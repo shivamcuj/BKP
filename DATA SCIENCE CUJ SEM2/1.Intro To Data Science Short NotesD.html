@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Notes | PDF Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --secondary-dark: #0d9668;
+            --dark: #111827;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent: #8b5cf6;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary);
+            background: linear-gradient(to right, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab:hover {
+            background-color: var(--card-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--secondary);
+        }
+        
+        /* List Styles */
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .highlight {
+            background-color: rgba(99, 102, 241, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .definition {
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .exam-topic {
+            background-color: rgba(239, 68, 68, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--danger);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .exam-topic i {
+            color: var(--danger);
+            font-size: 24px;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .topic-card {
+            background: linear-gradient(145deg, rgba(99, 102, 241, 0.15), rgba(30, 41, 59, 0.8));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .topic-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .topic-card .importance {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--warning);
+            color: var(--darker);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div>
+                    <h1>Data Science Notes</h1>
+                    <p class="subtitle">Comprehensive analysis of "Intro DATA SCIENCE.pdf" - Organized for optimal learning</p>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="nav-tabs">
+            <div class="tab active" data-target="detailed">
+                <i class="fas fa-file-alt"></i> Detailed Notes
+            </div>
+            <div class="tab" data-target="short">
+                <i class="fas fa-list"></i> Short Notes
+            </div>
+            <div class="tab" data-target="exam">
+                <i class="fas fa-graduation-cap"></i> Exam Topics
+            </div>
+        </nav>
+        
+        <!-- Detailed Notes Section -->
+        <section id="detailed" class="content-section active">
+            <h2 class="section-title">
+                <i class="fas fa-file-alt"></i> Detailed Notes
+            </h2>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-exchange-alt"></i> 1. Organizational Change & Innovation</h3>
+                <div class="highlight">
+                    <p><strong>Key Example:</strong> IBM's transformation journey</p>
+                </div>
+                <ul>
+                    <li><strong>1960-2000:</strong> IBM operated primarily as a hardware and software company</li>
+                    <li><strong>2000-Present:</strong> Transformed into a service-oriented company focusing mainly on consulting</li>
+                    <li><strong>Critical Insight:</strong> Organizations must successfully change and innovate to survive; failure to adapt leads to obsolescence</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-brain"></i> 2. Understanding Intelligence</h3>
+                <div class="definition">
+                    <p><strong>Definition:</strong> Capacity to learn and solve problems</p>
+                </div>
+                <ul>
+                    <li><strong>Three Specific Abilities:</strong>
+                        <ul>
+                            <li>Ability to solve novel problems</li>
+                            <li>Ability to act rationally</li>
+                            <li>Ability to act like humans</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Components of Intelligence:</strong>
+                        <ul>
+                            <li><strong>Interaction with the Real World:</strong> Perception, understanding, and action (e.g., Speech Recognition, Image Understanding)</li>
+                            <li><strong>Reasoning and Planning:</strong> Modeling the external world, solving new problems, planning, decision-making, handling uncertainties</li>
+                            <li><strong>Learning and Adaptation:</strong> Continuous learning and adapting (e.g., a baby learning to categorize animals)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-robot"></i> 3. Artificial Intelligence (AI)</h3>
+                <div class="definition">
+                    <p><strong>Definition:</strong> A popular branch of Computer Science concerned with building intelligent machines capable of performing intelligent tasks</p>
+                </div>
+                <ul>
+                    <li><strong>Primary Goal:</strong> Steering machines toward understanding human intelligence</li>
+                    <li><strong>Key Concepts:</strong>
+                        <ul>
+                            <li>Real-Time AI: Systems that process and respond to data in real-time</li>
+                            <li>Virtual Assistants: AI-powered helpers like Siri, Alexa, Google Assistant</li>
+                        </ul>
+                    </li>
+                    <li><strong>Historical Context:</strong> AI development spans decades (1950s to present) with significant acceleration in recent years</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-chart-bar"></i> 4. The Era of Big Data</h3>
+                <div class="highlight">
+                    <p><strong>Core Concept:</strong> Massive amounts of data are being collected and stored across various domains</p>
+                </div>
+                <ul>
+                    <li><strong>Data Sources:</strong>
+                        <ul>
+                            <li>Web data and e-commerce transactions</li>
+                            <li>Financial and bank/credit transactions</li>
+                            <li>Online trading and purchasing data</li>
+                            <li>Social network interactions</li>
+                        </ul>
+                    </li>
+                    <li><strong>Scale Examples:</strong>
+                        <ul>
+                            <li><strong>Google:</strong> Processes 20 PB per day (20,971,520 Gigabytes)</li>
+                            <li><strong>Facebook:</strong> 60 TB of daily logs</li>
+                            <li><strong>eBay:</strong> 6.5 PB of user data + 50 TB/day (as of 5/2009)</li>
+                            <li><strong>1000 Genomes Project:</strong> 200 TB of genetic data</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-microscope"></i> 5. What is Data Science?</h3>
+                <ul>
+                    <li><strong>Multidisciplinary Field:</strong> Combines mathematics, statistics, data engineering, pattern recognition, machine learning, advanced computing, visualization, uncertainty modeling, data warehousing, and high-performance computing</li>
+                    <li><strong>Primary Goal:</strong> Extracting meaningful insights from data and creating data products</li>
+                    <li><strong>Key Challenge:</strong> Identifying which step in the data science pipeline is most challenging (varies by project and context)</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-chart-line"></i> 6. Data Analysis</h3>
+                <div class="definition">
+                    <p><strong>Definition:</strong> Using data to discover useful information and support decision-making</p>
+                </div>
+                <ul>
+                    <li><strong>Three Core Components:</strong>
+                        <ul>
+                            <li><strong>Data:</strong> Anything that can be measured or recorded</li>
+                            <li><strong>Statistics:</strong> Summarizing and visualizing main characteristics of data</li>
+                            <li><strong>Algorithms:</strong> Applying computational methods to find patterns in data</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-users"></i> 7. The Multidisciplinary Nature of Data Science</h3>
+                <ul>
+                    <li>Data science integrates knowledge from multiple domains</li>
+                    <li>Requires collaboration between subject matter experts, statisticians, computer scientists, and business analysts</li>
+                    <li>Effective data science teams combine diverse skills and perspectives</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-project-diagram"></i> 8. Data Science & Artificial Intelligence Relationship</h3>
+                <div class="highlight">
+                    <p><strong>Key Distinction:</strong> Data science produces insights; Machine learning produces predictions</p>
+                </div>
+                <ul>
+                    <li>Data science and AI are interconnected but distinct fields</li>
+                    <li>AI, particularly machine learning, is a subset of data science methodologies</li>
+                    <li>Data science provides the foundation for AI systems through data preparation and analysis</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-cogs"></i> 9. Machine Learning</h3>
+                <div class="definition">
+                    <p><strong>Definition:</strong> A field of study within AI concerned with developing statistical algorithms that can generalize and perform tasks without explicit instructions</p>
+                </div>
+                <ul>
+                    <li><strong>Core Principle:</strong> Algorithms learn patterns from data rather than following rigid programming rules</li>
+                    <li><strong>Key Capability:</strong> Generalization - applying learned patterns to new, unseen data</li>
+                    <li><strong>Relationship to Data Science:</strong> Machine learning is a key tool in the data scientist's toolkit for making predictions and discovering complex patterns</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Short Notes Section -->
+        <section id="short" class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-list"></i> Short Notes
+            </h2>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-bolt"></i> Concise Summary of Key Concepts</h3>
+                
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h4>Organizational Change</h4>
+                        <p>IBM: Hardware/software (1960-2000) → Service/consulting (2000-present). Innovation = survival.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>Intelligence Definition</h4>
+                        <p>Capacity to learn + solve problems. 3 abilities: solve novel problems, act rationally, act human-like.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>AI Overview</h4>
+                        <p>CS branch building smart machines. Goals: understand human intelligence, real-time processing, virtual assistants.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>Big Data Scale</h4>
+                        <p>Google: 20PB/day. Facebook: 60TB/day logs. eBay: 6.5PB user data. 1000 Genomes: 200TB.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>Data Science</h4>
+                        <p>Multidisciplinary: math, stats, ML, visualization, HPC. Goal: extract meaning, create data products.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>Data Analysis</h4>
+                        <p>Use data → discover info. Components: data (measurable), stats (summarize), algorithms (find patterns).</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>DS Multidisciplinary</h4>
+                        <p>Integrates multiple fields. Requires diverse teams (experts, statisticians, CS, business).</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>DS vs AI</h4>
+                        <p>DS → insights. ML → predictions. AI subset of DS methodologies.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h4>Machine Learning</h4>
+                        <p>AI subfield: statistical algorithms that generalize. Learn from data, not explicit programming.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-key"></i> Key Definitions</h3>
+                <ul>
+                    <li><strong>Intelligence:</strong> Capacity to learn and solve problems</li>
+                    <li><strong>AI:</strong> Building intelligent machines capable of intelligent tasks</li>
+                    <li><strong>Data Science:</strong> Multidisciplinary field extracting meaning from data</li>
+                    <li><strong>Data Analysis:</strong> Using data to discover useful information</li>
+                    <li><strong>Machine Learning:</strong> Algorithms that learn from data without explicit instructions</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-lightbulb"></i> Critical Distinctions</h3>
+                <ul>
+                    <li><strong>IBM Transformation:</strong> Hardware → Services (survival through innovation)</li>
+                    <li><strong>Intelligence Components:</strong> Interaction, Reasoning, Learning</li>
+                    <li><strong>Data Scale:</strong> PB (Google) vs TB (Facebook) - understand magnitude</li>
+                    <li><strong>DS vs ML:</strong> Insights vs Predictions</li>
+                    <li><strong>Data Analysis Steps:</strong> Data → Statistics → Algorithms</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Exam Topics Section -->
+        <section id="exam" class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-graduation-cap"></i> Highly Expected Exam Topics
+            </h2>
+            
+            <div class="exam-topic">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <h3>Based on PDF analysis, these topics are highly likely to appear in exams</h3>
+                    <p>Focus your study on these key areas for maximum efficiency</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-star"></i> Most Important Topics</h3>
+                
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>IBM Transformation Case Study</h4>
+                        <p>1960-2000 vs 2000-present. Why change is essential for organizational survival.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>Definition of Intelligence</h4>
+                        <p>3 specific abilities + 3 key components (Interaction, Reasoning, Learning).</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>AI Definition & Goals</h4>
+                        <p>Branch of CS, building intelligent machines, understanding human intelligence.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>Big Data Examples & Scale</h4>
+                        <p>Google, Facebook, eBay data volumes. Understand PB vs TB scale.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>Data Science Definition</h4>
+                        <p>Multidisciplinary nature, key components, primary goal.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">HIGH PRIORITY</span>
+                        <h4>Data Analysis Components</h4>
+                        <p>Data, Statistics, Algorithms - definitions and relationships.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">MEDIUM PRIORITY</span>
+                        <h4>DS vs AI Relationship</h4>
+                        <p>Data Science (insights) vs Machine Learning (predictions).</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">MEDIUM PRIORITY</span>
+                        <h4>Machine Learning Definition</h4>
+                        <p>Statistical algorithms, generalization, no explicit instructions.</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <span class="importance">MEDIUM PRIORITY</span>
+                        <h4>Multidisciplinary Nature of DS</h4>
+                        <p>Integration of fields, need for diverse teams.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-question-circle"></i> Expected Question Types</h3>
+                <ul>
+                    <li><strong>Definition Questions:</strong> "Define Intelligence/AI/Data Science/Machine Learning"</li>
+                    <li><strong>Comparison Questions:</strong> "Compare Data Science and AI" or "Contrast IBM's historical vs current business model"</li>
+                    <li><strong>Application Questions:</strong> "Give examples of big data in modern companies" or "Explain how machine learning differs from traditional programming"</li>
+                    <li><strong>Component Questions:</strong> "List and explain the three components of intelligence" or "What are the three elements of data analysis?"</li>
+                    <li><strong>Scale Questions:</strong> "Compare data volumes: Google vs Facebook" or "Explain what PB and TB represent"</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-tasks"></i> Study Checklist</h3>
+                <ul>
+                    <li><input type="checkbox"> IBM transformation timeline and rationale</li>
+                    <li><input type="checkbox"> Intelligence definition with 3 abilities</li>
+                    <li><input type="checkbox"> 3 components of intelligence (Interaction, Reasoning, Learning)</li>
+                    <li><input type="checkbox"> AI definition and primary goal</li>
+                    <li><input type="checkbox"> Big data examples with specific volume numbers</li>
+                    <li><input type="checkbox"> Data science multidisciplinary components</li>
+                    <li><input type="checkbox"> Data analysis: Data, Statistics, Algorithms</li>
+                    <li><input type="checkbox"> DS vs AI distinction (insights vs predictions)</li>
+                    <li><input type="checkbox"> Machine learning definition and key capability</li>
+                </ul>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Data Science Notes | PDF Analysis Complete | Created with comprehensive coverage of all topics</p>
+            <p>Source: "Intro DATA SCIENCE.pdf" | UI Design: Tech/AI Inspired</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the targeted section
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Add interactivity to checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const listItem = this.parentElement;
+                if (this.checked) {
+                    listItem.style.textDecoration = 'line-through';
+                    listItem.style.opacity = '0.7';
+                } else {
+                    listItem.style.textDecoration = 'none';
+                    listItem.style.opacity = '1';
+                }
+            });
+        });
+        
+        // Add a subtle animation to cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
