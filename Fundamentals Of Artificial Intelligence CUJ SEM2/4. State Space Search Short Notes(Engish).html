@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Space Search | Fundamentals of AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc;
+        }
+        .header-font { font-family: 'Space Grotesk', sans-serif; }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .concept-card {
+            transition: all 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #9333ea;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <span class="header-font font-bold text-xl tracking-tight">AI<span class="text-purple-600">Search</span></span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider text-slate-600">
+                    <a href="#intro" class="nav-link hover:text-purple-600 transition-colors">Concept</a>
+                    <a href="#terms" class="nav-link hover:text-purple-600 transition-colors">Key Terms</a>
+                    <a href="#puzzle" class="nav-link hover:text-purple-600 transition-colors">8-Puzzle</a>
+                    <a href="#realworld" class="nav-link hover:text-purple-600 transition-colors">Examples</a>
+                    <a href="#revision" class="nav-link text-purple-600 font-bold bg-purple-50 px-3 py-1 rounded-full">Revision</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b px-4 py-4 space-y-3 shadow-lg">
+            <a href="#intro" class="block font-medium p-2 text-slate-700">Concept</a>
+            <a href="#terms" class="block font-medium p-2 text-slate-700">Key Terms</a>
+            <a href="#puzzle" class="block font-medium p-2 text-slate-700">8-Puzzle Problem</a>
+            <a href="#revision" class="block font-bold p-2 text-purple-600">Exam Revision</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-12 px-4 text-center bg-gradient-to-b from-purple-50 to-transparent">
+        <h1 class="header-font text-4xl md:text-6xl font-bold mb-6">
+            State Space <span class="gradient-text">Search</span>
+        </h1>
+        <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            The fundamental process in AI for solving problems by exploring possible configurations. From playing Chess to finding the best route on Google Maps.
+        </p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pb-20 space-y-24">
+
+        <!-- Section 1: Introduction -->
+        <section id="intro" class="scroll-mt-24">
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-10 w-2 bg-purple-600 rounded-full"></div>
+                <h2 class="header-font text-3xl font-bold">What is State Space Search?</h2>
+            </div>
+            
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 concept-card">
+                <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+                    State Space Search is the process of finding a solution to a problem by exploring a set of possible configurations (called <strong>states</strong>). This is how machines tackle problems like humans do in gaming scenarios (Tic-Tac-Toe, Chess).
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-purple-50 p-6 rounded-2xl border-l-4 border-purple-500">
+                        <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-project-diagram mr-2"></i> Graph Representation</h3>
+                        <p class="text-sm text-slate-600">
+                            The problem is organized as a graph or tree where:
+                            <ul class="list-disc list-inside mt-2 font-medium space-y-1">
+                                <li><strong>Nodes:</strong> Represent different states (configurations).</li>
+                                <li><strong>Edges:</strong> Represent transitions (moves) between states.</li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-2xl border-l-4 border-blue-500">
+                        <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-square-root-alt mr-2"></i> The Formal Definition</h3>
+                        <p class="text-sm text-slate-600">
+                            A problem is defined by the set <span class="font-mono bg-white px-2 py-1 rounded text-blue-700 font-bold">S: {S, A, Action, Transition, Cost}</span>.
+                            <br><br>
+                            It includes the Initial State, Goal State, and the Set of Actions ($A$).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Key Terminologies -->
+        <section id="terms" class="scroll-mt-24">
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
+                <h2 class="header-font text-3xl font-bold">Key Terminology</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- State -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 concept-card group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">State</h3>
+                    <p class="text-sm text-slate-600">
+                        A snapshot of the system at a specific moment. It represents exactly what the problem looks like right now.
+                    </p>
+                </div>
+
+                <!-- Start & Goal -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 concept-card group">
+                    <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mb-4 text-green-600 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Start & Goal State</h3>
+                    <p class="text-sm text-slate-600">
+                        <strong>Start State:</strong> Where you begin (Initial configuration).<br>
+                        <strong>Goal State:</strong> Where you want to reach (The solution).
+                    </p>
+                </div>
+
+                <!-- Operators -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 concept-card group">
+                    <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mb-4 text-amber-600 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Operators / Actions</h3>
+                    <p class="text-sm text-slate-600">
+                        The steps you can take to move from one state to another. In navigation, this could be "Turn Left" or "Walk".
+                    </p>
+                </div>
+
+                <!-- Path Cost -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 concept-card group">
+                    <div class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center mb-4 text-red-600 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Path & Search Strategy</h3>
+                    <p class="text-sm text-slate-600">
+                        <strong>Path:</strong> The sequence of steps from Start to Goal.<br>
+                        <strong>Search Strategy:</strong> The method used to decide which path to explore first.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 8-Puzzle Problem -->
+        <section id="puzzle" class="scroll-mt-24">
+            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-80 h-80 bg-purple-600 blur-[120px] opacity-20 -mr-32 -mt-32"></div>
+                
+                <h2 class="header-font text-3xl font-bold mb-8 border-b border-slate-700 pb-4 flex items-center">
+                    <i class="fas fa-th text-purple-400 mr-4"></i> Classic Example: The 8-Puzzle
+                </h2>
+                
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-slate-300 mb-6 text-lg leading-relaxed">
+                            The 8-Puzzle consists of a 3x3 board with eight numbered tiles and one <strong>Blank Space</strong>. A tile adjacent to the blank space can slide into it.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                                <i class="fas fa-bullseye text-green-400 mt-1 mr-3"></i>
+                                <div>
+                                    <strong class="text-white block">Goal</strong>
+                                    <span class="text-sm text-slate-400">Arrange the mixed-up tiles into a specific order (e.g., 1-8).</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                                <i class="fas fa-arrows-alt text-purple-400 mt-1 mr-3"></i>
+                                <div>
+                                    <strong class="text-white block">Actions (Operators)</strong>
+                                    <span class="text-sm text-slate-400">Move the blank space: UP, DOWN, LEFT, RIGHT.</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                                <i class="fas fa-coins text-yellow-400 mt-1 mr-3"></i>
+                                <div>
+                                    <strong class="text-white block">Path Cost</strong>
+                                    <span class="text-sm text-slate-400">Each step costs 1. Total cost = Number of steps.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Representation of Puzzle -->
+                    <div class="bg-white/5 p-8 rounded-3xl backdrop-blur-md border border-white/10 flex flex-col items-center">
+                        <div class="text-center mb-6">
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Start State Example</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 w-48 mb-8">
+                            <!-- Row 1 -->
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">7</div>
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">2</div>
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">4</div>
+                            <!-- Row 2 -->
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">5</div>
+                            <div class="aspect-square bg-slate-800/30 border-2 border-dashed border-slate-600 rounded-lg"></div>
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">6</div>
+                            <!-- Row 3 -->
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">8</div>
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">3</div>
+                            <div class="aspect-square bg-slate-700 flex items-center justify-center rounded-lg font-bold text-2xl shadow-lg border-b-4 border-slate-900">1</div>
+                        </div>
+                        <div class="text-center text-xs text-slate-400 italic bg-slate-900/50 px-4 py-2 rounded-full">
+                            AI algorithms search for the sequence to sort this grid.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Real World Examples -->
+        <section id="realworld" class="scroll-mt-24">
+            <h2 class="header-font text-3xl font-bold mb-8 text-slate-800">Real World Examples</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Example 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-l-8 border-blue-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="p-3 bg-blue-100 text-blue-600 rounded-xl mr-4">
+                            <i class="fas fa-map-marked-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Route Finding (Google Maps)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Imagine navigating from your <strong>Hostel</strong> to the <strong>Exam Hall</strong>.
+                    </p>
+                    <ul class="text-sm text-slate-600 space-y-2 ml-2">
+                        <li class="flex items-center"><i class="fas fa-play text-blue-400 text-xs mr-2"></i> <strong>Start:</strong> Current Location (Hostel).</li>
+                        <li class="flex items-center"><i class="fas fa-flag text-blue-400 text-xs mr-2"></i> <strong>Goal:</strong> Destination (Library/Hall).</li>
+                        <li class="flex items-center"><i class="fas fa-walking text-blue-400 text-xs mr-2"></i> <strong>Actions:</strong> Turn Left/Right, take Bus/Metro.</li>
+                        <li class="flex items-center"><i class="fas fa-search text-blue-400 text-xs mr-2"></i> <strong>Search:</strong> Google Maps calculating the fastest route.</li>
+                    </ul>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-l-8 border-indigo-500 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="p-3 bg-indigo-100 text-indigo-600 rounded-xl mr-4">
+                            <i class="fas fa-tint text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">The Water Jug Problem</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        A classic AI logic puzzle often used to demonstrate state spaces.
+                    </p>
+                    <ul class="text-sm text-slate-600 space-y-2 ml-2">
+                        <li class="flex items-center"><i class="fas fa-crosshairs text-indigo-400 text-xs mr-2"></i> <strong>Goal:</strong> Measure a specific amount of water using 2 jugs.</li>
+                        <li class="flex items-center"><i class="fas fa-ban text-indigo-400 text-xs mr-2"></i> <strong>Constraint:</strong> Jugs have no measurement markings.</li>
+                        <li class="flex items-center"><i class="fas fa-hand-holding-water text-indigo-400 text-xs mr-2"></i> <strong>Actions:</strong> Fill jug, Empty jug, Pour one into another.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Revision -->
+        <section id="revision" class="scroll-mt-24">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-8 shadow-2xl">
+                <h2 class="header-font text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-bolt text-yellow-400 mr-3"></i> Exam Revision Sheet
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-600">
+                                <th class="p-4 text-slate-400 font-bold uppercase text-xs tracking-wider">Term</th>
+                                <th class="p-4 text-slate-400 font-bold uppercase text-xs tracking-wider">Definition</th>
+                                <th class="p-4 text-slate-400 font-bold uppercase text-xs tracking-wider">Example (Chess)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700/50">
+                            <tr>
+                                <td class="p-4 font-bold text-white">State</td>
+                                <td class="p-4 text-slate-300">A snapshot of the system at a moment.</td>
+                                <td class="p-4 text-slate-400">Position of all pieces on board.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-white">Transition</td>
+                                <td class="p-4 text-slate-300">Moving from one state to another via an action.</td>
+                                <td class="p-4 text-slate-400">Making a move.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-white">Goal Test</td>
+                                <td class="p-4 text-slate-300">Checking if the current state is the solution.</td>
+                                <td class="p-4 text-slate-400">Is it Checkmate?</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-white">Path Cost</td>
+                                <td class="p-4 text-slate-300">The effort/steps taken to reach the goal.</td>
+                                <td class="p-4 text-slate-400">Number of moves made.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 p-4 bg-white/10 rounded-xl text-center text-sm text-slate-300 italic border border-white/5">
+                    "State Space Search is about finding the best sequence of moves in a graph where Nodes are States and Edges are Actions."
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 px-4 mt-20">
+        <div class="max-w-6xl mx-auto flex flex-col items-center">
+            <div class="flex items-center space-x-2 mb-6">
+                <i class="fas fa-network-wired text-purple-600 text-xl"></i>
+                <span class="header-font font-bold text-lg">Shivam<span class="text-purple-600">CUJ</span></span>
+            </div>
+            
+            <p class="text-slate-500 text-sm mb-8 text-center max-w-md">
+                Fundamentals of AI - State Space Search Module.
+                <br>Based on the curriculum notes by Dr. Deepti Malhotra.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6 text-2xl">
+                <a href="https://github.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-black transition-colors" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="text-slate-400 hover:text-red-600 transition-colors" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="text-slate-400 hover:text-blue-700 transition-colors" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-pink-600 transition-colors" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <div class="mt-10 pt-10 border-t w-full text-center">
+                <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">
+                    Developed for Academic Purposes | CUJ &copy; 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
