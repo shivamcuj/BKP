@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents & Types | Fundamentals of AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.1);
+        }
+
+        .sidebar-link {
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-link:hover {
+            background: #f1f5f9;
+            border-left-color: #3b82f6;
+            padding-left: 1.25rem;
+        }
+
+        .step-badge {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight">AI<span class="text-blue-600">Agents</span></span>
+            </div>
+            
+            <div class="hidden lg:flex space-x-6">
+                <a href="#definition" class="text-sm font-medium hover:text-blue-600 transition-colors">Definition</a>
+                <a href="#components" class="text-sm font-medium hover:text-blue-600 transition-colors">Components</a>
+                <a href="#structure" class="text-sm font-medium hover:text-blue-600 transition-colors">Structure</a>
+                <a href="#types" class="text-sm font-medium hover:text-blue-600 transition-colors">Agent Types</a>
+                <a href="#revision" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all">Revision Sheet</a>
+            </div>
+
+            <button class="lg:hidden text-slate-600" id="mobile-toggle">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 p-4 space-y-3">
+            <a href="#definition" class="block font-medium">Definition</a>
+            <a href="#components" class="block font-medium">Components</a>
+            <a href="#structure" class="block font-medium">Structure</a>
+            <a href="#types" class="block font-medium">Agent Types</a>
+            <a href="#revision" class="block font-bold text-blue-600">Revision</a>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 pt-28 pb-20 lg:flex lg:gap-12">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="hidden lg:block w-64 h-fit sticky top-28">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">On This Page</h3>
+            <nav class="space-y-1">
+                <a href="#definition" class="sidebar-link block py-2 px-4 text-sm text-slate-600">Overview</a>
+                <a href="#components" class="sidebar-link block py-2 px-4 text-sm text-slate-600">Key Components</a>
+                <a href="#structure" class="sidebar-link block py-2 px-4 text-sm text-slate-600">Agent Structure</a>
+                <a href="#types" class="sidebar-link block py-2 px-4 text-sm text-slate-600">Types of Agents</a>
+                <a href="#goals" class="sidebar-link block py-2 px-4 text-sm text-slate-600">Agent Goals</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-16">
+            
+            <!-- Hero Header -->
+            <header class="animate-fade">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
+                    AI Agents: The <span class="text-blue-600">Building Blocks</span> of AI
+                </h1>
+                <p class="text-lg text-slate-600 leading-relaxed max-w-3xl">
+                    An AI agent is more than just code; it's a goal-oriented system that interacts with the world. 
+                    Based on the Fundamentals of AI curriculum by <span class="font-semibold">Dr. Deepti Malhotra</span>.
+                </p>
+            </header>
+
+            <!-- Definition -->
+            <section id="definition" class="section-card p-8 animate-fade" style="animation-delay: 0.1s">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="step-badge text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">01</span>
+                    <h2 class="text-2xl font-bold">What is an AI Agent?</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-slate-600">
+                            An AI agent is a software program or system designed to <span class="font-semibold text-slate-900">perceive</span> its environment, <span class="font-semibold text-slate-900">make decisions</span>, and take <span class="font-semibold text-slate-900">actions</span> to achieve specific goals.
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="font-bold text-blue-900 text-sm mb-1">Common Examples:</h4>
+                            <p class="text-sm text-blue-700">Driverless cars, Siri Virtual Assistant, Chatbots.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 rounded-2xl p-6 text-white flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">The Logic Flow</h4>
+                        <div class="flex items-center justify-between text-center">
+                            <div><i class="fas fa-eye text-blue-400 mb-2"></i><div class="text-[10px] uppercase">Percept</div></div>
+                            <i class="fas fa-chevron-right text-slate-700"></i>
+                            <div><i class="fas fa-brain text-purple-400 mb-2"></i><div class="text-[10px] uppercase">Decision</div></div>
+                            <i class="fas fa-chevron-right text-slate-700"></i>
+                            <div><i class="fas fa-hand-pointer text-emerald-400 mb-2"></i><div class="text-[10px] uppercase">Action</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Components -->
+            <section id="components" class="space-y-6">
+                <div class="flex items-center space-x-3">
+                    <span class="step-badge text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">02</span>
+                    <h2 class="text-2xl font-bold">Key Components</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                        <i class="fas fa-video text-blue-500 mb-3 text-xl"></i>
+                        <h3 class="font-bold mb-2">Sensors</h3>
+                        <p class="text-sm text-slate-500">For perception. Examples: Cameras, input data, microphones.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                        <i class="fas fa-mechanical-arm text-emerald-500 mb-3 text-xl"></i>
+                        <h3 class="font-bold mb-2">Actuators</h3>
+                        <p class="text-sm text-slate-500">For actions. Examples: Robot arms, text output, wheels.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                        <i class="fas fa-code-branch text-purple-500 mb-3 text-xl"></i>
+                        <h3 class="font-bold mb-2">Agent Function</h3>
+                        <p class="text-sm text-slate-500">The decision-making logic/mathematical mapping.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                        <i class="fas fa-globe text-orange-500 mb-3 text-xl"></i>
+                        <h3 class="font-bold mb-2">Environment</h3>
+                        <p class="text-sm text-slate-500">The world in which the agent operates.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Structure -->
+            <section id="structure" class="section-card p-8 bg-white">
+                <div class="flex items-center space-x-3 mb-8">
+                    <span class="step-badge text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">03</span>
+                    <h2 class="text-2xl font-bold">Agent Structure</h2>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="mono bg-slate-100 text-slate-800 px-6 py-4 rounded-2xl text-lg font-bold border-2 border-slate-200 shadow-sm mb-12">
+                        Agent = Architecture + Agent Program
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 w-full">
+                        <div class="border-l-4 border-blue-600 pl-6">
+                            <h4 class="font-bold text-lg mb-2">Architecture</h4>
+                            <p class="text-slate-600 text-sm">The physical machinery or device the agent executes on (e.g., PC, Robotic Car, Camera Hardware).</p>
+                        </div>
+                        <div class="border-l-4 border-emerald-600 pl-6">
+                            <h4 class="font-bold text-lg mb-2">Agent Program</h4>
+                            <p class="text-slate-600 text-sm">The software implementation of the agent function. It processes the percepts to produce actions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Types -->
+            <section id="types" class="space-y-8">
+                <div class="flex items-center space-x-3">
+                    <span class="step-badge text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">04</span>
+                    <h2 class="text-2xl font-bold">Types of AI Agents</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Simple Reflex -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-xl">Simple Reflex Agents</h3>
+                            <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 rounded-md uppercase">Reactive</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-4">Acts only on the current perception. It ignores the rest of the history.</p>
+                        <ul class="space-y-2 text-xs text-slate-500">
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Based on <span class="font-bold text-slate-700">If / Then Rules</span></li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Environment must be <span class="font-bold text-slate-700">Fully Observable</span></li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Example: Thermostat.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Model-Based -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-xl">Model-Based Reflex</h3>
+                            <span class="bg-blue-100 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase">Internal State</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-4">Maintains an internal state to track things it cannot see now.</p>
+                        <ul class="space-y-2 text-xs text-slate-500">
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Good for <span class="font-bold text-slate-700">Partially Observable</span> worlds.</li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Uses a "model" of how the world works.</li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Example: Self-driving car with a map.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Goal-Based -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-xl">Goal-Based Agents</h3>
+                            <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase">Strategic</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-4">Expansion of model-based agents with a desirable situation (Goal).</p>
+                        <ul class="space-y-2 text-xs text-slate-500">
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Uses <span class="font-bold text-slate-700">Searching and Planning</span></li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Evaluates "What if I do A?" against the goal.</li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Example: Chess-playing AI.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Learning -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-xl">Learning Agents</h3>
+                            <span class="bg-emerald-100 text-emerald-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase">Adaptive</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-4">Learns from experience and improves performance over time.</p>
+                        <ul class="space-y-2 text-xs text-slate-500">
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Acts, observes results, and <span class="font-bold text-slate-700">updates logic</span>.</li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Critical for dynamic environments.</li>
+                            <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Example: Recommendation system.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Revision -->
+            <section id="revision" class="scroll-mt-24">
+                <div class="bg-slate-900 rounded-[2rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                    <!-- Decoration -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 -mr-32 -mt-32"></div>
+                    
+                    <h2 class="text-3xl font-bold mb-8 flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-4"></i> Exam Revision Sheet
+                    </h2>
+
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-3">Core Equation</h4>
+                                <div class="bg-white/5 p-4 rounded-xl border border-white/10 font-mono text-sm">
+                                    Agent = Architecture + Program
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-3">Agent Goals</h4>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li><i class="fas fa-dot-circle mr-2 text-blue-500"></i> High Performance</li>
+                                    <li><i class="fas fa-dot-circle mr-2 text-blue-500"></i> Optimum Result</li>
+                                    <li><i class="fas fa-dot-circle mr-2 text-blue-500"></i> Rational Action (Right Action)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-3">Quick Comparison</h4>
+                            <div class="space-y-3">
+                                <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
+                                    <span class="text-xs font-semibold">Simple Reflex</span>
+                                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded">No Memory</span>
+                                </div>
+                                <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
+                                    <span class="text-xs font-semibold">Model-Based</span>
+                                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded">History/Map</span>
+                                </div>
+                                <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
+                                    <span class="text-xs font-semibold">Goal-Based</span>
+                                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded">Planning</span>
+                                </div>
+                                <div class="bg-white/5 p-3 rounded-lg border border-white/10 flex justify-between items-center">
+                                    <span class="text-xs font-semibold">Learning</span>
+                                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded">Experience</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col items-center justify-center text-center space-y-8">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                        <i class="fas fa-robot text-lg"></i>
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight">Shivam<span class="text-blue-600 text-sm align-top ml-0.5">CUJ</span></span>
+                </div>
+                
+                <p class="text-slate-500 max-w-sm text-sm">
+                    Comprehensive study notes for AI Agents. Connect for more resources and project collaborations.
+                </p>
+
+                <div class="flex gap-4">
+                    <a href="https://github.com/shivamcuj" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-github"></i></a>
+                    <a href="https://youtube.com/@shivamcuj" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-red-600 hover:text-white transition-all"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-blue-700 hover:text-white transition-all"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/shivamcuj" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-pink-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                </div>
+
+                <div class="pt-8 border-t border-slate-100 w-full text-center">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                        Developed for Academic Purposes | Dept. of CS & IT, CUJ &copy; 2026
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        const toggle = document.getElementById('mobile-toggle');
+        const menu = document.getElementById('mobile-menu');
+        
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
