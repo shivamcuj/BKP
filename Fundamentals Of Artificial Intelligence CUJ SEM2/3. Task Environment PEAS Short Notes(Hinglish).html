@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEAS & Task Environment | Shivam CUJ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .header-font { font-family: 'Space Grotesk', sans-serif; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .peas-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .peas-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .p-border { border-left-color: #3b82f6; } /* Blue for Performance */
+        .e-border { border-left-color: #10b981; } /* Green for Environment */
+        .a-border { border-left-color: #f59e0b; } /* Amber for Actuators */
+        .s-border { border-left-color: #ef4444; } /* Red for Sensors */
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ef4444;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-orange-50/30 text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-layer-group text-red-500 text-2xl"></i>
+                    <span class="header-font font-bold text-xl tracking-tight">PEAS<span class="text-red-500">Model</span></span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider text-slate-600">
+                    <a href="#concept" class="nav-link hover:text-red-500 transition-colors">Concept</a>
+                    <a href="#examples" class="nav-link hover:text-red-500 transition-colors">Real Examples</a>
+                    <a href="#revision" class="nav-link text-red-500 font-bold">Revision</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b px-4 py-4 space-y-3 shadow-lg">
+            <a href="#concept" class="block font-medium p-2">Concept</a>
+            <a href="#examples" class="block font-medium p-2">Real Examples</a>
+            <a href="#revision" class="block font-medium p-2 text-red-500">Revision</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-12 px-4 text-center">
+        <h1 class="header-font text-4xl md:text-6xl font-bold mb-6">
+            Task Environment & <span class="gradient-text">PEAS</span>
+        </h1>
+        <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Kisi bhi AI Agent ko design karne se pehle uska <span class="font-bold">Task Environment</span> define karna zaroori hai. Iske liye hum <span class="font-bold">PEAS</span> formula use karte hain.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">Performance</span>
+            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Environment</span>
+            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold">Actuators</span>
+            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-bold">Sensors</span>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pb-20 space-y-20">
+
+        <!-- Section 1: Concept Breakdown -->
+        <section id="concept" class="scroll-mt-24">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- P -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm peas-card p-border">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-blue-600 font-bold text-xl">P</div>
+                    <h3 class="font-bold text-lg mb-2">Performance Measure</h3>
+                    <p class="text-sm text-slate-600">
+                        Ye decide karta hai ki agent kitna <span class="font-bold">successful</span> hai.
+                        <br><br><span class="italic text-slate-500 text-xs">"Kaam kaisa kiya? Fast? Safe?"</span>
+                    </p>
+                </div>
+                <!-- E -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm peas-card e-border">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-4 text-green-600 font-bold text-xl">E</div>
+                    <h3 class="font-bold text-lg mb-2">Environment</h3>
+                    <p class="text-sm text-slate-600">
+                        Wo surroundings jahan agent <span class="font-bold">operate</span> karega.
+                        <br><br><span class="italic text-slate-500 text-xs">"Road? Hospital? Factory?"</span>
+                    </p>
+                </div>
+                <!-- A -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm peas-card a-border">
+                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-amber-600 font-bold text-xl">A</div>
+                    <h3 class="font-bold text-lg mb-2">Actuators</h3>
+                    <p class="text-sm text-slate-600">
+                        Wo tools jinse agent <span class="font-bold">actions</span> leta hai (Output).
+                        <br><br><span class="italic text-slate-500 text-xs">"Steering, Screen, Robotic Arm"</span>
+                    </p>
+                </div>
+                <!-- S -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm peas-card s-border">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mb-4 text-red-600 font-bold text-xl">S</div>
+                    <h3 class="font-bold text-lg mb-2">Sensors</h3>
+                    <p class="text-sm text-slate-600">
+                        Wo devices jinse agent data <span class="font-bold">perceive</span> (dekhta/sunta) hai.
+                        <br><br><span class="italic text-slate-500 text-xs">"Camera, GPS, Keyboard"</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Detailed Examples -->
+        <section id="examples" class="scroll-mt-24">
+            <h2 class="header-font text-3xl font-bold mb-8 border-l-8 border-red-500 pl-4">PEAS Examples (From Notes)</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- 1. Automated Taxi -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-slate-100 px-4 py-2 rounded-bl-2xl text-xs font-bold uppercase text-slate-500">Most Important</div>
+                    <h3 class="text-2xl font-bold mb-6 flex items-center"><i class="fas fa-taxi text-yellow-500 mr-3"></i> Automated Taxi</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex"><span class="w-24 font-bold text-blue-600">Performance:</span> <span class="flex-1">Safe, Fast, Legal drive, Maximize Profit, Comfortable trip.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-green-600">Environment:</span> <span class="flex-1">Roads, Traffic, Pedestrians (log), Customers.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-amber-600">Actuators:</span> <span class="flex-1">Steering, Accelerator, Brake, Signal, Horn, Display.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-red-600">Sensors:</span> <span class="flex-1">Cameras, Speedometer, GPS, Engine sensors.</span></div>
+                    </div>
+                </div>
+
+                <!-- 2. Medical Diagnosis -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center"><i class="fas fa-user-md text-blue-500 mr-3"></i> Medical System</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex"><span class="w-24 font-bold text-blue-600">Performance:</span> <span class="flex-1">Patient ki health, cost kam karna.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-green-600">Environment:</span> <span class="flex-1">Patient, Hospital, Staff.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-amber-600">Actuators:</span> <span class="flex-1">Display questions, Diagnoses, Treatments refer karna.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-red-600">Sensors:</span> <span class="flex-1">Keyboard entry (symptoms), Patient answers.</span></div>
+                    </div>
+                </div>
+
+                <!-- 3. Part-Picking Robot -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center"><i class="fas fa-robot text-slate-500 mr-3"></i> Part-Picking Robot</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex"><span class="w-24 font-bold text-blue-600">Performance:</span> <span class="flex-1">% of parts in correct bins.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-green-600">Environment:</span> <span class="flex-1">Conveyor belt, bins (dabbe).</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-amber-600">Actuators:</span> <span class="flex-1">Jointed Arm (haath), Hand.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-red-600">Sensors:</span> <span class="flex-1">Camera, Joint angle sensors.</span></div>
+                    </div>
+                </div>
+
+                <!-- 4. Interactive English Tutor -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center"><i class="fas fa-chalkboard-teacher text-green-500 mr-3"></i> English Tutor</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex"><span class="w-24 font-bold text-blue-600">Performance:</span> <span class="flex-1">Student ka test score.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-green-600">Environment:</span> <span class="flex-1">Students, Testing agency.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-amber-600">Actuators:</span> <span class="flex-1">Display exercises, Corrections dikhana.</span></div>
+                        <div class="flex"><span class="w-24 font-bold text-red-600">Sensors:</span> <span class="flex-1">Keyboard entry.</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 3: Revision -->
+        <section id="revision" class="scroll-mt-24">
+            <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-red-600 blur-3xl opacity-20 rounded-full"></div>
+                
+                <h2 class="text-3xl font-bold mb-8 flex items-center">
+                    <i class="fas fa-bolt text-yellow-400 mr-4"></i> Exam Quick Revision
+                </h2>
+
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-2">Definition</h4>
+                        <p class="text-lg">PEAS stands for <span class="text-blue-400 font-bold">P</span>erformance, <span class="text-green-400 font-bold">E</span>nvironment, <span class="text-amber-400 font-bold">A</span>ctuators, <span class="text-red-400 font-bold">S</span>ensors.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="font-bold text-blue-300 block mb-1">Performance Measure</span>
+                            Success criteria (e.g., Safety, Speed, Score).
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="font-bold text-green-300 block mb-1">Environment</span>
+                            The world (e.g., Road, Patient, Satellite Downlink).
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="font-bold text-amber-300 block mb-1">Actuators (Outputs)</span>
+                            Action tools (e.g., Steering, Display, Valves).
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="font-bold text-red-300 block mb-1">Sensors (Inputs)</span>
+                            Perception tools (e.g., Camera, Keyboard, GPS).
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-4 border border-white/20 rounded-xl bg-slate-800/50">
+                        <p class="text-center italic text-slate-300">
+                            "Exam mein agar 'Taxi Driver' ka example aaye, toh <span class="font-bold text-white">Actuators</span> mein 'Steering/Brake' aur <span class="font-bold text-white">Sensors</span> mein 'Camera/GPS' likhna mat bhoolna."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-12 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col items-center">
+            <div class="flex items-center space-x-2 mb-6">
+                <i class="fas fa-layer-group text-red-500 text-xl"></i>
+                <span class="header-font font-bold text-lg">Shivam<span class="text-red-500">CUJ</span></span>
+            </div>
+            
+            <p class="text-slate-500 text-sm mb-8 text-center max-w-md">
+                Fundamentals of AI - Task Environment Module.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6 text-2xl">
+                <a href="https://github.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-black transition-colors" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="text-slate-400 hover:text-red-600 transition-colors" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="text-slate-400 hover:text-blue-700 transition-colors" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-pink-600 transition-colors" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <div class="mt-10 pt-10 border-t w-full text-center">
+                <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">
+                    Based on notes by Dr. Deepti Malhotra | CUJ &copy; 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
