@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Security Notes | Intro to Cybersecurity</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter and JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            dark: '#0f172a',
+                            light: '#1e293b',
+                            accent: '#10b981', // Emerald Green for Security focus
+                            glow: '#34d399',
+                            text: '#e2e8f0'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .tab-active {
+            background-color: #10b981;
+            color: #064e3b;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 glass-card border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-cyber-accent text-xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-white">Cyber<span class="text-cyber-accent">Sec</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#intro" class="hover:text-cyber-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Introduction</a>
+                        <a href="#types" class="hover:text-cyber-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Security Types</a>
+                        <a href="#applications" class="hover:text-cyber-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Applications</a>
+                        <a href="#aspects" class="hover:text-cyber-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Key Aspects</a>
+                    </div>
+                </div>
+
+                <!-- Mode Toggle -->
+                <div class="flex items-center gap-4">
+                    <div class="bg-slate-800 rounded-lg p-1 flex">
+                        <button onclick="switchMode('detailed')" id="btn-detailed" class="px-3 py-1 rounded-md text-sm transition-all duration-300 tab-active">
+                            <i class="fa-solid fa-book-open mr-1"></i> Detailed Notes
+                        </button>
+                        <button onclick="switchMode('revision')" id="btn-revision" class="px-3 py-1 rounded-md text-sm transition-all duration-300 hover:text-white">
+                            <i class="fa-solid fa-bolt mr-1"></i> Revision
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="-mr-2 flex md:hidden">
+                        <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                            <i class="fa-solid fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-b border-slate-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#intro" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Introduction</a>
+                <a href="#types" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Security Types</a>
+                <a href="#applications" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Applications</a>
+                <a href="#aspects" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Key Aspects</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <div class="inline-block p-2 rounded-full bg-emerald-500/10 mb-4">
+                <i class="fa-solid fa-lock text-emerald-400 text-3xl"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+                Digital <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Security</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                Comprehensive guide to Information Security, types, and real-world applications.
+            </p>
+        </div>
+
+        <!-- ================= DETAILED NOTES VIEW ================= -->
+        <div id="view-detailed" class="space-y-8">
+
+            <!-- Section 1: What is Digital Security -->
+            <section id="intro" class="glass-card rounded-xl p-6 md:p-8 border-l-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-emerald-400"></i> Introduction
+                </h2>
+                <div class="space-y-4 text-slate-300 leading-relaxed">
+                    <p>
+                        <strong class="text-emerald-300">Definition:</strong> Digital security, also known as <strong>information security</strong>, is the practice of protecting digital information from unauthorized access, use, disclosure, disruption, modification, or destruction.
+                    </p>
+                    <p>
+                        It is a multidimensional discipline aimed at safeguarding <span class="bg-slate-800 px-2 py-0.5 rounded text-emerald-200 text-sm">digital assets, data, and systems</span>. It involves a blend of practices, tools, and strategies designed to protect digital identities and networks.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: Types of Security -->
+            <section id="types" class="space-y-4">
+                <h2 class="text-2xl font-bold text-white mb-4 pl-2 border-l-4 border-blue-500">Types of Digital Security</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Network Security -->
+                    <div class="glass-card p-6 rounded-xl hover:bg-slate-800/80 transition-all">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-blue-500/20 p-2 rounded-lg"><i class="fa-solid fa-network-wired text-blue-400"></i></div>
+                            <h3 class="text-xl font-bold text-white">Network Security</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm">
+                            Focuses on protecting an organization's networks from unauthorized access or attack.
+                        </p>
+                        <ul class="mt-3 text-xs text-slate-400 list-disc list-inside">
+                            <li>Firewalls</li>
+                            <li>Intrusion Detection/Prevention Systems (IDS/IPS)</li>
+                            <li>Virtual Private Networks (VPNs)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Application Security -->
+                    <div class="glass-card p-6 rounded-xl hover:bg-slate-800/80 transition-all">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-purple-500/20 p-2 rounded-lg"><i class="fa-solid fa-mobile-screen-button text-purple-400"></i></div>
+                            <h3 class="text-xl font-bold text-white">Application Security</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm">
+                            Ensures applications and systems are safe from unauthorized access or software vulnerabilities.
+                        </p>
+                        <ul class="mt-3 text-xs text-slate-400 list-disc list-inside">
+                            <li>Web Application Firewalls (WAF)</li>
+                            <li>Application Security Testing</li>
+                            <li>Secure Coding Practices</li>
+                        </ul>
+                    </div>
+
+                    <!-- Endpoint Security -->
+                    <div class="glass-card p-6 rounded-xl hover:bg-slate-800/80 transition-all">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-orange-500/20 p-2 rounded-lg"><i class="fa-solid fa-laptop text-orange-400"></i></div>
+                            <h3 class="text-xl font-bold text-white">Endpoint Security</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm">
+                            Secures entry points of end-user devices such as laptops, smartphones, and tablets.
+                        </p>
+                        <ul class="mt-3 text-xs text-slate-400 list-disc list-inside">
+                            <li>Antivirus Software</li>
+                            <li>Mobile Device Management (MDM)</li>
+                            <li>Endpoint Protection Platforms</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cloud & IAM -->
+                    <div class="glass-card p-6 rounded-xl hover:bg-slate-800/80 transition-all">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-pink-500/20 p-2 rounded-lg"><i class="fa-solid fa-cloud text-pink-400"></i></div>
+                            <h3 class="text-xl font-bold text-white">Cloud & IAM</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm mb-2">
+                            <strong class="text-pink-300">Cloud Security:</strong> Protects cloud-based systems/data (e.g., CASB, Security-as-a-Service).
+                        </p>
+                        <p class="text-slate-300 text-sm">
+                            <strong class="text-pink-300">IAM (Identity & Access Mgmt):</strong> Controls access to systems (e.g., Multi-factor Authentication, Single Sign-On).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Applications -->
+            <section id="applications" class="glass-card rounded-xl p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-briefcase text-yellow-400"></i> Real-world Applications
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-red-500/20 p-3 rounded-full shrink-0">
+                            <i class="fa-solid fa-heart-pulse text-red-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Healthcare Industry</h3>
+                            <p class="text-slate-400 text-sm">Essential for protecting patient information and maintaining the privacy of electronic health records (EHR).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-green-500/20 p-3 rounded-full shrink-0">
+                            <i class="fa-solid fa-money-bill-wave text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Financial Industry</h3>
+                            <p class="text-slate-400 text-sm">Crucial for protecting sensitive financial data and ensuring the integrity of transactions.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-blue-500/20 p-3 rounded-full shrink-0">
+                            <i class="fa-solid fa-shop text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Retail Industry</h3>
+                            <p class="text-slate-400 text-sm">Used to protect customer information and maintain the security of online payment transactions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Key Aspects -->
+            <section id="aspects" class="glass-card rounded-xl p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">Key Aspects of Digital Security</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-database text-2xl text-emerald-400 mb-2"></i>
+                        <h4 class="text-white font-bold text-sm">Protecting Data</h4>
+                        <p class="text-xs text-slate-500 mt-1">Safeguarding from breaches</p>
+                    </div>
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-mobile text-2xl text-emerald-400 mb-2"></i>
+                        <h4 class="text-white font-bold text-sm">Securing Devices</h4>
+                        <p class="text-xs text-slate-500 mt-1">Keeping hardware safe</p>
+                    </div>
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-wifi text-2xl text-emerald-400 mb-2"></i>
+                        <h4 class="text-white font-bold text-sm">Network Protection</h4>
+                        <p class="text-xs text-slate-500 mt-1">Securing connections</p>
+                    </div>
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-user-secret text-2xl text-emerald-400 mb-2"></i>
+                        <h4 class="text-white font-bold text-sm">Identity Protection</h4>
+                        <p class="text-xs text-slate-500 mt-1">Preventing identity theft</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= REVISION MODE VIEW ================= -->
+        <div id="view-revision" class="hidden space-y-6">
+            <div class="bg-gradient-to-br from-emerald-900/50 to-slate-900 border border-emerald-500/30 rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> Quick Revision Sheet
+                </h2>
+                
+                <div class="space-y-6">
+                    <!-- Point 1 -->
+                    <div class="border-b border-slate-700 pb-4">
+                        <h3 class="text-white font-bold text-lg mb-2">1. Definition</h3>
+                        <p class="text-slate-300 text-sm">
+                            Digital Security (or Information Security) protects digital information from unauthorized access, modification, or destruction. It is a multidimensional discipline safeguarding assets, data, and systems.
+                        </p>
+                    </div>
+
+                    <!-- Point 2 -->
+                    <div class="border-b border-slate-700 pb-4">
+                        <h3 class="text-white font-bold text-lg mb-2">2. Five Pillars of Security</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                            <div class="bg-slate-800 p-2 rounded border-l-2 border-emerald-500 text-slate-300">
+                                <strong>Network Security:</strong> Protects infrastructure (Firewalls, VPN).
+                            </div>
+                            <div class="bg-slate-800 p-2 rounded border-l-2 border-emerald-500 text-slate-300">
+                                <strong>App Security:</strong> Protects software/code (WAF, Secure Coding).
+                            </div>
+                            <div class="bg-slate-800 p-2 rounded border-l-2 border-emerald-500 text-slate-300">
+                                <strong>Endpoint Security:</strong> Protects devices (Antivirus, MDM).
+                            </div>
+                            <div class="bg-slate-800 p-2 rounded border-l-2 border-emerald-500 text-slate-300">
+                                <strong>Cloud Security:</strong> Protects online systems (CASB).
+                            </div>
+                            <div class="bg-slate-800 p-2 rounded border-l-2 border-emerald-500 text-slate-300">
+                                <strong>IAM:</strong> Controls user access (MFA, SSO).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-2">3. Applications & Aspects</h3>
+                        <ul class="list-disc list-inside text-slate-300 text-sm space-y-1">
+                            <li><strong>Healthcare:</strong> Patient privacy & records.</li>
+                            <li><strong>Finance:</strong> Transaction integrity.</li>
+                            <li><strong>Retail:</strong> Customer data & payments.</li>
+                            <li><strong>Core Aspects:</strong> Protecting Data, Securing Devices, Network Protection, Identity Protection.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h3 class="text-white font-bold mb-4">Connect with Shivam</h3>
+            <div class="flex justify-center gap-6 mb-6">
+                <a href="https://github.com/shivamcuj" target="_blank" class="group relative">
+                    <div class="relative bg-slate-800 rounded-full p-3 hover:bg-slate-700 transition border border-slate-700 hover:border-emerald-500">
+                        <i class="fa-brands fa-github text-2xl text-white"></i>
+                    </div>
+                </a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="group relative">
+                    <div class="relative bg-slate-800 rounded-full p-3 hover:bg-slate-700 transition border border-slate-700 hover:border-blue-500">
+                        <i class="fa-brands fa-linkedin text-2xl text-blue-400"></i>
+                    </div>
+                </a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="group relative">
+                    <div class="relative bg-slate-800 rounded-full p-3 hover:bg-slate-700 transition border border-slate-700 hover:border-red-500">
+                        <i class="fa-brands fa-youtube text-2xl text-red-500"></i>
+                    </div>
+                </a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="group relative">
+                    <div class="relative bg-slate-800 rounded-full p-3 hover:bg-slate-700 transition border border-slate-700 hover:border-pink-500">
+                        <i class="fa-brands fa-instagram text-2xl text-pink-400"></i>
+                    </div>
+                </a>
+            </div>
+            <p class="text-slate-500 text-sm">
+                &copy; 2026 Created for Cybersecurity Revision.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function switchMode(mode) {
+            const detailedView = document.getElementById('view-detailed');
+            const revisionView = document.getElementById('view-revision');
+            const btnDetailed = document.getElementById('btn-detailed');
+            const btnRevision = document.getElementById('btn-revision');
+
+            if (mode === 'detailed') {
+                detailedView.classList.remove('hidden');
+                revisionView.classList.add('hidden');
+                
+                btnDetailed.classList.add('tab-active', 'text-slate-900');
+                btnDetailed.classList.remove('hover:text-white');
+                
+                btnRevision.classList.remove('tab-active', 'text-slate-900');
+                btnRevision.classList.add('hover:text-white');
+            } else {
+                detailedView.classList.add('hidden');
+                revisionView.classList.remove('hidden');
+                
+                btnRevision.classList.add('tab-active', 'text-slate-900');
+                btnRevision.classList.remove('hover:text-white');
+                
+                btnDetailed.classList.remove('tab-active', 'text-slate-900');
+                btnDetailed.classList.add('hover:text-white');
+            }
+        }
+    </script>
+</body>
+</html>
