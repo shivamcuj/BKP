@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Data Structures | Complete Notes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .hinglish-text { color: #4b5563; line-height: 1.8; }
+        .highlight { background-color: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+
+        .mcq-option { cursor: pointer; transition: all 0.2s; }
+        .mcq-option:hover { background-color: #f3f4f6; }
+        .correct { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46; }
+        .wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="lg:hidden bg-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
+        <h1 class="text-xl font-bold">Data Structures</h1>
+        <button id="menuBtn" class="focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="hidden fixed inset-0 bg-gray-900 bg-opacity-90 z-40 flex flex-col justify-center items-center space-y-6 text-white text-xl lg:hidden">
+        <a href="#definition" class="mobile-link hover:text-indigo-400">Definition & Intro</a>
+        <a href="#classification" class="mobile-link hover:text-indigo-400">Classification</a>
+        <a href="#linear" class="mobile-link hover:text-indigo-400">Arrays & Lists</a>
+        <a href="#stacks-queues" class="mobile-link hover:text-indigo-400">Stacks & Queues</a>
+        <a href="#nonlinear" class="mobile-link hover:text-indigo-400">Trees & Graphs</a>
+        <a href="#revision" class="mobile-link text-yellow-400 font-bold">Revision Notes</a>
+        <a href="#exam-corner" class="mobile-link text-green-400 font-bold">Exam Corner (MCQs)</a>
+        <button id="closeMenu" class="absolute top-5 right-5 text-3xl">&times;</button>
+    </div>
+
+    <div class="flex flex-1">
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden lg:block w-64 bg-white border-r border-gray-200 h-screen sticky top-0 overflow-y-auto p-6 shadow-sm z-30">
+            <h2 class="text-2xl font-bold text-indigo-700 mb-8">Index</h2>
+            <ul class="space-y-4 text-sm font-medium text-gray-600">
+                <li><a href="#definition" class="flex items-center hover:text-indigo-600 transition"><i class="fas fa-book-open w-6"></i> Introduction</a></li>
+                <li><a href="#classification" class="flex items-center hover:text-indigo-600 transition"><i class="fas fa-sitemap w-6"></i> Classification</a></li>
+                <li><a href="#linear" class="flex items-center hover:text-indigo-600 transition"><i class="fas fa-layer-group w-6"></i> Linear DS (Arrays/Lists)</a></li>
+                <li><a href="#stacks-queues" class="flex items-center hover:text-indigo-600 transition"><i class="fas fa-exchange-alt w-6"></i> Stacks & Queues</a></li>
+                <li><a href="#nonlinear" class="flex items-center hover:text-indigo-600 transition"><i class="fas fa-project-diagram w-6"></i> Trees & Graphs</a></li>
+                <li class="pt-4 border-t"><a href="#revision" class="flex items-center text-indigo-600 font-bold hover:text-indigo-800 transition"><i class="fas fa-bolt w-6"></i> Quick Revision</a></li>
+                <li><a href="#exam-corner" class="flex items-center text-green-600 font-bold hover:text-green-800 transition"><i class="fas fa-graduation-cap w-6"></i> Exam Corner</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-10 max-w-6xl mx-auto w-full">
+            
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 mb-10 text-white shadow-xl">
+                <h1 class="text-3xl lg:text-5xl font-bold mb-4">Introduction to Data Structures</h1>
+                <p class="text-lg opacity-90">Detailed notes in Hinglish, Cheat Sheets, and Exam Questions designed for easy understanding.</p>
+                <div class="mt-6 flex gap-3">
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Program = Algorithm + Data Structure</span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Exam Ready</span>
+                </div>
+            </div>
+
+            <!-- 1. Definition -->
+            <section id="definition" class="mb-12 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 inline-block">1. Definition & Introduction</h2>
+                <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                    <p class="hinglish-text mb-4">
+                        <strong class="text-indigo-600">Definition:</strong> Data Structure basically data elements ke beech ka <strong>logical relationship</strong> hota hai. Simple shabdon mein kahein toh, data structure ek tarika hai data ko computer mein organize karne ka taaki hum us data ko efficiently use kar sakein.
+                    </p>
+                    <p class="hinglish-text mb-4">
+                        Jab hum koi program banate hain, toh humein do cheezon ki zarurat hoti hai:
+                    </p>
+                    <div class="bg-gray-100 p-4 rounded-lg text-center font-mono text-lg font-bold text-indigo-700 my-4 border border-indigo-200">
+                        Program = Algorithm + Data Structure
+                    </div>
+                    <p class="hinglish-text">
+                        <strong>Algorithm</strong> ek step-by-step procedure hai problem solve karne ka, aur <strong>Data Structure</strong> wo tarika hai jisse data organize kiya jata hai taaki algorithm sahi se kaam kare.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. Classification -->
+            <section id="classification" class="mb-12 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 inline-block">2. Classification of Data Structures</h2>
+                <p class="mb-6 hinglish-text">Data Structures ko mainly do broad categories mein divide kiya gaya hai:</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Primitive -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500 card-hover">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-cube text-blue-500 mr-2"></i> Primitive Data Structures</h3>
+                        <p class="text-sm text-gray-600 mb-3">Ye basic structures hote hain jo system/machine level instructions par directly operate karte hain.</p>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                            <li><strong>Integer</strong> (Numbers)</li>
+                            <li><strong>Float</strong> (Decimal numbers)</li>
+                            <li><strong>Character</strong> (Single alphabet/symbol)</li>
+                            <li><strong>Pointer</strong> (Memory address holder)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Non-Primitive -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500 card-hover">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fas fa-cubes text-purple-500 mr-2"></i> Non-Primitive Data Structures</h3>
+                        <p class="text-sm text-gray-600 mb-3">Ye sophisticated hote hain aur Primitive DS se derive kiye jate hain. Ye same type (homogeneous) ya alag type (heterogeneous) data ka group ho sakte hain.</p>
+                        <div class="mt-3">
+                            <span class="block font-semibold text-purple-700">1. Linear List:</span>
+                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded mr-1">Arrays</span>
+                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded mr-1">Linked List</span>
+                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded mr-1">Stack</span>
+                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Queue</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="block font-semibold text-purple-700">2. Non-Linear List:</span>
+                            <span class="text-xs bg-pink-100 text-pink-800 px-2 py-1 rounded mr-1">Trees</span>
+                            <span class="text-xs bg-pink-100 text-pink-800 px-2 py-1 rounded">Graphs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <h4 class="font-bold text-yellow-800 mb-2">Difference (Antar)</h4>
+                    <p class="text-sm text-gray-700">
+                        <strong>Primitive</strong> generally language mein built-in hote hain (int, float).<br>
+                        <strong>Non-Primitive</strong> primitive se milkar bante hain aur complex data relationships ko handle karte hain (Graph, Tree).
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3. Linear DS -->
+            <section id="linear" class="mb-12 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 inline-block">3. Arrays & Lists</h2>
+                
+                <!-- Arrays -->
+                <div class="bg-white p-6 rounded-xl shadow-md mb-6 card-hover">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Arrays</h3>
+                    <p class="hinglish-text mb-3">
+                        Array ek collection hai finite number of <strong>homogeneous elements</strong> ka (yani sabhi elements same type ke hone chahiye, jaise sirf integers).
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                        <li><strong>Consecutive Memory:</strong> Array ke elements memory mein lagatar (line se) store hote hain.</li>
+                        <li><strong>Indexing:</strong> Access karne ke liye hum index use karte hain `arr[0]`. Index hamesha 0 se shuru hota hai.</li>
+                        <li><strong>Size Formula:</strong> Elements count = <span class="bg-gray-100 font-mono px-2 py-1 rounded">(Upperbound - Lowerbound) + 1</span></li>
+                    </ul>
+                    <div class="bg-blue-50 p-3 rounded text-sm text-blue-800">
+                        <i class="fas fa-info-circle mr-2"></i><strong>Example:</strong> Agar array index 0 se 9 tak hai, toh size = (9-0)+1 = 10 elements.
+                    </div>
+                </div>
+
+                <!-- Lists -->
+                <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Linked Lists</h3>
+                    <p class="hinglish-text mb-3">
+                        Linked List data items ka collection hai jisme har element ko <strong>Node</strong> kehte hain. Har node ke paas do fields hoti hain:
+                    </p>
+                    <ol class="list-decimal list-inside text-gray-700 mb-4 ml-4">
+                        <li><strong>Information Field:</strong> Actual data store karta hai.</li>
+                        <li><strong>Pointer Field:</strong> Next element ka address store karta hai.</li>
+                    </ol>
+                    <p class="text-sm font-semibold text-gray-600">Types:</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <span class="px-3 py-1 bg-gray-200 rounded text-sm">Single Linked List</span>
+                        <span class="px-3 py-1 bg-gray-200 rounded text-sm">Doubly Linked List</span>
+                        <span class="px-3 py-1 bg-gray-200 rounded text-sm">Circular Linked List</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Stack & Queue -->
+            <section id="stacks-queues" class="mb-12 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 inline-block">4. Stack & Queue</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Stack -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-500 card-hover">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Stack (LIFO)</h3>
+                            <i class="fas fa-layer-group text-red-500 text-2xl"></i>
+                        </div>
+                        <p class="hinglish-text mb-4">
+                            Stack plates ke dher jaisa hota hai. Jo plate sabse last mein rakhi gayi, wo sabse pehle uthai jayegi. Isse <strong>LIFO (Last In First Out)</strong> kehte hain.
+                        </p>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Insertion = <strong>PUSH</strong></li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Deletion = <strong>POP</strong></li>
+                            <li><i class="fas fa-info-circle text-blue-500 mr-2"></i>Insertion aur Deletion sirf ek end se hota hai jise <strong>TOP</strong> kehte hain.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Queue -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-green-500 card-hover">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Queue (FIFO)</h3>
+                            <i class="fas fa-people-arrows text-green-500 text-2xl"></i>
+                        </div>
+                        <p class="hinglish-text mb-4">
+                            Ye ticket counter ki line jaisa hai. Jo insaan pehle aaya, wo pehle jayega. Isse <strong>FIFO (First In First Out)</strong> kehte hain.
+                        </p>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Insertion = <strong>Rear End</strong> se hota hai.</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Deletion = <strong>Front End</strong> se hota hai.</li>
+                            <li><i class="fas fa-info-circle text-blue-500 mr-2"></i>Real world example: Railway reservation row.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Non-Linear -->
+            <section id="nonlinear" class="mb-12 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-indigo-500 inline-block">5. Trees & Graphs</h2>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+                    <h3 class="text-lg font-bold text-indigo-700">Trees</h3>
+                    <p class="hinglish-text text-sm mt-2">
+                        Tree ek hierarchical structure hai (jaise family tree). Isme sabse upar <strong>Root</strong> node hota hai. Data "branches" mein organize hota hai. Note: Computer Science mein Tree ulti grow karti hai (Root upar, branches neeche).
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-bold text-indigo-700">Graph</h3>
+                    <p class="hinglish-text text-sm mt-2 mb-3">
+                        Graph ek mathematical structure hai jo physical structures ko represent karta hai. 
+                        <strong>Definition:</strong> G(V,E) where V = Vertices (points) and E = Edges (lines connecting points).
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs font-semibold text-gray-600">
+                        <div class="bg-gray-100 p-2 rounded text-center">Directed Graph</div>
+                        <div class="bg-gray-100 p-2 rounded text-center">Undirected Graph</div>
+                        <div class="bg-gray-100 p-2 rounded text-center">Weighted Graph</div>
+                        <div class="bg-gray-100 p-2 rounded text-center">Simple Graph</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REVISION SECTION -->
+            <section id="revision" class="mb-12 scroll-mt-24">
+                <div class="bg-gray-800 text-white rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 opacity-10 transform translate-x-10 -translate-y-10">
+                        <i class="fas fa-bolt text-9xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-6 text-yellow-400">⚡ Exam Revision Cheat Sheet</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-indigo-300 border-b border-gray-600 mb-2 pb-1">Key Formulas & Concepts</h4>
+                            <ul class="text-sm space-y-2 text-gray-300">
+                                <li>• <strong>Array Size:</strong> (Upperbound - Lowerbound) + 1</li>
+                                <li>• <strong>Array Index:</strong> Starts at 0, Ends at n-1</li>
+                                <li>• <strong>Program:</strong> Algorithm + Data Structure</li>
+                                <li>• <strong>Node (LinkedList):</strong> Data + Address(Pointer)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-indigo-300 border-b border-gray-600 mb-2 pb-1">LIFO vs FIFO</h4>
+                            <ul class="text-sm space-y-2 text-gray-300">
+                                <li>• <strong>Stack:</strong> LIFO (Last In First Out) -> PUSH/POP @ Top</li>
+                                <li>• <strong>Queue:</strong> FIFO (First In First Out) -> Add @ Rear, Remove @ Front</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-600 text-center text-sm text-gray-400">
+                        <em>Tip: Exam mein "Homogeneous" (Array) aur "Heterogeneous" words ka use zaroor karein acche marks ke liye.</em>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXAM CORNER -->
+            <section id="exam-corner" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">🎓 Exam Corner</h2>
+
+                <!-- Tabs -->
+                <div class="flex justify-center mb-6">
+                    <button onclick="showTab('mcqs')" class="tab-btn active px-6 py-2 bg-indigo-600 text-white rounded-l-lg font-bold focus:outline-none">MCQs</button>
+                    <button onclick="showTab('short')" class="tab-btn px-6 py-2 bg-gray-200 text-gray-700 font-bold focus:outline-none hover:bg-gray-300 transition">Short Q</button>
+                    <button onclick="showTab('long')" class="tab-btn px-6 py-2 bg-gray-200 text-gray-700 rounded-r-lg font-bold focus:outline-none hover:bg-gray-300 transition">Long Q</button>
+                </div>
+
+                <!-- MCQs Content -->
+                <div id="mcqs" class="tab-content bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Test Your Knowledge (10 Questions)</h3>
+                    <div class="space-y-4" id="quiz-container">
+                        <!-- Questions generated by JS -->
+                    </div>
+                    <button onclick="resetQuiz()" class="mt-6 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-800 transition">Reset Quiz</button>
+                </div>
+
+                <!-- Short Questions -->
+                <div id="short" class="tab-content hidden bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold mb-4 text-indigo-700">Short Answer Questions</h3>
+                    <div class="space-y-4">
+                        <details class="bg-gray-50 p-4 rounded-lg cursor-pointer">
+                            <summary class="font-semibold text-gray-800">Q1. Define Data Structure.</summary>
+                            <p class="mt-2 text-gray-600 text-sm">Data structure is a way of organizing all data items that considers not only the elements stored but also their relationship to each other. It affects the design of both structural and functional aspects of a program.</p>
+                        </details>
+                        <details class="bg-gray-50 p-4 rounded-lg cursor-pointer">
+                            <summary class="font-semibold text-gray-800">Q2. What is the equation for an Array's size?</summary>
+                            <p class="mt-2 text-gray-600 text-sm">Size = (Upperbound - Lowerbound) + 1.</p>
+                        </details>
+                        <details class="bg-gray-50 p-4 rounded-lg cursor-pointer">
+                            <summary class="font-semibold text-gray-800">Q3. Differentiate between Stack and Queue.</summary>
+                            <p class="mt-2 text-gray-600 text-sm">Stack follows LIFO (Last In First Out) principle where insertion/deletion happens at TOP. Queue follows FIFO (First In First Out) principle where insertion happens at REAR and deletion at FRONT.</p>
+                        </details>
+                        <details class="bg-gray-50 p-4 rounded-lg cursor-pointer">
+                            <summary class="font-semibold text-gray-800">Q4. What are Primitive Data Structures?</summary>
+                            <p class="mt-2 text-gray-600 text-sm">These are basic structures directly operated upon by machine instructions. Examples: Integer, Float, Character, Pointer.</p>
+                        </details>
+                        <details class="bg-gray-50 p-4 rounded-lg cursor-pointer">
+                            <summary class="font-semibold text-gray-800">Q5. Define Graph.</summary>
+                            <p class="mt-2 text-gray-600 text-sm">A graph G(V,E) is a non-linear data structure consisting of a set of vertices (V) and a set of edges (E) connecting them.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Long Questions -->
+                <div id="long" class="tab-content hidden bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold mb-4 text-indigo-700">Long Answer Questions</h3>
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <h4 class="font-bold text-gray-800">Q1. Explain the Classification of Data Structures in detail.</h4>
+                            <p class="text-sm text-gray-600 mt-2">
+                                <strong>Answer Structure:</strong><br>
+                                1. Start with the definition of Data Structure.<br>
+                                2. Draw the hierarchy chart: DS -> Primitive & Non-Primitive.<br>
+                                3. <strong>Primitive DS:</strong> Explain Integer, Float, Char, Pointer with examples.<br>
+                                4. <strong>Non-Primitive DS:</strong> Explain it is derived from primitives.<br>
+                                5. Sub-divide Non-Primitive into:<br>
+                                &nbsp;&nbsp;- <em>Linear:</em> Array (Homogeneous), List, Stack, Queue.<br>
+                                &nbsp;&nbsp;- <em>Non-Linear:</em> Trees (Hierarchical), Graphs (Network).
+                            </p>
+                        </div>
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <h4 class="font-bold text-gray-800">Q2. Describe Stack and Queue with real-life analogies and operations.</h4>
+                            <p class="text-sm text-gray-600 mt-2">
+                                <strong>Answer Structure:</strong><br>
+                                1. <strong>Stack:</strong> Define as Ordered collection. Mention LIFO. <br>
+                                &nbsp;&nbsp;- <em>Analogy:</em> Stack of plates in a party.<br>
+                                &nbsp;&nbsp;- <em>Operations:</em> PUSH (Insert), POP (Delete). Fixed Base, Changing Top.<br>
+                                2. <strong>Queue:</strong> Define as Ordered collection. Mention FIFO.<br>
+                                &nbsp;&nbsp;- <em>Analogy:</em> Railway reservation line.<br>
+                                &nbsp;&nbsp;- <em>Operations:</em> Insert at Rear, Delete at Front.<br>
+                                3. Compare static (Array) vs Dynamic (Pointer) implementation for both.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Sticky Footer -->
+    <footer class="bg-gray-900 text-white p-4 sticky bottom-0 z-50 border-t border-gray-700 shadow-[0_-5px_15px_rgba(0,0,0,0.3)]">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm font-semibold text-gray-300">
+                Created by <span class="text-indigo-400">Arvind Selwal</span> (Based on PPT)
+            </div>
+            <div class="flex gap-6">
+                <a href="https://github.com/Arvind-Selwal" target="_blank" class="hover:text-indigo-400 transition transform hover:scale-110"><i class="fab fa-github text-xl"></i></a>
+                <a href="https://youtube.com/@arvindselwal" target="_blank" class="hover:text-red-500 transition transform hover:scale-110"><i class="fab fa-youtube text-xl"></i></a>
+                <a href="https://linkedin.com/in/Arvind-Selwal" target="_blank" class="hover:text-blue-500 transition transform hover:scale-110"><i class="fab fa-linkedin text-xl"></i></a>
+                <a href="https://instagram.com/Arvind-Selwal" target="_blank" class="hover:text-pink-500 transition transform hover:scale-110"><i class="fab fa-instagram text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Quiz Data
+        const questions = [
+            { q: "Which of the following is a Linear Data Structure?", options: ["Tree", "Graph", "Stack", "None"], ans: 2 },
+            { q: "Stack follows which principle?", options: ["FIFO", "LIFO", "FILO", "LILO"], ans: 1 },
+            { q: "Array elements are stored in ______ memory locations.", options: ["Random", "Consecutive", "Scattered", "Linked"], ans: 1 },
+            { q: "If Array Lowerbound=0 and Upperbound=9, what is the size?", options: ["9", "10", "8", "11"], ans: 1 },
+            { q: "Insertion in a Stack is called?", options: ["Pop", "Push", "Top", "Enque"], ans: 1 },
+            { q: "In Queue, deletion takes place at which end?", options: ["Rear", "Front", "Top", "Bottom"], ans: 1 },
+            { q: "Which DS is used for Hierarchical relationships?", options: ["Array", "Graph", "Tree", "Stack"], ans: 2 },
+            { q: "A Graph G is defined as a set of:", options: ["Nodes & Links", "Vertices & Edges", "Rows & Columns", "Fields & Records"], ans: 1 },
+            { q: "Linked List elements are called:", options: ["Nodes", "Points", "Vertices", "Blocks"], ans: 0 },
+            { q: "Which is a Primitive Data Structure?", options: ["Stack", "Queue", "Integer", "Tree"], ans: 2 }
+        ];
+
+        // Render Quiz
+        const quizContainer = document.getElementById('quiz-container');
+        
+        function renderQuiz() {
+            quizContainer.innerHTML = '';
+            questions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "border-b border-gray-200 pb-4";
+                qDiv.innerHTML = `
+                    <p class="font-semibold text-gray-800 mb-2">${index + 1}. ${item.q}</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        ${item.options.map((opt, i) => `
+                            <div class="mcq-option border rounded px-3 py-2 text-sm text-gray-600" onclick="checkAnswer(this, ${index}, ${i})">
+                                ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-2 text-sm font-bold hidden feedback-${index}"></div>
+                `;
+                quizContainer.appendChild(qDiv);
+            });
+        }
+
+        function checkAnswer(el, qIndex, optIndex) {
+            const parent = el.parentElement;
+            const feedback = parent.nextElementSibling;
+            const correctAns = questions[qIndex].ans;
+
+            // Disable all clicks in this question
+            const opts = parent.querySelectorAll('.mcq-option');
+            opts.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (optIndex === correctAns) {
+                el.classList.add('correct');
+                feedback.innerHTML = '<span class="text-green-600">Correct! 🎉</span>';
+            } else {
+                el.classList.add('wrong');
+                opts[correctAns].classList.add('correct'); // Show correct answer
+                feedback.innerHTML = '<span class="text-red-600">Incorrect. The right answer is highlighted.</span>';
+            }
+            feedback.classList.remove('hidden');
+        }
+
+        function resetQuiz() {
+            renderQuiz();
+        }
+
+        // Tab Switching Logic
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            event.target.classList.add('bg-indigo-600', 'text-white');
+        }
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenu.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Initialize
+        renderQuiz();
+
+    </script>
+</body>
+</html>
