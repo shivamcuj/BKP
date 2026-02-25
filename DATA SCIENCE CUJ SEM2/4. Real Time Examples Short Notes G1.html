@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Machine Learning - Real Time Examples</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering LaTeX / Math formulas -->
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0f',
+                        neonBlue: '#00f3ff',
+                        neonPurple: '#bc13fe',
+                        glassBg: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Sci-Fi & Glassmorphism Styles */
+        body {
+            background-color: #050505;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(188, 19, 254, 0.08), transparent 25%);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+        }
+
+        .text-glow-purple {
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.6);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
+
+        /* Custom details/summary styling */
+        details summary::-webkit-details-marker { display:none; }
+        details > summary { list-style: none; }
+        
+        /* Active Sidebar Link */
+        .nav-link.active {
+            color: #00f3ff;
+            border-left: 3px solid #00f3ff;
+            background: rgba(0, 243, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Mobile Header & Hamburger -->
+    <header class="lg:hidden fixed top-0 w-full z-50 glass-panel border-b-0 rounded-none px-4 py-3 flex justify-between items-center">
+        <div class="text-xl font-orbitron font-bold text-neonBlue text-glow-blue">AI Notes</div>
+        <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-dark/95 backdrop-blur-md z-40 hidden flex-col pt-20 px-6 transition-transform transform translate-x-full duration-300">
+        <ul class="space-y-4 font-orbitron text-lg">
+            <li><a href="#topic1" class="mobile-link block text-gray-400 hover:text-neonBlue py-2">1. Real-Time AI</a></li>
+            <li><a href="#topic2" class="mobile-link block text-gray-400 hover:text-neonBlue py-2">2. NLP</a></li>
+            <li><a href="#topic3" class="mobile-link block text-gray-400 hover:text-neonBlue py-2">3. ChatGPT & GenAI</a></li>
+            <li><a href="#topic4" class="mobile-link block text-gray-400 hover:text-neonBlue py-2">4. Deepfakes</a></li>
+            <li><a href="#topic5" class="mobile-link block text-gray-400 hover:text-neonBlue py-2">5. Computer Vision</a></li>
+            <li><a href="#topic6" class="mobile-link block text-neonPurple hover:text-white py-2">6. Quick Revision</a></li>
+        </ul>
+        <button id="close-menu-btn" class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-white">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="flex flex-col lg:flex-row min-h-screen pt-14 lg:pt-0">
+        
+        <!-- Sticky Sidebar (Desktop) -->
+        <aside class="hidden lg:flex flex-col w-72 h-screen sticky top-0 glass-panel border-r border-t-0 border-b-0 border-l-0 rounded-none p-6 z-10 overflow-y-auto">
+            <div class="mb-8 mt-4">
+                <h1 class="text-2xl font-bold text-neonBlue text-glow-blue uppercase tracking-wider">AI Concepts</h1>
+                <p class="text-sm text-gray-400 mt-2 font-rajdhani">Core concepts & Real-world examples</p>
+            </div>
+            
+            <nav id="toc" class="flex-1">
+                <ul class="space-y-2 font-orbitron text-sm">
+                    <li>
+                        <a href="#topic1" class="nav-link block py-3 px-4 rounded-r-lg text-gray-400 hover:text-neonBlue transition-all border-l-[3px] border-transparent">
+                            1. Real-Time AI Apps
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#topic2" class="nav-link block py-3 px-4 rounded-r-lg text-gray-400 hover:text-neonBlue transition-all border-l-[3px] border-transparent">
+                            2. Natural Language Processing
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#topic3" class="nav-link block py-3 px-4 rounded-r-lg text-gray-400 hover:text-neonBlue transition-all border-l-[3px] border-transparent">
+                            3. ChatGPT & Gen AI
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#topic4" class="nav-link block py-3 px-4 rounded-r-lg text-gray-400 hover:text-neonBlue transition-all border-l-[3px] border-transparent">
+                            4. Deepfakes Architecture
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#topic5" class="nav-link block py-3 px-4 rounded-r-lg text-gray-400 hover:text-neonBlue transition-all border-l-[3px] border-transparent">
+                            5. Computer Vision
+                        </a>
+                    </li>
+                    <li class="mt-8">
+                        <a href="#topic6" class="nav-link block py-3 px-4 rounded-r-lg text-neonPurple hover:text-white transition-all border-l-[3px] border-transparent">
+                            <i class="fas fa-bolt mr-2 text-yellow-400"></i> Quick Revision
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 sm:p-8 lg:p-12 xl:px-24 max-w-7xl mx-auto w-full">
+            
+            <!-- Welcome Header -->
+            <div class="mb-12 text-center lg:text-left glass-panel p-8 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-neonBlue opacity-20 blur-[50px] rounded-full"></div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Complete <span class="text-neonBlue text-glow-blue">AI & ML</span> Notes</h1>
+                <p class="text-xl text-gray-300">Simplified in user-friendly Hinglish. Based on Real-Time examples.</p>
+            </div>
+
+            <!-- TOPIC 1 -->
+            <section id="topic1" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-neonBlue border-b border-gray-700 pb-2"><i class="fas fa-clock mr-3"></i>1. Real-Time AI Applications</h2>
+                
+                <div class="glass-panel p-6 mb-8 space-y-4 text-lg text-gray-200">
+                    <p>Aaj kal hum jo bhi use karte hain, usme Artificial Intelligence peeche se real-time mein kaam kar rahi hoti hai. Yahan kuch popular examples hain:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <h3 class="text-xl text-blue-400 font-bold mb-2"><i class="fab fa-facebook mr-2"></i> Facebook News Feed</h3>
+                            <p>Agar aap kisi friend ki posts ko regularly "like" karte ho, toh algorithm samajh jata hai. Agli baar jaise hi wo friend kuch post karega, Facebook <strong>automatically</strong> uski activity aapki feed mein top par dikhayega.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <h3 class="text-xl text-red-500 font-bold mb-2"><i class="fas fa-film mr-2"></i> Netflix Recommendations</h3>
+                            <p>Netflix ML (Machine Learning) ka use karta hai. Jo movies aapne pehle dekhi hain aur rate ki hain, unke basis par Netflix predict kar leta hai ki aapko aane wali (unwatched) movies pasand aayengi ya nahi.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <h3 class="text-xl text-yellow-400 font-bold mb-2"><i class="fas fa-palette mr-2"></i> Fine Art & Influences</h3>
+                            <p>Machine learning algorithms purani aur nayi paintings ko analyze karke ye bata sakte hain ki kis artist ka influence kis dusre artist par raha hai, jo pehle insaan recognize nahi kar paate the.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                            <h3 class="text-xl text-purple-400 font-bold mb-2"><i class="fas fa-share-nodes mr-2"></i> Social Media (Q&A)</h3>
+                            <p>Platforms (jaise Quora, Reddit) par koi bhi question pooch sakta hai. AI ensure karta hai ki jin answers ko sabse zyada "Upvotes" milte hain, wo filter hoke top par show hon.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 1 -->
+                <h4 class="text-xl font-orbitron text-gray-300 mb-4"><i class="fas fa-question-circle mr-2 text-neonPurple"></i> Topic 1: Knowledge Check</h4>
+                <div class="space-y-3">
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">1. Facebook news feed algorithm mainly kis cheez par depend karta hai user ki feed customize karne ke liye?</p>
+                        <ul class="ml-4 mt-2 mb-3 text-sm text-gray-400 list-disc">
+                            <li>A) Random selection</li>
+                            <li>B) User's frequent "likes" and interactions</li>
+                            <li>C) Alphabetical order of friends</li>
+                            <li>D) Time of day only</li>
+                        </ul>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer: B</strong>. Algorithm aapki past engagement (jaise likes) track karke relevant content pehle dikhata hai.
+                            </div>
+                        </details>
+                    </div>
+                    <!-- MCQ 2 -->
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">2. Netflix kis technique ka use karke unwatched movies ko rate karta hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer: Machine Learning / Predictive Algorithms.</strong> (Based on previous movie ratings).
+                            </div>
+                        </details>
+                    </div>
+                    <!-- MCQ 3 -->
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">3. AI Fine Arts mein kis tarah help kar raha hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Unrecognized influences aur patterns find karne mein between different artists.
+                            </div>
+                        </details>
+                    </div>
+                    <!-- MCQ 4 -->
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">4. Social media Q&A platforms par best answers top par kaise aate hain?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Through Upvoting systems managed by backend algorithms.
+                            </div>
+                        </details>
+                    </div>
+                    <!-- MCQ 5 -->
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">5. True/False: Machine learning algorithms sirf text data pe kaam karte hain, arts ya video pe nahi.</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer: False.</strong> ML art (patterns), video (Netflix), aur images par bhi equally well kaam karta hai.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOPIC 2 -->
+            <section id="topic2" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-neonBlue border-b border-gray-700 pb-2"><i class="fas fa-language mr-3"></i>2. Natural Language Processing (NLP)</h2>
+                
+                <div class="glass-panel p-6 mb-8 text-lg text-gray-200">
+                    <p class="mb-4"><strong>NLP Kya Hai?</strong> Yeh AI ki wo branch hai jisme hum aise software banate hain jo insaani bhasha (human language) ko naturally analyze, understand, aur generate kar sake.</p>
+                    
+                    <h3 class="text-xl font-orbitron text-neonPurple mt-6 mb-3">How NLP Works (Step-by-Step Pipeline)</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-between bg-dark/50 p-6 rounded-xl border border-white/5 space-y-4 md:space-y-0">
+                        <div class="text-center w-full md:w-1/5">
+                            <i class="fas fa-user-tie text-4xl text-blue-400 mb-2"></i>
+                            <p class="text-sm">Human talks to machine</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-500 hidden md:block"></i>
+                        <i class="fas fa-arrow-down text-gray-500 md:hidden"></i>
+                        
+                        <div class="text-center w-full md:w-1/5">
+                            <i class="fas fa-microphone text-4xl text-green-400 mb-2"></i>
+                            <p class="text-sm">Machine captures Audio</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-500 hidden md:block"></i>
+                        <i class="fas fa-arrow-down text-gray-500 md:hidden"></i>
+
+                        <div class="text-center w-full md:w-1/5">
+                            <i class="fas fa-file-text text-4xl text-yellow-400 mb-2"></i>
+                            <p class="text-sm">Audio-to-Text Conversion</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-500 hidden md:block"></i>
+                        <i class="fas fa-arrow-down text-gray-500 md:hidden"></i>
+
+                        <div class="text-center w-full md:w-1/5">
+                            <i class="fas fa-cogs text-4xl text-neonPurple mb-2"></i>
+                            <p class="text-sm">Processes Text Data (Understanding)</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-gray-500 hidden md:block"></i>
+                        <i class="fas fa-arrow-down text-gray-500 md:hidden"></i>
+
+                        <div class="text-center w-full md:w-1/5">
+                            <i class="fas fa-volume-up text-4xl text-red-400 mb-2"></i>
+                            <p class="text-sm">Text-to-Audio (Machine Responds)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 2 -->
+                <h4 class="text-xl font-orbitron text-gray-300 mb-4"><i class="fas fa-question-circle mr-2 text-neonPurple"></i> Topic 2: Knowledge Check</h4>
+                <div class="space-y-3">
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">1. NLP ka primary goal kya hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> To analyze, understand, and generate natural human languages.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">2. NLP pipeline mein jab machine pehli baar user ki aawaz record karti hai, toh next immediate step kya hota hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Audio-to-text conversion.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">3. Machine text processing karne ke baad human ko wapas reply kaise karti hai (in voice assistants)?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Data-to-audio (Text-to-Speech) conversion ke through.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">4. True/False: NLP sirf translation ke liye use hota hai.</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer: False.</strong> Ye text analysis, chatbot conversation, sentiment analysis sabme use hota hai.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">5. Human aur machine communication mein 'Understanding' kis stage par aati hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> After Audio-to-Text conversion, jab machine text data ko process karti hai.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOPIC 3 -->
+            <section id="topic3" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-neonBlue border-b border-gray-700 pb-2"><i class="fas fa-robot mr-3"></i>3. ChatGPT & Generative AI</h2>
+                
+                <div class="glass-panel p-6 mb-8 text-lg text-gray-200">
+                    <p class="mb-4">Late 2022 mein Generative AI ka boom aaya. Generative AI purane AI se thoda alag hai. Purana AI data ko sirf <em>classify</em> ya <em>recognize</em> karta tha, jabki Generative AI nayi (fresh) chizein <strong>create</strong> karta hai.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mt-4">
+                        <div class="bg-blue-900/20 p-5 rounded-xl border border-blue-500/30">
+                            <h3 class="text-2xl font-orbitron text-neonBlue mb-2">What is ChatGPT?</h3>
+                            <p class="text-sm mb-3">Yeh ek Artificial Intelligence tool hai jise <strong>OpenAI</strong> ne late 2022 mein banaya tha.</p>
+                            <ul class="list-disc ml-5 space-y-2 text-sm text-gray-300">
+                                <li>Built on a Natural Language Processing model.</li>
+                                <li>Iska core model hai <strong>Generative Pre-trained Transformer (GPT)</strong>.</li>
+                                <li><strong>Trained on Vast Data:</strong> Isko bohot bade dataset par train kiya gaya hai.</li>
+                                <li><strong>Text Patterns:</strong> Yeh text ke patterns ko pehchanta hai. <em>"You Type It, It Responds"</em>.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-purple-900/20 p-5 rounded-xl border border-purple-500/30">
+                            <h3 class="text-2xl font-orbitron text-neonPurple mb-2">Generative vs Discriminatory</h3>
+                            <p class="text-sm mb-3">Dono approach alag hoti hain:</p>
+                            <ul class="space-y-3 text-sm text-gray-300">
+                                <li><strong class="text-red-400">Discriminatory (TAR):</strong> Technology Assisted Review. Ye NLP ka use patterns samajhne ke liye karta hai, sirf data ko <strong>classify</strong> karne ke liye (e.g., spam vs not spam).</li>
+                                <li><strong class="text-green-400">Generative:</strong> NLP aur OpenAI ke 'Transformer' model ka use karke bilkul <strong>naya content create</strong> karta hai. (e.g., writing a poem or code).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-white/5 rounded border border-white/10 text-center text-sm italic text-gray-400">
+                        *Fact: As of 2023, Global Generative AI market is worth $13.71 Billion.*
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 3 -->
+                <h4 class="text-xl font-orbitron text-gray-300 mb-4"><i class="fas fa-question-circle mr-2 text-neonPurple"></i> Topic 3: Knowledge Check</h4>
+                <div class="space-y-3">
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">1. GPT ka full form kya hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Generative Pre-trained Transformer.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">2. Generative AI ka main purpose kya hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Naya aur original content create karna based on learned patterns.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">3. TAR (Technology Assisted Review) AI ka kaunsa type hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Discriminatory AI (It classifies information).
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">4. ChatGPT kis company ne develop kiya aur kab boom aaya?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> OpenAI ne develop kiya, late 2022 mein rise hua.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">5. 2023 ke mutabiq Generative AI market ki worth lagbhag kitni thi?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> $13.71 Billion.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOPIC 4 -->
+            <section id="topic4" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-neonBlue border-b border-gray-700 pb-2"><i class="fas fa-user-ninja mr-3"></i>4. Deepfakes Architecture (Trick or Treat?)</h2>
+                
+                <div class="glass-panel p-6 mb-8 text-lg text-gray-200">
+                    <p class="mb-4">Deepfakes AI ka use karke ek person ka face kisi doosre person ke face se swap kar dete hain. Iska basic architecture Encoders aur Decoders par based hota hai.</p>
+                    
+                    <div class="bg-gray-800/50 rounded-xl p-6 border border-gray-600 mt-4">
+                        <h3 class="text-xl text-yellow-400 font-bold mb-4">The Architecture Process</h3>
+                        <p class="text-sm text-gray-300 mb-4">Imagine do faces hain: <strong>Face A</strong> (Original) aur <strong>Face B</strong> (Target).</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4 border-l-4 border-blue-500 pl-4">
+                                <div>
+                                    <h4 class="font-bold text-neonBlue">1. Training Phase</h4>
+                                    <p class="text-sm">Algorithm dono faces ko alag-alag encode karta hai. <br>
+                                    <code>Original Face A ➔ Encoder ➔ Latent Representation of A</code><br>
+                                    <code>Original Face B ➔ Encoder ➔ Latent Representation of B</code><br>
+                                    Phit in representations ko unke apne Decoders (Decoder A & Decoder B) se pass karke face wapas reconstruct kiya jata hai model ko train karne ke liye.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 border-l-4 border-purple-500 pl-4">
+                                <div>
+                                    <h4 class="font-bold text-neonPurple">2. Generation Phase (The "Fake" part)</h4>
+                                    <p class="text-sm">Aab magic hota hai. Face A ki latent representation ko <strong>Decoder B</strong> mein daal diya jata hai.<br>
+                                    <code>Latent Representation of Face A ➔ Decoder B ➔ Reconstructed Face B from A</code><br>
+                                    Is tarah Face B ke expressions, Face A jaisa dikhne lagta hai.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 4 -->
+                <h4 class="text-xl font-orbitron text-gray-300 mb-4"><i class="fas fa-question-circle mr-2 text-neonPurple"></i> Topic 4: Knowledge Check</h4>
+                <div class="space-y-3">
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">1. Deepfake architecture ke main components kya hote hain?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Encoders and Decoders.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">2. Face encode hone ke baad jo choti/compressed representation banti hai usko kya bolte hain?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Latent Representation.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">3. Deepfake generation phase mein face swap kaise hota hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Face A ki latent representation ko Decoder B mein bhej kar.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">4. True/False: Training phase mein Decoder A ka kaam Face B ko reconstruct karna hota hai.</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer: False.</strong> Training mein Decoder A sirf Face A ko reconstruct karta hai takki error minimize ho sake.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">5. Deepfakes mainly AI ki kis broad branch ka hissa maane jayenge (visual data pe kaam karne ke kaaran)?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Computer Vision / Generative AI.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOPIC 5 -->
+            <section id="topic5" class="mb-20 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-neonBlue border-b border-gray-700 pb-2"><i class="fas fa-eye mr-3"></i>5. Computer Vision</h2>
+                
+                <div class="glass-panel p-6 mb-8 text-lg text-gray-200">
+                    <p class="mb-4"><strong>Definition:</strong> Computer vision computers ko capacity deta hai ki wo photos aur videos mein chizon ko theek waise hi dekhein, pehchane (recognize) aur analyze karein jaise insaan (people) karte hain.</p>
+                    
+                    <h3 class="text-xl text-white font-bold mb-4 mt-6">Real-World Applications</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-x-ray text-3xl text-blue-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Medical Imaging</h4>
+                            <p class="text-xs text-gray-400 mt-1">X-rays/MRIs se disease detect karna.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-tractor text-3xl text-green-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Agriculture</h4>
+                            <p class="text-xs text-gray-400 mt-1">Crops ki health monitor karna using drones.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-crosshairs text-3xl text-red-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Object Detection</h4>
+                            <p class="text-xs text-gray-400 mt-1">Pedestrians aur cars ko track karna traffic mein.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-plane text-3xl text-yellow-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Aerial Imaging</h4>
+                            <p class="text-xs text-gray-400 mt-1">Planes, terrain ko satellites se analyze karna.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-fingerprint text-3xl text-purple-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Facial Recognition</h4>
+                            <p class="text-xs text-gray-400 mt-1">Identification aur file/data access security.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded text-center border border-white/10 hover:bg-white/10 transition">
+                            <i class="fas fa-car-side text-3xl text-cyan-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Self-driving Cars</h4>
+                            <p class="text-xs text-gray-400 mt-1">Tesla jaise cars obstacles detect karne ke liye.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 5 -->
+                <h4 class="text-xl font-orbitron text-gray-300 mb-4"><i class="fas fa-question-circle mr-2 text-neonPurple"></i> Topic 5: Knowledge Check</h4>
+                <div class="space-y-3">
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">1. Computer Vision kis type ke data par sabse zyada rely karta hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Photos aur Videos (Visual data).
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">2. Self-driving cars kis technology ke bina raste pe navigate nahi kar sakti?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Computer Vision (Object detection, lane tracking).
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">3. Face ID (jaise phones mein) kis application ka example hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Facial Recognition Technology.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">4. Drones se khoti (Agriculture) mein bimari pata karna kiske under aata hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Computer Vision applications in Agriculture.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="font-medium">5. Aerial imaging mainly kiske madad se ki jati hai?</p>
+                        <details class="cursor-pointer group">
+                            <summary class="inline-block mt-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-sm text-neonBlue transition">Show Answer <i class="fas fa-chevron-down ml-1 text-xs group-open:rotate-180 transition"></i></summary>
+                            <div class="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded text-green-400 text-sm">
+                                <strong>Answer:</strong> Satellites, Drones ya aircrafts mounted with cameras.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOPIC 6 : QUICK REVISION -->
+            <section id="topic6" class="mb-20 scroll-mt-24">
+                <div class="p-1 rounded-2xl bg-gradient-to-r from-neonBlue to-neonPurple">
+                    <div class="glass-panel bg-dark/95 p-8 rounded-[14px] border-none">
+                        <h2 class="text-3xl font-bold mb-6 text-white pb-2 flex items-center">
+                            <i class="fas fa-bolt text-yellow-400 mr-3"></i> Exam-Ready Quick Revision
+                        </h2>
+                        
+                        <p class="text-gray-300 mb-6">Last minute padhai ke liye concept cheatsheets aur standard AI formula derivations.</p>
+
+                        <!-- Concept Comparison Table -->
+                        <div class="overflow-x-auto mb-8">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-white/10 text-neonBlue font-orbitron">
+                                        <th class="p-3 border border-white/20 rounded-tl-lg">AI Category</th>
+                                        <th class="p-3 border border-white/20">Key Function</th>
+                                        <th class="p-3 border border-white/20 rounded-tr-lg">Real-World Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="p-3 border border-white/20 font-bold">Discriminative AI</td>
+                                        <td class="p-3 border border-white/20">Classifies or maps input data to specific labels.</td>
+                                        <td class="p-3 border border-white/20">TAR, Spam Filter, Basic Image Recognition</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="p-3 border border-white/20 font-bold">Generative AI</td>
+                                        <td class="p-3 border border-white/20">Learns patterns to generate entirely new data/content.</td>
+                                        <td class="p-3 border border-white/20">ChatGPT (Text), Midjourney (Images)</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="p-3 border border-white/20 font-bold">NLP</td>
+                                        <td class="p-3 border border-white/20">Processes human language (Text/Audio).</td>
+                                        <td class="p-3 border border-white/20">Voice Assistants, Translation apps</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="p-3 border border-white/20 font-bold">Computer Vision</td>
+                                        <td class="p-3 border border-white/20">Processes visual data (Photos/Videos).</td>
+                                        <td class="p-3 border border-white/20">Tesla Autopilot, Medical Imaging, Deepfakes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mathematics / LaTeX Cheatsheet using MathJax -->
+                        <h3 class="text-xl font-orbitron text-neonBlue mb-4 border-b border-gray-700 pb-2">Behind the Scenes: AI Math Formulations</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Transformer Formula -->
+                            <div class="bg-gray-900/80 p-5 rounded-lg border border-gray-700">
+                                <h4 class="text-purple-400 font-bold mb-2">1. The Transformer (GPT) Attention</h4>
+                                <p class="text-xs text-gray-400 mb-3">Self-attention mechanism that allows models like ChatGPT to understand context:</p>
+                                <div class="bg-black/50 p-3 rounded flex justify-center overflow-x-auto text-sm">
+                                    $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+                                </div>
+                                <p class="text-[11px] text-gray-500 mt-2">Where Q = Query, K = Key, V = Value matrices.</p>
+                            </div>
+
+                            <!-- Deepfakes Encoder-Decoder -->
+                            <div class="bg-gray-900/80 p-5 rounded-lg border border-gray-700">
+                                <h4 class="text-blue-400 font-bold mb-2">2. Encoder-Decoder (Deepfakes)</h4>
+                                <p class="text-xs text-gray-400 mb-3">Latent space mapping function where $x$ is input face and $\hat{x}$ is reconstructed face:</p>
+                                <div class="bg-black/50 p-3 rounded flex flex-col justify-center items-center text-sm">
+                                    <div class="mb-2">Encoder: $$z = f_\theta(x)$$</div>
+                                    <div>Decoder: $$\hat{x} = g_\phi(z)$$</div>
+                                </div>
+                                <p class="text-[11px] text-gray-500 mt-2">Where $z$ is the latent representation transferred across decoders.</p>
+                            </div>
+
+                            <!-- Standard Neural Network -->
+                            <div class="bg-gray-900/80 p-5 rounded-lg border border-gray-700">
+                                <h4 class="text-green-400 font-bold mb-2">3. Basic Machine Learning Core</h4>
+                                <p class="text-xs text-gray-400 mb-3">Foundation of all AI (Weights, Biases, and Activation):</p>
+                                <div class="bg-black/50 p-3 rounded flex justify-center text-sm">
+                                    $$y = \sigma(Wx + b)$$
+                                </div>
+                                <p class="text-[11px] text-gray-500 mt-2">Where $\sigma$ is activation, $W$ is weight matrix, and $b$ is bias.</p>
+                            </div>
+                            
+                            <!-- Probability in Generative Models -->
+                            <div class="bg-gray-900/80 p-5 rounded-lg border border-gray-700">
+                                <h4 class="text-red-400 font-bold mb-2">4. GenAI Probability</h4>
+                                <p class="text-xs text-gray-400 mb-3">Predicting the next word based on previous words (Conditional Probability):</p>
+                                <div class="bg-black/50 p-3 rounded flex justify-center overflow-x-auto text-sm">
+                                    $$P(w_t | w_1, w_2, ..., w_{t-1})$$
+                                </div>
+                                <p class="text-[11px] text-gray-500 mt-2">GPT tries to maximize this probability for human-like text.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-panel rounded-none border-b-0 border-l-0 border-r-0 mt-12 py-8 text-center">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl font-orbitron text-white mb-6">Designed & Developed by <span class="text-neonBlue text-glow-blue">Shivam</span></h3>
+            
+            <div class="flex justify-center space-x-6">
+                <a href="https://github.com/shivamcuj" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-gray-300 hover:text-white hover:bg-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition duration-300 transform hover:-translate-y-1">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-gray-300 hover:text-red-500 hover:bg-red-500/10 hover:shadow-[0_0_15px_rgba(239,68,68,0.5)] transition duration-300 transform hover:-translate-y-1">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-gray-300 hover:text-blue-500 hover:bg-blue-500/10 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition duration-300 transform hover:-translate-y-1">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-gray-300 hover:text-pink-500 hover:bg-pink-500/10 hover:shadow-[0_0_15px_rgba(236,72,153,0.5)] transition duration-300 transform hover:-translate-y-1">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+            <p class="mt-8 text-sm text-gray-500 font-rajdhani">© 2026 AI Notes Interactive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Scroll Spy Implementation for Desktop Sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current) && current !== "") {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
