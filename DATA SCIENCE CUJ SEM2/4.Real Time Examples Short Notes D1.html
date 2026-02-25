@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रियल-टाइम AI · हिंग्लिश नोट्स</title>
+    <!-- Tailwind + Font Awesome + MathJax -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass {
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(15, 25, 40, 0.7);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            color: #7dd3fc;
+            border-left: 3px solid #0ff;
+        }
+        /* mobile sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(3px);
+                z-index: 90;
+            }
+            #overlay.open {
+                display: block;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a2a; }
+        ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-200 font-sans antialiased min-h-screen">
+
+    <!-- mobile overlay -->
+    <div id="overlay" class="md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- mobile top bar -->
+    <nav class="md:hidden bg-slate-800/80 p-4 flex justify-between items-center glass sticky top-0 z-30 border-b border-cyan-500/30">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">⚡ Real-Time AI</span>
+        <button onclick="toggleSidebar()" class="text-cyan-300 focus:outline-none p-2 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <div class="flex relative">
+        <!-- SIDEBAR (sticky) -->
+        <aside id="sidebar" class="w-64 h-screen sticky top-0 left-0 overflow-y-auto glass md:shadow-2xl z-[100] md:z-10">
+            <div class="p-5">
+                <h2 class="text-2xl font-light mb-6 flex items-center gap-2 border-b border-cyan-500/30 pb-3">
+                    <i class="fas fa-clock text-cyan-400"></i>
+                    <span class="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent font-semibold">index</span>
+                </h2>
+                <ul class="space-y-2 text-sm font-medium" id="sidebar-links">
+                    <li><a href="#section1" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">1. Real-Time क्या है?</a></li>
+                    <li><a href="#section2" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">2. NLP (Natural Language Processing)</a></li>
+                    <li><a href="#section3" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">3. Generative AI & GPT</a></li>
+                    <li><a href="#section4" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">4. Deepfakes</a></li>
+                    <li><a href="#section5" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">5. Computer Vision</a></li>
+                    <li><a href="#section6" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">6. Real‑World Applications</a></li>
+                    <li><a href="#quickrev" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">⚡ क्विक रिवीजन</a></li>
+                </ul>
+                <div class="mt-8 text-xs text-cyan-600/50 border-t border-cyan-500/20 pt-4">
+                    <p class="flex items-center gap-1"><i class="fas fa-dragon"></i> based on real‑time example.pdf</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-5 md:p-8 max-w-4xl mx-auto space-y-8">
+            
+            <!-- header -->
+            <div class="glass-card p-6 rounded-3xl neon-glow">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent">⏱️ रियल‑टाइम AI <span class="text-white/30">· हिंग्लिश</span></h1>
+                <p class="mt-2 text-slate-300 text-lg">NLP, Generative AI, Deepfakes, Computer Vision – असल ज़िंदगी के examples 💡</p>
+            </div>
+
+            <!-- SECTION 1 : Real-Time -->
+            <section id="section1" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-hourglass-half text-purple-400"></i>1. Real-Time क्या है?</h2>
+                <p>Real‑time सिस्टम वो होते हैं जो इनपुट मिलते ही तुरंत रिस्पॉन्स देते हैं – जैसे सेल्फ‑ड्राइविंग कार, वॉयस असिस्टेंट, लाइव फेस डिटेक्शन। PDF के पहले पेज पर बस “Real‑Time” लिखा है, लेकिन यहाँ मतलब है कि AI को तुरंत decisions लेने होते हैं।</p>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">✍️ MCQs – Real-Time</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Real‑time system का मुख्य गुण क्या है?</p><div class="ml-3 text-sm"><div>A) बैच प्रोसेसिंग</div><div>B) तुरंत रिस्पॉन्स</div><div>C) डेटा स्टोरेज</div><div>D) ऑफलाइन एनालिसिस</div></div><details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) तुरंत रिस्पॉन्स</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Real‑time AI का example नहीं है?</p><div class="ml-3 text-sm"><div>A) सेल्फ‑ड्राइविंग कार</div><div>B) वॉयस असिस्टेंट</div><div>C) बैंक स्टेटमेंट प्रिंट करना</div><div>D) फेस डिटेक्शन</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) बैंक स्टेटमेंट प्रिंट करना (यह बैच है)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. किसमें real‑time processing ज़रूरी है?</p><div class="ml-3 text-sm"><div>A) ईमेल भेजना</div><div>B) टेस्ला ऑटोपायलट</div><div>C) फाइल डाउनलोड</div><div>D) वेबसाइट होस्टिंग</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) टेस्ला ऑटोपायलट</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Real‑time का अंग्रेजी अर्थ क्या है?</p><div class="ml-3 text-sm"><div>A) पिछले समय</div><div>B) वास्तविक समय</div><div>C) भविष्य काल</div><div>D) देर से</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) वास्तविक समय</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. PDF में Real‑Time के बाद कौन सा टॉपिक आता है?</p><div class="ml-3 text-sm"><div>A) Deepfakes</div><div>B) NLP</div><div>C) Computer Vision</div><div>D) Generative AI</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) NLP (Natural Language Processing)</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 : NLP -->
+            <section id="section2" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-language text-purple-400 mr-2"></i>2. Natural Language Processing (NLP)</h2>
+                <p>NLP का मतलब है इंसानी भाषा (जैसे हिंदी, अंग्रेज़ी) को कंप्यूटर समझे और प्रोसेस करे। इसमें speech recognition, language translation, sentiment analysis शामिल हैं।</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📝 NLP MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. NLP का फुल फॉर्म क्या है?</p><div class="ml-3 text-sm"><div>A) Natural Programming Language</div><div>B) Neural Language Processing</div><div>C) Natural Language Processing</div><div>D) Network Language Protocol</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) Natural Language Processing</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. NLP का उदाहरण है?</p><div class="ml-3 text-sm"><div>A) गूगल ट्रांसलेट</div><div>B) एक्सेल फॉर्मूला</div><div>C) फोटो एडिटिंग</div><div>D) गेमिंग</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) गूगल ट्रांसलेट</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. NLP किस एआई फील्ड का हिस्सा है?</p><div class="ml-3 text-sm"><div>A) कंप्यूटर विजन</div><div>B) रोबोटिक्स</div><div>C) भाषा विज्ञान + मशीन लर्निंग</div><div>D) हार्डवेयर</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) भाषा विज्ञान + मशीन लर्निंग</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. निम्न में से कौन NLP टास्क नहीं है?</p><div class="ml-3 text-sm"><div>A) स्पीच टू टेक्स्ट</div><div>B) इमेज क्लासिफिकेशन</div><div>C) सेंटीमेंट एनालिसिस</div><div>D) नेम्ड एंटिटी रिकग्निशन</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) इमेज क्लासिफिकेशन (वो computer vision है)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. NLP का रियल‑टाइम example?</p><div class="ml-3 text-sm"><div>A) सिरी या एलेक्सा</div><div>B) फेसबुक टैगिंग</div><div>C) टेस्ला कार</div><div>D) डीपफेक वीडियो</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) सिरी या एलेक्सा</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 : Generative AI & GPT -->
+            <section id="section3" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-robot text-purple-400 mr-2"></i>3. Generative AI & GPT</h2>
+                <p><span class="text-purple-300">🤖 Generative AI:</span> नई क्रिएटिव चीज़ें बनाता है (टेक्स्ट, इमेज, वीडियो) – patterns सीखकर।</p>
+                <p><span class="text-purple-300">🧠 GPT (Generative Pre-trained Transformer):</span> OpenAI ने 2022 के अंत में बनाया। यह एक NLP मॉडल है जो इंसानों जैसा टेक्स्ट जेनरेट करता है।</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🤖 Generative AI MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Generative AI क्या करता है?</p><div class="ml-3 text-sm"><div>A) डेटा डिलीट करना</div><div>B) नया ओरिजिनल आउटपुट बनाना</div><div>C) केवल डेटा स्टोर करना</div><div>D) पैटर्न इग्नोर करना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) नया ओरिजिनल आउटपुट बनाना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. GPT का पूरा नाम क्या है?</p><div class="ml-3 text-sm"><div>A) General Purpose Transformer</div><div>B) Generative Pre-trained Transformer</div><div>C) Graphical Processing Tool</div><div>D) Google Pre-trained Text</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Generative Pre-trained Transformer</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. GPT किस कंपनी ने बनाया?</p><div class="ml-3 text-sm"><div>A) Google</div><div>B) Microsoft</div><div>C) OpenAI</div><div>D) IBM</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) OpenAI</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Generative AI कब famous हुआ?</p><div class="ml-3 text-sm"><div>A) 2018</div><div>B) 2020</div><div>C) 2022 के अंत में</div><div>D) 2024</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) 2022 के अंत में</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. GPT किस मॉडल पर आधारित है?</p><div class="ml-3 text-sm"><div>A) CNN</div><div>B) RNN</div><div>C) Transformer</div><div>D) SVM</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) Transformer</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 : Deepfakes -->
+            <section id="section4" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-mask text-purple-400 mr-2"></i>4. Deepfakes (Trick or Treat?)</h2>
+                <p><span class="text-purple-300">🎭 Deepfake:</span> AI से बनाई गई fake इमेज/वीडियो जो रियल लगती है। Generative AI का ही रूप है। “Trick or Treat” का मतलब – यह trick (धोखा) भी हो सकता है और treat (मनोरंजन) भी।</p>
+                <p><span class="text-purple-300">🔧 Architecture (Mirsky & Lee 2021):</span> इसमें usually autoencoders या GANs (Generative Adversarial Networks) use होते हैं।</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🎭 Deepfakes MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Deepfake क्या है?</p><div class="ml-3 text-sm"><div>A) सच्ची खबर</div><div>B) AI से बनाया गया फर्जी मीडिया</div><div>C) एंटीवायरस</div><div>D) एक तरह का ड्रोन</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) AI से बनाया गया फर्जी मीडिया</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Deepfake बनाने में कौन सी तकनीक आम है?</p><div class="ml-3 text-sm"><div>A) GANs</div><div>B) SQL</div><div>C) HTML</div><div>D) TCP/IP</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) GANs (Generative Adversarial Networks)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Deepfake को क्या कहा गया है?</p><div class="ml-3 text-sm"><div>A) Trick or Treat?</div><div>B) Truth or Dare</div><div>C) Friend or Foe</div><div>D) Black or White</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) Trick or Treat?</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Deepfake architecture paper किसने लिखा?</p><div class="ml-3 text-sm"><div>A) Y. Mirsky & W. Lee (2021)</div><div>B) Turing (1950)</div><div>C) Elon Musk</div><div>D) OpenAI</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) Y. Mirsky & W. Lee (2021)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Deepfake का खतरा क्या है?</p><div class="ml-3 text-sm"><div>A) गलत सूचना फैलाना</div><div>B) पहचान चोरी</div><div>C) राजनीतिक धोखा</div><div>D) सभी</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) सभी</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5 : Computer Vision -->
+            <section id="section5" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-eye text-purple-400 mr-2"></i>5. Computer Vision</h2>
+                <p><span class="text-purple-300">👁️ परिभाषा:</span> कंप्यूटर को photos/videos में चीज़ें देखने, पहचानने और analyze करने की क्षमता – ठीक वैसे जैसे इंसान करते हैं।</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">👁️ CV MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Computer Vision का मुख्य काम क्या है?</p><div class="ml-3 text-sm"><div>A) टेक्स्ट पढ़ना</div><div>B) इमेज/वीडियो को समझना</div><div>C) आवाज पहचानना</div><div>D) डेटा स्टोर करना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) इमेज/वीडियो को समझना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. CV का real‑time example?</p><div class="ml-3 text-sm"><div>A) फेस अनलॉक</div><div>B) टेक्स्ट टू स्पीच</div><div>C) चैटबॉट</div><div>D) भाषा अनुवाद</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) फेस अनलॉक</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. CV और NLP में अंतर?</p><div class="ml-3 text-sm"><div>A) CV इमेज से सम्बंधित, NLP टेक्स्ट से</div><div>B) दोनों एक ही हैं</div><div>C) CV ऑडियो से</div><div>D) NLP इमेज से</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) CV इमेज से सम्बंधित, NLP टेक्स्ट से</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Aerial Imaging किसका उदाहरण है?</p><div class="ml-3 text-sm"><div>A) NLP</div><div>B) Computer Vision</div><div>C) GPT</div><div>D) Deepfake</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Computer Vision</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. PDF के अनुसार CV किस तरह काम करता है?</p><div class="ml-3 text-sm"><div>A) धीरे-धीरे</div><div>B) इंसानों की तरह देख और समझ सके</div><div>C) केवल रात में</div><div>D) बिना डेटा के</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) इंसानों की तरह देख और समझ सके</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6 : Real-World Applications -->
+            <section id="section6" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-globe text-purple-400 mr-2"></i>6. Real‑World Applications</h2>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li><span class="text-cyan-200">Aerial Imaging</span> – ड्रोन, सैटेलाइट इमेज, खेती, नक्शे।</li>
+                    <li><span class="text-cyan-200">Social Media</span> – फेसबुक, इंस्टाग्राम पर फेस डिटेक्शन, फिल्टर।</li>
+                    <li><span class="text-cyan-200">Facial Recognition</span> – फोन अनलॉक, सुरक्षा।</li>
+                    <li><span class="text-cyan-200">Self-driving Cars (Tesla)</span> – इंसान के बिना चलने वाली कार (Elon Musk के अनुसार)।</li>
+                    <li><span class="text-cyan-200">Navigation Apps</span> – गूगल मैप्स, रियल‑टाइम ट्रैफिक।</li>
+                </ul>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🌍 Apps MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Aerial Imaging कहाँ use होता है?</p><div class="ml-3 text-sm"><div>A) खेती</div><div>B) नक्शे</div><div>C) ड्रोन सर्वे</div><div>D) सभी</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) सभी</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Social Media में किस टेक्नोलॉजी का use होता है?</p><div class="ml-3 text-sm"><div>A) फेस रिकग्निशन</div><div>B) फिल्टर (CV)</div><div>C) NLP (कमेंट समझना)</div><div>D) सभी</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) सभी</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Self-driving cars के लिए कौन सी AI मेन है?</p><div class="ml-3 text-sm"><div>A) NLP</div><div>B) Computer Vision</div><div>C) GPT</div><div>D) Deepfake</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Computer Vision</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Elon Musk ने किस कंपनी के बारे में कहा कि जल्द ही बिना ड्राइवर के कार चलेगी?</p><div class="ml-3 text-sm"><div>A) Google</div><div>B) Tesla</div><div>C) Uber</div><div>D) Ford</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Tesla</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Navigation Apps में real‑time क्या feature है?</p><div class="ml-3 text-sm"><div>A) ट्रैफिक अपडेट</div><div>B) रास्ता बदलना</div><div>C) estimated time</div><div>D) सभी</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) सभी</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUICK REVISION + CHEATSHEET -->
+            <section id="quickrev" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><i class="fas fa-bolt text-yellow-300"></i>⚡ exam‑ready quick revision</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border border-cyan-500/30">Technology</th><th class="p-3 border">हिंग्लिश में</th><th class="p-3 border">Real‑time example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">NLP</td><td class="p-3 border">भाषा समझना और जेनरेट करना</td><td class="p-3 border">Siri, Google Translate</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Generative AI (GPT)</td><td class="p-3 border">नया कंटेंट बनाना (text/image)</td><td class="p-3 border">ChatGPT, DALL·E</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Deepfakes</td><td class="p-3 border">AI से बनाया गया फर्जी वीडियो/फोटो</td><td class="p-3 border">फेमस सेलिब्रिटी डीपफेक</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Computer Vision</td><td class="p-3 border">इमेज/वीडियो से जानकारी निकालना</td><td class="p-3 border">फेस अनलॉक, सेल्फ‑ड्राइविंग कार</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="text-xl mt-5 text-purple-300">📐 formula / key notes</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\( \text{GPT} = \text{Generative Pre-trained Transformer} \)</li>
+                    <li>Deepfake architecture: Autoencoders / GANs</li>
+                    <li>CV: कंप्यूटर को 'देखना' सिखाना</li>
+                    <li>NLP: भाषा को प्रोसेस करना</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER with socials -->
+            <footer class="glass-card p-5 rounded-2xl flex justify-center gap-8 text-3xl text-cyan-300">
+                <a href="https://github.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-instagram"></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // toggle mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // scroll‑spy : active section highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 90;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
