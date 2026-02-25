@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>बिग डेटा · हिंग्लिश नोट्स</title>
+    <!-- Tailwind + Font Awesome + MathJax -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass {
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(15, 25, 40, 0.7);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            color: #7dd3fc;
+            border-left: 3px solid #0ff;
+        }
+        /* mobile sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(3px);
+                z-index: 90;
+            }
+            #overlay.open {
+                display: block;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a2a; }
+        ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-200 font-sans antialiased min-h-screen">
+
+    <!-- mobile overlay -->
+    <div id="overlay" class="md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- mobile top bar -->
+    <nav class="md:hidden bg-slate-800/80 p-4 flex justify-between items-center glass sticky top-0 z-30 border-b border-cyan-500/30">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">📊 Big Data</span>
+        <button onclick="toggleSidebar()" class="text-cyan-300 focus:outline-none p-2 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <div class="flex relative">
+        <!-- SIDEBAR (sticky) -->
+        <aside id="sidebar" class="w-64 h-screen sticky top-0 left-0 overflow-y-auto glass md:shadow-2xl z-[100] md:z-10">
+            <div class="p-5">
+                <h2 class="text-2xl font-light mb-6 flex items-center gap-2 border-b border-cyan-500/30 pb-3">
+                    <i class="fas fa-database text-cyan-400"></i>
+                    <span class="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent font-semibold">index</span>
+                </h2>
+                <ul class="space-y-2 text-sm font-medium" id="sidebar-links">
+                    <li><a href="#section1" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">1. डेटा बाढ़ (Data Flood)</a></li>
+                    <li><a href="#section2" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">2. बिग डेटा की परिभाषा</a></li>
+                    <li><a href="#section3" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">3. डेटा वैरायटी & प्रकार</a></li>
+                    <li><a href="#section4" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">4. चुनौतियाँ & अवसर</a></li>
+                    <li><a href="#quickrev" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">⚡ क्विक रिवीजन</a></li>
+                </ul>
+                <div class="mt-8 text-xs text-cyan-600/50 border-t border-cyan-500/20 pt-4">
+                    <p class="flex items-center gap-1"><i class="fas fa-dragon"></i> based on big data PDF</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-5 md:p-8 max-w-4xl mx-auto space-y-8">
+            
+            <!-- header -->
+            <div class="glass-card p-6 rounded-3xl neon-glow">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent">📀 बिग डेटा <span class="text-white/30">· हिंग्लिश</span></h1>
+                <p class="mt-2 text-slate-300 text-lg">हर कॉन्सेप्ट आसान भाषा में, exam के लिए तैयारी पक्की 💡</p>
+            </div>
+
+            <!-- SECTION 1 : Data Flood -->
+            <section id="section1" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-water text-purple-400"></i>1. डेटा बाढ़ (Data Flood)</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300 font-medium">📦 कितना डेटा?</span> हर जगह से data collect & warehouse हो रहा है – Web, e-commerce, financial transactions, social networks।</p>
+                    <ul class="list-disc ml-6 space-y-1">
+                        <li><span class="text-cyan-200">Google</span> – 20 PB (petabytes) प्रति दिन। 1 PB = 1,048,576 GB.</li>
+                        <li><span class="text-cyan-200">Facebook</span> – 60 TB (terabytes) daily logs.</li>
+                        <li><span class="text-cyan-200">eBay</span> – 6.5 PB user data + 50 TB/day (May 2009).</li>
+                        <li><span class="text-cyan-200">1000 genomes project</span> – 200 TB.</li>
+                    </ul>
+                    <p class="mt-2 text-sm italic">📌 यानी डेटा का tsunami 🌊</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">✍️ MCQs – खुद को जाँचे</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>1. Google daily कितना data process करता है?</p>
+                            <div class="ml-3 text-sm space-y-1">
+                                <div><input type="radio" name="q1" class="mr-2 accent-cyan-400"> A) 20 TB</div>
+                                <div><input type="radio" name="q1" class="mr-2 accent-cyan-400"> B) 20 PB</div>
+                                <div><input type="radio" name="q1" class="mr-2 accent-cyan-400"> C) 60 TB</div>
+                                <div><input type="radio" name="q1" class="mr-2 accent-cyan-400"> D) 6.5 PB</div>
+                            </div>
+                            <details class="mt-2"><summary class="cursor-pointer text-cyan-300 text-sm">🔓 जवाब देखें</summary><p class="text-green-400 mt-1">✅ B) 20 PB</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>2. Facebook daily logs कितने?</p>
+                            <div class="ml-3 text-sm">
+                                <div><input type="radio" name="q2" class="mr-2"> A) 60 TB</div>
+                                <div><input type="radio" name="q2" class="mr-2"> B) 20 PB</div>
+                                <div><input type="radio" name="q2" class="mr-2"> C) 50 TB</div>
+                                <div><input type="radio" name="q2" class="mr-2"> D) 200 TB</div>
+                            </div>
+                            <details class="mt-2"><summary class="cursor-pointer text-cyan-300 text-sm">🔓 जवाब देखें</summary><p class="text-green-400 mt-1">✅ A) 60 TB</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>3. eBay का user data (2009) कितना था?</p>
+                            <div class="ml-3 text-sm">
+                                <div><input type="radio" name="q3" class="mr-2"> A) 6.5 PB</div>
+                                <div><input type="radio" name="q3" class="mr-2"> B) 50 TB/day</div>
+                                <div><input type="radio" name="q3" class="mr-2"> C) 20 PB</div>
+                                <div><input type="radio" name="q3" class="mr-2"> D) Both A and B</div>
+                            </div>
+                            <details class="mt-2"><summary class="cursor-pointer text-cyan-300 text-sm">🔓 जवाब देखें</summary><p class="text-green-400 mt-1">✅ D) Both A and B (6.5 PB user data + 50 TB/day)</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>4. 1000 genomes project में कितना data?</p>
+                            <div class="ml-3 text-sm">
+                                <div><input type="radio" name="q4" class="mr-2"> A) 200 TB</div>
+                                <div><input type="radio" name="q4" class="mr-2"> B) 200 PB</div>
+                                <div><input type="radio" name="q4" class="mr-2"> C) 20 PB</div>
+                                <div><input type="radio" name="q4" class="mr-2"> D) 60 TB</div>
+                            </div>
+                            <details class="mt-2"><summary class="cursor-pointer text-cyan-300 text-sm">🔓 जवाब देखें</summary><p class="text-green-400 mt-1">✅ A) 200 TB</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>5. Data कहाँ से collect हो रहा है? (सबसे सही)</p>
+                            <div class="ml-3 text-sm">
+                                <div><input type="radio" name="q5" class="mr-2"> A) Web & e-commerce</div>
+                                <div><input type="radio" name="q5" class="mr-2"> B) Financial transactions</div>
+                                <div><input type="radio" name="q5" class="mr-2"> C) Social networks</div>
+                                <div><input type="radio" name="q5" class="mr-2"> D) All of the above</div>
+                            </div>
+                            <details class="mt-2"><summary class="cursor-pointer text-cyan-300 text-sm">🔓 जवाब देखें</summary><p class="text-green-400 mt-1">✅ D) All of the above</p></details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 : Defining Big Data -->
+            <section id="section2" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-elephant text-purple-400"></i>2. बिग डेटा क्या है?</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">🐘 Elephant vs rat analogy:</span> बिग डेटा साधारण डेटा से बहुत बड़ा होता है।</p>
+                    <p><span class="text-purple-300">🔍 Narrow sense:</span> बिग डेटा का मतलब सिर्फ बड़ा sample size।</p>
+                    <p><span class="text-purple-300">🌐 Broad sense:</span> sample size + dimensionality (बहुत सारे features)।</p>
+                    <p><span class="text-purple-300">💰 Definition (expensiveness):</span> “Big Data is any data that is expensive to manage and hard to extract value from.”</p>
+                    <p><span class="text-purple-300">📊 3 V’s (Volume, Velocity, Variety) + Complexity:</span></p>
+                    <ul class="list-disc ml-6">
+                        <li><span class="text-cyan-200">Volume</span> – data की मात्रा (size).</li>
+                        <li><span class="text-cyan-200">Velocity</span> – data generate/process होने की speed (latency, real-time).</li>
+                        <li><span class="text-cyan-200">Variety</span> – data के sources, formats, quality, structures में विविधता।</li>
+                        <li><span class="text-cyan-200">Complexity</span> – data को manage करना मुश्किल।</li>
+                    </ul>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📐 MCQs – Big Data परिभाषा</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>1. संकीर्ण (narrow) अर्थ में Big Data क्या दर्शाता है?</p>
+                            <div class="ml-3 text-sm"><div>A) केवल sample size</div><div>B) केवल dimensionality</div><div>C) sample size + dimensionality</div><div>D) data velocity</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ A) केवल sample size</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>2. Big Data की सही परिभाषा क्या है?</p>
+                            <div class="ml-3 text-sm"><div>A) बहुत सारा data</div><div>B) Data जिसे manage करना expensive हो और value निकालना मुश्किल</div><div>C) Data जो हर दिन बढ़े</div><div>D) केवल unstructured data</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) expensive to manage and hard to extract value</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>3. तीन V’s में कौन सा शामिल नहीं है?</p>
+                            <div class="ml-3 text-sm"><div>A) Volume</div><div>B) Velocity</div><div>C) Variety</div><div>D) Value</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ D) Value (value तीन V’s में नहीं, PDF में variety है)</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>4. Velocity का क्या मतलब है?</p>
+                            <div class="ml-3 text-sm"><div>A) data की मात्रा</div><div>B) data की speed और latency</div><div>C) data के प्रकार</div><div>D) data की सुरक्षा</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) data की speed और latency</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>5. “Expensive to manage and hard to extract value from” किसकी परिभाषा है?</p>
+                            <div class="ml-3 text-sm"><div>A) Data Science</div><div>B) Big Data</div><div>C) Machine Learning</div><div>D) AI</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) Big Data</p></details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 : Data Variety & Types -->
+            <section id="section3" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-shapes text-purple-400"></i>3. डेटा वैरायटी & प्रकार</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">📋 Data Variety – PDF के अनुसार:</span></p>
+                    <ol class="list-decimal ml-6 space-y-1">
+                        <li>Relational Data (Tables, Transaction, Legacy)</li>
+                        <li>Text Data (Web pages, documents)</li>
+                        <li>Semi-structured Data (XML, JSON)</li>
+                        <li>Graph Data</li>
+                        <li>Social Network, Semantic Web (RDF)</li>
+                        <li>Streaming Data (real-time, one scan)</li>
+                    </ol>
+                    <p><span class="text-purple-300">🌍 उदाहरण (examples) PDF में दिए गए:</span></p>
+                    <ul class="list-disc ml-6">
+                        <li><span class="text-cyan-200">Twitter Data</span> – tweets, streaming</li>
+                        <li><span class="text-cyan-200">Internet of Things (IoT) Data</span> – sensors, devices</li>
+                        <li><span class="text-cyan-200">Linked Open Data: XML</span> – structured web data</li>
+                        <li><span class="text-cyan-200">Transactional Data</span> – bank, e-commerce</li>
+                        <li><span class="text-cyan-200">IP Connection Data</span> – network logs</li>
+                    </ul>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🧩 MCQs – Data Types</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>1. Semi-structured data का example क्या है?</p>
+                            <div class="ml-3 text-sm"><div>A) Relational table</div><div>B) XML</div><div>C) Graph</div><div>D) Streaming</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) XML</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>2. Twitter Data किस category में आता है?</p>
+                            <div class="ml-3 text-sm"><div>A) Relational</div><div>B) Graph</div><div>C) Streaming & Text</div><div>D) Transactional</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ C) Streaming & Text (real-time stream)</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>3. IoT Data कहाँ से आता है?</p>
+                            <div class="ml-3 text-sm"><div>A) Sensors</div><div>B) Bank transactions</div><div>C) Web pages</div><div>D) Social media</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ A) Sensors</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>4. कौन सा डेटा टाइप “one scan” (सिर्फ एक बार पढ़ सकते) से related है?</p>
+                            <div class="ml-3 text-sm"><div>A) Relational</div><div>B) Graph</div><div>C) Streaming Data</div><div>D) XML</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ C) Streaming Data</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>5. Transactional Data किससे सम्बंधित है?</p>
+                            <div class="ml-3 text-sm"><div>A) e-commerce purchases</div><div>B) Tweets</div><div>C) IP logs</div><div>D) Sensor data</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ A) e-commerce purchases</p></details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 : Challenges & Opportunities -->
+            <section id="section4" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-exclamation-triangle text-purple-400"></i>4. चुनौतियाँ & अवसर</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">🧱 Traditional methods breakdown:</span> जब data इतना large/complex हो कि traditional storage/access/analysis tools fail हो जाएँ और बहुत expensive पड़ें।</p>
+                    <p><span class="text-purple-300">💎 Hidden value:</span> फिर भी इस data में बहुत potential value छिपी है। Organizations इस value को निकालकर innovation और competitive advantage पाना चाहती हैं।</p>
+                    <p><span class="text-purple-300">🛠️ Big Data technologies & approaches:</span> नए tools जो traditional analytics से नहीं हो सकता, वो कर दिखाते हैं।</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">⚡ MCQs – Challenges & Opportunities</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>1. Traditional methods क्यों fail हो जाते हैं?</p>
+                            <div class="ml-3 text-sm"><div>A) Data बहुत छोटा हो</div><div>B) Data बहुत large/complex</div><div>C) Data सही format में न हो</div><div>D) Data सस्ता हो</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) Data बहुत large/complex</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>2. Big Data में छिपा होता है?</p>
+                            <div class="ml-3 text-sm"><div>A) Noise</div><div>B) Potential value</div><div>C) Errors</div><div>D) Duplicates</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) Potential value</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>3. Organizations Big Data का use क्यों करना चाहती हैं?</p>
+                            <div class="ml-3 text-sm"><div>A) Innovation</div><div>B) Competitive advantage</div><div>C) Cost cutting</div><div>D) Both A and B</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ D) Both A and B</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>4. Big Data technologies क्या कर सकती हैं?</p>
+                            <div class="ml-3 text-sm"><div>A) Traditional analytics जैसा</div><div>B) Value निकालना जहाँ traditional tools fail</div><div>C) Data delete करना</div><div>D) केवल storage</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ B) Value निकालना जहाँ traditional tools fail</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>5. Big Data की मुख्य चुनौती क्या है?</p>
+                            <div class="ml-3 text-sm"><div>A) Volume</div><div>B) Velocity</div><div>C) Variety</div><div>D) सब मिलाकर complexity और cost</div></div>
+                            <details><summary class="text-cyan-300 text-sm">🔓 जवाब</summary><p class="text-green-400">✅ D) सब मिलाकर complexity और cost</p></details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUICK REVISION + CHEATSHEET -->
+            <section id="quickrev" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><i class="fas fa-bolt text-yellow-300"></i>⚡ exam‑ready quick revision</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border border-cyan-500/30">Concept</th><th class="p-3 border">हिंग्लिश summary</th><th class="p-3 border">Key points</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Data explosion</td><td class="p-3 border">Google 20 PB/d, FB 60 TB/d, eBay 6.5 PB</td><td class="p-3 border">1 PB = 1024 TB = 10⁶ GB</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Big Data (narrow)</td><td class="p-3 border">सिर्फ sample size बड़ा</td><td class="p-3 border">–</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Big Data (broad)</td><td class="p-3 border">sample size + dimensionality (बहुत features)</td><td class="p-3 border">–</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Definition</td><td class="p-3 border">expensive to manage & hard to extract value</td><td class="p-3 border">3 V’s: Volume, Velocity, Variety</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Data Variety</td><td class="p-3 border">relational, text, semi‑structured, graph, social, streaming</td><td class="p-3 border">examples: Twitter, IoT, XML, transaction, IP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="text-xl mt-5 text-purple-300">📐 size cheat sheet</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(1\ \text{PB} = 1024\ \text{TB} = 1,048,576\ \text{GB}\)</li>
+                    <li>\(1\ \text{TB} = 1024\ \text{GB}\)</li>
+                    <li>\( \text{Google daily} = 20\ PB \)</li>
+                    <li>\( \text{Facebook daily logs} = 60\ TB \)</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER with socials -->
+            <footer class="glass-card p-5 rounded-2xl flex justify-center gap-8 text-3xl text-cyan-300">
+                <a href="https://github.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-instagram"></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // toggle mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // scroll‑spy : active section highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 90;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
