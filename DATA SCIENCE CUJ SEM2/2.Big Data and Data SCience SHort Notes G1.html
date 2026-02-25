@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Data & Data Science - Ultimate Notes</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for LaTeX / Math formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Orbitron', 'sans-serif'],
+                        body: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        neon: {
+                            blue: '#00f3ff',
+                            purple: '#bc13fe',
+                            pink: '#ff007f'
+                        },
+                        glass: {
+                            light: 'rgba(255, 255, 255, 0.05)',
+                            border: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050510;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(188, 19, 254, 0.08), transparent 25%);
+            background-attachment: fixed;
+            color: #e2e8f0;
+        }
+
+        .glass-panel {
+            background: rgba(10, 15, 30, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            border-radius: 16px;
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(188, 19, 254, 0.15);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #00f3ff, #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050510;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 243, 255, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(188, 19, 254, 0.5);
+        }
+
+        /* Sidebar active link styling */
+        .nav-link.active {
+            background: rgba(0, 243, 255, 0.15);
+            border-left: 4px solid #00f3ff;
+            color: #00f3ff;
+        }
+
+        /* Details & Summary Styling */
+        details > summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-body antialiased flex flex-col min-h-screen selection:bg-neon-purple selection:text-white">
+
+    <!-- Mobile Header -->
+    <header class="md:hidden sticky top-0 z-50 glass-panel rounded-none border-b border-t-0 border-l-0 border-r-0 flex justify-between items-center p-4">
+        <h1 class="font-heading font-bold text-xl text-gradient">Data Science Core</h1>
+        <button id="mobile-menu-btn" class="text-neon-blue focus:outline-none text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div class="flex flex-1 relative max-w-7xl mx-auto w-full">
+
+        <!-- Sidebar Navigation (Scroll-spy) -->
+        <aside id="sidebar" class="hidden md:block w-72 h-[calc(100vh-2rem)] sticky top-4 left-0 overflow-y-auto glass-panel p-6 mx-4 my-4 transition-transform duration-300 z-40 fixed md:relative md:translate-x-0 -translate-x-full">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-heading font-bold text-2xl text-gradient">Index</h2>
+                <button id="close-sidebar-btn" class="md:hidden text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-2" id="toc-nav">
+                <a href="#topic1" class="nav-link px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all font-semibold"><i class="fas fa-database mr-2 text-neon-blue"></i> 1. Intro to Big Data</a>
+                <a href="#topic2" class="nav-link px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all font-semibold"><i class="fas fa-globe mr-2 text-neon-purple"></i> 2. Explosion of Data</a>
+                <a href="#topic3" class="nav-link px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all font-semibold"><i class="fas fa-bolt mr-2 text-neon-blue"></i> 3. The 3 V's of Big Data</a>
+                <a href="#topic4" class="nav-link px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all font-semibold"><i class="fas fa-layer-group mr-2 text-neon-purple"></i> 4. Types of Data</a>
+                <a href="#quick-revision" class="nav-link px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all font-semibold"><i class="fas fa-rocket mr-2 text-neon-blue"></i> 5. Quick Revision</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 md:p-8 w-full">
+            
+            <div class="text-center mb-16 pt-8">
+                <h1 class="font-heading text-4xl md:text-6xl font-extrabold mb-4 text-gradient tracking-wider">Big Data & Data Science</h1>
+                <p class="text-xl text-gray-400">Complete Section-by-Section Notes & Cheat-sheets</p>
+                <div class="mt-6 inline-block glass-panel px-6 py-2 rounded-full text-sm text-neon-blue">
+                    <i class="fas fa-code mr-2"></i> User-Friendly Hinglish Format
+                </div>
+            </div>
+
+            <!-- Topic 1: Intro to Big Data -->
+            <section id="topic1" class="mb-20 scroll-mt-20">
+                <h2 class="font-heading text-3xl font-bold mb-6 flex items-center border-b border-glass-border pb-2">
+                    <span class="bg-neon-blue text-black w-10 h-10 rounded-full flex items-center justify-center mr-4 text-xl">1</span>
+                    Introduction to Big Data & Data Science
+                </h2>
+                
+                <div class="glass-panel p-6 mb-8 prose prose-invert max-w-none">
+                    <h3 class="text-xl font-bold text-neon-blue mb-3">Data Kya Hai? (What is Data?)</h3>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        Basically, data kisi bhi cheez ki raw information hoti hai. Data Science ki duniya mein hum data ko mainly do hisso mein samajhte hain:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-300 space-y-2 mb-6">
+                        <li><strong class="text-white">Objects (Samples, Individuals):</strong> Yeh hamara actual data record hota hai (e.g., Student 1, Student 2). Data table mein ye <em>Rows</em> hoti hain.</li>
+                        <li><strong class="text-white">Attributes (Dimension, Features, Variables):</strong> Yeh objects ki characteristics hoti hain (e.g., Height, Weight, Age). Data table mein ye <em>Columns</em> hoti hain.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-neon-purple mb-3">Big Data ke 2 Perspectives (Narrow vs Broad)</h3>
+                    <div class="grid md:grid-cols-2 gap-6 mt-4">
+                        <div class="glass-card p-5">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-compress-alt mr-2"></i> Narrow Sense</h4>
+                            <p class="text-sm text-gray-400">Ek chhoti soch mein, Big Data ka matlab sirf <strong>Sample Size (Rows)</strong> ka bada hona hai. Matlab sirf logo ki ginti zyada hona.</p>
+                        </div>
+                        <div class="glass-card p-5 border-neon-blue">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-expand-arrows-alt mr-2"></i> Broad Sense</h4>
+                            <p class="text-sm text-gray-400">Actual (broad) definition mein, Big Data sirf size nahi, balki <strong>Sample Size + Dimensionality (Features/Columns)</strong> dono ka combination hai. Data bada bhi hai aur complex (bahut saari properties wala) bhi hai.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 1 -->
+                <div class="mt-8">
+                    <h3 class="font-heading text-2xl mb-4 text-neon-blue"><i class="fas fa-gamepad mr-2"></i> Knowledge Check (Topic 1)</h3>
+                    <div class="space-y-4">
+                        <!-- MCQ 1 -->
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">1. Data table mein 'Attributes' ko aur kis naam se jaana jata hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Samples</li>
+                                <li>B) Dimensions / Features</li>
+                                <li>C) Objects</li>
+                                <li>D) Individuals</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Dimensions / Features.</strong> Attributes characteristics hoti hain jinki wajah se hum data ko analyze karte hain (jaise Age, Height).
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 2 -->
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">2. In a "Broad sense", Big Data kis cheez ko represent karta hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Only Sample Size</li>
+                                <li>B) Only Data Velocity</li>
+                                <li>C) Both Sample Size and Dimensionality</li>
+                                <li>D) None of the above</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) Both Sample Size and Dimensionality.</strong> Sirf rows nahi, columns (features) ka zyada hona bhi Big data banata hai.
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 3 -->
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">3. Ek dataset mein "Student 1", "Student 2" kya kehlayenge?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Variables</li>
+                                <li>B) Objects / Samples</li>
+                                <li>C) Dimensions</li>
+                                <li>D) Attributes</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Objects / Samples.</strong> Jo entities pe data collect kiya jaata hai unhe objects ya samples kehte hain.
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 4 -->
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">4. Narrow sense mein, Big Data ka focus kis par hota hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Data ki variety par</li>
+                                <li>B) Data ke sample size par</li>
+                                <li>C) Data ke columns par</li>
+                                <li>D) Data ki speed par</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Data ke sample size par.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 5 -->
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">5. Agar ek table mein 'ID', 'Height', 'Weight', 'Age' columns hain, toh inme se kaunsa ek 'Feature' nahi hai balki identifier hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Height</li>
+                                <li>B) Weight</li>
+                                <li>C) Age</li>
+                                <li>D) ID</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: D) ID.</strong> ID is just to identify the object/sample, jabki Height, Weight, Age uske analytical features (attributes) hain.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 2: Explosion of Data -->
+            <section id="topic2" class="mb-20 scroll-mt-20">
+                <h2 class="font-heading text-3xl font-bold mb-6 flex items-center border-b border-glass-border pb-2">
+                    <span class="bg-neon-purple text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 text-xl">2</span>
+                    Explosion of Data (Data All Around)
+                </h2>
+                
+                <div class="glass-panel p-6 mb-8">
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        Aaj kal har jagah huge amount mein data generate aur store ho raha hai. E-commerce websites, financial bank transactions, online trading, aur sabse zyada <strong>Social Networks</strong> lagatar massive data produce kar rahe hain.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <div class="glass-card p-4 text-center">
+                            <i class="fab fa-google text-4xl text-blue-400 mb-2"></i>
+                            <h4 class="font-bold text-lg">Google</h4>
+                            <p class="text-sm text-neon-blue font-mono">20 PB / Day</p>
+                            <p class="text-xs text-gray-400 mt-1">(1,048,576 GBs)</p>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <i class="fab fa-facebook text-4xl text-blue-600 mb-2"></i>
+                            <h4 class="font-bold text-lg">Facebook</h4>
+                            <p class="text-sm text-neon-blue font-mono">60 TB / Day</p>
+                            <p class="text-xs text-gray-400 mt-1">Daily logs</p>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <i class="fab fa-ebay text-4xl text-red-400 mb-2"></i>
+                            <h4 class="font-bold text-lg">eBay</h4>
+                            <p class="text-sm text-neon-blue font-mono">6.5 PB Total</p>
+                            <p class="text-xs text-gray-400 mt-1">+ 50 TB/day</p>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <i class="fas fa-dna text-4xl text-green-400 mb-2"></i>
+                            <h4 class="font-bold text-lg">Genomes</h4>
+                            <p class="text-sm text-neon-blue font-mono">200 TB</p>
+                            <p class="text-xs text-gray-400 mt-1">1000 Genomes Project</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-neon-purple mb-4">Crazy Internet Stats (Per Second/Day)</h3>
+                    <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                        <li><strong>Emails:</strong> 2.9 Million emails bheje jaate hain har second!</li>
+                        <li><strong>Youtube:</strong> 20 hours ka video upload hota hai har minute.</li>
+                        <li><strong>Twitter:</strong> 50 Million tweets aate hain per day.</li>
+                        <li><strong>Amazon:</strong> 72.9 products order hote hain per second.</li>
+                    </ul>
+                </div>
+
+                <!-- MCQs for Topic 2 -->
+                <div class="mt-8">
+                    <h3 class="font-heading text-2xl mb-4 text-neon-purple"><i class="fas fa-gamepad mr-2"></i> Knowledge Check (Topic 2)</h3>
+                    <div class="space-y-4">
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">1. Google approximately ek din mein kitna data process karta hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) 20 TB</li>
+                                <li>B) 20 PB</li>
+                                <li>C) 6.5 PB</li>
+                                <li>D) 60 TB</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-blue cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) 20 PB (Petabytes).</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">2. 1000 Genomes Project mein approx kitna data use hota hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) 200 GB</li>
+                                <li>B) 200 TB</li>
+                                <li>C) 20 PB</li>
+                                <li>D) 60 TB</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-blue cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) 200 TB.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">3. Har minute YouTube par lagbhag kitne ghante ka video upload hota hai? (As per slides)</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) 10 Hours</li>
+                                <li>B) 20 Hours</li>
+                                <li>C) 50 Hours</li>
+                                <li>D) 100 Hours</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-blue cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) 20 Hours.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">4. Har second Amazon par kitne products order hote hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) 50</li>
+                                <li>B) 100</li>
+                                <li>C) 72.9</li>
+                                <li>D) 24</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-blue cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) 72.9 products per second.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">5. Inme se kaunsa statement TRUE hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Facebook has 60 TB of daily logs.</li>
+                                <li>B) eBay has 6.5 PB of user data.</li>
+                                <li>C) 2.9 million emails are sent every second.</li>
+                                <li>D) All of the above.</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-blue cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: D) All of the above.</strong> Ye sabhi statistics notes me di gayi hain.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 3: 3 V's of Big Data -->
+            <section id="topic3" class="mb-20 scroll-mt-20">
+                <h2 class="font-heading text-3xl font-bold mb-6 flex items-center border-b border-glass-border pb-2">
+                    <span class="bg-neon-pink text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 text-xl">3</span>
+                    The 3 V's of Big Data
+                </h2>
+                
+                <div class="glass-panel p-6 mb-8">
+                    <p class="text-gray-300 leading-relaxed mb-6 font-semibold">
+                        <i class="fas fa-quote-left text-neon-blue opacity-50 text-xl mr-2"></i>
+                        Big Data is any data that is expensive to manage and hard to extract value from. Iske complexity ko mainly 3 V's se define kiya jaata hai.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="glass-card p-5 border-l-4 border-neon-blue">
+                            <h4 class="font-bold text-xl text-white mb-2"><i class="fas fa-database text-neon-blue mr-2"></i> 1. Volume (Size of Data)</h4>
+                            <p class="text-gray-400 mb-2">Kitna zyada data hai? Jab data GBs se aage badhkar Terabytes (TB) aur Petabytes (PB) mein chala jaye. Isme shamil hain millions of transactions aur sensor data.</p>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                                <span class="px-2 py-1 bg-white/10 rounded">Terabytes</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">Petabytes</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">Transactions</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 border-l-4 border-neon-purple">
+                            <h4 class="font-bold text-xl text-white mb-2"><i class="fas fa-tachometer-alt text-neon-purple mr-2"></i> 2. Velocity (Speed of Data)</h4>
+                            <p class="text-gray-400 mb-2">Latency of data processing. Yaani data kis speed se aa raha hai aur usko process karne ki demand kitni tez hai. Speed ka flow kuch aisa hota hai: <br>
+                                <span class="text-neon-pink font-semibold">Batch -> Periodic -> Near Real-time -> Real Time</span>
+                            </p>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                                <span class="px-2 py-1 bg-white/10 rounded">Batch</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">Streams</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">Real-time</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 border-l-4 border-neon-pink">
+                            <h4 class="font-bold text-xl text-white mb-2"><i class="fas fa-cubes text-neon-pink mr-2"></i> 3. Variety (Complexity of Data)</h4>
+                            <p class="text-gray-400 mb-2">Diversity of sources aur formats. Pehle data sirf tables (RDBMS) mein hota tha, ab images, videos, logs, XML sab data hain.</p>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                                <span class="px-2 py-1 bg-white/10 rounded">RDBMS</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">XML / JSON</span>
+                                <span class="px-2 py-1 bg-white/10 rounded">Audio/Video</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 3 -->
+                <div class="mt-8">
+                    <h3 class="font-heading text-2xl mb-4 text-neon-pink"><i class="fas fa-gamepad mr-2"></i> Knowledge Check (Topic 3)</h3>
+                    <div class="space-y-4">
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">1. 3 V's of Big data mein kaunse aate hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Volume, Velocity, Value</li>
+                                <li>B) Volume, Velocity, Variety</li>
+                                <li>C) Variety, Veracity, Validity</li>
+                                <li>D) Volume, Versatility, Velocity</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Volume, Velocity, Variety.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">2. In terms of Velocity, kis type ki processing sabse fast/immediate hoti hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Batch</li>
+                                <li>B) Periodic</li>
+                                <li>C) Real Time</li>
+                                <li>D) Offline</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) Real Time.</strong> Real time processing ka matlab hai jaise hi data generate hua wese hi action le lena.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">3. "Terabytes, Petabytes, Exabytes" kis V ko represent karte hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Variety</li>
+                                <li>B) Velocity</li>
+                                <li>C) Volume</li>
+                                <li>D) Veracity</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) Volume.</strong> Ye data ke mass / size ko represent karta hai.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">4. XML files, Videos, Relational Tables, and Audios - ye kis V ka example hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Volume</li>
+                                <li>B) Variety</li>
+                                <li>C) Velocity</li>
+                                <li>D) Validity</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Variety.</strong> Ye alag alag data formats (diversity) ko darshate hain.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">5. Big Data ko "expensive to manage" aur "hard to extract value from" kyu kaha gaya hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Kyuki traditional methods aur databases inke huge size/complexity ke liye fit nahi hain.</li>
+                                <li>B) Kyuki inka internet pe download speed slow hai.</li>
+                                <li>C) Kyuki isme sirf numbers hote hain.</li>
+                                <li>D) None of the above.</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: A) Traditional methods inke size aur complexity handle nahi kar sakte.</strong> Isiliye Hadoop aur Spark jaise tools banaye gaye.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 4: Types of Data -->
+            <section id="topic4" class="mb-20 scroll-mt-20">
+                <h2 class="font-heading text-3xl font-bold mb-6 flex items-center border-b border-glass-border pb-2">
+                    <span class="bg-neon-blue text-black w-10 h-10 rounded-full flex items-center justify-center mr-4 text-xl">4</span>
+                    Different Types of Data We Have
+                </h2>
+                
+                <div class="glass-panel p-6 mb-8">
+                    <p class="text-gray-300 mb-6">Real world mein data sirf Excel sheets mein limited nahi hai. Chaliye dekhte hain kitne tarah ke data formats exist karte hain:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Type 1 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-neon-blue transition-colors">
+                            <h4 class="font-bold text-lg text-neon-blue mb-2"><i class="fas fa-table mr-2"></i> Structured Data</h4>
+                            <p class="text-sm text-gray-400 mb-2">Rows aur columns mein properly arranged data. Ise analyze karna sabse asaan hota hai.</p>
+                            <span class="text-xs bg-black/50 px-2 py-1 rounded text-gray-300 font-mono">Examples: RDBMS, SQL Tables, Spreadsheets</span>
+                        </div>
+                        <!-- Type 2 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-neon-purple transition-colors">
+                            <h4 class="font-bold text-lg text-neon-purple mb-2"><i class="fas fa-code mr-2"></i> Semi-structured Data</h4>
+                            <p class="text-sm text-gray-400 mb-2">Isme strict tables nahi hote, balki "Tags" ka use hota hai elements ko separate karne ke liye.</p>
+                            <span class="text-xs bg-black/50 px-2 py-1 rounded text-gray-300 font-mono">Examples: XML, JSON, HTML, Linked Open Data (vCards)</span>
+                        </div>
+                        <!-- Type 3 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-neon-pink transition-colors">
+                            <h4 class="font-bold text-lg text-neon-pink mb-2"><i class="fas fa-align-left mr-2"></i> Unstructured Data</h4>
+                            <p class="text-sm text-gray-400 mb-2">Koi fix fields ya attributes nahi hote. Ye sabse jyada generate hota hai aaj kal.</p>
+                            <span class="text-xs bg-black/50 px-2 py-1 rounded text-gray-300 font-mono">Examples: Text (Web), Emails, Notes, Articles, Videos, Tweets</span>
+                        </div>
+                        <!-- Type 4 -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-green-400 transition-colors">
+                            <h4 class="font-bold text-lg text-green-400 mb-2"><i class="fas fa-project-diagram mr-2"></i> Graph & Network Data</h4>
+                            <p class="text-sm text-gray-400 mb-2">Jahan data points ke beech ke relationships matter karte hain.</p>
+                            <span class="text-xs bg-black/50 px-2 py-1 rounded text-gray-300 font-mono">Examples: Social Networks, Semantic Web (RDF), IP Connections</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-neon-blue mt-8 mb-4">Other Specialized Domains:</h3>
+                    <ul class="list-disc pl-6 text-gray-300 space-y-3">
+                        <li><strong>Geospatial Data:</strong> Layers mein data manage hota hai (e.g. Street data -> Buildings -> Vegetation -> Integrated Map).</li>
+                        <li><strong>Streaming Data:</strong> Continuous aane wala data jise aap fast scan karte hain (e.g. Sensors, IP log connections).</li>
+                        <li><strong>IoT (Internet of Things) Data:</strong> Smart homes, Smart manufacturing (RFID), Wearables, Connected cars, Healthcare remote monitoring. Ye huge volume generate karta hai.</li>
+                        <li><strong>Transactional Data:</strong> Accounts payable/receivable, Credits, Debits, invoices ki logs (Banking/Accounting).</li>
+                    </ul>
+                </div>
+
+                <!-- MCQs for Topic 4 -->
+                <div class="mt-8">
+                    <h3 class="font-heading text-2xl mb-4 text-neon-blue"><i class="fas fa-gamepad mr-2"></i> Knowledge Check (Topic 4)</h3>
+                    <div class="space-y-4">
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">1. JSON aur XML files kis category ke data mein aati hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Structured Data</li>
+                                <li>B) Semi-structured Data</li>
+                                <li>C) Unstructured Data</li>
+                                <li>D) Streaming Data</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) Semi-structured Data.</strong> Kyuki isme fields alag karne ke liye 'tags' use hote hain, but RDBMS jaisa rigid column structure nahi hota.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">2. Inme se kaunsa Unstructured data ka example hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Ek SQL table ki rows</li>
+                                <li>B) Excel spreadsheet</li>
+                                <li>C) Customer ki taraf se likha gaya Email</li>
+                                <li>D) Bank account balance record</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) Customer ki taraf se likha gaya Email.</strong> Text, audio, emails me koi fixed schema nahi hota isiliye unstructured hain.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">3. "Street Data", "Buildings Data", aur "Vegetation Data" layers ko combine karke kaisa data banaya jata hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Social Network Data</li>
+                                <li>B) Transactional Data</li>
+                                <li>C) Geospatial Data</li>
+                                <li>D) XML Data</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: C) Geospatial Data.</strong> Ye geographical information system (GIS) layers ko represent karta hai.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">4. Smart home management, wearables, and fleet tracking (GPS) se nikalne wala data basically kis category mein classify hota hai?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Relational database</li>
+                                <li>B) IoT (Internet of Things) Data</li>
+                                <li>C) Graph Data</li>
+                                <li>D) Legacy Data</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: B) IoT (Internet of Things) Data.</strong>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="font-semibold mb-3">5. "Semantic Web (RDF)" aur "Social Networks" (nodes aur edges wale) kis tarah ka data hain?</p>
+                            <ul class="ml-4 space-y-2 mb-3 text-gray-400">
+                                <li>A) Graph Data</li>
+                                <li>B) Geospatial Data</li>
+                                <li>C) RDBMS</li>
+                                <li>D) Text Data</li>
+                            </ul>
+                            <details class="group">
+                                <summary class="text-neon-purple cursor-pointer hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Answer</summary>
+                                <div class="mt-3 p-3 bg-green-900/30 border border-green-500/30 rounded text-green-400 text-sm">
+                                    <strong>Correct Answer: A) Graph Data.</strong> Inme entities aur unke beech ke relationship (networks) store kiye jate hain.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Revision Section -->
+            <section id="quick-revision" class="mb-20 scroll-mt-20">
+                <h2 class="font-heading text-3xl font-bold mb-6 flex items-center border-b border-glass-border pb-2">
+                    <span class="bg-gradient-to-r from-neon-blue to-neon-purple text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 text-xl"><i class="fas fa-rocket text-sm"></i></span>
+                    Exam-Ready Quick Revision
+                </h2>
+                
+                <div class="glass-panel p-6 mb-8 overflow-x-auto">
+                    <h3 class="text-xl font-bold text-white mb-4">Quick Comparison: Data Types</h3>
+                    <table class="w-full text-left text-sm text-gray-300">
+                        <thead class="bg-white/10 text-neon-blue">
+                            <tr>
+                                <th class="p-3 rounded-tl-lg">Feature</th>
+                                <th class="p-3">Structured Data</th>
+                                <th class="p-3">Semi-Structured Data</th>
+                                <th class="p-3 rounded-tr-lg">Unstructured Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/10">
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 font-semibold text-white">Format/Schema</td>
+                                <td class="p-3">Strict Fields/Tables/Columns</td>
+                                <td class="p-3">Tags/Markers to separate elements</td>
+                                <td class="p-3">No specific fields/attributes</td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 font-semibold text-white">Storage</td>
+                                <td class="p-3">RDBMS (SQL)</td>
+                                <td class="p-3">NoSQL databases (Document)</td>
+                                <td class="p-3">Data Lakes, File systems</td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 font-semibold text-white">Examples</td>
+                                <td class="p-3">Spreadsheets, Relational Tables</td>
+                                <td class="p-3">XML, JSON, HTML</td>
+                                <td class="p-3">Emails, Notes, Images, Videos</td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 font-semibold text-white">Analysis Ease</td>
+                                <td class="p-3 text-green-400">Very Easy</td>
+                                <td class="p-3 text-yellow-400">Moderate</td>
+                                <td class="p-3 text-red-400">Complex (Needs ML/NLP)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="glass-card p-5">
+                        <h3 class="font-bold text-lg text-neon-blue mb-3">Math / Units Cheatsheet</h3>
+                        <div class="bg-black/50 p-4 rounded text-sm font-mono overflow-x-auto">
+                            $$ 1 \text{ Kilobyte (KB)} = 1024 \text{ Bytes} $$
+                            $$ 1 \text{ Megabyte (MB)} = 1024 \text{ KB} $$
+                            $$ 1 \text{ Gigabyte (GB)} = 1024 \text{ MB} $$
+                            $$ 1 \text{ Terabyte (TB)} = 1024 \text{ GB} $$
+                            $$ 1 \text{ Petabyte (PB)} = 1024 \text{ TB} $$
+                            <br>
+                            <p class="text-xs text-gray-400">Fact: 1 Petabyte (PB) = 1,048,576 Gigabytes (GB)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card p-5">
+                        <h3 class="font-bold text-lg text-neon-purple mb-3">The 3 V's Summary</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="bg-neon-blue w-2 h-2 rounded-full mt-2 mr-3"></span>
+                                <div>
+                                    <strong class="text-white">Volume:</strong> GBs, TBs, PBs. The scale of data.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-neon-purple w-2 h-2 rounded-full mt-2 mr-3"></span>
+                                <div>
+                                    <strong class="text-white">Velocity:</strong> The speed of data generation & processing (Batch to Real-time).
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-neon-pink w-2 h-2 rounded-full mt-2 mr-3"></span>
+                                <div>
+                                    <strong class="text-white">Variety:</strong> Structured, Semi-structured, Unstructured. The diversity of data.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer with Profiles -->
+    <footer class="mt-auto glass-panel rounded-none border-b-0 border-l-0 border-r-0 border-t py-8 text-center relative z-10">
+        <div class="container mx-auto px-4">
+            <h3 class="font-heading text-2xl font-bold mb-4 text-gradient">Connect With Me</h3>
+            <p class="text-gray-400 mb-6 max-w-md mx-auto">Made with <i class="fas fa-heart text-red-500 animate-pulse"></i> for quick learning. Feel free to connect on my socials!</p>
+            
+            <div class="flex justify-center space-x-6">
+                <!-- GitHub -->
+                <a href="https://github.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-neon-blue/20 hover:text-neon-blue border border-white/10 hover:border-neon-blue transition-all duration-300 transform hover:-translate-y-1 text-2xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="https://youtube.com/@shivamcuj" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-500 border border-white/10 hover:border-red-500 transition-all duration-300 transform hover:-translate-y-1 text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-blue-500/20 hover:text-blue-500 border border-white/10 hover:border-blue-500 transition-all duration-300 transform hover:-translate-y-1 text-2xl">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-pink-500/20 hover:text-pink-500 border border-white/10 hover:border-pink-500 transition-all duration-300 transform hover:-translate-y-1 text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-600 mt-8 text-sm">&copy; 2026 shivamcuj. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interactivity -->
+    <script>
+        // 1. Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebar.classList.toggle('hidden');
+            // Allow it to be fixed layout over content on mobile
+            sidebar.classList.add('fixed', 'top-0', 'h-screen', 'w-3/4', 'z-50', 'bg-gray-900/95');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleSidebar);
+        closeSidebarBtn.addEventListener('click', toggleSidebar);
+
+        // Close sidebar if user clicks outside of it on mobile
+        document.addEventListener('click', (e) => {
+            if(window.innerWidth < 768) {
+                if(!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target) && !sidebar.classList.contains('-translate-x-full')) {
+                    toggleSidebar();
+                }
+            }
+        });
+
+        // 2. Scroll-spy Logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px', // Trigger area
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active class from all
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        // link.classList.remove('bg-white/10', 'border-l-4', 'border-neon-blue');
+                    });
+                    
+                    // Add active class to intersecting section's link
+                    const activeId = entry.target.id;
+                    const activeLink = document.querySelector(`.nav-link[href="#${activeId}"]`);
+                    if(activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add smooth scrolling specifically to links (optional since html has scroll-smooth, but good practice)
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // If on mobile, close menu when link is clicked
+                if(window.innerWidth < 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
