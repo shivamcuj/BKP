@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>डेटा कलेक्शन · हिंग्लिश नोट्स</title>
+    <!-- Tailwind + Font Awesome + MathJax -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass {
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(15, 25, 40, 0.7);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            color: #7dd3fc;
+            border-left: 3px solid #0ff;
+        }
+        /* mobile sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(3px);
+                z-index: 90;
+            }
+            #overlay.open {
+                display: block;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a2a; }
+        ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-200 font-sans antialiased min-h-screen">
+
+    <!-- mobile overlay -->
+    <div id="overlay" class="md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- mobile top bar -->
+    <nav class="md:hidden bg-slate-800/80 p-4 flex justify-between items-center glass sticky top-0 z-30 border-b border-cyan-500/30">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">📊 Data Collection</span>
+        <button onclick="toggleSidebar()" class="text-cyan-300 focus:outline-none p-2 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <div class="flex relative">
+        <!-- SIDEBAR (sticky) -->
+        <aside id="sidebar" class="w-64 h-screen sticky top-0 left-0 overflow-y-auto glass md:shadow-2xl z-[100] md:z-10">
+            <div class="p-5">
+                <h2 class="text-2xl font-light mb-6 flex items-center gap-2 border-b border-cyan-500/30 pb-3">
+                    <i class="fas fa-database text-cyan-400"></i>
+                    <span class="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent font-semibold">index</span>
+                </h2>
+                <ul class="space-y-2 text-sm font-medium" id="sidebar-links">
+                    <li><a href="#section1" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">1. डेटा कलेक्शन – परिचय</a></li>
+                    <li><a href="#section2" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">2. प्राथमिक डेटा के तरीके</a></li>
+                    <li><a href="#section3" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">3. द्वितीयक डेटा स्रोत</a></li>
+                    <li><a href="#section4" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">4. उदाहरण – चर (Variable)</a></li>
+                    <li><a href="#quickrev" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">⚡ क्विक रिवीजन</a></li>
+                </ul>
+                <div class="mt-8 text-xs text-cyan-600/50 border-t border-cyan-500/20 pt-4">
+                    <p class="flex items-center gap-1"><i class="fas fa-dragon"></i> based on 6.Data Collection Methods.pdf</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-5 md:p-8 max-w-4xl mx-auto space-y-8">
+            
+            <!-- header -->
+            <div class="glass-card p-6 rounded-3xl neon-glow">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent">📥 डेटा कलेक्शन <span class="text-white/30">· हिंग्लिश</span></h1>
+                <p class="mt-2 text-slate-300 text-lg">तरीके, स्रोत, शब्दावली और रियल उदाहरण – exam के लिए एकदम तैयार 💡</p>
+            </div>
+
+            <!-- SECTION 1 : Introduction & Terms -->
+            <section id="section1" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-info-circle text-purple-400"></i>1. डेटा कलेक्शन – परिभाषा और शब्दावली</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">📌 What is Data Collection?</span> यह एक systematic process है – information gather, measure और analyze करना, ताकि किसी area की accurate picture मिल सके। यह statistical inquiry का पहला और सबसे जरूरी step है।</p>
+                    <p><span class="text-purple-300">🎯 Purpose:</span> समस्या का solution ढूंढना, informed decisions लेना, trends पकड़ना, progress measure करना।</p>
+                    <p><span class="text-purple-300">🧑‍🏫 Important Terms:</span></p>
+                    <ul class="list-disc ml-6">
+                        <li><span class="text-cyan-200">Data:</span> tool जो investigator को problem समझने में मदद करता है। दो प्रकार: Primary और Secondary।</li>
+                        <li><span class="text-cyan-200">Investigator:</span> वह व्यक्ति जो statistical enquiry conduct करता है।</li>
+                        <li><span class="text-cyan-200">Enumerators:</span> investigator की मदद करने वाले लोग (data collect करते हैं)।</li>
+                        <li><span class="text-cyan-200">Respondent:</span> जिससे information ली जाती है।</li>
+                        <li><span class="text-cyan-200">Survey:</span> individuals से information collect करने का तरीका – जैसे product/service के बारे में सवाल पूछना।</li>
+                    </ul>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">✍️ MCQs – परिचय</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Data collection का पहला step क्या है?</p><div class="ml-3 text-sm"><div>A) Data analysis</div><div>B) Statistical inquiry</div><div>C) Data cleaning</div><div>D) Report writing</div></div><details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) Statistical inquiry</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Investigator किसे कहते हैं?</p><div class="ml-3 text-sm"><div>A) जो data देता है</div><div>B) जो statistical enquiry conduct करता है</div><div>C) जो सवालों के जवाब देता है</div><div>D) जो सर्वे में मदद करता है</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) जो statistical enquiry conduct करता है</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Respondent कौन होता है?</p><div class="ml-3 text-sm"><div>A) जिससे information ली जाती है</div><div>B) जो enumerator होता है</div><div>C) जो सवाल बनाता है</div><div>D) जो data publish करता है</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) जिससे information ली जाती है</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Survey का मुख्य उद्देश्य क्या है?</p><div class="ml-3 text-sm"><div>A) data store करना</div><div>B) individuals से information collect करना</div><div>C) data delete करना</div><div>D) data visualize करना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) individuals से information collect करना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Data के दो मुख्य प्रकार कौन से हैं?</p><div class="ml-3 text-sm"><div>A) Primary & Secondary</div><div>B) Big & Small</div><div>C) Qualitative & Quantitative</div><div>D) Structured & Unstructured</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) Primary & Secondary</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 : Primary Data Collection Methods -->
+            <section id="section2" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-clipboard-list text-purple-400 mr-2"></i>2. प्राथमिक डेटा संग्रह के तरीके</h2>
+                <div class="space-y-4">
+                    <p><span class="text-cyan-200">1. Interviews (साक्षात्कार):</span> एक-से-एक बातचीत। दो प्रकार – <span class="text-purple-300">Direct Personal</span> (सीधे source से मिलकर, जैसे गृहिणी से daily routine पूछना) और <span class="text-purple-300">Indirect Oral</span> (जैसे कर्मचारियों का data उनके superiors से लेना)।</p>
+                    <p><span class="text-cyan-200">2. Questionnaires (प्रश्नावली):</span> सवालों की सूची। दो तरीके – <span class="text-purple-300">Mailing Method</span> (डाक से भेजना) और <span class="text-purple-300">Enumerator's Method</span> (enumerator खुद जाकर भरवाता है)। Advantage: बड़ी संख्या तक जल्दी पहुँच। Disadvantage: कम response rate, biased answers।</p>
+                    <p><span class="text-cyan-200">3. Observations (अवलोकन):</span> बिना कुछ पूछे, behavior या events को naturally record करना। Advantage: real-time, authentic data। Disadvantage: observer bias, subjects अपना behavior बदल सकते हैं।</p>
+                    <p><span class="text-cyan-200">4. Experiments (प्रयोग):</span> variables को manipulate करके cause-effect देखना। control और experimental group बनाए जाते हैं। Advantage: precise cause-effect। Disadvantage: artificial environment, generalize करना मुश्किल।</p>
+                    <p><span class="text-cyan-200">5. Focus Groups:</span> 6-12 लोगों का समूह, moderator guided discussion। Advantage: in-depth insights, diverse perspectives। Disadvantage: groupthink, non-representative sample।</p>
+                    <p><span class="text-cyan-200">6. Local Sources / Correspondents:</span> अलग-अलग जगहों पर local persons नियुक्त करके data collect करना, जिससे wide area cover हो सके।</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📝 MCQs – प्राथमिक तरीके</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Direct Personal Investigation में investigator किससे contact करता है?</p><div class="ml-3 text-sm"><div>A) indirect links से</div><div>B) सीधे source of origin से</div><div>C) केवल superiors से</div><div>D) correspondents से</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) सीधे source of origin से</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Mailing Method किससे सम्बंधित है?</p><div class="ml-3 text-sm"><div>A) Observations</div><div>B) Questionnaires</div><div>C) Experiments</div><div>D) Focus Groups</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Questionnaires</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Observation method का एक disadvantage क्या है?</p><div class="ml-3 text-sm"><div>A) high cost</div><div>B) observer bias</div><div>C) low response rate</div><div>D) artificial environment</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) observer bias</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. किस method में control और experimental groups बनाए जाते हैं?</p><div class="ml-3 text-sm"><div>A) Focus Group</div><div>B) Survey</div><div>C) Experiment</div><div>D) Interview</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) Experiment</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Focus Group में आमतौर पर कितने participants होते हैं?</p><div class="ml-3 text-sm"><div>A) 1-2</div><div>B) 6-12</div><div>C) 20-30</div><div>D) 50+</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 6-12</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 : Secondary Data Sources -->
+            <section id="section3" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-book-open text-purple-400 mr-2"></i>3. द्वितीयक डेटा स्रोत</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">📚 Published Sources:</span></p>
+                    <ul class="list-disc ml-6">
+                        <li><span class="text-cyan-200">Government Publications:</span> Ministries, Central/State Governments द्वारा प्रकाशित (e.g., Annual Survey of Industries, Statistical Abstract of India).</li>
+                        <li><span class="text-cyan-200">Semi-Government:</span> Metropolitan Councils, Municipalities (health, education, deaths, births data).</li>
+                        <li><span class="text-cyan-200">Trade Associations:</span> जैसे Sugar Mills Association द्वारा sugar mills का data।</li>
+                        <li><span class="text-cyan-200">Journals & Papers:</span> newspapers, magazines में statistical data।</li>
+                        <li><span class="text-cyan-200">International Publications:</span> IMF, UNO, ILO, World Bank, etc.</li>
+                        <li><span class="text-cyan-200">Research Institutions:</span> National Council of Applied Economics, Indian Statistical Institute, universities के research publications.</li>
+                    </ul>
+                    <p><span class="text-purple-300">📦 Unpublished Sources:</span> data जो organizations ने अपने use के लिए collect किया, पर publish नहीं किया – e.g., professors, professionals की research, business records.</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📚 MCQs – द्वितीयक स्रोत</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Government Publications का एक उदाहरण है?</p><div class="ml-3 text-sm"><div>A) Sugar Mills Association data</div><div>B) Annual Survey of Industries</div><div>C) Indian Statistical Institute research</div><div>D) IMF reports</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Annual Survey of Industries</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. कौन सा semi-government body का example है?</p><div class="ml-3 text-sm"><div>A) World Bank</div><div>B) Municipalities</div><div>C) UNO</div><div>D) ILO</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Municipalities</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Unpublished sources का क्या मतलब है?</p><div class="ml-3 text-sm"><div>A) data जो कभी collect ही नहीं हुआ</div><div>B) data जो collect तो हुआ पर publish नहीं</div><div>C) data जो केवल government के पास है</div><div>D) data जो किताबों में छपा है</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) data जो collect तो हुआ पर publish नहीं</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. International organization कौन सा secondary data publish करता है?</p><div class="ml-3 text-sm"><div>A) IMF</div><div>B) ILO</div><div>C) UNO</div><div>D) All of the above</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) All of the above</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Research institutions के publications कैसे data होते हैं?</p><div class="ml-3 text-sm"><div>A) Primary data</div><div>B) Secondary data</div><div>C) Experimental data</div><div>D) None</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Secondary data</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 : Example – Variables (Rice production) -->
+            <section id="section4" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-table text-purple-400 mr-2"></i>4. उदाहरण – चर (Variable) और डेटा</h2>
+                <div class="space-y-3">
+                    <p>नीचे दी गई table में भारत में चावल उत्पादन (मिलियन टन) दिखाया गया है।</p>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-cyan-500/30 text-sm">
+                            <thead class="bg-cyan-900/40">
+                                <tr><th class="p-2 border">Year (X)</th><th class="p-2 border">Production of Rice (Y) (million tonnes)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="p-2 border">1950-1951</td><td class="p-2 border">20.58</td></tr>
+                                <tr><td class="p-2 border">1966-1967</td><td class="p-2 border">30.34</td></tr>
+                                <tr><td class="p-2 border">1975-1976</td><td class="p-2 border">48.74</td></tr>
+                                <tr><td class="p-2 border">1998-1999</td><td class="p-2 border">86.03</td></tr>
+                                <tr><td class="p-2 border">2002-2003</td><td class="p-2 border">77.7</td></tr>
+                                <tr><td class="p-2 border">2020-2021</td><td class="p-2 border">120</td></tr>
+                                <tr><td class="p-2 border">2022-2023 (estimated)</td><td class="p-2 border">135.52</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><span class="text-purple-300">📐 Variable:</span> ऊपर X (year) और Y (production) दोनों variables हैं क्योंकि इनकी values अलग-अलग सालों में बदलती हैं। Variable वह quantity या attribute है जिसका मान एक investigation से दूसरी में बदलता है।</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📊 MCQs – Variable & Table</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. उपरोक्त table में variable X क्या दर्शाता है?</p><div class="ml-3 text-sm"><div>A) चावल उत्पादन</div><div>B) वर्ष</div><div>C) राज्य</div><div>D) जनसंख्या</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) वर्ष</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. 2022-23 में अनुमानित उत्पादन कितना है?</p><div class="ml-3 text-sm"><div>A) 120</div><div>B) 135.52</div><div>C) 86.03</div><div>D) 77.7</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 135.52</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Variable किसे कहते हैं?</p><div class="ml-3 text-sm"><div>A) जिसकी value fixed हो</div><div>B) जिसकी value बदलती हो</div><div>C) केवल संख्यात्मक मान</div><div>D) केवल श्रेणीगत मान</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) जिसकी value बदलती हो</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. 1975-76 में उत्पादन कितना था?</p><div class="ml-3 text-sm"><div>A) 20.58</div><div>B) 30.34</div><div>C) 48.74</div><div>D) 86.03</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) 48.74</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. इस table के data किस प्रकार के हैं?</p><div class="ml-3 text-sm"><div>A) Primary data</div><div>B) Secondary data</div><div>C) Experimental data</div><div>D) Observational data</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Secondary data (क्योंकि पहले से published)</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUICK REVISION + CHEATSHEET -->
+            <section id="quickrev" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><i class="fas fa-bolt text-yellow-300"></i>⚡ exam‑ready quick revision</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border border-cyan-500/30">Method</th><th class="p-3 border">Type</th><th class="p-3 border">Key Point</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Direct Personal Interview</td><td class="p-3 border">Primary</td><td class="p-3 border">सीधे source से मिलना</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Indirect Oral</td><td class="p-3 border">Primary</td><td class="p-3 border">अन्य व्यक्ति से info लेना (जैसे manager से)</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Mailing Questionnaire</td><td class="p-3 border">Primary</td><td class="p-3 border">डाक से प्रश्नावली भेजना</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Enumerator Method</td><td class="p-3 border">Primary</td><td class="p-3 border">enumerator खुद जाकर भरवाता है</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Observation</td><td class="p-3 border">Primary</td><td class="p-3 border">बिना हस्तक्षेप के देखना</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Experiment</td><td class="p-3 border">Primary</td><td class="p-3 border">control & experimental group</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Focus Group</td><td class="p-3 border">Primary</td><td class="p-3 border">6-12 लोग, moderator</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Published Sources</td><td class="p-3 border">Secondary</td><td class="p-3 border">govt, semi-govt, journals, etc.</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Unpublished Sources</td><td class="p-3 border">Secondary</td><td class="p-3 border">research, business records (not published)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="text-xl mt-5 text-purple-300">📐 महत्वपूर्ण शब्द / सूत्र</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Investigator → enquiry conduct करता है</li>
+                    <li>Enumerator → data collect करने में मदद</li>
+                    <li>Respondent → जिससे data लिया जाता है</li>
+                    <li>Variable = वह जिसका मान बदलता है (X, Y)</li>
+                    <li>\( \text{Primary data} \) – first-hand, fresh</li>
+                    <li>\( \text{Secondary data} \) – already published</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER with socials -->
+            <footer class="glass-card p-5 rounded-2xl flex justify-center gap-8 text-3xl text-cyan-300">
+                <a href="https://github.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-instagram"></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // toggle mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // scroll‑spy : active section highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 90;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
