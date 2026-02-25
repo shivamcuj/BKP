@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Evolution & Life Cycle · हिंग्लिश नोट्स</title>
+    <!-- Tailwind + Font Awesome + MathJax -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass {
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(15, 25, 40, 0.7);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            color: #7dd3fc;
+            border-left: 3px solid #0ff;
+        }
+        /* mobile sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(3px);
+                z-index: 90;
+            }
+            #overlay.open {
+                display: block;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a2a; }
+        ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-200 font-sans antialiased min-h-screen">
+
+    <!-- mobile overlay -->
+    <div id="overlay" class="md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- mobile top bar -->
+    <nav class="md:hidden bg-slate-800/80 p-4 flex justify-between items-center glass sticky top-0 z-30 border-b border-cyan-500/30">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">📈 DS Life Cycle</span>
+        <button onclick="toggleSidebar()" class="text-cyan-300 focus:outline-none p-2 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <div class="flex relative">
+        <!-- SIDEBAR (sticky) -->
+        <aside id="sidebar" class="w-64 h-screen sticky top-0 left-0 overflow-y-auto glass md:shadow-2xl z-[100] md:z-10">
+            <div class="p-5">
+                <h2 class="text-2xl font-light mb-6 flex items-center gap-2 border-b border-cyan-500/30 pb-3">
+                    <i class="fas fa-dna text-cyan-400"></i>
+                    <span class="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent font-semibold">index</span>
+                </h2>
+                <ul class="space-y-2 text-sm font-medium" id="sidebar-links">
+                    <li><a href="#section1" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">1. एवोल्यूशन (1960s–2020s)</a></li>
+                    <li><a href="#section2" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">2. लाइफ साइकिल (6 steps)</a></li>
+                    <li><a href="#section3" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">3. रियल‑लाइफ एग्जाम्पल</a></li>
+                    <li><a href="#section4" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">4. ट्रेडिशनल vs रियल‑टाइम डेटा</a></li>
+                    <li><a href="#quickrev" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">⚡ क्विक रिवीजन</a></li>
+                </ul>
+                <div class="mt-8 text-xs text-cyan-600/50 border-t border-cyan-500/20 pt-4">
+                    <p class="flex items-center gap-1"><i class="fas fa-dragon"></i> based on 5.DATA SCIENCE EVOLUTION LIFE CYCLE.pdf</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-5 md:p-8 max-w-4xl mx-auto space-y-8">
+            
+            <!-- header -->
+            <div class="glass-card p-6 rounded-3xl neon-glow">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent">🔄 डेटा साइंस एवोल्यूशन & लाइफ साइकिल <span class="text-white/30">· हिंग्लिश</span></h1>
+                <p class="mt-2 text-slate-300 text-lg">1960 से LLM तक का सफर, 6 steps, real‑life examples और भी बहुत कुछ 💡</p>
+            </div>
+
+            <!-- SECTION 1 : Evolution -->
+            <section id="section1" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-history text-purple-400"></i>1. एवोल्यूशन ऑफ़ डेटा साइंस</h2>
+                <div class="space-y-3">
+                    <p><span class="text-purple-300">📅 1960s-70s (Early Beginnings):</span> जॉन टकी (1962) ने data analysis को अलग विज्ञान बताया। Exploratory data analysis की नींव पड़ी।</p>
+                    <p><span class="text-purple-300">📅 1980s-90s (Data Mining & Warehousing):</span> डेटाबेस बड़े हुए, patterns ढूंढने पर जोर। Classification, association rule mining popular हुए।</p>
+                    <p><span class="text-purple-300">📅 2000s-2010s (Big Data Boom):</span> इंटरनेट, social media, IoT से भारी डेटा। Hadoop, MapReduce ने distributed computing ला दी।</p>
+                    <p><span class="text-purple-300">📅 2010s-present (ML & AI Integration):</span> “Data scientist” role 2012 में उभरा। Neural networks, deep learning ने image recognition, NLP को ताकत दी।</p>
+                    <p><span class="text-purple-300">📅 2020s-Future (Modern Era):</span> LLMs (Large Language Models), AutoML, Ethical AI, cloud platforms (AWS, Google Cloud) का दौर।</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">✍️ MCQs – Evolution</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. जॉन टकी ने 1962 में क्या argue किया?</p><div class="ml-3 text-sm"><div>A) डेटा साइंस = कंप्यूटर साइंस</div><div>B) डेटा एनालिसिस अलग विज्ञान होना चाहिए</div><div>C) मशीन लर्निंग ही सब कुछ है</div><div>D) बिग डेटा का जन्म</div></div><details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) डेटा एनालिसिस अलग विज्ञान होना चाहिए</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Data Mining & Warehousing किस दशक में प्रमुख हुआ?</p><div class="ml-3 text-sm"><div>A) 1960s</div><div>B) 1980s-90s</div><div>C) 2000s</div><div>D) 2010s</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 1980s-90s</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Big Data Boom के दौरान कौन सी तकनीक आई?</p><div class="ml-3 text-sm"><div>A) Python</div><div>B) Hadoop & MapReduce</div><div>C) GPT-3</div><div>D) AutoML</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Hadoop & MapReduce</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Data scientist का role कब common हुआ?</p><div class="ml-3 text-sm"><div>A) 2005</div><div>B) 2012 के आसपास</div><div>C) 1995</div><div>D) 2020</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 2012 के आसपास</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Modern Era (2020s) में किस पर फोकस है?</p><div class="ml-3 text-sm"><div>A) LLMs</div><div>B) AutoML</div><div>C) Ethical AI</div><div>D) All of the above</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) All of the above</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 : Life Cycle (6 steps) -->
+            <section id="section2" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-sync-alt text-purple-400 mr-2"></i>2. डेटा साइंस लाइफ साइकिल (6 steps)</h2>
+                <div class="space-y-4">
+                    <p><span class="text-cyan-200">1. Problem Statement:</span> सबसे जरूरी – problem clear और precise होनी चाहिए। पूरा model इसी पर निर्भर। business value add होनी चाहिए।</p>
+                    <p><span class="text-cyan-200">2. Data Collection:</span> data इकट्ठा करो – unstructured/structured, videos, spreadsheets, coded forms। जितने sources मिले लो।</p>
+                    <p><span class="text-cyan-200">3. Data Cleaning:</span> missing, duplicate, unnecessary data हटाओ। R (12,000+ packages) stats के लिए अच्छा, Python fast और accessible।</p>
+                    <p><span class="text-cyan-200">4. Data Analysis & Exploration:</span> data की structure समझो, hidden patterns ढूंढो, graphs से visualize करो।</p>
+                    <p><span class="text-cyan-200">5. Data Modelling:</span> hypothesis model बनाओ। algorithm चुनो – regression, classification, SVM, clustering। K‑fold method (train/test split) से model train करो।</p>
+                    <p><span class="text-cyan-200">6. Optimization & Deployment:</span> accuracy check करो, optimize करो। फिर model deploy करो, feedback लो और improve करो।</p>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📝 MCQs – Life Cycle</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. सबसे महत्वपूर्ण step कौन सा माना गया है?</p><div class="ml-3 text-sm"><div>A) Data Collection</div><div>B) Problem Statement</div><div>C) Deployment</div><div>D) Data Cleaning</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Problem Statement</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Data Cleaning में क्या हटाते हैं?</p><div class="ml-3 text-sm"><div>A) missing data</div><div>B) duplicate data</div><div>C) redundant data</div><div>D) All of the above</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) All of the above</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. R किसके लिए ज्यादा preferred है?</p><div class="ml-3 text-sm"><div>A) web development</div><div>B) statistical part (12,000+ packages)</div><div>C) game design</div><div>D) mobile apps</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) statistical part (12,000+ packages)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. K‑fold method किस step में आता है?</p><div class="ml-3 text-sm"><div>A) Data Analysis</div><div>B) Data Modelling</div><div>C) Deployment</div><div>D) Data Collection</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Data Modelling (train/test split)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Deployment के बाद क्या करना चाहिए?</p><div class="ml-3 text-sm"><div>A) model भूल जाओ</div><div>B) feedback लो और improve करो</div><div>C) data delete करो</div><div>D) नया प्रोजेक्ट शुरू करो</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) feedback लो और improve करो</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 : Real-Life Examples -->
+            <section id="section3" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-globe text-purple-400 mr-2"></i>3. रियल‑लाइफ एग्जाम्पल</h2>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li><span class="text-cyan-200">E‑Commerce:</span> Recommender systems – browsing history देखकर products suggest करना।</li>
+                    <li><span class="text-cyan-200">Streaming (Netflix, YouTube):</span> ML से movies/videos recommend करना (watch duration, engagement)।</li>
+                    <li><span class="text-cyan-200">Banking & Finance:</span> Fraud detection – unusual transaction को flag करना।</li>
+                    <li><span class="text-cyan-200">Healthcare Diagnostics:</span> medical scans से disease early detect करना।</li>
+                    <li><span class="text-cyan-200">Ride‑Sharing (Uber, Ola):</span> fare estimate, optimal routes (traffic, demand/supply)।</li>
+                    <li><span class="text-cyan-200">Social Media:</span> Sentiment analysis – posts से public opinion जानना।</li>
+                </ul>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🌍 MCQs – Real-Life Examples</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. E‑commerce में किस सिस्टम से products suggest होते हैं?</p><div class="ml-3 text-sm"><div>A) Fraud detection</div><div>B) Recommender systems</div><div>C) Sentiment analysis</div><div>D) Route optimization</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Recommender systems</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Banking में fraud detection किस पर आधारित होता है?</p><div class="ml-3 text-sm"><div>A) watch duration</div><div>B) unusual transaction (anomaly)</div><div>C) social media posts</div><div>D) traffic conditions</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) unusual transaction (anomaly)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Ride‑sharing apps में fare estimate किन factors पर आधारित?</p><div class="ml-3 text-sm"><div>A) traffic & supply-demand</div><div>B) only distance</div><div>C) only time</div><div>D) user reviews</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) traffic & supply-demand</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Social Media sentiment analysis से क्या पता चलता है?</p><div class="ml-3 text-sm"><div>A) location</div><div>B) public opinion on brands/events</div><div>C) age of user</div><div>D) device type</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) public opinion on brands/events</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Healthcare diagnostics में डेटा साइंस कैसे मदद करता है?</p><div class="ml-3 text-sm"><div>A) medical scans से disease detection</div><div>B) patient billing</div><div>C) appointment scheduling</div><div>D) medicine delivery</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) medical scans से disease detection</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 : Traditional vs Real-Time Data -->
+            <section id="section4" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-clock text-purple-400 mr-2"></i>4. ट्रेडिशनल vs रियल‑टाइम डेटा</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border">Feature</th><th class="p-3 border">Traditional Data</th><th class="p-3 border">Real‑Time / Big Data</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-medium">Volume</td><td class="p-3 border">GB / TB</td><td class="p-3 border">PB / EB</td></tr>
+                            <tr><td class="p-3 border font-medium">Velocity</td><td class="p-3 border">Batch / periodic</td><td class="p-3 border">Streaming / real‑time</td></tr>
+                            <tr><td class="p-3 border font-medium">Variety</td><td class="p-3 border">Structured (tables)</td><td class="p-3 border">Unstructured, semi‑structured (text, video, sensor)</td></tr>
+                            <tr><td class="p-3 border font-medium">Processing</td><td class="p-3 border">Relational DB, OLAP</td><td class="p-3 border">Hadoop, Spark, NoSQL</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MCQs 5 -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">⏱️ MCQs – Traditional vs Real‑Time</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Real‑time data की मुख्य विशेषता क्या है?</p><div class="ml-3 text-sm"><div>A) high latency</div><div>B) streaming / instant processing</div><div>C) only structured</div><div>D) small volume</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) streaming / instant processing</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. किसमें variety ज्यादा होती है?</p><div class="ml-3 text-sm"><div>A) Traditional Data</div><div>B) Real‑Time / Big Data</div><div>C) दोनों में बराबर</div><div>D) किसी में नहीं</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Real‑Time / Big Data (unstructured, semi‑structured)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Traditional data के लिए कौन सा tool common है?</p><div class="ml-3 text-sm"><div>A) Hadoop</div><div>B) Spark</div><div>C) Relational Database (OLAP)</div><div>D) NoSQL</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) Relational Database (OLAP)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Volume के लिहाज से Big Data कहाँ आता है?</p><div class="ml-3 text-sm"><div>A) GB</div><div>B) TB</div><div>C) PB / EB</div><div>D) KB</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) PB / EB</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Real‑time data processing के लिए कौन सा फ्रेमवर्क use होता है?</p><div class="ml-3 text-sm"><div>A) MapReduce (batch)</div><div>B) Apache Spark Streaming</div><div>C) Microsoft Excel</div><div>D) MySQL</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Apache Spark Streaming</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUICK REVISION + CHEATSHEET -->
+            <section id="quickrev" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><i class="fas fa-bolt text-yellow-300"></i>⚡ exam‑ready quick revision</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border border-cyan-500/30">Phase</th><th class="p-3 border">Time</th><th class="p-3 border">Key highlights</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Early Beginnings</td><td class="p-3 border">1960s-70s</td><td class="p-3 border">John Tukey, exploratory data analysis</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Data Mining & Warehousing</td><td class="p-3 border">1980s-90s</td><td class="p-3 border">classification, association rules</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Big Data Boom</td><td class="p-3 border">2000s-10s</td><td class="p-3 border">Hadoop, MapReduce, IoT, social media</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">ML & AI Integration</td><td class="p-3 border">2010s-present</td><td class="p-3 border">data scientist role, deep learning, NLP</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Modern Era</td><td class="p-3 border">2020s- future</td><td class="p-3 border">LLMs, AutoML, Ethical AI, cloud</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="text-xl mt-5 text-purple-300">📐 Life Cycle 6 steps (याद रखने का मंत्र)</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li><span class="text-cyan-200">Problem</span> → <span class="text-cyan-200">Collect</span> → <span class="text-cyan-200">Clean</span> → <span class="text-cyan-200">Analyse</span> → <span class="text-cyan-200">Model</span> → <span class="text-cyan-200">Deploy</span></li>
+                    <li>K‑fold: data split into train/test k times</li>
+                    <li>R (stats) vs Python (fast, general)</li>
+                </ul>
+                <h3 class="text-xl mt-5 text-purple-300">📊 Traditional vs Big Data formula</h3>
+                <ul class="list-disc ml-6">
+                    <li>\( \text{Velocity}_{\text{real-time}} \gg \text{Velocity}_{\text{batch}} \)</li>
+                    <li>\( \text{Volume}_{\text{big}} \approx \text{PB} \), \( \text{Volume}_{\text{trad}} \approx \text{GB/TB} \)</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER with socials -->
+            <footer class="glass-card p-5 rounded-2xl flex justify-center gap-8 text-3xl text-cyan-300">
+                <a href="https://github.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-instagram"></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // toggle mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // scroll‑spy : active section highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 90;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
