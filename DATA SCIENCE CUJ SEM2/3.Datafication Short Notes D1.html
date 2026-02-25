@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>डेटाफिकेशन · हिंग्लिश नोट्स</title>
+    <!-- Tailwind + Font Awesome + MathJax -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        .glass {
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(15, 25, 40, 0.7);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .sidebar-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            color: #7dd3fc;
+            border-left: 3px solid #0ff;
+        }
+        /* mobile sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(3px);
+                z-index: 90;
+            }
+            #overlay.open {
+                display: block;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a2a; }
+        ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-slate-200 font-sans antialiased min-h-screen">
+
+    <!-- mobile overlay -->
+    <div id="overlay" class="md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- mobile top bar -->
+    <nav class="md:hidden bg-slate-800/80 p-4 flex justify-between items-center glass sticky top-0 z-30 border-b border-cyan-500/30">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">📊 डेटाफिकेशन</span>
+        <button onclick="toggleSidebar()" class="text-cyan-300 focus:outline-none p-2 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <div class="flex relative">
+        <!-- SIDEBAR (sticky) -->
+        <aside id="sidebar" class="w-64 h-screen sticky top-0 left-0 overflow-y-auto glass md:shadow-2xl z-[100] md:z-10">
+            <div class="p-5">
+                <h2 class="text-2xl font-light mb-6 flex items-center gap-2 border-b border-cyan-500/30 pb-3">
+                    <i class="fas fa-wave-square text-cyan-400"></i>
+                    <span class="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent font-semibold">index</span>
+                </h2>
+                <ul class="space-y-2 text-sm font-medium" id="sidebar-links">
+                    <li><a href="#section1" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">1. डेटा के साथ क्या करें?</a></li>
+                    <li><a href="#section2" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">2. डेटाफिकेशन (Datafication)</a></li>
+                    <li><a href="#section3" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">3. भविष्य & डिमांड</a></li>
+                    <li><a href="#section4" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">4. डेटा साइंस (परिभाषा)</a></li>
+                    <li><a href="#section5" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">5. डेटा साइंटिस्ट</a></li>
+                    <li><a href="#section6" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">6. स्किल्स & टाइप्स</a></li>
+                    <li><a href="#quickrev" onclick="if(window.innerWidth<768) toggleSidebar()" class="sidebar-link block p-2.5 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition border-l-2 border-transparent">⚡ क्विक रिवीजन</a></li>
+                </ul>
+                <div class="mt-8 text-xs text-cyan-600/50 border-t border-cyan-500/20 pt-4">
+                    <p class="flex items-center gap-1"><i class="fas fa-dragon"></i> based on datafication.pdf</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-5 md:p-8 max-w-4xl mx-auto space-y-8">
+            
+            <!-- header -->
+            <div class="glass-card p-6 rounded-3xl neon-glow">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent">🌀 डेटाफिकेशन <span class="text-white/30">· हिंग्लिश</span></h1>
+                <p class="mt-2 text-slate-300 text-lg">हर कॉन्सेप्ट आसान भाषा में, exam के लिए तैयारी पक्की 💡</p>
+            </div>
+
+            <!-- SECTION 1 : What To Do With Data -->
+            <section id="section1" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3 flex items-center gap-2"><i class="fas fa-tools text-purple-400"></i>1. डेटा के साथ क्या करें?</h2>
+                <div class="space-y-2">
+                    <p><span class="text-purple-300">🔧 डेटा से क्या-क्या किया जा सकता है:</span></p>
+                    <ul class="list-disc ml-6 grid grid-cols-2 gap-1">
+                        <li>Aggregation & Statistics</li><li>Data warehousing & OLAP</li>
+                        <li>Indexing, Searching, Querying</li><li>Keyword based search</li>
+                        <li>Pattern matching</li><li>Knowledge discovery</li>
+                        <li>Data Mining</li><li>Statistical Modeling</li>
+                    </ul>
+                </div>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">✍️ MCQs – डेटा ऑपरेशन्स</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>1. निम्न में से कौन सा डेटा से ज्ञान निकालने की प्रक्रिया है?</p>
+                            <div class="ml-3 text-sm"><div>A) Indexing</div><div>B) Data Mining</div><div>C) Warehousing</div><div>D) OLAP</div></div>
+                            <details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) Data Mining</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>2. OLAP का full form क्या होगा?</p>
+                            <div class="ml-3 text-sm"><div>A) Online Analytical Processing</div><div>B) Online Application Processing</div><div>C) Offline Analytical Processing</div><div>D) Open Link Access Protocol</div></div>
+                            <details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ A) Online Analytical Processing</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>3. पैटर्न मैचिंग किसमें help करता है?</p>
+                            <div class="ml-3 text-sm"><div>A) डेटा स्टोर करने में</div><div>B) डेटा में रिपीटिंग स्ट्रक्चर ढूंढने में</div><div>C) डेटा डिलीट करने में</div><div>D) डेटा एन्क्रिप्ट करने में</div></div>
+                            <details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) डेटा में रिपीटिंग स्ट्रक्चर ढूंढने में</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>4. कौन सा टर्म डेटा वेयरहाउसिंग से जुड़ा है?</p>
+                            <div class="ml-3 text-sm"><div>A) MapReduce</div><div>B) OLAP</div><div>C) Neural Network</div><div>D) Deep Learning</div></div>
+                            <details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ B) OLAP</p></details>
+                        </div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl">
+                            <p>5. "Knowledge discovery" का मतलब क्या है?</p>
+                            <div class="ml-3 text-sm"><div>A) डेटा में छिपे पैटर्न और जानकारी को खोजना</div><div>B) डेटा को डिलीट करना</div><div>C) डेटा को कॉपी करना</div><div>D) डेटा को बैकअप करना</div></div>
+                            <details><summary class="text-cyan-300 text-sm mt-1 cursor-pointer">🔓 जवाब</summary><p class="text-green-400">✅ A) डेटा में छिपे पैटर्न और जानकारी को खोजना</p></details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 : Datafication -->
+            <section id="section2" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-sync-alt text-purple-400 mr-2"></i>2. डेटाफिकेशन (Datafication)</h2>
+                <div class="space-y-2">
+                    <p><span class="text-purple-300">🔁 परिभाषा:</span> "taking all aspects of life and turning them into data" – जीवन के हर पहलू (ऑनलाइन/ऑफलाइन, real-time/past) को डेटा में बदलना।</p>
+                    <p><span class="text-purple-300">📦 उदाहरण:</span> सोशल मीडिया एक्टिविटी, लोकेशन, शॉपिंग, सेहट – सबका डेटा बनना।</p>
+                    <p><span class="text-purple-300">💡 वैल्यू क्रिएशन:</span> "Once we datafy things, we can transform their purpose and turn information into new forms of value." – नए प्रोडक्ट, सर्विस, इनसाइट्स।</p>
+                    <p><span class="text-purple-300">🚀 ड्राइवर्स:</span> सस्ती कंप्यूटिंग पावर, communication capacity, छोटे सेंसर (IoT), behavior-environment-data का फीडबैक लूप।</p>
+                </div>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📀 MCQs – Datafication</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Datafication का क्या मतलब है?</p><div class="ml-3 text-sm"><div>A) डेटा डिलीट करना</div><div>B) लाइफ के हर पहलू को डेटा में बदलना</div><div>C) डेटा को स्टोर करना</div><div>D) डेटा एनालिसिस</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) लाइफ के हर पहलू को डेटा में बदलना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Datafication को मुमकिन बनाने वाला एक कारक क्या है?</p><div class="ml-3 text-sm"><div>A) महंगे सुपरकंप्यूटर</div><div>B) सस्ते सेंसर (IoT)</div><div>C) मैनुअल डेटा एंट्री</div><div>D) पेपर रिकॉर्ड</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) सस्ते सेंसर (IoT)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. "Once we datafy things, we can transform their purpose" – इसका मतलब?</p><div class="ml-3 text-sm"><div>A) डेटा बेकार हो जाता है</div><div>B) डेटा से नई वैल्यू बनाई जा सकती है</div><div>C) डेटा को हटाना पड़ता है</div><div>D) डेटा को सीक्रेट रखना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) डेटा से नई वैल्यू बनाई जा सकती है</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Datafication के तहत किस तरह का डेटा शामिल है?</p><div class="ml-3 text-sm"><div>A) केवल ऑनलाइन</div><div>B) केवल ऑफलाइन</div><div>C) ऑनलाइन और ऑफलाइन, real-time और past</div><div>D) केवल real-time</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) ऑनलाइन और ऑफलाइन, real-time और past</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. फीडबैक लूप से क्या बनता है?</p><div class="ml-3 text-sm"><div>A) behavior ↔ environment ↔ data products</div><div>B) केवल डेटा स्टोरेज</div><div>C) डेटा डिलीट</div><div>D) हार्डवेयर अपग्रेड</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) behavior ↔ environment ↔ data products</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 : Future & Demand -->
+            <section id="section3" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-chart-line text-purple-400 mr-2"></i>3. भविष्य & डिमांड</h2>
+                <ul class="list-disc ml-6">
+                    <li>Hal Varian (Google) : "future job in the next 10 years will be statisticians"</li>
+                    <li>McKinsey (2011) : 2018 तक US को 140k–190k predictive analysts और 1.5 million managers/analysts चाहिए।</li>
+                    <li>नए Data Science institutes: NYU, Columbia, Washington, UC Berkeley ...</li>
+                    <li>नए degree programs, bootcamps (Berkeley: Stats, I-School, CS, Astronomy)</li>
+                </ul>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">📈 MCQs – Future of DS</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Hal Varian के अनुसार अगले 10 साल की नौकरी कौन सी होगी?</p><div class="ml-3 text-sm"><div>A) Data Engineer</div><div>B) Statistician</div><div>C) Software Developer</div><div>D) Network Admin</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Statistician</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. McKinsey के अनुसार 2018 तक predictive analysts की demand?</p><div class="ml-3 text-sm"><div>A) 140,000–190,000</div><div>B) 1.5 million</div><div>C) 50,000</div><div>D) 10,000</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) 140,000–190,000</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. किस यूनिवर्सिटी में Data Science institute बना? (example)</p><div class="ml-3 text-sm"><div>A) Oxford</div><div>B) NYU</div><div>C) Cambridge</div><div>D) MIT</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) NYU (or any listed: Columbia, Washington, UCB)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Managers/analysts की कितनी demand बताई गई?</p><div class="ml-3 text-sm"><div>A) 140,000</div><div>B) 1.5 million</div><div>C) 190,000</div><div>D) 2 million</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 1.5 million</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. UC Berkeley में कौन से विभाग DS से जुड़े?</p><div class="ml-3 text-sm"><div>A) Statistics, I-School, CS, Astronomy</div><div>B) केवल CS</div><div>C) केवल Mathematics</div><div>D) केवल Physics</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) Statistics, I-School, CS, Astronomy</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 : What is Data Science? -->
+            <section id="section4" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-cogs text-purple-400 mr-2"></i>4. डेटा साइंस (परिभाषा)</h2>
+                <p><span class="text-purple-300">📌 DS:</span> manages, manipulates, extracts, interprets knowledge from tremendous data. Multidisciplinary, addresses big data challenges, principles apply to all data (big & small).</p>
+                <p><span class="text-purple-300">🔬 शामिल फील्ड्स:</span></p>
+                <ul class="list-disc ml-6">
+                    <li>Computer Science – pattern recognition, visualization, data warehousing, HPC, DB, AI</li>
+                    <li>Mathematics – mathematical modeling</li>
+                    <li>Statistics – statistical & stochastic modeling, probability</li>
+                </ul>
+                <p><span class="text-purple-300">📋 दूसरी परिभाषा:</span> technical skills पर फोकस।</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🧠 MCQs – Data Science definition</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Data Science किन फील्ड्स से थ्योरी लेता है?</p><div class="ml-3 text-sm"><div>A) CS, Maths, Stats</div><div>B) केवल CS</div><div>C) केवल Biology</div><div>D) केवल Economics</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) CS, Maths, Stats</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. DS का मुख्य लक्ष्य क्या है?</p><div class="ml-3 text-sm"><div>A) डेटा स्टोर करना</div><div>B) डेटा से ज्ञान निकालना और इंटरप्रेट करना</div><div>C) डेटा डिलीट करना</div><div>D) हार्डवेयर बनाना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) डेटा से ज्ञान निकालना और इंटरप्रेट करना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Mathematical Modeling किस फील्ड का हिस्सा है?</p><div class="ml-3 text-sm"><div>A) Computer Science</div><div>B) Mathematics</div><div>C) Statistics</div><div>D) Biology</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) Mathematics</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Pattern recognition और visualization किसमें आते हैं?</p><div class="ml-3 text-sm"><div>A) Statistics</div><div>B) Mathematics</div><div>C) Computer Science</div><div>D) Physics</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) Computer Science</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Data Science principles किस पर apply होते हैं?</p><div class="ml-3 text-sm"><div>A) केवल big data</div><div>B) केवल small data</div><div>C) सभी data (big & small)</div><div>D) केवल structured data</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ C) सभी data (big & small)</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5 : Data Scientist -->
+            <section id="section5" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-user-astronaut text-purple-400 mr-2"></i>5. डेटा साइंटिस्ट</h2>
+                <p><span class="text-purple-300">👤 21वीं सदी की futuristic job:</span> वो stories ढूंढते हैं, knowledge extract करते हैं – reporter नहीं।</p>
+                <p><span class="text-purple-300">🔑 Key to big data opportunities:</span> structure लाते हैं, patterns ढूंढते हैं, executives को सलाह देते हैं (products, processes, decisions पर)।</p>
+                <p><span class="text-purple-300">🧭 क्या करते हैं?</span> National Security, Cyber Security, Business Analytics, Engineering, Healthcare, and more.</p>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">👨‍🚀 MCQs – Data Scientist role</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Data Scientist क्या खोजते हैं?</p><div class="ml-3 text-sm"><div>A) सिर्फ नंबर</div><div>B) stories और knowledge</div><div>C) bugs</div><div>D) hardware issues</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) stories और knowledge</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. Data Scientist किसे सलाह देते हैं?</p><div class="ml-3 text-sm"><div>A) क्लीनर्स को</div><div>B) executives को</div><div>C) स्टूडेंट्स को</div><div>D) ड्राइवर्स को</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) executives को</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Data Scientist किन क्षेत्रों में काम करते हैं?</p><div class="ml-3 text-sm"><div>A) National Security</div><div>B) Healthcare</div><div>C) Business Analytics</div><div>D) All of the above</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) All of the above</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Data Scientist को किस तरह का job कहा गया?</p><div class="ml-3 text-sm"><div>A) 20th century</div><div>B) 21st century futuristic</div><div>C) 19th century</div><div>D) पारंपरिक</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) 21st century futuristic</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Data Scientist और reporter में अंतर?</p><div class="ml-3 text-sm"><div>A) DS stories नहीं ढूंढता</div><div>B) DS knowledge extract करता है, reporter news report करता है</div><div>C) दोनों एक जैसे</div><div>D) reporter data scientist होता है</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) DS knowledge extract करता है, reporter news report करता है</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6 : Skills & Types -->
+            <section id="section6" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-semibold text-cyan-300 mb-3"><i class="fas fa-brain text-purple-400 mr-2"></i>6. स्किल्स & टाइप्स</h2>
+                <p><span class="text-purple-300">📚 Concentration in DS:</span> Mathematics, Applied Statistics, Programming (R, Python, SQL), Data Mining, Database Management, Machine Learning.</p>
+                <p><span class="text-purple-300">👥 Types of Data Scientists:</span> Machine Learning Scientist, Statistician, Software Programming Analyst, Data Engineer, Actuarial Scientist, Business Analytic Practitioner, Quality Analyst, Spatial Data Scientist, Mathematician, Digital Analytic Consultant.</p>
+                <p><span class="text-purple-300">🎓 Academia vs Industry (O'Neil & Schutt):</span></p>
+                <ul class="list-disc ml-6">
+                    <li><span class="text-cyan-200">Academia:</span> trained in discipline, works with large data, computational problems, solves real-world problems.</li>
+                    <li><span class="text-cyan-200">Industry:</span> extract meaning, interpret data (stats+ML tools + human), collects/cleans/munges data, EDA, builds models, communicates findings with visualizations.</li>
+                </ul>
+                <!-- MCQs -->
+                <div class="mt-6 pt-4 border-t border-cyan-500/30">
+                    <h3 class="text-xl font-medium text-purple-300 mb-3">🧰 MCQs – Skills & Types</h3>
+                    <div class="space-y-3">
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>1. Data Science के लिए कौन सी प्रोग्रामिंग स्किल जरूरी?</p><div class="ml-3 text-sm"><div>A) R, Python, SQL</div><div>B) HTML, CSS</div><div>C) C++ only</div><div>D) Java only</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ A) R, Python, SQL</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>2. कौन सा Data Scientist का टाइप नहीं है?</p><div class="ml-3 text-sm"><div>A) Machine Learning Scientist</div><div>B) Statistician</div><div>C) Data Engineer</div><div>D) Web Designer</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ D) Web Designer</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>3. Industry में Data Scientist का एक काम क्या है?</p><div class="ml-3 text-sm"><div>A) केवल थ्योरी पढ़ना</div><div>B) डेटा क्लीन करना और विजुअलाइज़ करना</div><div>C) पेपर पब्लिश करना</div><div>D) लैब में काम करना</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) डेटा क्लीन करना और विजुअलाइज़ करना</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>4. Academia में Data Scientist किस तरह की समस्याएँ सुलझाता है?</p><div class="ml-3 text-sm"><div>A) केवल किताबी</div><div>B) real-world problems (large data, computational)</div><div>C) मार्केटिंग की</div><div>D) फाइनेंशियल</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) real-world problems (large data, computational)</p></details></div>
+                        <div class="bg-slate-800/60 p-3 rounded-xl"><p>5. Spatial Data Scientist किससे सम्बंधित है?</p><div class="ml-3 text-sm"><div>A) टेक्स्ट डेटा</div><div>B) जियोग्राफिक/लोकेशन डेटा</div><div>C) टाइम सीरीज</div><div>D) इमेज डेटा</div></div><details><summary class="text-cyan-300">🔓 जवाब</summary><p class="text-green-400">✅ B) जियोग्राफिक/लोकेशन डेटा</p></details></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUICK REVISION + CHEATSHEET -->
+            <section id="quickrev" class="scroll-mt-20 glass-card p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><i class="fas fa-bolt text-yellow-300"></i>⚡ exam‑ready quick revision</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-cyan-500/30 text-sm">
+                        <thead class="bg-cyan-900/40">
+                            <tr><th class="p-3 border border-cyan-500/30">Concept</th><th class="p-3 border">हिंग्लिश सारांश</th><th class="p-3 border">Key points</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Datafication</td><td class="p-3 border">जीवन के हर पहलू को डेटा बनाना</td><td class="p-3 border">IoT, cheap computing, feedback loop</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Data Science</td><td class="p-3 border">CS + Maths + Stats → big data से knowledge</td><td class="p-3 border">multidisciplinary, all data types</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Data Scientist</td><td class="p-3 border">storyteller + pattern finder + advisor</td><td class="p-3 border">academia (real problems), industry (clean, model, communicate)</td></tr>
+                            <tr><td class="p-3 border font-semibold text-cyan-300">Demand 2018</td><td class="p-3 border">140–190k predictive analysts, 1.5M managers</td><td class="p-3 border">Hal Varian: statisticians future job</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="text-xl mt-5 text-purple-300">📐 formula / stats cheat</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>\(\bar{x} = \frac{\sum x_i}{n}\) (mean)</li>
+                    <li>\(P(A|B) = \frac{P(A \cap B)}{P(B)}\) (conditional probability)</li>
+                    <li>\(\text{Correlation} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}\)</li>
+                    <li>Data Science = pattern recognition + visualization + statistical modeling</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER with socials -->
+            <footer class="glass-card p-5 rounded-2xl flex justify-center gap-8 text-3xl text-cyan-300">
+                <a href="https://github.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110"><i class="fab fa-instagram"></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // toggle mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        // scroll‑spy : active section highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".sidebar-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 90;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "bg-cyan-500/20", "text-cyan-300", "border-l-2", "border-cyan-400");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
