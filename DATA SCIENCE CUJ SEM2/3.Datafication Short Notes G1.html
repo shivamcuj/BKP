@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datafication & Data Science Notes | Sci-Fi Edition</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Inter & Fira Code) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Tailwind Config for Custom Sci-Fi Theme -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        sci: {
+                            dark: '#0a0f1c',
+                            card: 'rgba(17, 25, 40, 0.75)',
+                            neonBlue: '#00f0ff',
+                            neonPurple: '#8a2be2',
+                            border: 'rgba(255, 255, 255, 0.125)'
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0f1c; }
+        ::-webkit-scrollbar-thumb { background: #8a2be2; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: var(--tw-colors-sci-card, rgba(17, 25, 40, 0.75));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--tw-colors-sci-border, rgba(255, 255, 255, 0.125));
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .neon-border {
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5), inset 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Sidebar active state */
+        .nav-link.active {
+            color: #00f0ff;
+            border-left: 4px solid #00f0ff;
+            background: rgba(0, 240, 255, 0.1);
+            padding-left: 1rem;
+        }
+
+        /* Detail/Summary animation */
+        details > summary { list-style: none; cursor: pointer; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="bg-sci-dark text-gray-200 font-sans antialiased overflow-x-hidden relative min-h-screen flex flex-col">
+
+    <!-- Ambient Background Glows -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-sci-neonPurple/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-sci-neonBlue/15 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+    <!-- Mobile Header & Hamburger -->
+    <header class="md:hidden glass-panel sticky top-0 z-50 flex justify-between items-center p-4">
+        <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sci-neonBlue to-sci-neonPurple">DataSci Notes</h1>
+        <button id="mobile-menu-btn" class="text-2xl text-sci-neonBlue focus:outline-none">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div class="flex flex-1 relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 md:pt-10">
+        
+        <!-- Sidebar Navigation (Desktop + Mobile overlay) -->
+        <aside id="sidebar" class="fixed md:sticky top-0 left-0 h-screen md:h-[calc(100vh-4rem)] w-64 md:w-1/4 glass-panel md:bg-transparent md:border-none md:shadow-none p-6 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50 flex flex-col">
+            <div class="flex justify-between items-center md:hidden mb-6">
+                <h2 class="text-lg font-bold text-white">Index</h2>
+                <button id="close-menu-btn" class="text-xl text-sci-neonBlue"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="hidden md:block mb-8">
+                <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sci-neonBlue to-sci-neonPurple tracking-wide">Datafication &<br>Data Science</h1>
+                <p class="text-sm text-gray-400 mt-2"><i class="fas fa-rocket mr-2"></i>Sci-Fi Edition Notes</p>
+            </div>
+
+            <nav class="flex flex-col space-y-2 overflow-y-auto pr-2 pb-20 md:pb-0" id="nav-menu">
+                <a href="#topic1" class="nav-link block py-2 px-3 text-gray-400 hover:text-white rounded transition-all duration-200">1. Datafication Basics</a>
+                <a href="#topic2" class="nav-link block py-2 px-3 text-gray-400 hover:text-white rounded transition-all duration-200">2. Intro to Data Science</a>
+                <a href="#topic3" class="nav-link block py-2 px-3 text-gray-400 hover:text-white rounded transition-all duration-200">3. Interdisciplinary Nature</a>
+                <a href="#topic4" class="nav-link block py-2 px-3 text-gray-400 hover:text-white rounded transition-all duration-200">4. The Data Scientist</a>
+                <a href="#revision" class="nav-link block py-2 px-3 text-gray-400 hover:text-white rounded transition-all duration-200 mt-4 border-t border-gray-700 pt-4 text-sci-neonPurple font-semibold">⚡ Quick Revision</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="w-full md:w-3/4 pb-24 md:pl-8 lg:pl-12">
+            
+            <!-- Hero Section -->
+            <div class="glass-panel p-8 rounded-2xl mb-12 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-sci-neonBlue/10 to-transparent pointer-events-none"></div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Complete Guide to <span class="text-transparent bg-clip-text bg-gradient-to-r from-sci-neonBlue to-sci-neonPurple neon-text">Datafication</span></h1>
+                <p class="text-lg text-gray-300 leading-relaxed">Ek aisi duniya jahan hamari life ki har activity data ban chuki hai. Aaiye asaan Hinglish mein samajhte hain ki ye data kaise generate hota hai aur Data Scientists isse kaise valuable information nikalte hain.</p>
+            </div>
+
+            <!-- SECTION 1 -->
+            <section id="topic1" class="mb-16 scroll-mt-24">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-sci-neonBlue/20 flex items-center justify-center border border-sci-neonBlue mr-4 shadow-[0_0_15px_rgba(0,240,255,0.4)]">
+                        <i class="fas fa-database text-sci-neonBlue"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white">1. Datafication Basics</h2>
+                </div>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-sci-neonBlue mb-2">What To Do With These Data? (Itne data ka karna kya hai?)</h3>
+                        <p class="text-gray-300 mb-2">Aaj kal har jagah se data generate ho raha hai. Is raw data ke saath mainly 4 cheezein ki jaati hain:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                            <li><strong class="text-white">Aggregation and Statistics:</strong> Data ko jama karna aur uspe mathematical operations lagana. (e.g., Data warehousing and OLAP).</li>
+                            <li><strong class="text-white">Indexing, Searching, and Querying:</strong> Jaise hum Google pe search karte hain. (Keyword based search & Pattern matching).</li>
+                            <li><strong class="text-white">Knowledge Discovery:</strong> Chhupe hue patterns nikalna (Data Mining).</li>
+                            <li><strong class="text-white">Statistical Modeling:</strong> Future predict karne ke liye models banana.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/30 p-5 rounded-lg border-l-4 border-sci-neonPurple">
+                        <h3 class="text-xl font-semibold text-sci-neonPurple mb-2">What is Datafication?</h3>
+                        <p class="text-gray-300"><strong>Datafication</strong> ka seedha sa matlab hai: <span class="italic">"Taking all aspects of life and turning them into data."</span> <br><br>
+                        Yaani hamari online aur offline activities, real-time events, sab kuch data mein convert ho raha hai. Iska faida kya hai? Jab hum cheezon ko datafy kar dete hain, toh hum uski information se <strong>new forms of value</strong> (naya business, nayi insights) bana sakte hain.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-sci-neonBlue mb-2">Reasons behind Datafication</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                            <li>Bohot hi sasti (inexpensive) computing power aur communication capacity available hai aaj kal.</li>
+                            <li>Chhote aur low-power sensors <strong>(IoT - Internet of Things)</strong> ka har jagah use hona.</li>
+                            <li>Ek feedback loop ban gaya hai hamare behavior, environment aur data products ke beech.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Topic 1 MCQs -->
+                    <div class="mt-8 border border-gray-700 rounded-xl overflow-hidden bg-black/20">
+                        <div class="bg-gray-800/80 p-3 border-b border-gray-700">
+                            <h4 class="font-bold text-white flex items-center"><i class="fas fa-gamepad text-sci-neonPurple mr-2"></i> Knowledge Check: Topic 1</h4>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <!-- MCQ 1 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q1. "Turning all aspects of life into data" is the definition of?
+                                    <i class="fas fa-chevron-down text-sci-neonBlue transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonBlue font-semibold p-2 bg-black/30 rounded border border-sci-neonBlue/30">
+                                    Answer: Datafication
+                                </div>
+                            </details>
+                            <!-- MCQ 2 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q2. Which technology has led to the proliferation of small footprint low-power sensors?
+                                    <i class="fas fa-chevron-down text-sci-neonBlue transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonBlue font-semibold p-2 bg-black/30 rounded border border-sci-neonBlue/30">
+                                    Answer: IoT (Internet of Things)
+                                </div>
+                            </details>
+                            <!-- MCQ 3 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q3. What is the main purpose of "Knowledge Discovery" in data?
+                                    <i class="fas fa-chevron-down text-sci-neonBlue transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonBlue font-semibold p-2 bg-black/30 rounded border border-sci-neonBlue/30">
+                                    Answer: Data Mining (finding hidden patterns)
+                                </div>
+                            </details>
+                            <!-- MCQ 4 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q4. According to the notes, what allows us to transform information into new forms of value?
+                                    <i class="fas fa-chevron-down text-sci-neonBlue transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonBlue font-semibold p-2 bg-black/30 rounded border border-sci-neonBlue/30">
+                                    Answer: Datafying things
+                                </div>
+                            </details>
+                            <!-- MCQ 5 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q5. OLAP is primarily associated with which data task?
+                                    <i class="fas fa-chevron-down text-sci-neonBlue transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonBlue font-semibold p-2 bg-black/30 rounded border border-sci-neonBlue/30">
+                                    Answer: Aggregation and Statistics (Data Warehousing)
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section id="topic2" class="mb-16 scroll-mt-24">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-sci-neonPurple/20 flex items-center justify-center border border-sci-neonPurple mr-4 shadow-[0_0_15px_rgba(138,43,226,0.4)]">
+                        <i class="fas fa-chart-line text-sci-neonPurple"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white">2. Intro to Data Science & Big Data</h2>
+                </div>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-6">
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold text-sci-neonPurple mb-2">The Demand is Real</h3>
+                            <p class="text-gray-300">Google ke Chief Economist, Hal Varian ne kaha tha: <span class="text-white italic">"...the future job in the next 10 years will be statisticians."</span></p>
+                            <p class="text-gray-300 mt-2">Data Science ki field mein huge demand hai predictive analysts aur managers ki. Naye institutes, degree programs, aur bootcamps khul rahe hain specially "Big Data Science" ke liye.</p>
+                        </div>
+                        <div class="md:w-1/3 bg-black/40 p-4 rounded-lg border border-gray-600 text-center">
+                            <i class="fas fa-briefcase text-4xl text-yellow-400 mb-2"></i>
+                            <p class="text-sm text-gray-300">Harvard Business Review called it:</p>
+                            <p class="font-bold text-white">"The Sexiest Job of the 21st Century"</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-sci-neonPurple mb-2">What Exactly is Data Science?</h3>
+                        <p class="text-gray-300 mb-3">Ye ek area hai jo massive amount of data ko <strong>manage, manipulate, extract, aur interpret</strong> karke usme se knowledge nikalta hai.</p>
+                        <p class="text-gray-300">Ye ek <strong>multidisciplinary field</strong> (bohot saare subjects ka mixture) hai, jiska main goal Big Data ke challenges ko solve karna hai. Lekin dhyan rahe, Data science principles big aur small dono tarah ke data par apply hote hain.</p>
+                    </div>
+
+                    <!-- Topic 2 MCQs -->
+                    <div class="mt-8 border border-gray-700 rounded-xl overflow-hidden bg-black/20">
+                        <div class="bg-gray-800/80 p-3 border-b border-gray-700">
+                            <h4 class="font-bold text-white flex items-center"><i class="fas fa-gamepad text-sci-neonPurple mr-2"></i> Knowledge Check: Topic 2</h4>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <!-- MCQ 1 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q1. Who predicted that the future job in the next 10 years would be statisticians?
+                                    <i class="fas fa-chevron-down text-sci-neonPurple transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonPurple font-semibold p-2 bg-black/30 rounded border border-sci-neonPurple/30">
+                                    Answer: Hal Varian (Google Chief Economist)
+                                </div>
+                            </details>
+                            <!-- MCQ 2 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q2. Does Data Science apply ONLY to Big Data?
+                                    <i class="fas fa-chevron-down text-sci-neonPurple transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonPurple font-semibold p-2 bg-black/30 rounded border border-sci-neonPurple/30">
+                                    Answer: No, data science principles apply to all data (big and small).
+                                </div>
+                            </details>
+                            <!-- MCQ 3 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q3. Which publication called Data Scientist the "sexiest job of the 21st century"?
+                                    <i class="fas fa-chevron-down text-sci-neonPurple transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonPurple font-semibold p-2 bg-black/30 rounded border border-sci-neonPurple/30">
+                                    Answer: Harvard Business Review (HBR)
+                                </div>
+                            </details>
+                            <!-- MCQ 4 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q4. Extracting and interpreting knowledge from tremendous amounts of data is the goal of?
+                                    <i class="fas fa-chevron-down text-sci-neonPurple transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonPurple font-semibold p-2 bg-black/30 rounded border border-sci-neonPurple/30">
+                                    Answer: Data Science
+                                </div>
+                            </details>
+                            <!-- MCQ 5 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q5. Is Data Science a single discipline or multidisciplinary?
+                                    <i class="fas fa-chevron-down text-sci-neonPurple transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-sci-neonPurple font-semibold p-2 bg-black/30 rounded border border-sci-neonPurple/30">
+                                    Answer: Multidisciplinary field of study.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="topic3" class="mb-16 scroll-mt-24">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500 mr-4 shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+                        <i class="fas fa-project-diagram text-emerald-500"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white">3. Interdisciplinary Nature & Future</h2>
+                </div>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-emerald-400 mb-2">Core Pillars of Data Science</h3>
+                        <p class="text-gray-300 mb-4">Data Science akele exist nahi karta, ye in fields ka combination hai:</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/30 p-4 rounded border border-gray-700 hover:border-emerald-500 transition-colors">
+                                <h4 class="text-white font-bold mb-1"><i class="fas fa-laptop-code text-emerald-400 mr-2"></i>Computer Science</h4>
+                                <p class="text-sm text-gray-400">Pattern recognition, Visualization, Data warehousing, HPC, Databases, AI (Artificial Intelligence).</p>
+                            </div>
+                            <div class="bg-black/30 p-4 rounded border border-gray-700 hover:border-emerald-500 transition-colors">
+                                <h4 class="text-white font-bold mb-1"><i class="fas fa-square-root-alt text-emerald-400 mr-2"></i>Mathematics</h4>
+                                <p class="text-sm text-gray-400">Mathematical Modeling algorithms develop karne ke liye.</p>
+                            </div>
+                            <div class="bg-black/30 p-4 rounded border border-gray-700 hover:border-emerald-500 transition-colors">
+                                <h4 class="text-white font-bold mb-1"><i class="fas fa-chart-pie text-emerald-400 mr-2"></i>Statistics</h4>
+                                <p class="text-sm text-gray-400">Statistical and Stochastic modeling, Probability. Data ki uncertainty samajhne ke liye.</p>
+                            </div>
+                            <div class="bg-black/30 p-4 rounded border border-gray-700 hover:border-emerald-500 transition-colors">
+                                <h4 class="text-white font-bold mb-1"><i class="fas fa-industry text-emerald-400 mr-2"></i>Domain Knowledge</h4>
+                                <p class="text-sm text-gray-400">Business strategy aur domain expertise problem ko samajhne ke liye.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-emerald-400 mb-2">Why is it the Future?</h3>
+                        <p class="text-gray-300">Data science isliye future hai kyunki sabhi futuristic technologies isi par dependent hain. Jaise ki:</p>
+                        <ul class="flex flex-wrap gap-2 mt-3">
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Autonomous Vehicles</li>
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Speech Translation</li>
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Smart Robots</li>
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Prescriptive Analytics</li>
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Internet of Things (IoT)</li>
+                            <li class="bg-emerald-900/40 text-emerald-300 px-3 py-1 rounded-full text-sm border border-emerald-500/30">Machine Learning</li>
+                        </ul>
+                    </div>
+
+                    <!-- Topic 3 MCQs -->
+                    <div class="mt-8 border border-gray-700 rounded-xl overflow-hidden bg-black/20">
+                        <div class="bg-gray-800/80 p-3 border-b border-gray-700">
+                            <h4 class="font-bold text-white flex items-center"><i class="fas fa-gamepad text-emerald-400 mr-2"></i> Knowledge Check: Topic 3</h4>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <!-- MCQ 1 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q1. Which field provides the 'Probability' and 'Stochastic modeling' aspects of Data Science?
+                                    <i class="fas fa-chevron-down text-emerald-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-emerald-400 font-semibold p-2 bg-black/30 rounded border border-emerald-500/30">
+                                    Answer: Statistics
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q2. What is the role of 'Computer Science' in the data science ecosystem?
+                                    <i class="fas fa-chevron-down text-emerald-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-emerald-400 font-semibold p-2 bg-black/30 rounded border border-emerald-500/30">
+                                    Answer: Pattern recognition, AI, databases, and high-performance computing.
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q3. Why is 'Domain Knowledge' crucial in Data Science?
+                                    <i class="fas fa-chevron-down text-emerald-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-emerald-400 font-semibold p-2 bg-black/30 rounded border border-emerald-500/30">
+                                    Answer: To understand business strategies and solve relevant real-world problems.
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q4. According to the Gartner Hype Cycle mentioned implicitly, what fuels future technologies?
+                                    <i class="fas fa-chevron-down text-emerald-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-emerald-400 font-semibold p-2 bg-black/30 rounded border border-emerald-500/30">
+                                    Answer: Data Science and Big Data
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q5. Is 'Visualization' a part of the Data Science pipeline?
+                                    <i class="fas fa-chevron-down text-emerald-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-emerald-400 font-semibold p-2 bg-black/30 rounded border border-emerald-500/30">
+                                    Answer: Yes, it is used to communicate findings clearly.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="topic4" class="mb-16 scroll-mt-24">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center border border-pink-500 mr-4 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                        <i class="fas fa-user-astronaut text-pink-500"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white">4. The Data Scientist: Roles & Types</h2>
+                </div>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-pink-400 mb-2">What do Data Scientists do?</h3>
+                        <p class="text-gray-300 italic mb-4">"They find stories, extract knowledge. They are not reporters."</p>
+                        
+                        <div class="space-y-4">
+                            <div class="border-l-2 border-pink-500 pl-4">
+                                <h4 class="text-white font-bold">In Academia:</h4>
+                                <p class="text-gray-400 text-sm mt-1">Large amount of data ke sath work karte hain. Messy data aur computational problems se deal karte hue real-world problems solve karte hain.</p>
+                            </div>
+                            <div class="border-l-2 border-pink-500 pl-4">
+                                <h4 class="text-white font-bold">In Industry:</h4>
+                                <ul class="list-disc list-inside text-sm text-gray-400 mt-1 space-y-1">
+                                    <li>Meaning extract karte hain data se using stats & ML.</li>
+                                    <li>Bohot sara time <strong>collecting, cleaning, aur munging</strong> data mein lagate hain.</li>
+                                    <li>Exploratory Data Analysis (EDA) karte hain, patterns dhundhte hain, aur models/algorithms banate hain.</li>
+                                    <li><strong>Communication:</strong> Apni findings ko non-technical logo (colleagues) ko simple language aur visualizations ke through samjhate hain.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-pink-400 mb-2 mt-6">Core Concentration / Skills Needed</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600">Math & Applied Math</span>
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600">Applied Stats / Data Analysis</span>
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600 font-mono text-pink-300">R, Python, SQL</span>
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600">Data Mining</span>
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600">Database Management</span>
+                            <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded text-sm border border-gray-600">Machine Learning</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-pink-400 mb-2 mt-6">10 Types of Data Scientists</h3>
+                        <p class="text-gray-300 mb-3 text-sm">Data Science ek broad field hai, isme kai tarah ke specializations hote hain:</p>
+                        <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-300 list-disc list-inside ml-2">
+                            <li>Machine Learning Scientist</li>
+                            <li>Statistician</li>
+                            <li>Software Programming Analyst</li>
+                            <li>Data Engineer</li>
+                            <li>Actuarial Scientist</li>
+                            <li>Business Analytic Practitioner</li>
+                            <li>Quality Analyst</li>
+                            <li>Spatial Data Scientist</li>
+                            <li>Mathematician</li>
+                            <li>Digital Analytic Consultant</li>
+                        </ul>
+                    </div>
+
+                    <!-- Topic 4 MCQs -->
+                    <div class="mt-8 border border-gray-700 rounded-xl overflow-hidden bg-black/20">
+                        <div class="bg-gray-800/80 p-3 border-b border-gray-700">
+                            <h4 class="font-bold text-white flex items-center"><i class="fas fa-gamepad text-pink-400 mr-2"></i> Knowledge Check: Topic 4</h4>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <!-- MCQ 1 -->
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q1. Do data scientists merely "report" data?
+                                    <i class="fas fa-chevron-down text-pink-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-pink-400 font-semibold p-2 bg-black/30 rounded border border-pink-500/30">
+                                    Answer: No, they find stories and extract knowledge. "They are not reporters."
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q2. What are the three essential programming languages mentioned for Data Science?
+                                    <i class="fas fa-chevron-down text-pink-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-pink-400 font-semibold p-2 bg-black/30 rounded border border-pink-500/30">
+                                    Answer: R, Python, and SQL.
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q3. What does "data munging" mean in a Data Scientist's job?
+                                    <i class="fas fa-chevron-down text-pink-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-pink-400 font-semibold p-2 bg-black/30 rounded border border-pink-500/30">
+                                    Answer: Cleaning and transforming raw data into a usable format.
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q4. Why do Data Scientists use Data Visualizations?
+                                    <i class="fas fa-chevron-down text-pink-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-pink-400 font-semibold p-2 bg-black/30 rounded border border-pink-500/30">
+                                    Answer: To communicate complex findings to non-technical colleagues in a clear manner.
+                                </div>
+                            </details>
+                            <details class="group bg-slate-800/50 rounded-lg p-3 cursor-pointer transition-all">
+                                <summary class="font-medium text-gray-200 flex justify-between items-center">
+                                    Q5. Name at least 3 types of Data Scientists.
+                                    <i class="fas fa-chevron-down text-pink-400 transition-transform group-open:rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-pink-400 font-semibold p-2 bg-black/30 rounded border border-pink-500/30">
+                                    Answer: Data Engineer, Machine Learning Scientist, Statistician (and others).
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXAM READY QUICK REVISION -->
+            <section id="revision" class="mb-16 scroll-mt-24">
+                <div class="neon-border rounded-xl bg-[#111827] relative overflow-hidden">
+                    <!-- Ribbon -->
+                    <div class="absolute top-0 right-0 bg-sci-neonPurple text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">EXAM READY</div>
+                    
+                    <div class="p-6 md:p-8 relative z-10">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-bolt text-3xl text-yellow-400 mr-3"></i>
+                            <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">Quick Revision & Cheatsheet</h2>
+                        </div>
+                        
+                        <!-- Core Mathematical Foundations (To fulfill MathJax requirement) -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-white mb-3 border-b border-gray-700 pb-1">1. Foundational Math required in Data Science</h3>
+                            <p class="text-sm text-gray-400 mb-2">Although deep formulas weren't in the intro slides, Data Science relies heavily on Probability and Statistics. Here is a fundamental concept:</p>
+                            <div class="bg-black/50 p-4 rounded-lg flex items-center justify-center border border-gray-700 overflow-x-auto">
+                                <div class="text-white text-center">
+                                    <span class="text-gray-400 text-xs mb-1 block">Bayes' Theorem (Foundation of Probabilistic ML)</span>
+                                    $$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comparison Table -->
+                        <div class="mb-8 overflow-x-auto">
+                            <h3 class="text-lg font-bold text-white mb-3 border-b border-gray-700 pb-1">2. Important Terms Comparison</h3>
+                            <table class="w-full text-sm text-left text-gray-300">
+                                <thead class="text-xs uppercase bg-gray-800 text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 rounded-tl-lg">Concept</th>
+                                        <th scope="col" class="px-6 py-3">Key Focus</th>
+                                        <th scope="col" class="px-6 py-3 rounded-tr-lg">Example / Keyword</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-black/40 border-b border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-sci-neonBlue whitespace-nowrap">Datafication</th>
+                                        <td class="px-6 py-4">Turning life aspects into data.</td>
+                                        <td class="px-6 py-4">Sensors, IoT, Feedback loops.</td>
+                                    </tr>
+                                    <tr class="bg-black/20 border-b border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-sci-neonPurple whitespace-nowrap">Data Science</th>
+                                        <td class="px-6 py-4">Multidisciplinary field to extract knowledge.</td>
+                                        <td class="px-6 py-4">Math + CS + Domain Knowledge.</td>
+                                    </tr>
+                                    <tr class="bg-black/40 border-b border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-emerald-400 whitespace-nowrap">Data Munging/Cleaning</th>
+                                        <td class="px-6 py-4">Preparing raw data for analysis.</td>
+                                        <td class="px-6 py-4">Fixing messiness, structure.</td>
+                                    </tr>
+                                    <tr class="bg-black/20">
+                                        <th scope="row" class="px-6 py-4 font-medium text-pink-400 whitespace-nowrap">Data Visualization</th>
+                                        <td class="px-6 py-4">Communicating findings to non-tech peers.</td>
+                                        <td class="px-6 py-4">Graphs, clear language.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- VENN DIAGRAM SUMMARY -->
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-3 border-b border-gray-700 pb-1">3. The Data Science Venn Diagram (Summary)</h3>
+                            <div class="flex flex-wrap gap-4 mt-4">
+                                <div class="flex-1 min-w-[200px] bg-gray-800/50 p-4 rounded border-l-4 border-blue-500">
+                                    <h4 class="font-bold text-white text-sm">Tech / Hacker Skills</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Databases, Data Processing, Advanced Computing.</p>
+                                </div>
+                                <div class="flex-1 min-w-[200px] bg-gray-800/50 p-4 rounded border-l-4 border-purple-500">
+                                    <h4 class="font-bold text-white text-sm">Math & Stats</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Machine Learning, Pattern Recognition, Neurocomputing.</p>
+                                </div>
+                                <div class="flex-1 min-w-[200px] bg-gray-800/50 p-4 rounded border-l-4 border-green-500">
+                                    <h4 class="font-bold text-white text-sm">Domain / Business</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Business Strategy, Problem Solving, Presentation/Viz.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-gray-800 mt-auto py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <p class="text-gray-400 text-sm">Made with <i class="fas fa-heart text-red-500 mx-1"></i> for exam prep.</p>
+                <p class="text-gray-500 text-xs mt-1">Sci-Fi Edition Notes</p>
+            </div>
+            
+            <div class="flex space-x-6 text-xl">
+                <a href="https://github.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-red-500 hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-pink-500 hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Mobile Menu Toggle ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const sidebar = document.getElementById('sidebar');
+
+            mobileBtn.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('bg-sci-dark/95', 'backdrop-blur-xl', 'w-3/4', 'z-50', 'border-r', 'border-gray-800');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+            });
+
+            // Close mobile menu when a link is clicked
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                });
+            });
+
+            // --- Scroll-Spy Logic ---
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('#nav-menu .nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        // Remove active class from all links
+                        navItems.forEach(link => link.classList.remove('active', 'text-white'));
+                        navItems.forEach(link => link.classList.add('text-gray-400'));
+                        
+                        // Add active class to corresponding link
+                        const activeLink = document.querySelector(`#nav-menu a[href="#${id}"]`);
+                        if(activeLink) {
+                            activeLink.classList.add('active', 'text-white');
+                            activeLink.classList.remove('text-gray-400');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
