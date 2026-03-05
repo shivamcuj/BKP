@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Methods | Sci-Fi Notes</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            blue: '#00f3ff',
+                            purple: '#bc13fe',
+                            dark: '#0a0a1a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- MathJax for LaTeX / Formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Custom Sci-Fi & Glassmorphism Styles */
+        body {
+            background-color: #05050f;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(188, 19, 254, 0.08), transparent 25%);
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(20, 20, 35, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 243, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #00f3ff, #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neon-border {
+            position: relative;
+        }
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #00f3ff;
+            box-shadow: 0 0 10px #00f3ff;
+            transition: width 0.3s ease;
+        }
+        .neon-border:hover::after {
+            width: 100%;
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a1a; }
+        ::-webkit-scrollbar-thumb { background: #bc13fe; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
+
+        /* Hide scrollbar for sidebar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* MCQ Details/Summary styling */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-300 antialiased selection:bg-neon-blue selection:text-black flex flex-col min-h-screen">
+
+    <!-- Mobile Header & Hamburger -->
+    <header class="md:hidden glass-panel sticky top-0 z-50 p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gradient font-mono">Data_Collection.pdf</h1>
+        <button id="mobile-menu-btn" class="text-neon-blue focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </header>
+
+    <div class="flex flex-1 relative w-full max-w-7xl mx-auto">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 w-64 glass-panel z-40 p-6 flex flex-col h-screen md:h-[calc(100vh-4rem)] md:sticky md:top-8 transition-transform duration-300 ease-in-out md:rounded-2xl md:ml-4">
+            <h2 class="text-2xl font-bold mb-6 text-gradient font-mono border-b border-white/10 pb-4">Index</h2>
+            <nav class="flex flex-col space-y-3 flex-1 overflow-y-auto no-scrollbar font-medium" id="toc-nav">
+                <a href="#topic-1" class="toc-link text-slate-400 hover:text-neon-blue transition-colors flex items-center gap-2">
+                    <i class="fas fa-database text-xs"></i> 1. Introduction & Terms
+                </a>
+                <a href="#topic-2" class="toc-link text-slate-400 hover:text-neon-blue transition-colors flex items-center gap-2">
+                    <i class="fas fa-user-check text-xs"></i> 2. Primary Data
+                </a>
+                <a href="#topic-3" class="toc-link text-slate-400 hover:text-neon-blue transition-colors flex items-center gap-2">
+                    <i class="fas fa-book-open text-xs"></i> 3. Secondary Data
+                </a>
+                <a href="#topic-4" class="toc-link text-slate-400 hover:text-neon-blue transition-colors flex items-center gap-2">
+                    <i class="fas fa-chart-line text-xs"></i> 4. Variables & Examples
+                </a>
+                <a href="#quick-revision" class="toc-link text-slate-400 hover:text-neon-purple transition-colors flex items-center gap-2 mt-4 pt-4 border-t border-white/10">
+                    <i class="fas fa-bolt text-xs text-neon-purple"></i> Quick Revision
+                </a>
+            </nav>
+            <button id="close-sidebar" class="md:hidden absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-10 pb-24 w-full overflow-x-hidden">
+            
+            <!-- Hero Section -->
+            <div class="glass-panel p-8 rounded-2xl mb-12 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                    <i class="fas fa-network-wired text-8xl text-neon-blue"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Data Collection Methods</h1>
+                <p class="text-lg text-slate-400 max-w-2xl">Complete Hinglish notes on Primary and Secondary Data. Master the core concepts of statistical inquiry, variables, and data collection techniques easily.</p>
+            </div>
+
+            <!-- Topic 1: Introduction & Terms -->
+            <section id="topic-1" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-white neon-border inline-block pb-2">1. Introduction & Basic Terms</h2>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-4">
+                    <p><strong>Data Collection kya hai?</strong><br>
+                    Ye ek systematic process hai jahan hum alag-alag sources se information (data) ikattha karte hain, measure karte hain aur analyze karte hain. Iska main goal hai kisi specific problem ki sahi picture clear karna. Har research ki shuruaat data collection se hi hoti hai.</p>
+                    
+                    <p><strong>Statistical Inquiry:</strong><br>
+                    Simple words mein, ye 'sach ki khoj' (search for truth) hai using statistical methods. Ek investigator kisi topic pe jab deeply study karta hai aur facts/figures collect karta hai, toh use statistical inquiry kehte hain.</p>
+
+                    <h3 class="text-xl font-semibold text-neon-blue mt-6 mb-3">Important Terms Related to Data Collection</h3>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-caret-right text-neon-purple mt-1"></i>
+                            <div><strong class="text-white">Data:</strong> Ye wo tool ya information hai jo humari problem solve karne me madad karta hai. (Types: Primary & Secondary).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-caret-right text-neon-purple mt-1"></i>
+                            <div><strong class="text-white">Investigator:</strong> Wo main insaan jo statistical inquiry conduct kar raha hai (jo research kar raha hai).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-caret-right text-neon-purple mt-1"></i>
+                            <div><strong class="text-white">Enumerators:</strong> Investigator ki help karne wale log jo ground par jaakar actual data collect karte hain.</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-caret-right text-neon-purple mt-1"></i>
+                            <div><strong class="text-white">Respondents:</strong> Wo aam log ya sources jinse data liya jata hai (jo questions ke answer dete hain).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-caret-right text-neon-purple mt-1"></i>
+                            <div><strong class="text-white">Survey:</strong> Logon se unki pasand, napasand, product ka feedback lene ke method ko survey kehte hain.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- MCQs for Topic 1 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-200"><i class="fas fa-gamepad text-neon-blue"></i> Topic 1 MCQs</h3>
+                    <div class="space-y-3">
+                        <!-- MCQ 1 -->
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">1. Jo vyakti statistical enquiry conduct karta hai, use kya kehte hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Respondent</li>
+                                <li>Investigator</li>
+                                <li>Enumerator</li>
+                                <li>Surveyor</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">
+                                    <i class="fas fa-eye group-open:hidden"></i>
+                                    <i class="fas fa-eye-slash hidden group-open:inline-block"></i>
+                                    Show Answer
+                                </summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">
+                                    Answer: (b) Investigator
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 2 -->
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">2. Statistical enquiry ka basic purpose kya hota hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Paise kamana</li>
+                                <li>Sach ki khoj (Search for truth)</li>
+                                <li>Data delete karna</li>
+                                <li>Time waste karna</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">
+                                    <i class="fas fa-eye group-open:hidden"></i>
+                                    <i class="fas fa-eye-slash hidden group-open:inline-block"></i> Show Answer
+                                </summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">
+                                    Answer: (b) Sach ki khoj (Search for truth)
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 3 -->
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">3. Wo log jo investigator ki data collect karne me field par help karte hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Respondents</li>
+                                <li>Government</li>
+                                <li>Enumerators</li>
+                                <li>Teachers</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">
+                                    <i class="fas fa-eye group-open:hidden"></i>
+                                    <i class="fas fa-eye-slash hidden group-open:inline-block"></i> Show Answer
+                                </summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">
+                                    Answer: (c) Enumerators
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 4 -->
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">4. Jis person se data collect kiya jata hai (jo answers deta hai)?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Respondent</li>
+                                <li>Investigator</li>
+                                <li>Source</li>
+                                <li>None of the above</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">
+                                    <i class="fas fa-eye group-open:hidden"></i>
+                                    <i class="fas fa-eye-slash hidden group-open:inline-block"></i> Show Answer
+                                </summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">
+                                    Answer: (a) Respondent
+                                </div>
+                            </details>
+                        </div>
+                        <!-- MCQ 5 -->
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">5. Data ko kitne main types mein classify kiya jaa sakta hai (as per notes)?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>3 types</li>
+                                <li>4 types</li>
+                                <li>2 types (Primary & Secondary)</li>
+                                <li>Infinite types</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">
+                                    <i class="fas fa-eye group-open:hidden"></i>
+                                    <i class="fas fa-eye-slash hidden group-open:inline-block"></i> Show Answer
+                                </summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">
+                                    Answer: (c) 2 types (Primary & Secondary)
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 2: Primary Data -->
+            <section id="topic-2" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-white neon-border inline-block pb-2">2. Primary Data & Its Methods</h2>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-4">
+                    <p><strong>Primary Data kya hai?</strong><br>
+                    Ye wo data hota hai jo researcher ya investigator khud pheli baar (first-hand) collect karta hai apni specific research problem ke liye. Ye data bohot original aur accurate hota hai kyunki isme humein pura control hota hai.</p>
+                    
+                    <h3 class="text-xl font-semibold text-neon-blue mt-6 mb-3">Methods of Collecting Primary Data</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-user-friends text-neon-purple mr-2"></i>1. Interviews</h4>
+                            <p class="text-sm">Direct one-on-one baat karke data lena.</p>
+                            <ul class="text-sm list-disc pl-4 mt-2 space-y-1 text-slate-400">
+                                <li><strong>Direct Personal:</strong> Investigator directly person se milta hai. (e.g., Housewives se directly milke routine poochna).</li>
+                                <li><strong>Indirect Oral:</strong> Direct person se na mil kar, usko janne walo se poochna. (e.g., Employee ka data uske boss se lena).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-clipboard-list text-neon-purple mr-2"></i>2. Questionnaires</h4>
+                            <p class="text-sm">Questions ka ek set ready karna.</p>
+                            <ul class="text-sm list-disc pl-4 mt-2 space-y-1 text-slate-400">
+                                <li><strong>Mailing Method:</strong> Questionnaire email/post se bhejna. (Sasta hai par log reply kam karte hain).</li>
+                                <li><strong>Enumerator Method:</strong> Enumerator khud form leke jata hai aur fill karwata hai.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-eye text-neon-purple mr-2"></i>3. Observations</h4>
+                            <p class="text-sm">Bina disturb kiye naturally kisi ka behavior observe karna. <em>(Fayda: Authentic data. Nuksan: Observer bias ho sakta hai).</em></p>
+                        </div>
+
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-flask text-neon-purple mr-2"></i>4. Experiments</h4>
+                            <p class="text-sm">Variables ko manipulate karke effect dekhna (cause-and-effect). <em>(E.g., Nayi dawai (drug) test karna).</em></p>
+                        </div>
+
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-users text-neon-purple mr-2"></i>5. Focus Group</h4>
+                            <p class="text-sm">6-12 logo ko bula kar ek specific topic/product pe discussion karwana. Deep insights milte hain.</p>
+                        </div>
+
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-neon-purple/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2"><i class="fas fa-map-marker-alt text-neon-purple mr-2"></i>6. Local Sources / Correspondents</h4>
+                            <p class="text-sm">Alag-alag jagah par local agents ya correspondents rakhna jo wahan ka data bhejte rahein.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 2 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-200"><i class="fas fa-gamepad text-neon-blue"></i> Topic 2 MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">1. "First-hand" collect kiye gaye data ko kya kehte hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Secondary Data</li>
+                                <li>Primary Data</li>
+                                <li>Tertiary Data</li>
+                                <li>Fake Data</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Primary Data</div>
+                            </details>
+                        </div>
+                        
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">2. Agar aap Employee ki jagah uske Manager se uski details puchte ho, toh ye kaisa method hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Direct Personal Investigation</li>
+                                <li>Indirect Oral Investigation</li>
+                                <li>Observation</li>
+                                <li>Experiment</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Indirect Oral Investigation</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">3. Mailing method of questionnaire ka sabse bada disadvantage (nuksan) kya hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Bohot mehenga hai</li>
+                                <li>Low response rate (log reply kam karte hain)</li>
+                                <li>Data fake hota hai</li>
+                                <li>Sath me enumerator bhejna padta hai</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Low response rate</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">4. Cause-and-effect relationship kis method me sabse best establish hota hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Focus Group</li>
+                                <li>Local Sources</li>
+                                <li>Experiments</li>
+                                <li>Observation</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (c) Experiments</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">5. 6-12 logo ke group ko bitha kar discussion karwane wale method ko kya kehte hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Direct Interview</li>
+                                <li>Focus Group</li>
+                                <li>Enumerator Method</li>
+                                <li>Census</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Focus Group</div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 3: Secondary Data -->
+            <section id="topic-3" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-white neon-border inline-block pb-2">3. Secondary Data & Its Sources</h2>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-4">
+                    <p><strong>Secondary Data kya hai?</strong><br>
+                    Ye wo data hota hai jo kisi aur ne pehle se hi collect karke publish ya process kar diya hai. Humein bas wahan se lena hota hai. Ye sasta hota hai aur isme time bhi bohot kam lagta hai kyunki collection phase pehle hi koi aur kar chuka hai.</p>
+                    
+                    <h3 class="text-xl font-semibold text-neon-blue mt-6 mb-3">Sources of Secondary Data</h3>
+                    <p class="text-slate-400 mb-4">Secondary data ke 2 main sources hote hain: Published aur Unpublished.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-[#0a0a1a] to-[#12122b] p-5 rounded-lg border border-neon-blue/30">
+                            <h4 class="font-bold text-neon-blue text-lg mb-3 flex items-center"><i class="fas fa-book-open mr-2"></i> 1. Published Sources</h4>
+                            <p class="text-sm text-slate-300 mb-2">Jo data public ke liye available/print kar diya gaya ho.</p>
+                            <ul class="text-sm space-y-2 text-slate-400">
+                                <li><strong class="text-white">Government Publications:</strong> Ministries ya Govt dwara chhapi gyi reports (e.g., Annual Survey of Industries). Ye kaafi reliable hote hain.</li>
+                                <li><strong class="text-white">Semi-Govt Publications:</strong> Municipalities aadi ka data (Health, Birth/Death records).</li>
+                                <li><strong class="text-white">Trade Associations:</strong> Industries ka apna data (e.g., Sugar Mills Association ka data).</li>
+                                <li><strong class="text-white">Journals & Papers:</strong> Newspapers, Magazines me chhapa data.</li>
+                                <li><strong class="text-white">International Publications:</strong> UNO, IMF, World Bank jaisi badi bodies ka data.</li>
+                                <li><strong class="text-white">Research Institutions:</strong> Universities aur institutes ka published research.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-[#0a0a1a] to-[#220a2e] p-5 rounded-lg border border-neon-purple/30">
+                            <h4 class="font-bold text-neon-purple text-lg mb-3 flex items-center"><i class="fas fa-user-lock mr-2"></i> 2. Unpublished Sources</h4>
+                            <p class="text-sm text-slate-300 mb-2">Jo data collect toh hua hai par public ke liye chapa nahi gaya hai.</p>
+                            <p class="text-sm text-slate-400">
+                                Aksar organizations, professors, ya private companies apna data apne self-use ke liye collect karte hain, aur use kisi book ya website par publish nahi karte. Aise private/internal records ko Unpublished Secondary Data kehte hain.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCQs for Topic 3 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-200"><i class="fas fa-gamepad text-neon-blue"></i> Topic 3 MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">1. Inme se secondary data ka kya fayda (advantage) hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Wo bohot fresh hota hai</li>
+                                <li>Time aur resources bachata hai (readily available)</li>
+                                <li>Wo hamesha 100% accurate hota hai</li>
+                                <li>Wo collect karna sabse mehenga hota hai</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Time aur resources bachata hai</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">2. IMF, UNO, World Bank ki reports kiska example hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Unpublished Sources</li>
+                                <li>Semi-Government Publications</li>
+                                <li>International Publications</li>
+                                <li>Trade Associations</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (c) International Publications</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">3. Ek company ka apna internal staff attendance record jo bahar nahi chapta, wo kaisa source hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Published Source</li>
+                                <li>Unpublished Source</li>
+                                <li>Government Publication</li>
+                                <li>Primary Source</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Unpublished Source</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">4. Newspaper aur Magazines kis type ke source hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Journals and Papers (Published)</li>
+                                <li>Unpublished</li>
+                                <li>Primary Data</li>
+                                <li>None of the above</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (a) Journals and Papers (Published)</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">5. Municipalities dwara collect kiye gaye birth and death records kiske under aate hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>International Publications</li>
+                                <li>Semi-Government Publications</li>
+                                <li>Trade Associations</li>
+                                <li>Unpublished Sources</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Semi-Government Publications</div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topic 4: Variables -->
+            <section id="topic-4" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold mb-6 text-white neon-border inline-block pb-2">4. Variables & Examples</h2>
+                
+                <div class="glass-panel p-6 rounded-xl space-y-4">
+                    <p><strong>Variable kya hota hai?</strong><br>
+                    Koi bhi aisi quantity ya attribute jiski value time ke sath ya ek investigation se dusri investigation me change hoti rehti hai (vary karti hai), use <strong>Variable</strong> kehte hain. <br>
+                    Generally inko \( X \), \( Y \), ya \( Z \) jaise letters se represent kiya jata hai. Mathematical terms me, hum inhe equations me likh sakte hain, jaise \( Y = f(X) \).</p>
+
+                    <h3 class="text-xl font-semibold text-neon-blue mt-6 mb-3">Example: Production of Rice in India</h3>
+                    <p class="text-slate-400 text-sm">Yahan neeche table me aap dekh sakte hain ki 'Year' (X) badalne par 'Production' (Y) bhi badal raha hai.</p>
+
+                    <div class="overflow-x-auto mt-4 rounded-lg border border-white/10">
+                        <table class="min-w-full text-left text-sm text-slate-300">
+                            <thead class="bg-white/5 font-medium text-white">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 border-b border-white/10">Year (X)</th>
+                                    <th scope="col" class="px-6 py-4 border-b border-white/10">Production of Rice in Million Tonnes (Y)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/10">
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">1950-1951</td>
+                                    <td class="px-6 py-4">20.58</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">1966-1967</td>
+                                    <td class="px-6 py-4">30.34</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">1975-1976</td>
+                                    <td class="px-6 py-4">48.74</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">1998-1999</td>
+                                    <td class="px-6 py-4">86.03</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">2020-2021</td>
+                                    <td class="px-6 py-4">120.00</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors text-neon-blue font-semibold">
+                                    <td class="px-6 py-4">2022-2023 (Estimated)</td>
+                                    <td class="px-6 py-4">135.52</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-sm text-slate-400 mt-2">Is table me 'Year' ek variable \( X \) hai, aur 'Rice Production' dusra variable \( Y \) hai. In dono ki values se hum India me rice production ka trend analyze kar sakte hain.</p>
+                </div>
+
+                <!-- MCQs for Topic 4 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-200"><i class="fas fa-gamepad text-neon-blue"></i> Topic 4 MCQs</h3>
+                    <div class="space-y-3">
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">1. Wo quantity jiski value badalti rehti hai, use kya kehte hain?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Constant</li>
+                                <li>Variable</li>
+                                <li>Fixed value</li>
+                                <li>Integer</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Variable</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">2. Upar di gayi table mein 'X' kisko represent kar raha hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Wheat Production</li>
+                                <li>State Name</li>
+                                <li>Year</li>
+                                <li>Population</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (c) Year</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">3. Variable ko generally kin letters se denote kiya jata hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>A, B, C</li>
+                                <li>I, II, III</li>
+                                <li>X, Y, Z</li>
+                                <li>Alpha, Beta</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (c) X, Y, Z</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">4. 2022-2023 me estimated Rice Production (Y) kitna dikhaya gaya hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>120 Million Tonnes</li>
+                                <li>20.58 Million Tonnes</li>
+                                <li>135.52 Million Tonnes</li>
+                                <li>86.03 Million Tonnes</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (c) 135.52 Million Tonnes</div>
+                            </details>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-lg">
+                            <p class="font-medium text-white mb-2">5. Agar X (Year) badh raha hai, toh table ke hisaab se Y (Production) ka general trend kya hai?</p>
+                            <ol class="list-[lower-alpha] pl-5 mb-3 space-y-1 text-slate-400">
+                                <li>Ghat raha hai (Decreasing)</li>
+                                <li>Badh raha hai (Increasing)</li>
+                                <li>Constant hai (Same)</li>
+                                <li>Zero ho gaya</li>
+                            </ol>
+                            <details class="group cursor-pointer">
+                                <summary class="inline-flex items-center gap-2 text-sm font-semibold text-neon-blue bg-neon-blue/10 px-3 py-1 rounded-md hover:bg-neon-blue/20 transition-colors">Show Answer</summary>
+                                <div class="mt-3 p-3 bg-green-500/10 border border-green-500/20 rounded text-green-400 font-medium">Answer: (b) Badh raha hai (Increasing)</div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam-Ready Quick Revision -->
+            <section id="quick-revision" class="mb-16 scroll-mt-24">
+                <div class="relative p-1 rounded-2xl bg-gradient-to-r from-neon-blue via-purple-500 to-neon-purple">
+                    <div class="glass-panel p-8 rounded-xl bg-slate-950/90 h-full w-full">
+                        <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple flex items-center gap-3">
+                            <i class="fas fa-bolt"></i> Exam-Ready Quick Revision
+                        </h2>
+
+                        <!-- Comparison Table -->
+                        <h3 class="text-xl font-bold text-white mb-4">Comparison: Primary vs Secondary Data</h3>
+                        <div class="overflow-x-auto rounded-lg border border-white/20 mb-8">
+                            <table class="min-w-full text-left text-sm text-slate-200">
+                                <thead class="bg-white/10 text-white font-bold">
+                                    <tr>
+                                        <th class="px-4 py-3 border-b border-white/20 border-r w-1/4">Basis</th>
+                                        <th class="px-4 py-3 border-b border-white/20 border-r w-3/8 text-neon-blue">Primary Data</th>
+                                        <th class="px-4 py-3 border-b border-white/20 w-3/8 text-neon-purple">Secondary Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/10">
+                                    <tr>
+                                        <td class="px-4 py-3 font-semibold border-r border-white/10 bg-white/5">Meaning</td>
+                                        <td class="px-4 py-3 border-r border-white/10">First-hand information khud collect ki hui.</td>
+                                        <td class="px-4 py-3">Dusre dwara collect ki hui pehle se available info.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 font-semibold border-r border-white/10 bg-white/5">Originality</td>
+                                        <td class="px-4 py-3 border-r border-white/10">Highly original (Original Data).</td>
+                                        <td class="px-4 py-3">Not original (Kisi aur ka data hai).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 font-semibold border-r border-white/10 bg-white/5">Time & Cost</td>
+                                        <td class="px-4 py-3 border-r border-white/10">Bohot expensive hai aur time zyada lagta hai.</td>
+                                        <td class="px-4 py-3">Sasta hai aur quickly mil jata hai.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 font-semibold border-r border-white/10 bg-white/5">Accuracy/Reliability</td>
+                                        <td class="px-4 py-3 border-r border-white/10">Zyada accurate (researcher ke needs k hisaab se).</td>
+                                        <td class="px-4 py-3">Kam accurate ho sakta hai.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Cheatsheet Flowchart style -->
+                        <h3 class="text-xl font-bold text-white mb-4">Methods Cheat Sheet</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-lg bg-[#00f3ff]/10 border border-[#00f3ff]/30">
+                                <h4 class="font-bold text-neon-blue mb-2 text-center border-b border-[#00f3ff]/20 pb-2">Primary Methods</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-sm text-slate-300">
+                                    <li>Direct Personal Investigation</li>
+                                    <li>Indirect Oral Investigation</li>
+                                    <li>Questionnaires (Mailing & Enumerator)</li>
+                                    <li>Observations</li>
+                                    <li>Experiments</li>
+                                    <li>Focus Groups</li>
+                                    <li>Local Correspondents</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 rounded-lg bg-[#bc13fe]/10 border border-[#bc13fe]/30">
+                                <h4 class="font-bold text-neon-purple mb-2 text-center border-b border-[#bc13fe]/20 pb-2">Secondary Sources</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-sm text-slate-300">
+                                    <li><strong class="text-white">Published:</strong> Govt. Pubs, Semi-Govt, Trade Assoc., Journals, International (UNO, IMF).</li>
+                                    <li><strong class="text-white">Unpublished:</strong> Private internal records, unpublished university research.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Sci-Fi Footer -->
+    <footer class="glass-panel border-t border-white/10 py-8 mt-auto z-50 relative">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-slate-400 font-mono text-sm">
+                <span class="text-neon-blue">{"</span>
+                Designed with <i class="fas fa-heart text-red-500 mx-1"></i> for Students
+                <span class="text-neon-blue">"}</span>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <a href="https://github.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-white hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all text-2xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://youtube.com/@shivamcuj" target="_blank" class="text-slate-400 hover:text-red-500 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] transition-all text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/shivamcuj" target="_blank" class="text-slate-400 hover:text-blue-500 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all text-2xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/shivamcuj" target="_blank" class="text-slate-400 hover:text-pink-500 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] transition-all text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebarBtn = document.getElementById('close-sidebar');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeSidebarBtn.addEventListener('click', toggleMenu);
+
+        // Close sidebar on link click (Mobile)
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+        });
+
+        // ScrollSpy logic for Active Sidebar Link
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".toc-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                // Add an offset to trigger slightly earlier
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("text-neon-blue", "font-bold", "bg-white/5", "rounded-md", "px-2");
+                if (link.getAttribute("href").includes(current)) {
+                    // special handling for quick revision to keep its purple tint
+                    if(current === "quick-revision") {
+                        link.classList.add("text-neon-purple", "font-bold", "bg-white/5", "rounded-md", "px-2");
+                    } else {
+                        link.classList.add("text-neon-blue", "font-bold", "bg-white/5", "rounded-md", "px-2");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
