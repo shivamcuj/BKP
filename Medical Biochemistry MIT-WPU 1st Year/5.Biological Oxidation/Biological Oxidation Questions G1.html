@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biological Oxidation | Study Guide</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration for Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth transitions */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .option-label {
+            transition: all 0.2s ease;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+        /* Hide radio dots */
+        input[type="radio"] {
+            display: none;
+        }
+        .explanation-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+        }
+        .explanation-content.open {
+            grid-template-rows: 1fr;
+        }
+        .explanation-inner {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-100 p-2 rounded-lg">
+                    <i class="fas fa-microscope text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">BioOxidation <span class="text-primary-600 dark:text-primary-400">Mastery</span></h1>
+            </div>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <i id="themeIcon" class="fas fa-moon text-gray-600 dark:text-gray-300 text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-12">
+        
+        <!-- Welcome Section -->
+        <section class="text-center py-8 space-y-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Biological Oxidation Study Guide</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Master the concepts of energy release, coenzymes, and oxidoreductases through interactive quizzes and detailed explanations.</p>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: 20 Multiple Choice Questions    -->
+        <!-- ========================================== -->
+        <section>
+            <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-3">
+                <i class="fas fa-tasks text-2xl text-primary-500"></i>
+                <h2 class="text-2xl font-bold">Interactive MCQs</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="mcq-container">
+                <!-- MCQs will be dynamically injected here via JavaScript to keep HTML clean -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: 10 Short Answer Questions       -->
+        <!-- ========================================== -->
+        <section>
+            <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-3 mt-12">
+                <i class="fas fa-bolt text-2xl text-yellow-500"></i>
+                <h2 class="text-2xl font-bold">Short Answer Questions</h2>
+            </div>
+
+            <div class="space-y-4" id="short-q-container">
+                <!-- Short Questions injected via JS -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 3: 10 Essay Questions              -->
+        <!-- ========================================== -->
+        <section>
+            <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-700 pb-3 mt-12">
+                <i class="fas fa-book-open text-2xl text-green-500"></i>
+                <h2 class="text-2xl font-bold">Essay Questions</h2>
+            </div>
+
+            <div class="space-y-4" id="essay-q-container">
+                <!-- Essay Questions injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-12 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center gap-4 text-center">
+            <p class="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                Designed For My Bestie <i class="fas fa-heart text-red-500 animate-pulse"></i>
+            </p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-full font-semibold shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1">
+                <i class="fab fa-instagram text-xl"></i>
+                <span>@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // ==========================================
+        // DATA ARRAYS
+        // ==========================================
+        
+        const mcqs = [
+            { q: "What term is used to describe oxidation that occurs within living systems?", options: ["Chemical combustion", "Biological oxidation", "Photosynthesis", "Hydrolysis"], correct: 1 },
+            { q: "Biological oxidations are generally considered to be:", options: ["Endergonic", "Exergonic", "Isothermic", "Reversible"], correct: 1 },
+            { q: "The energy released during biological oxidation is captured to form which energy-rich compound?", options: ["Glucose", "DNA", "ATP", "Lipids"], correct: 2 },
+            { q: "The formation of ATP from ADP and Pi coupled with biological oxidation is called:", options: ["Substrate-level phosphorylation", "Biological oxidative phosphorylation", "Photophosphorylation", "Reductive phosphorylation"], correct: 1 },
+            { q: "Which class of enzymes is primarily required for biological oxidation?", options: ["Hydrolases", "Isomerases", "Transferases", "Oxidoreductases"], correct: 3 },
+            { q: "Which of the following is NOT a subclass of oxidoreductases?", options: ["Oxidases", "Dehydrogenases", "Ligases", "Oxygenases"], correct: 2 },
+            { q: "Oxidases catalyze the removal of hydrogen from a substrate using what as a hydrogen acceptor?", options: ["Carbon dioxide", "Nitrogen", "Oxygen", "Water"], correct: 2 },
+            { q: "Which of the following is an example of an oxidase?", options: ["Cytochrome oxidase", "NADH-dehydrogenase", "Phenylalanine hydroxylase", "Catalase"], correct: 0 },
+            { q: "When oxidases use oxygen as a hydrogen acceptor, what are the possible products?", options: ["H2O or H2O2", "CO2 and H2O", "ATP and Heat", "NADH and FADH2"], correct: 0 },
+            { q: "Dehydrogenases differ from oxidases primarily because they:", options: ["Do not remove hydrogen", "Use oxygen as a direct hydrogen acceptor", "Cannot use oxygen as a hydrogen acceptor", "Do not require coenzymes"], correct: 2 },
+            { q: "NAD+ and NADP+ are coenzymes derived from which vitamin?", options: ["Vitamin C", "Riboflavin", "Niacin", "Thiamine"], correct: 2 },
+            { q: "When a substrate is oxidized by an NAD-linked dehydrogenase, how many hydrogen atoms are removed?", options: ["One", "Two", "Three", "Four"], correct: 1 },
+            { q: "NADP-linked dehydrogenases are primarily involved in:", options: ["Energy production via the respiratory chain", "Glycolysis", "TCA cycle", "Reductive biosynthetic reactions (e.g., fatty acid synthesis)"], correct: 3 },
+            { q: "FMN and FAD coenzymes are derived from which vitamin?", options: ["Niacin", "Vitamin B12", "Riboflavin", "Vitamin A"], correct: 2 },
+            { q: "Unlike NAD, when FAD acts as a coenzyme, how are the hydrogen atoms accepted?", options: ["One is accepted, one is released as H+", "Both are released into the medium", "Neither is accepted", "Both hydrogen atoms are accepted by FAD"], correct: 3 },
+            { q: "Which enzyme is a classic example of an FAD-linked dehydrogenase?", options: ["Succinate dehydrogenase", "Xanthine oxidase", "Catalase", "Cycloxygenase"], correct: 0 },
+            { q: "What is the primary function of hydroperoxidases?", options: ["To synthesize hydrogen peroxide", "To reduce H2O2 to H2O", "To incorporate oxygen into substrates", "To remove hydrogen using oxygen"], correct: 1 },
+            { q: "Which of the following is a type of hydroperoxidase?", options: ["Catalase", "Oxygenase", "Cytochrome oxidase", "Dehydrogenase"], correct: 0 },
+            { q: "What do oxygenases do?", options: ["Remove oxygen from a substrate", "Catalyze the addition of O2 atoms into a substrate", "Produce energy in the form of ATP", "Reduce water to hydrogen gas"], correct: 1 },
+            { q: "Which enzyme incorporates only ONE oxygen atom into the substrate while the other forms water?", options: ["Dioxygenase", "Peroxidase", "Mono-oxygenase", "Oxidase"], correct: 2 }
+        ];
+
+        const shortQuestions = [
+            { q: "Define biological oxidation.", a: "Biological oxidation refers to the oxidation processes that occur within living systems. These reactions are exergonic, meaning they release energy as the chemical systems move to a lower energy state." },
+            { q: "What is biological oxidative phosphorylation?", a: "It is the process where the energy released from biological oxidation is utilized to form the energy-rich compound ATP from ADP and inorganic phosphate (Pi)." },
+            { q: "List the four main types of oxidoreductases.", a: "The four main types are: 1. Oxidases, 2. Dehydrogenases, 3. Hydroperoxidases, and 4. Oxygenases." },
+            { q: "Name the four key coenzymes involved in biological oxidation.", a: "The key coenzymes are NAD+ (Nicotinamide adenine dinucleotide), NADP+ (Nicotinamide adenine dinucleotide phosphate), FMN (Flavin mononucleotide), and FAD (Flavin adenine dinucleotide)." },
+            { q: "What is the defining characteristic of oxidases? Provide an example.", a: "Oxidases catalyze the removal of hydrogen from a substrate and exclusively use oxygen as the hydrogen acceptor, forming H2O or H2O2. Examples include Cytochrome oxidase and Xanthine oxidase." },
+            { q: "How do dehydrogenases differ from oxidases regarding oxygen?", a: "Unlike oxidases, dehydrogenases catalyze the removal of hydrogen but CANNOT use oxygen directly as a hydrogen acceptor. They require specific coenzymes (like NAD+ or FAD) to accept the hydrogens." },
+            { q: "What is the primary metabolic difference between NAD-linked and NADP-linked dehydrogenases?", a: "NAD-linked dehydrogenases are involved in oxidative, energy-producing pathways (like glycolysis and TCA cycle), whereas NADP-linked dehydrogenases are involved in reductive biosynthetic reactions (like fatty acid and cholesterol synthesis) and cannot produce energy." },
+            { q: "What are the vitamin precursors for NAD/NADP and FMN/FAD?", a: "NAD+ and NADP+ are derived from the vitamin Niacin. FMN and FAD are derived from the vitamin Riboflavin." },
+            { q: "What are hydroperoxidases and what are the two main types?", a: "Hydroperoxidases are enzymes that protect the body by catalyzing the reduction of harmful hydrogen peroxide (H2O2) to water (H2O). The two types are Peroxidases and Catalases." },
+            { q: "Differentiate between mono-oxygenases and dioxygenases.", a: "Mono-oxygenases incorporate only one atom of the O2 molecule into the substrate (forming a hydroxyl group) while the other forms water. Dioxygenases incorporate both atoms of the O2 molecule directly into the substrate." }
+        ];
+
+        const essayQuestions = [
+            { q: "Describe the concept of biological oxidation and explain its relationship with ATP generation.", a: "Biological oxidation is the process of oxidation occurring in living organisms. It is exergonic, meaning it releases energy. Instead of being lost entirely as heat, a significant portion of this energy is trapped to convert ADP and inorganic phosphate (Pi) into ATP. This coupling of oxidation with the phosphorylation of ADP is termed biological oxidative phosphorylation. ATP then serves as the universal energy currency for cellular activities." },
+            { q: "Classify oxidoreductases and provide a brief overview of each subclass.", a: "Oxidoreductases catalyze redox reactions and are divided into four main subclasses: <br>1. <strong>Oxidases:</strong> Remove hydrogen and use oxygen directly as an acceptor to form water or hydrogen peroxide. <br>2. <strong>Dehydrogenases:</strong> Remove hydrogen but use coenzymes (NAD, FAD) instead of oxygen as acceptors. <br>3. <strong>Hydroperoxidases:</strong> Reduce hydrogen peroxide (H2O2) to water, preventing cellular damage. Includes catalases and peroxidases. <br>4. <strong>Oxygenases:</strong> Incorporate molecular oxygen atoms directly into substrate molecules without producing energy." },
+            { q: "Discuss the role of Nicotinamide coenzymes (NAD+ and NADP+) in biological oxidation.", a: "Derived from niacin, these coenzymes are utilized by dehydrogenases. When a substrate is oxidized, two hydrogen atoms are removed; one is transferred to the coenzyme (forming NADH or NADPH), and the other enters the medium as an H+ ion. NAD+ is primarily involved in energy-yielding catabolic pathways (glycolysis, TCA cycle, respiratory chain). In contrast, NADP+ provides reducing equivalents for anabolic, biosynthetic reactions like fatty acid and cholesterol synthesis. Importantly, NADPH cannot be oxidized in the respiratory chain to produce ATP." },
+            { q: "Compare and contrast NAD-linked dehydrogenases with Flavin-linked dehydrogenases.", a: "<strong>Precursors:</strong> NAD is derived from Niacin; Flavin (FAD/FMN) is from Riboflavin. <br><strong>Hydrogen Acceptance:</strong> NAD accepts one hydrogen atom and releases one H+ ion into the medium. Flavin coenzymes accept both hydrogen atoms entirely to form FADH2 or FMNH2. <br><strong>Examples/Roles:</strong> NAD is heavily involved in glycolysis and TCA cycle energy extraction. FMN is crucial in the mitochondrial electron transport chain (NADH dehydrogenase), while FAD is utilized by succinate dehydrogenase (TCA) and acyl-CoA dehydrogenase (fatty acid beta-oxidation)." },
+            { q: "Explain the biochemical significance of hydroperoxidases with examples.", a: "Hydroperoxidases are crucial for cellular defense mechanisms against oxidative stress. Biological reactions often produce hydrogen peroxide (H2O2) as a byproduct, which is highly toxic and can damage cellular components. Hydroperoxidases catalyze the reduction of H2O2 into harmless water (H2O). The two main categories are Peroxidases and Catalases. By neutralizing H2O2, they prevent the formation of highly reactive free radicals, thereby maintaining cellular integrity and health." },
+            { q: "Write a detailed note on Oxygenases, their classification, and examples.", a: "Oxygenases directly incorporate molecular oxygen (O2) into substrates. Unlike oxidases, they are not involved in energy production. They are classified into two groups: <br>1. <strong>Mono-oxygenases (Mixed-function oxidases):</strong> Incorporate only one oxygen atom into the substrate, typically as a hydroxyl (-OH) group, while the second oxygen atom is reduced to water. Example: Phenylalanine hydroxylase (converts phenylalanine to tyrosine). <br>2. <strong>Dioxygenases:</strong> Incorporate both oxygen atoms of the O2 molecule into the substrate. Examples include Homogentisate oxidase (tyrosine metabolism) and Cycloxygenase (prostaglandin synthesis)." },
+            { q: "Discuss the distinct roles that oxygen plays in the reactions catalyzed by Oxidases versus Oxygenases.", a: "While both enzyme classes interact with molecular oxygen, their mechanisms and purposes differ vastly. <br><strong>Oxidases:</strong> Use oxygen strictly as an electron/hydrogen 'sink' or acceptor at the end of an oxidative process. Oxygen does not become part of the organic substrate; instead, it combines with extracted hydrogens to form H2O or H2O2. This is often linked to energy production (e.g., Cytochrome oxidase in the ETC). <br><strong>Oxygenases:</strong> Actively insert oxygen atoms directly into the chemical structure of the organic substrate itself. This is used for modifying molecules (synthesis or degradation) and does not yield energy." },
+            { q: "Analyze the specific roles of dehydrogenases in varying metabolic environments (Catabolism vs. Anabolism).", a: "Dehydrogenases are highly specialized based on their coenzymes. In catabolism (breaking down molecules for energy), NAD-linked and FAD-linked dehydrogenases are utilized. They strip hydrogens/electrons from glucose or fats (in glycolysis, TCA cycle, beta-oxidation) and transport them to the respiratory chain to generate ATP. In anabolism (building molecules), NADP-linked dehydrogenases are used. They utilize the reducing power of NADPH to build complex molecules like cholesterol and fatty acids, acting as a donor of hydrogen/electrons rather than a pathway for energy extraction." },
+            { q: "Trace the fate of a hydrogen atom removed by an NAD-linked dehydrogenase versus an FAD-linked dehydrogenase.", a: "When a substrate (MH2) encounters an NAD-linked dehydrogenase, two hydrogen atoms are removed. One proton and two electrons are transferred to NAD+ to form NADH, while the remaining proton is released as a free H+ ion into the aqueous cellular medium. When the substrate encounters an FAD-linked dehydrogenase, both hydrogen atoms (two protons and two electrons) are seamlessly accepted into the isoalloxazine ring of the FAD coenzyme, forming FADH2 without releasing a free proton into the immediate medium." },
+            { q: "Summarize the overarching process of biological oxidation starting from substrate oxidation to ATP formation.", a: "Biological oxidation begins when specific enzymes (oxidoreductases) act on energetic substrates derived from food. Dehydrogenases remove hydrogen atoms, transferring them to coenzymes like NAD+ or FAD, converting them to their energy-rich reduced states (NADH, FADH2). These reduced coenzymes travel to the mitochondrial electron transport chain. Here, electrons are passed through a series of carriers. The final enzyme in this chain is an Oxidase (Cytochrome oxidase), which transfers the electrons to molecular oxygen, forming water. The energy released during this electron transport is used to pump protons, creating a gradient that drives ATP synthase to phosphorylate ADP into ATP, completing the process of oxidative phosphorylation." }
+        ];
+
+        // ==========================================
+        // RENDERING FUNCTIONS
+        // ==========================================
+
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            
+            mcqs.forEach((mcq, index) => {
+                const optionsHtml = mcq.options.map((opt, oIndex) => `
+                    <label class="option-label block relative p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer hover:border-primary-400 dark:hover:border-primary-500">
+                        <input type="radio" name="mcq-${index}" value="${oIndex}" onchange="checkMCQ(this, ${mcq.correct})">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 mr-3 text-sm font-semibold">${String.fromCharCode(65 + oIndex)}</span>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">${opt}</span>
+                        </div>
+                    </label>
+                `).join('');
+
+                html += `
+                    <div class="mcq-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col transition-colors">
+                        <div class="mb-4 flex gap-3 items-start">
+                            <span class="bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 font-bold px-3 py-1 rounded-lg text-sm shrink-0">Q${index + 1}</span>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">${mcq.q}</h3>
+                        </div>
+                        <div class="space-y-3 mt-auto relative" id="mcq-group-${index}">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderQA(data, containerId, badgeColorClasses, iconClass) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            data.forEach((item, index) => {
+                html += `
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-colors">
+                        <div class="p-6">
+                            <div class="flex gap-4 items-start">
+                                <span class="${badgeColorClasses} font-bold px-3 py-1 rounded-lg text-sm shrink-0 flex items-center gap-1">
+                                    <i class="${iconClass} text-xs"></i> ${index + 1}
+                                </span>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 leading-relaxed">${item.q}</h3>
+                            </div>
+                            
+                            <div class="mt-4 pl-14">
+                                <button onclick="toggleExplanation(this)" class="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors bg-primary-50 dark:bg-gray-700 px-4 py-2 rounded-lg focus:outline-none">
+                                    <i class="fas fa-eye"></i> Show Explanation
+                                </button>
+                                
+                                <div class="explanation-content mt-4">
+                                    <div class="explanation-inner">
+                                        <div class="p-4 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 rounded-r-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                                            ${item.a}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // INTERACTIVITY LOGIC
+        // ==========================================
+
+        // Logic for MCQ verification
+        function checkMCQ(inputElement, correctIndex) {
+            const selectedValue = parseInt(inputElement.value);
+            const card = inputElement.closest('.mcq-card');
+            const inputs = card.querySelectorAll('input[type="radio"]');
+            const labels = card.querySelectorAll('.option-label');
+
+            // Disable all inputs
+            inputs.forEach(inp => inp.disabled = true);
+
+            // Remove hover effects and default styling
+            labels.forEach(lbl => {
+                lbl.classList.remove('hover:border-primary-400', 'dark:hover:border-primary-500', 'cursor-pointer');
+                lbl.style.opacity = '0.6'; // Dim non-selected/non-correct answers
+            });
+
+            // Styling variables
+            const successClasses = ['bg-green-100', 'border-green-500', 'dark:bg-green-900/40', 'dark:border-green-500'];
+            const successTextClasses = ['text-green-800', 'dark:text-green-300'];
+            const successCircleClasses = ['bg-green-500', 'text-white', 'border-green-500', 'dark:bg-green-600', 'dark:border-green-600'];
+
+            const errorClasses = ['bg-red-100', 'border-red-500', 'dark:bg-red-900/40', 'dark:border-red-500'];
+            const errorTextClasses = ['text-red-800', 'dark:text-red-300'];
+            const errorCircleClasses = ['bg-red-500', 'text-white', 'border-red-500', 'dark:bg-red-600', 'dark:border-red-600'];
+
+            const defaultClassesToRemove = ['border-gray-200', 'dark:border-gray-700', 'bg-gray-50', 'dark:bg-gray-800'];
+            const defaultTextToRemove = ['text-gray-700', 'dark:text-gray-300'];
+            const defaultCircleToRemove = ['bg-white', 'dark:bg-gray-700', 'border-gray-300', 'dark:border-gray-600'];
+
+            // Highlight the selected answer
+            const selectedLabel = inputElement.closest('label');
+            const selectedText = selectedLabel.querySelector('span:nth-child(2)');
+            const selectedCircle = selectedLabel.querySelector('span:nth-child(1)');
+            
+            selectedLabel.classList.remove(...defaultClassesToRemove);
+            selectedText.classList.remove(...defaultTextToRemove);
+            selectedCircle.classList.remove(...defaultCircleToRemove);
+            selectedLabel.style.opacity = '1';
+
+            if (selectedValue === correctIndex) {
+                // Correct
+                selectedLabel.classList.add(...successClasses);
+                selectedText.classList.add(...successTextClasses);
+                selectedCircle.classList.add(...successCircleClasses);
+                selectedCircle.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                // Incorrect
+                selectedLabel.classList.add(...errorClasses);
+                selectedText.classList.add(...errorTextClasses);
+                selectedCircle.classList.add(...errorCircleClasses);
+                selectedCircle.innerHTML = '<i class="fas fa-times"></i>';
+
+                // Highlight correct answer as well
+                const correctLabel = labels[correctIndex];
+                const correctText = correctLabel.querySelector('span:nth-child(2)');
+                const correctCircle = correctLabel.querySelector('span:nth-child(1)');
+
+                correctLabel.classList.remove(...defaultClassesToRemove);
+                correctText.classList.remove(...defaultTextToRemove);
+                correctCircle.classList.remove(...defaultCircleToRemove);
+                correctLabel.style.opacity = '1';
+
+                correctLabel.classList.add(...successClasses);
+                correctText.classList.add(...successTextClasses);
+                correctCircle.classList.add(...successCircleClasses);
+                correctCircle.innerHTML = '<i class="fas fa-check"></i>';
+            }
+        }
+
+        // Logic for toggling explanations using CSS Grid transition
+        function toggleExplanation(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                btn.innerHTML = '<i class="fas fa-eye"></i> Show Explanation';
+                btn.classList.remove('bg-gray-200', 'dark:bg-gray-600');
+            } else {
+                content.classList.add('open');
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Explanation';
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-600');
+            }
+        }
+
+        // Dark/Light Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        // Check local storage for theme preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            themeIcon.classList.replace('text-gray-600', 'text-yellow-400');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeIcon.classList.replace('text-gray-600', 'text-yellow-400');
+                themeIcon.classList.remove('dark:text-gray-300');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeIcon.classList.replace('text-yellow-400', 'text-gray-600');
+                themeIcon.classList.add('dark:text-gray-300');
+            }
+        });
+
+        // Initialize Rendering
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderQA(shortQuestions, 'short-q-container', 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300', 'fas fa-pen');
+            renderQA(essayQuestions, 'essay-q-container', 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300', 'fas fa-align-left');
+        });
+
+    </script>
+</body>
+</html>
+

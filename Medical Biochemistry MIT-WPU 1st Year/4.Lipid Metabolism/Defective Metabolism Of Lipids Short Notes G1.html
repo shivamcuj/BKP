@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defective Metabolism of Lipids - Study Notes</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for cute icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #fff5f7;
+            --card-bg: #ffffff;
+            --text-main: #4a4044;
+            --text-muted: #7a6b71;
+            --primary-rose: #d67d8d;
+            --light-rose: #f9e1e5;
+            --accent-gold: #d4a373;
+            --shadow-soft: rgba(214, 125, 141, 0.15);
+            --shadow-hover: rgba(214, 125, 141, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(var(--light-rose) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Romantic Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 30px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-rose);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px var(--light-rose);
+        }
+
+        header p.subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* Floating Action Button */
+        .btn-download {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-rose), #e097a5);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px var(--shadow-soft);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px var(--shadow-hover);
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px var(--shadow-soft);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Section Headings */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-rose);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--light-rose);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-family: 'Lora', serif;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Text Elements */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        ul li::before {
+            content: '♡';
+            position: absolute;
+            left: 0;
+            color: var(--primary-rose);
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background-color: var(--light-rose);
+            border-left: 4px solid var(--primary-rose);
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+            font-family: 'Lora', serif;
+            font-style: italic;
+        }
+
+        /* Revision Card Style */
+        .revision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .revision-card {
+            background: linear-gradient(to bottom right, #ffffff, #fffafa);
+            border: 1px solid var(--light-rose);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease;
+        }
+
+        .revision-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .revision-card h4 {
+            color: var(--primary-rose);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .revision-card ul li::before {
+            content: '•';
+            font-size: 1.5rem;
+            top: -6px;
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 50px 0;
+            color: var(--light-rose);
+            font-size: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .btn-download {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-download" onclick="generatePDF()">
+        <i class="fa-solid fa-heart"></i> Save as PDF
+    </button>
+
+    <header>
+        <h1>Defective Metabolism of Lipids</h1>
+        <p class="subtitle">A cozy study guide carefully crafted for your exams <i class="fa-solid fa-sparkles" style="color:var(--accent-gold); font-size: 1rem;"></i></p>
+    </header>
+
+    <div class="container" id="study-material">
+        
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <div class="section-detailed">
+            <h2 style="justify-content: center; border:none; font-size: 2.2rem; margin-top: 0;">
+                <i class="fa-solid fa-book-open-reader" style="font-size: 1.5rem;"></i> In-Depth Study Notes
+            </h2>
+            
+            <!-- Atherosclerosis -->
+            <h2><i class="fa-solid fa-heart-pulse"></i> 1. Atherosclerosis</h2>
+            <p><strong>Definition:</strong> A buildup of cholesterol plaque in the walls of arteries, which causes the narrowing of the arterial lumen and obstruction of blood flow. It is heavily associated with abnormal cholesterol metabolism.</p>
+            
+            <h3>The Pathogenesis (How it forms):</h3>
+            <ul>
+                <li><strong>Initial Stage (Reversible):</strong> Cholesterol esters (specifically cholesterol oleates) from arterial smooth muscle cells deposit in the arterial intima. This creates <em>fatty streaks</em>. If controlled here, the condition can be reversed.</li>
+                <li><strong>Plaque Formation:</strong> If uncontrolled, extracellular deposition continues along with <strong>apo B-100</strong> lipoproteins. This solidifies into a plaque in the arterial wall.</li>
+                <li><strong>Complications:</strong> The plaque promotes blood clot formation (thrombosis). If a clot forms in the coronary artery, oxygen supply to the heart diminishes.</li>
+                <li><strong>Ultimate Result:</strong> Anoxia (lack of oxygen) causes necrosis of cardiac tissue, leading to <em>Myocardial Infarction (heart attack)</em>, Stroke, and Coronary Artery Disease (CAD).</li>
+            </ul>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-lightbulb" style="color: var(--primary-rose);"></i> 
+                <strong>Important Note:</strong> Atherosclerosis can also develop as a secondary complication to diseases like diabetes, hypothyroidism, and lipid nephrosis. Sometimes, it happens even with normal cholesterol levels due to inflammatory factors and <strong>low HDL levels</strong> (which leads to monocyte infiltration and foam cell formation).
+            </div>
+
+            <!-- Fatty Liver -->
+            <h2><i class="fa-solid fa-seedling"></i> 2. Fatty Liver</h2>
+            <p><strong>Definition:</strong> A normal liver contains about 5% lipid (one-quarter of which is triglyceride). When lipid accumulation becomes extensive, reaching <strong>25% to 30%</strong>, it is known as a fatty liver. In severe cases, triglycerides can occupy the entire cytoplasm of the hepatocyte.</p>
+            
+            <h3>Primary Causes of Lipid Accumulation:</h3>
+            <ul>
+                <li><strong>Raised Plasma Free Fatty Acids:</strong> Excessive fat mobilization from adipose tissues causes the liver to esterify more fatty acids into triglycerides. Because VLDL synthesis remains at a normal rate, the triglycerides pile up. 
+                <br><em>Examples:</em> Starvation, Diabetes, High-fat diet, Carnitine deficiency.</li>
+                <li><strong>Metabolic Block in Lipoprotein (VLDL) Production:</strong> VLDL is required to transport triglycerides out of the liver. If VLDL formation is blocked, fats accumulate.
+                <br><em>The Cure:</em> <strong>Lipotropic factors</strong> (Choline, Methionine, Betaine) prevent or cure this. For instance, choline deficiency blocks phospholipid biosynthesis, impairing the membranes needed to make VLDL.</li>
+                <li><strong>Toxic Substances:</strong> Hepatotoxic agents damage the liver's ability to process fats. 
+                <br><em>Examples:</em> Carbon tetrachloride, chloroform, alcohol, arsenic, and lead. Drugs that inhibit protein synthesis (like puromycin) also cause this.</li>
+            </ul>
+            <p><strong>Medical Consequence:</strong> Chronic lipid accumulation leads to fibrotic changes in hepatocytes, progressing to <em>cirrhosis</em> and total impairment of liver function.</p>
+
+            <!-- Hypercholesterolemia -->
+            <h2><i class="fa-solid fa-droplet"></i> 3. Hypercholesterolemia</h2>
+            <p><strong>Definition:</strong> An elevation in blood cholesterol levels greater than <strong>200 mg/dl</strong>. While cholesterol is a vital natural metabolite (needed for cell membranes, steroid hormones, and bile acids), excess amounts lead to coronary heart disease.</p>
+
+            <h3>Disorders causing Hypercholesterolemia:</h3>
+            <ul>
+                <li><strong>Diabetes Mellitus:</strong> Increases cholesterol synthesis due to a high availability of Acetyl CoA.</li>
+                <li><strong>Hypothyroidism (Myxoedema):</strong> Decreases the number of HDL receptors on hepatocytes, keeping cholesterol in the blood.</li>
+                <li><strong>Obstructive Jaundice:</strong> Causes an obstruction in the excretion of cholesterol through bile.</li>
+                <li><strong>Nephrotic Syndrome:</strong> Characterized by an increase in plasma globulin concentration and lipoprotein fractions.</li>
+            </ul>
+
+            <h3>Good vs. Bad Cholesterol</h3>
+            <ul>
+                <li><strong>LDL (Bad Cholesterol):</strong> Lethally dangerous lipoprotein. It causes atherosclerosis. <em>Small dense LDL (sdLDL)</em> is the most dangerous fraction associated with Coronary Heart Disease.</li>
+                <li><strong>HDL (Good Cholesterol):</strong> Highly desirable lipoprotein. High concentrations actively counteract atherogenesis (plaque formation).</li>
+            </ul>
+
+            <div class="highlight-box">
+                <i class="fa-solid fa-mug-hot" style="color: var(--primary-rose);"></i> 
+                <strong>Lifestyle Impacts:</strong> High blood pressure, emotional stress, smoking, drinking soft water, coffee drinking, lack of exercise, and abdominal obesity all significantly elevate serum cholesterol levels.
+            </div>
+        </div>
+
+        <div class="divider">
+            <i class="fa-solid fa-fan"></i><i class="fa-solid fa-fan" style="font-size: 1.5rem; margin: 0 10px;"></i><i class="fa-solid fa-fan"></i>
+        </div>
+
+        <!-- SECTION 2: QUICK REVISION -->
+        <div class="section-revision">
+            <h2 style="justify-content: center; border:none; font-size: 2.2rem; margin-top: 0;">
+                <i class="fa-solid fa-bolt" style="color: var(--accent-gold); font-size: 1.5rem;"></i> Last-Minute Revision Notes
+            </h2>
+            <p style="text-align: center; color: var(--text-muted); font-style: italic;">Quick, punchy facts to glance at right before your exam.</p>
+
+            <div class="revision-grid">
+                <!-- Card 1 -->
+                <div class="revision-card">
+                    <h4>Atherosclerosis</h4>
+                    <ul>
+                        <li><strong>What:</strong> Cholesterol plaque buildup in arteries.</li>
+                        <li><strong>Start:</strong> Cholesterol oleates deposit -> <em>Fatty streaks</em> (Reversible).</li>
+                        <li><strong>End:</strong> Plaque + apo B-100 -> Luminal narrowing.</li>
+                        <li><strong>Result:</strong> Clots, Myocardial Infarction, Stroke, CAD.</li>
+                        <li><strong>Triggers:</strong> Low HDL, Diabetes, Hypothyroidism.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="revision-card">
+                    <h4>Fatty Liver</h4>
+                    <ul>
+                        <li><strong>Normal vs Fatty:</strong> 5% lipid jumps to 25-30%.</li>
+                        <li><strong>Cause 1 (High FFA):</strong> Starvation, Diabetes. VLDL can't keep up with triglyceride synthesis.</li>
+                        <li><strong>Cause 2 (VLDL Block):</strong> Lack of Lipotropic factors (Choline, Methionine).</li>
+                        <li><strong>Cause 3 (Toxins):</strong> Alcohol, CCl4, Chloroform.</li>
+                        <li><strong>Endgame:</strong> Liver Cirrhosis.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="revision-card">
+                    <h4>Hypercholesterolemia</h4>
+                    <ul>
+                        <li><strong>Level:</strong> Blood Cholesterol > 200 mg/dl.</li>
+                        <li><strong>Diabetes:</strong> High Acetyl CoA -> high synthesis.</li>
+                        <li><strong>Hypothyroidism:</strong> Low HDL receptors.</li>
+                        <li><strong>Jaundice:</strong> Blocked bile excretion.</li>
+                        <li><strong>Nephrotic Syndrome:</strong> High lipoproteins.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="revision-card">
+                    <h4>Cholesterol & Lifestyle</h4>
+                    <ul>
+                        <li><strong>LDL (Bad):</strong> Causes plaque. <em>sdLDL</em> is the most dangerous.</li>
+                        <li><strong>HDL (Good):</strong> Counteracts plaque formation.</li>
+                        <li><strong>Risk Factors:</strong> Stress, smoking, obesity, coffee, lack of exercise, high BP.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            const element = document.getElementById('study-material');
+            const button = document.querySelector('.btn-download');
+            
+            // Visual feedback
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            button.style.pointerEvents = 'none';
+
+            // PDF Options
+            const opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5], // Top, Left, Bottom, Right
+                filename:     'Lipid_Metabolism_Study_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button
+                button.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.pointerEvents = 'auto';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+

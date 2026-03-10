@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defective Metabolism of Lipids - Study App</title>
+    <!-- Modern Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --bg-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #596b7d;
+            --primary: #6c5ce7;
+            --primary-hover: #5b4bc4;
+            --accent: #00cec9;
+            --correct: #27ae60;
+            --wrong: #e74c3c;
+            --border: #e1e8ed;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --btn-text: #ffffff;
+        }
+
+        .dark-mode {
+            /* Dark Mode Colors */
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --primary: #8c7ae6;
+            --primary-hover: #7b6ad6;
+            --accent: #00cec9;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--container-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        main {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            color: var(--text-main);
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        /* MCQ Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .option-btn {
+            background-color: var(--bg-color);
+            border: 2px solid var(--border);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: rgba(108, 92, 231, 0.05);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background-color: rgba(39, 174, 96, 0.1) !important;
+            border-color: var(--correct) !important;
+            color: var(--correct) !important;
+            font-weight: 600;
+        }
+
+        .option-btn.wrong {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            border-color: var(--wrong) !important;
+            color: var(--wrong) !important;
+        }
+
+        /* Explanations */
+        .btn-explain {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-explain:hover {
+            background-color: var(--primary);
+            color: var(--btn-text);
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .explanation-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--container-bg);
+            border-top: 1px solid var(--border);
+            padding: 25px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bestie-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .bestie-text i.fa-heart {
+            color: #e74c3c;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .ig-handle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.2rem;
+            margin-top: 5px;
+            transition: color 0.3s;
+        }
+
+        .ig-handle:hover {
+            color: var(--primary-hover);
+        }
+
+        .ig-handle i {
+            font-size: 1.4rem;
+            background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header { padding: 15px 20px; }
+            header h1 { font-size: 1.2rem; }
+            .card { padding: 15px; }
+            .section-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-book-medical"></i> Lipid Metabolism Notes</h1>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+            <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+    </header>
+
+    <main>
+        <h2 class="section-title"><i class="fa-solid fa-list-check"></i> Multiple Choice Questions (20)</h2>
+        <div id="mcq-container"></div>
+
+        <h2 class="section-title"><i class="fa-solid fa-pen-to-square"></i> Short Answer Questions (10)</h2>
+        <div id="short-container"></div>
+
+        <h2 class="section-title"><i class="fa-solid fa-file-lines"></i> Essay Questions (10)</h2>
+        <div id="essay-container"></div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="bestie-text">Designed For My Bestie <i class="fa-solid fa-heart"></i></span>
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="ig-handle">
+                <i class="fa-brands fa-instagram"></i> @shivamcuj
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Database of Questions extracted from the PDF
+        const mcqs = [
+            {
+                q: "1. What is the normal percentage of lipid content in a healthy liver?",
+                opts: ["10%", "5%", "15%", "25-30%"], ans: 1,
+                exp: "A normal liver contains about 5% lipid, of which about 1/4th is triglyceride."
+            },
+            {
+                q: "2. In a fatty liver condition, the lipid content increases to approximately what percentage?",
+                opts: ["10-15%", "15-20%", "25-30%", "40-50%"], ans: 2,
+                exp: "Extensive accumulation leads to a fatty liver where lipid content jumps to 25-30%."
+            },
+            {
+                q: "3. Atherosclerosis is initially characterized by the reversible formation of what?",
+                opts: ["Plaque rupture", "Fatty streaks", "Blood clots", "Macrophage death"], ans: 1,
+                exp: "Initially, cholesterol esters deposit in the arterial intima leading to fatty streaks formation, which is a reversible condition."
+            },
+            {
+                q: "4. Which specific apolipoprotein deposits along with cholesterol esters to form arterial plaque?",
+                opts: ["Apo A-1", "Apo C-II", "Apo B-100", "Apo E"], ans: 2,
+                exp: "Extracellular deposition of cholesterol esters occurs along with apo B-100 of lipoproteins."
+            },
+            {
+                q: "5. A clot formation in the coronary artery due to plaque rupture leads to anoxia and manifests as:",
+                opts: ["Fatty liver", "Diabetes mellitus", "Myocardial infarction", "Nephrotic syndrome"], ans: 2,
+                exp: "Diminished blood and O2 supply to the cardiac muscle manifests as myocardial infarction or stroke."
+            },
+            {
+                q: "6. Which of the following diseases is NOT listed as a secondary cause of atherosclerosis?",
+                opts: ["Diabetes", "Hypothyroidism", "Lipid nephrosis", "Obstructive jaundice"], ans: 3,
+                exp: "Atherosclerosis develops as a secondary complication in diabetes, hypothyroidism, and lipid nephrosis. Obstructive jaundice primarily causes hypercholesterolemia."
+            },
+            {
+                q: "7. Which of the following raises plasma free fatty acid levels, contributing to fatty liver?",
+                opts: ["Starvation", "Carnitine deficiency", "High fat diet", "All of the above"], ans: 3,
+                exp: "Plasma free fatty acid levels are elevated in starvation, diabetes, high fat diet, and carnitine deficiency."
+            },
+            {
+                q: "8. What is the role of lipotropic factors in the liver?",
+                opts: ["Increase cholesterol synthesis", "Prevent or relieve excess lipid accumulation", "Cause fatty streaks", "Inhibit protein synthesis"], ans: 1,
+                exp: "Lipotropic factors are compounds (like choline, methionine) that relieve or prevent excess accumulation of lipids in the liver."
+            },
+            {
+                q: "9. Which of the following is a classic lipotropic factor?",
+                opts: ["Carbon tetrachloride", "Puromycin", "Choline", "Ethionine"], ans: 2,
+                exp: "Choline, methionine, and betaine are the primary lipotropic factors."
+            },
+            {
+                q: "10. Choline deficiency impairs the biosynthesis of what component necessary for VLDL formation?",
+                opts: ["Cholesterol", "Phospholipid", "Triglyceride", "Apo B-100"], ans: 1,
+                exp: "Choline deficiency leads to a block in choline-dependent phospholipid biosynthesis, impairing membrane formation needed for VLDL synthesis."
+            },
+            {
+                q: "11. Which of the following is considered a hepatotoxic agent that causes fatty liver?",
+                opts: ["Carbon tetrachloride", "Methionine", "Betaine", "Vitamin E"], ans: 0,
+                exp: "Carbon tetrachloride, chloroform, phosphorus, lead, arsenic, and alcohol are hepatotoxic agents that cause fatty liver."
+            },
+            {
+                q: "12. Chronic accumulation of lipid in the liver progresses to:",
+                opts: ["Myocardial Infarction", "Cirrhosis", "Atherosclerosis", "Obstructive jaundice"], ans: 1,
+                exp: "Chronic fibrotic changes take place in hepatocytes, progressing to cirrhosis and finally impaired liver function."
+            },
+            {
+                q: "13. Hypercholesterolemia is defined as an elevated blood cholesterol level greater than:",
+                opts: ["100 mg/dl", "150 mg/dl", "200 mg/dl", "250 mg/dl"], ans: 2,
+                exp: "Increase in plasma cholesterol (>200 mg/dl) concentration is known as hypercholesterolemia."
+            },
+            {
+                q: "14. How does Diabetes Mellitus contribute to hypercholesterolemia?",
+                opts: ["Decreased HDL receptors", "Increased acetyl CoA availability", "Obstruction of bile", "Increased plasma globulin"], ans: 1,
+                exp: "In diabetes, there is increased cholesterol synthesis due to the increased availability of acetyl CoA."
+            },
+            {
+                q: "15. Hypothyroidism causes hypercholesterolemia by:",
+                opts: ["Increasing cholesterol synthesis", "Decreasing HDL receptors on hepatocytes", "Blocking VLDL formation", "Raising free fatty acids"], ans: 1,
+                exp: "Hypothyroidism (myxoedema) is believed to cause hypercholesterolemia due to a decrease in the HDL receptors on hepatocytes."
+            },
+            {
+                q: "16. Which lipoprotein fraction is lethally dangerous and associated strongly with Coronary Heart Disease?",
+                opts: ["HDL", "VLDL", "Chylomicrons", "Small dense LDL (sdLDL)"], ans: 3,
+                exp: "Small dense LDL (sdLDL) is considered to be the most dangerous fraction of LDL associated with CHD."
+            },
+            {
+                q: "17. HDL cholesterol is considered 'good' because:",
+                opts: ["It causes atherogenesis", "It is found in fast food", "Its high concentration counteracts atherogenesis", "It blocks bile excretion"], ans: 2,
+                exp: "HDL cholesterol is good since its high concentration actively counteracts atherogenesis."
+            },
+            {
+                q: "18. Which lifestyle factor is known to elevate serum cholesterol?",
+                opts: ["Drinking soft water (against hard water)", "Lack of exercise", "Emotional stress", "All of the above"], ans: 3,
+                exp: "Factors like high BP, stress, smoking, soft water, coffee, lack of exercise, and obesity all elevate serum cholesterol."
+            },
+            {
+                q: "19. Which condition occurs due to an obstruction in the excretion of cholesterol through bile?",
+                opts: ["Nephrotic syndrome", "Hypothyroidism", "Obstructive jaundice", "Fatty liver"], ans: 2,
+                exp: "Obstructive jaundice causes an obstruction in the excretion of cholesterol through bile, leading to its accumulation in the blood."
+            },
+            {
+                q: "20. Nephrotic syndrome leads to cholesterol elevation due to:",
+                opts: ["Increased plasma lipoprotein fractions", "Decreased acetyl CoA", "Loss of lipotropic factors", "Liver cirrhosis"], ans: 0,
+                exp: "In Nephrotic syndrome, an increase in plasma globulin concentration and an increase in plasma lipoprotein fractions lead to cholesterol elevation."
+            }
+        ];
+
+        const shortQs = [
+            { q: "1. Define Atherosclerosis.", exp: "It is an abnormality associated with cholesterol metabolism where a buildup of cholesterol plaque in the walls of arteries causes narrowing and obstruction of blood flow." },
+            { q: "2. What are 'fatty streaks'?", exp: "Fatty streaks are the initial, reversible stage of atherosclerosis formed when cholesterol esters (particularly cholesterol oleates) deposit in the arterial intima." },
+            { q: "3. How does Hypothyroidism affect blood cholesterol?", exp: "It causes hypercholesterolemia (myxoedema) primarily due to a decrease in the number of HDL receptors on hepatocytes, preventing clearance." },
+            { q: "4. What is the standard lipid composition in a normal, healthy liver?", exp: "A normal liver contains about 5% lipid, of which roughly one quarter (1/4) is comprised of triglycerides." },
+            { q: "5. Define 'Lipotropic factors'.", exp: "Lipotropic factors are compounds such as choline, methionine, and betaine that relieve or prevent the excess accumulation of lipids in the liver." },
+            { q: "6. Name three hepatotoxic agents that can cause a fatty liver.", exp: "Carbon tetrachloride, chloroform, alcohol, arsenic, and lead are examples of hepato-toxic agents." },
+            { q: "7. Why is 'sdLDL' highly dangerous?", exp: "Small dense LDL (sdLDL) is the most dangerous fraction of LDL because it easily permeates arterial walls, leading to severe atherosclerosis and Coronary Heart Disease (CHD)." },
+            { q: "8. What is the threshold for Hypercholesterolemia?", exp: "An elevated blood cholesterol concentration greater than 200 mg/dl is diagnosed as hypercholesterolemia." },
+            { q: "9. How does obstructive jaundice lead to hypercholesterolemia?", exp: "It causes a physical obstruction in the bile ducts, preventing the normal excretion of cholesterol through bile into the intestines." },
+            { q: "10. List four lifestyle factors that increase serum cholesterol.", exp: "Emotional stress, smoking, physical inactivity (lack of exercise), and obesity (particularly abdominal obesity)." }
+        ];
+
+        const essayQs = [
+            { q: "1. Describe the detailed pathogenesis of atherosclerosis, starting from normal function to plaque rupture.", exp: "The process begins with an abnormality in cholesterol metabolism. Endothelial dysfunction allows cholesterol oleates to deposit in the arterial intima, forming reversible 'fatty streaks'. If uncontrolled, continued extracellular deposition of cholesterol and apo B-100 solidifies into plaque. This causes arterial narrowing. Eventually, plaque rupture promotes thrombosis (clotting). If this occurs in the coronary artery, the heart muscle is starved of oxygen (anoxia), leading to necrosis and Myocardial Infarction (heart attack)." },
+            { q: "2. Discuss the three primary metabolic causes that lead to the development of a fatty liver.", exp: "1) Raised Plasma Free Fatty Acids: Caused by starvation, diabetes, or high-fat diets, where the liver esterifies more fats than it can export via VLDL. \n2) Blocked VLDL Production: Even with normal triglyceride synthesis, a lack of lipotropic factors (choline/methionine) prevents the formation of lipoproteins needed to export fat. \n3) Toxic Substances: Hepato-toxins like alcohol, carbon tetrachloride, or protein-synthesis inhibitors (puromycin) damage the liver's lipid-processing mechanisms." },
+            { q: "3. Explain the mechanism by which lipotropic factors prevent fatty liver, specifically detailing the role of choline.", exp: "Lipotropic factors like choline are essential for exporting fat out of the liver. Choline is directly required for choline-dependent phospholipid biosynthesis. These phospholipids are crucial for forming the membranes necessary to assemble and secrete Very Low-Density Lipoprotein (VLDL). Without choline, VLDL formation is blocked, and triglycerides cannot leave the liver, resulting in fatty liver." },
+            { q: "4. Elaborate on the four distinct clinical disorders that cause secondary Hypercholesterolemia.", exp: "1) Diabetes Mellitus: Increases acetyl CoA availability, supercharging cholesterol synthesis. \n2) Hypothyroidism: Decreases hepatic HDL receptors, reducing cholesterol clearance from blood. \n3) Obstructive Jaundice: Blocks the biliary pathway, preventing cholesterol excretion via bile. \n4) Nephrotic Syndrome: Characterized by abnormal increases in plasma globulin and lipoprotein fractions in the blood." },
+            { q: "5. Critically analyze the concepts of 'Good' and 'Bad' cholesterol and their relationship with Coronary Heart Disease.", exp: "Though both are natural metabolites, LDL is termed 'bad' because it deposits cholesterol into arterial walls, driving atherogenesis. The sdLDL fraction is particularly lethal. High LDL correlates positively with CHD. Conversely, HDL is termed 'good' because it performs reverse cholesterol transport, removing cholesterol from tissues and counteracting plaque formation, thus correlating negatively with CHD risk." },
+            { q: "6. Discuss the connection between atherosclerosis, localized anoxia, and myocardial infarction.", exp: "Atherosclerosis physically narrows the coronary arteries via plaque. If a plaque ruptures, a blood clot forms quickly. This clot obstructs the remaining lumen completely. The cardiac muscle downstream gets deprived of oxygen (localized anoxia). Without oxygen, the tissue undergoes necrosis (cell death), which clinically manifests as a myocardial infarction (heart attack)." },
+            { q: "7. Analyze how modern lifestyle and dietary choices influence the pathogenesis of hypercholesterolemia and CHD.", exp: "Modern lifestyle choices heavily impact lipid levels. Sedentary habits (lack of exercise) lower protective HDL. High-stress environments and smoking trigger inflammation and alter lipid handling. Dietary choices, like consuming trans/saturated fats or drinking coffee/soft water, can elevate LDL. Abdominal obesity creates metabolic imbalances, further promoting the excessive synthesis of cholesterol and increasing CHD risk." },
+            { q: "8. Explain the paradox of atherosclerotic lesions developing even in patients with normal blood cholesterol levels.", exp: "Atherosclerosis isn't solely dependent on high cholesterol. Inflammatory factors and exceptionally low HDL levels can drive the disease. When HDL is low, monocytes easily infiltrate the arterial wall. These monocytes differentiate into macrophages, ingest available lipoproteins, and become 'foam cells', initiating lesion formation despite normal overall systemic cholesterol levels." },
+            { q: "9. Write a comprehensive note on the medical consequences of untreated chronic fatty liver.", exp: "If a fatty liver is left untreated and the accumulation of lipids (taking up 25-30% of the liver's weight) becomes chronic, the continuous stress leads to cellular damage. This triggers an inflammatory response resulting in fibrotic changes within the hepatocytes. Eventually, the functional tissue is replaced by scar tissue, progressing to severe cirrhosis, which causes a total failure of hepatic function." },
+            { q: "10. Discuss the role of VLDL in normal lipid transport versus its role in the pathology of fatty liver.", exp: "Normally, VLDL serves as the primary transport vehicle to carry endogenously synthesized triglycerides from the liver to extrahepatic tissues. In fatty liver pathology, VLDL becomes the bottleneck. If there is a massive influx of free fatty acids (from starvation/diabetes), the liver synthesizes triglycerides faster than VLDL can be produced. Alternatively, if lipotropic factors are missing, VLDL synthesis is completely blocked, trapping lipids inside the liver." }
+        ];
+
+        // Rendering Functions
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqs.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                let optsHTML = '';
+                item.opts.forEach((opt, oIdx) => {
+                    const isCorrect = (oIdx === item.ans);
+                    optsHTML += `<button class="option-btn" onclick="checkMcq(this, ${isCorrect})" data-correct="${isCorrect}">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                });
+
+                card.innerHTML = `
+                    <div class="question-text">${item.q}</div>
+                    <div class="options-grid">${optsHTML}</div>
+                    <button class="btn-explain" onclick="toggleExp(this)"><i class="fa-solid fa-lightbulb"></i> Show Explanation</button>
+                    <div class="explanation-box">${item.exp}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderTextQs(data, containerId) {
+            const container = document.getElementById(containerId);
+            data.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="question-text">${item.q}</div>
+                    <button class="btn-explain" onclick="toggleExp(this)"><i class="fa-solid fa-eye"></i> Show Answer / Explanation</button>
+                    <div class="explanation-box">${item.exp}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Interaction Logic
+        function checkMcq(btn, isCorrect) {
+            const optionsGrid = btn.parentElement;
+            if (optionsGrid.dataset.answered === "true") return; // Prevent multiple clicks
+            
+            optionsGrid.dataset.answered = "true";
+            const allBtns = optionsGrid.querySelectorAll('.option-btn');
+            
+            // Disable all buttons
+            allBtns.forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                // Highlight the right one
+                allBtns.forEach(b => {
+                    if (b.dataset.correct === "true") b.classList.add('correct');
+                });
+            }
+        }
+
+        function toggleExp(btn) {
+            const expBox = btn.nextElementSibling;
+            if (expBox.classList.contains('show')) {
+                expBox.classList.remove('show');
+                btn.innerHTML = btn.innerHTML.replace('Hide', 'Show').replace('fa-eye-slash', 'fa-eye');
+            } else {
+                expBox.classList.add('show');
+                btn.innerHTML = btn.innerHTML.replace('Show', 'Hide').replace('fa-eye', 'fa-eye-slash');
+            }
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if(document.body.classList.contains('dark-mode')){
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Initialize App
+        window.onload = () => {
+            renderMCQs();
+            renderTextQs(shortQs, 'short-container');
+            renderTextQs(essayQs, 'essay-container');
+        };
+    </script>
+</body>
+</html>
+

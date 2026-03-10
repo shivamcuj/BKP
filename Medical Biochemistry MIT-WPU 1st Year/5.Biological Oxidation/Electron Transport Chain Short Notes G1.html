@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron Transport Chain - Study Notes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: {
+                            50: '#fff0f3',
+                            100: '#ffe4e8',
+                            200: '#fecdd6',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        cream: '#fffdfb',
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #fce7f3 50%, #f3e8ff 100%);
+            background-attachment: fixed;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px rgba(251, 113, 133, 0.15);
+        }
+
+        .romantic-shadow {
+            box-shadow: 0 8px 25px rgba(251, 113, 133, 0.2);
+        }
+
+        .heading-glow {
+            text-shadow: 0 2px 10px rgba(251, 113, 133, 0.2);
+        }
+
+        /* Hide elements during print, show content linearly */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-show {
+                display: block !important;
+            }
+            .glass-card {
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+            h1, h2, h3 {
+                color: #881337 !important;
+                page-break-after: avoid;
+            }
+            .page-break-before {
+                page-break-before: always;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+        }
+
+        /* Custom Scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fb7185;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased min-h-screen py-8 px-4 sm:px-8">
+
+    <!-- Header Section -->
+    <header class="max-w-4xl mx-auto mb-10 text-center relative z-10">
+        <div class="inline-block p-4 rounded-full bg-white/50 romantic-shadow mb-4 no-print">
+            <i class="fa-solid fa-heart-pulse text-3xl text-blush-400"></i>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-serif font-bold text-blush-900 mb-3 heading-glow">
+            Electron Transport Chain
+        </h1>
+        <p class="text-blush-800 text-lg font-light italic">
+            "Energy flowing through the heart of the cell."
+        </p>
+    </header>
+
+    <!-- Navigation / Action Bar -->
+    <nav class="max-w-4xl mx-auto mb-8 flex flex-wrap justify-center gap-4 no-print relative z-10">
+        <button onclick="switchTab('detailed')" id="btn-detailed" class="px-6 py-3 rounded-full font-semibold transition-all duration-300 romantic-shadow bg-blush-500 text-white transform hover:scale-105">
+            <i class="fa-solid fa-book-open mr-2"></i> Detailed Explanations
+        </button>
+        <button onclick="switchTab('revision')" id="btn-revision" class="px-6 py-3 rounded-full font-semibold transition-all duration-300 romantic-shadow bg-white text-blush-500 hover:bg-blush-50 transform hover:scale-105">
+            <i class="fa-solid fa-bolt mr-2"></i> Quick Revision
+        </button>
+        <button onclick="window.print()" class="px-6 py-3 rounded-full font-semibold transition-all duration-300 romantic-shadow bg-white text-gray-700 hover:bg-gray-50 transform hover:scale-105 ml-auto">
+            <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i> Save to PDF
+        </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto relative z-10">
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <div id="section-detailed" class="glass-card rounded-3xl p-8 sm:p-12 mb-8 print-show transition-opacity duration-500">
+            <h2 class="text-3xl font-serif text-blush-900 border-b-2 border-blush-200 pb-3 mb-6 flex items-center">
+                <i class="fa-solid fa-microscope text-blush-400 mr-3 text-2xl"></i> Detailed Explanations
+            </h2>
+
+            <div class="space-y-8 text-lg leading-relaxed text-gray-700">
+                
+                <!-- Introduction -->
+                <section>
+                    <h3 class="text-2xl font-serif text-blush-800 mb-3">1. Introduction to the ETC</h3>
+                    <p class="mb-3">
+                        The <strong>Electron Transport Chain (ETC)</strong>, affectionately also known as the <em>Respiratory Chain</em>, is the grand finale of cellular respiration. 
+                        The final steps in the overall oxidation of foodstuffs (carbohydrates, fats, and amino acids) result in the formation of energy-rich coenzymes: <strong>NADH</strong> and <strong>FADH<sub>2</sub></strong>.
+                    </p>
+                    <p>
+                        The ETC oxidizes these coenzymes by transferring their electrons (reducing equivalents) through a series of oxidation-reduction reactions. The terminal electron acceptor in this journey is <strong>Oxygen (O<sub>2</sub>)</strong>. In the presence of oxygen, the ETC beautifully converts these reducing equivalents into usable cellular energy—<strong>ATP</strong>—via a process called <em>oxidative phosphorylation</em>.
+                    </p>
+                </section>
+
+                <!-- Localization -->
+                <section class="bg-blush-50 rounded-2xl p-6 border border-blush-100 romantic-shadow">
+                    <h3 class="text-xl font-serif text-blush-800 mb-2">
+                        <i class="fa-solid fa-location-dot mr-2 text-blush-400"></i> Localization
+                    </h3>
+                    <p>
+                        Where does this magic happen? The electron transport chain is nestled snugly within the <strong>inner mitochondrial membrane</strong>. The enzymes and complexes that orchestrate this electron dance are intimately embedded within this membrane, acting as a bridge between the mitochondrial matrix and the cytosolic side.
+                    </p>
+                </section>
+
+                <!-- Components -->
+                <section>
+                    <h3 class="text-2xl font-serif text-blush-800 mb-3">2. Components & Complexes</h3>
+                    <p class="mb-4">The ETC is composed of several key players, most of which are proteins (with one notable lipid-soluble exception). They are structurally organized into four major complexes:</p>
+                    
+                    <ul class="list-none space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-blush-200 text-blush-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 shrink-0">I</span>
+                            <div>
+                                <strong class="text-blush-900">Complex I (NADH-CoQ Reductase):</strong>
+                                Catalyzes the transfer of electrons from NADH to Coenzyme Q (CoQ). It utilizes Flavin mononucleotide (FMN) and Iron-Sulfur (Fe-S) proteins.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blush-200 text-blush-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 shrink-0">II</span>
+                            <div>
+                                <strong class="text-blush-900">Complex II (Succinate-CoQ Reductase):</strong>
+                                Transfers electrons directly from Succinate (via FADH<sub>2</sub>) to Coenzyme Q, bypassing Complex I.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blush-200 text-blush-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 shrink-0">III</span>
+                            <div>
+                                <strong class="text-blush-900">Complex III (CoQ-Cytochrome c Reductase):</strong>
+                                Transfers electrons from Coenzyme Q to Cytochrome c. It contains cytochromes b and c<sub>1</sub>, and Fe-S proteins.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blush-200 text-blush-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 shrink-0">IV</span>
+                            <div>
+                                <strong class="text-blush-900">Complex IV (Cytochrome Oxidase):</strong>
+                                The final stage. It transfers electrons from Cytochrome c to Oxygen (O<sub>2</sub>), forming water. It contains cytochromes a and a<sub>3</sub> (which contain copper).
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 p-4 border-l-4 border-blush-400 bg-white">
+                        <p class="text-sm italic text-gray-600">
+                            <strong>Note on Cytochromes:</strong> Cytochrome c is water-soluble and easily diffuses. Cytochromes b, c<sub>1</sub>, a, and a<sub>3</sub> are lipid-soluble and fixed in the membrane. <strong>Coenzyme Q (Ubiquinone)</strong> is the only non-protein component—it is a fat-soluble quinone.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ATP Synthesis -->
+                <section>
+                    <h3 class="text-2xl font-serif text-blush-800 mb-3">3. Formation of ATP</h3>
+                    <p class="mb-3">
+                        As electrons flow from components of more negative redox potential to those with a more positive redox potential, energy is released. This beautiful flow is coupled to the synthesis of ATP by an enzyme called <strong>F<sub>0</sub>F<sub>1</sub> ATPase</strong>.
+                    </p>
+                    <p class="mb-4">There are three specific sites along the chain that provide enough energy to phosphorylate ADP into ATP:</p>
+                    <ol class="list-decimal pl-6 space-y-2 text-blush-900 font-semibold mb-4">
+                        <li>Oxidation of FMNH<sub>2</sub> by Coenzyme Q.</li>
+                        <li>Oxidation of Cytochrome b by Cytochrome c<sub>1</sub>.</li>
+                        <li>Cytochrome oxidase reaction (Oxidation of Cyt a by Cyt a<sub>3</sub>).</li>
+                    </ol>
+                    <p>
+                        Because <strong>NADH</strong> enters at Complex I, it passes through all 3 sites, yielding <strong>3 ATPs</strong>. 
+                        <strong>FADH<sub>2</sub></strong> enters at Complex II, bypassing the first site, thus yielding only <strong>2 ATPs</strong>.
+                    </p>
+                </section>
+
+                <!-- Inhibitors -->
+                <section>
+                    <h3 class="text-2xl font-serif text-blush-800 mb-4">4. Inhibitors & Uncouplers</h3>
+                    <p class="mb-4 text-gray-600">Substances that disrupt this delicate chain can be divided into three romantic tragedies: inhibitors of the chain, inhibitors of phosphorylation, and uncouplers.</p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-rose-100 shadow-sm">
+                            <h4 class="font-bold text-rose-900 mb-2 border-b border-rose-100 pb-1">Inhibitors of ETC Proper</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li><strong>Complex I:</strong> Barbiturates (Amobarbital), Piericidin A, Rotenone (insecticide).</li>
+                                <li><strong>Complex III:</strong> Antimycin A, Dimercaprol, BAL (British antilewisite).</li>
+                                <li><strong>Complex IV:</strong> Cyanide, Carbon Monoxide (CO), H<sub>2</sub>S. <em>(Totally arrests respiration)</em>.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-rose-100 shadow-sm">
+                            <h4 class="font-bold text-rose-900 mb-2 border-b border-rose-100 pb-1">Inhibitors of Phosphorylation</h4>
+                            <p class="text-sm">These block the F<sub>0</sub>F<sub>1</sub> ATPase directly. <br><strong>Example:</strong> Oligomycin (an antibiotic).</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-rose-100 shadow-sm sm:col-span-2">
+                            <h4 class="font-bold text-rose-900 mb-2 border-b border-rose-100 pb-1">Uncouplers & Ionophores</h4>
+                            <p class="text-sm mb-2">They allow electron transport but prevent ATP synthesis by destroying the proton (H<sup>+</sup>) gradient. Energy is released as heat instead of ATP.</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li><strong>Chemical:</strong> 2,4-Dinitrophenol (DNP), Dicoumarol, Salicylate (Aspirin metabolite).</li>
+                                <li><strong>Physiological:</strong> Thermogenin, Thyroxine, Bilirubin, Free fatty acids.</li>
+                                <li><strong>Ionophores:</strong> (Carry cations other than H<sup>+</sup>) Valinomycin, Gramicidin.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- SECTION 2: SHORT NOTES / REVISION -->
+        <div id="section-revision" class="glass-card rounded-3xl p-8 sm:p-12 hidden print-show page-break-before">
+            <h2 class="text-3xl font-serif text-blush-900 border-b-2 border-blush-200 pb-3 mb-6 flex items-center">
+                <i class="fa-solid fa-clock-rotate-left text-blush-400 mr-3 text-2xl"></i> Quick Revision Notes
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Summary Box -->
+                <div class="bg-blush-800 text-white rounded-xl p-5 romantic-shadow">
+                    <h3 class="text-xl font-bold mb-2">ETC at a Glance</h3>
+                    <p class="text-sm opacity-90">Located in the <strong>inner mitochondrial membrane</strong>. Oxidizes NADH & FADH<sub>2</sub> to generate ATP via oxidative phosphorylation. Ultimate electron acceptor is <strong>O<sub>2</sub></strong> (forms water).</p>
+                </div>
+
+                <!-- Pathway Flow -->
+                <div>
+                    <h3 class="text-lg font-bold text-blush-900 mb-3 border-l-4 border-blush-400 pl-3">Electron Flow Pathway</h3>
+                    <div class="bg-white p-4 rounded-lg border border-gray-100 flex flex-wrap items-center gap-2 text-sm font-semibold text-gray-700 justify-center text-center">
+                        <span class="text-blush-600">NADH</span> 
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span>FMN</span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span class="bg-blush-50 px-2 py-1 rounded">CoQ</span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span>Cyt b</span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span>Cyt c<sub>1</sub></span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span class="bg-blush-50 px-2 py-1 rounded">Cyt c</span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span>Cyt a <i class="fa-solid fa-arrow-right text-gray-300 text-xs"></i> Cyt a<sub>3</sub></span>
+                        <i class="fa-solid fa-arrow-right text-gray-300"></i>
+                        <span class="text-blue-500">O<sub>2</sub> (H<sub>2</sub>O)</span>
+                    </div>
+                    <p class="text-xs text-center mt-2 text-gray-500">*FADH<sub>2</sub> enters directly at CoQ (via Complex II).</p>
+                </div>
+
+                <!-- Fast Facts Table -->
+                <div class="overflow-x-auto rounded-xl border border-blush-100">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-blush-100 text-blush-900">
+                            <tr>
+                                <th class="p-3">Topic</th>
+                                <th class="p-3">Key Details to Memorize</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-blush-50 bg-white text-gray-700">
+                            <tr>
+                                <td class="p-3 font-bold">ATP Yield</td>
+                                <td class="p-3">1 NADH = <strong>3 ATP</strong> <br>1 FADH<sub>2</sub> = <strong>2 ATP</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Complex I</td>
+                                <td class="p-3">NADH-CoQ reductase. Inhibited by: <strong>Rotenone, Amobarbital, Piericidin A</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Complex II</td>
+                                <td class="p-3">Succinate-CoQ reductase (Entry point for FADH<sub>2</sub>).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Complex III</td>
+                                <td class="p-3">CoQ-Cyt c reductase. Inhibited by: <strong>Antimycin A, BAL, Dimercaprol</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Complex IV</td>
+                                <td class="p-3">Cytochrome oxidase (Cyt a + a<sub>3</sub>, contains Copper). Inhibited by: <strong>Cyanide, CO, H<sub>2</sub>S</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">F<sub>0</sub>F<sub>1</sub> ATPase</td>
+                                <td class="p-3">Enzyme for ATP synthesis. Inhibited directly by: <strong>Oligomycin</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Uncouplers</td>
+                                <td class="p-3">Destroy proton gradient, produce heat. <strong>Examples:</strong> 2,4-DNP, Aspirin (Salicylate), Thermogenin.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p class="text-center text-blush-400 font-serif italic mt-6">"Breathe in, breathe out. You've got this."</p>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-blush-800 text-sm mt-12 pb-8 no-print font-light">
+        <p>Crafted with <i class="fa-solid fa-heart text-blush-400 mx-1"></i> for studying.</p>
+    </footer>
+
+    <!-- Tab Switching Logic -->
+    <script>
+        function switchTab(tab) {
+            const detailedSec = document.getElementById('section-detailed');
+            const revisionSec = document.getElementById('section-revision');
+            const btnDetailed = document.getElementById('btn-detailed');
+            const btnRevision = document.getElementById('btn-revision');
+
+            // Define styles for active and inactive states
+            const activeClasses = ['bg-blush-500', 'text-white'];
+            const inactiveClasses = ['bg-white', 'text-blush-500', 'hover:bg-blush-50'];
+
+            if (tab === 'detailed') {
+                // Show Detailed, Hide Revision
+                detailedSec.classList.remove('hidden');
+                revisionSec.classList.add('hidden');
+                
+                // Update Buttons
+                btnDetailed.classList.add(...activeClasses);
+                btnDetailed.classList.remove(...inactiveClasses);
+                
+                btnRevision.classList.add(...inactiveClasses);
+                btnRevision.classList.remove(...activeClasses);
+            } else {
+                // Show Revision, Hide Detailed
+                revisionSec.classList.remove('hidden');
+                detailedSec.classList.add('hidden');
+                
+                // Update Buttons
+                btnRevision.classList.add(...activeClasses);
+                btnRevision.classList.remove(...inactiveClasses);
+                
+                btnDetailed.classList.add(...inactiveClasses);
+                btnDetailed.classList.remove(...activeClasses);
+            }
+        }
+    </script>
+</body>
+</html>
+
