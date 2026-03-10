@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Synthesis Study Hub</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind config for dark mode and custom font -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        primaryDark: '#4f46e5',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(4px);
+        }
+        .slide-down {
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 font-sans min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">Translation Quiz Hub</h1>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none">
+                    <!-- Sun Icon -->
+                    <svg id="theme-toggle-light-icon" class="hidden w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 3.22a1 1 0 011.415 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-3.22 4.22a1 1 0 010 1.415l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.415 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-3.22a1 1 0 01-1.415 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm3.22-4.22a1 1 0 010-1.415l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.415 0zM10 6a4 4 0 100 8 4 4 0 000-8z" clip-rule="evenodd"></path></svg>
+                    <!-- Moon Icon -->
+                    <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6 text-slate-700 dark:text-slate-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <header class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Protein Synthesis Review</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">Test your knowledge on translation, ribosomes, and the intricate steps of protein biosynthesis in eukaryotes and prokaryotes.</p>
+        </header>
+
+        <!-- Section Navigation -->
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button onclick="scrollToSection('mcq-section')" class="px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary dark:hover:border-primary transition font-medium">Multiple Choice</button>
+            <button onclick="scrollToSection('saq-section')" class="px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary dark:hover:border-primary transition font-medium">Short Answers</button>
+            <button onclick="scrollToSection('essay-section')" class="px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary dark:hover:border-primary transition font-medium">Essay Questions</button>
+        </div>
+
+        <!-- MCQs Section -->
+        <section id="mcq-section" class="mb-16 scroll-mt-20">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
+                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span> 
+                Multiple Choice Questions (20)
+            </h3>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs injected via JS -->
+            </div>
+        </section>
+
+        <!-- Short Answers Section -->
+        <section id="saq-section" class="mb-16 scroll-mt-20">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
+                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span> 
+                Short Answer Questions (10)
+            </h3>
+            <div id="saq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- SAQs injected via JS -->
+            </div>
+        </section>
+
+        <!-- Essay Section -->
+        <section id="essay-section" class="mb-16 scroll-mt-20">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
+                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span> 
+                Essay Questions (10)
+            </h3>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center gap-3">
+            <div class="flex items-center gap-2 text-lg font-medium text-slate-700 dark:text-slate-300">
+                Designed For My Bestie 
+                <svg class="w-5 h-5 text-red-500 fill-current animate-pulse" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-slate-500 hover:text-primary dark:hover:text-primary transition-colors bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="font-semibold tracking-wide">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // --- Data Definitions ---
+        const mcqs = [
+            { q: "What is the pathway of protein biosynthesis called?", options: ["Transcription", "Replication", "Translation", "Translocation"], answer: 2 },
+            { q: "Where does translation occur in the cell?", options: ["Nucleus", "Mitochondria", "Cytosol on ribosomes", "Golgi apparatus"], answer: 2 },
+            { q: "What is the size of the eukaryotic ribosome and its subunits?", options: ["70S (50S and 30S)", "80S (60S and 40S)", "80S (50S and 30S)", "70S (60S and 40S)"], answer: 1 },
+            { q: "Which of the following is the initiator tRNA in prokaryotes?", options: ["Met-tRNAMet", "fMet-tRNAmet", "Ala-tRNAAla", "Tyr-tRNATyr"], answer: 1 },
+            { q: "What acts as the start signal in eukaryotic mRNA?", options: ["Shine-Dalgarno sequence", "A poly-A tail", "Initiating AUG preceded by a methylguanosyl triphosphate cap", "Initiating UAA preceded by a cap"], answer: 2 },
+            { q: "How many initiation factors are known in prokaryotic protein synthesis?", options: ["One", "Three (IF1, IF2, IF3)", "Nine", "More than nine"], answer: 1 },
+            { q: "Termination in eukaryotes is carried out by which release factor?", options: ["RF1", "RF2", "RF3", "Single release factor eRF"], answer: 3 },
+            { q: "Which enzyme is responsible for the activation of amino acids?", options: ["Peptidyl transferase", "RNA polymerase", "Aminoacyl tRNA synthase (AAS)", "Helicase"], answer: 2 },
+            { q: "The activation of amino acids requires energy in the form of:", options: ["GTP", "ATP", "CTP", "NADH"], answer: 1 },
+            { q: "During ribosomal dissociation, the 40S subunit binds to which initiation factors?", options: ["eIF4 and eIF5", "eIF3 and eIF-1A", "eIF2 and eIF3", "CBP and eIF4"], answer: 1 },
+            { q: "The ternary complex in eukaryotic initiation consists of:", options: ["40S, mRNA, and ATP", "60S, eIF2, and GTP", "GTP, eIF2, and Met-tRNAMet", "eIF3, eIF-1A, and mRNA"], answer: 2 },
+            { q: "What is required for the association of mRNA with the 43S initiation complex?", options: ["Cap binding protein (CBP/eIF4) and ATP", "eEF-1α and GTP", "Shine-Dalgarno sequence", "Peptidyl transferase"], answer: 0 },
+            { q: "In the 80S initiation complex, where is the initiator Met-tRNAMet located?", options: ["A site", "E site", "P site", "Cytosol"], answer: 2 },
+            { q: "During elongation, the incoming aminoacyl tRNA enters which site on the ribosome?", options: ["P site", "A site", "E site", "T site"], answer: 1 },
+            { q: "Which enzyme catalyzes the formation of the peptide bond during elongation?", options: ["Aminoacyl tRNA synthase", "Peptidyl transferase (Ribozyme)", "DNA polymerase", "Translocase"], answer: 1 },
+            { q: "Translocation of the ribosome along the mRNA requires which elongation factor?", options: ["eEF1α", "eEF2 (Translocase)", "eIF2", "eRF"], answer: 1 },
+            { q: "How far does the ribosome move along the mRNA during translocation?", options: ["One base", "Two bases", "Three bases (one codon)", "Six bases"], answer: 2 },
+            { q: "Which of the following is NOT a termination (nonsense) codon?", options: ["UAA", "UAG", "UGA", "AUG"], answer: 3 },
+            { q: "What provides the energy required for the translocation step?", options: ["Hydrolysis of ATP", "Hydrolysis of GTP", "Peptide bond formation", "Release factor eRF"], answer: 1 },
+            { q: "What happens after the peptidyl tRNA bond is hydrolyzed during termination?", options: ["The ribosome moves to the next codon", "A new peptide bond is formed", "The polypeptide is freed and mRNA is released", "The 40S and 60S subunits fuse tightly"], answer: 2 }
+        ];
+
+        const saqs = [
+            { q: "Define translation.", a: "Translation is the process by which ribosomes convert the information carried by mRNA in the form of genetic code to the synthesis of a new protein." },
+            { q: "Where does translation occur?", a: "Translation occurs in the cytosol on ribosomes and is guided by mRNA." },
+            { q: "What are the basic requirements for translation?", a: "The basic requirements include mRNA, tRNAs, Ribosomes, Energy (ATP and GTP), Enzymes, and specific protein factors (initiation/elongation factors)." },
+            { q: "What is the function of aminoacyl tRNA synthase (AAS)?", a: "It catalyzes the activation of amino acids by covalently attaching each of the 20 amino acids to their respective tRNA at the expense of ATP." },
+            { q: "Differentiate between eukaryotic and prokaryotic start signals.", a: "In eukaryotes, the initiating AUG of mRNA is preceded by a methylguanosyl triphosphate cap. In prokaryotes, it is preceded by a purine-rich sequence called the Shine-Dalgarno sequence." },
+            { q: "What are the components of the 43S pre-initiation complex?", a: "It consists of the 40S ribosomal subunit bound to the ternary complex (GTP-eIF2-Met-tRNAMet) and is stabilized by eIF3 and eIF-1A." },
+            { q: "Name the three steps of the elongation phase.", a: "1) Binding of aminoacyl tRNA to the A site. 2) Formation of a peptide bond. 3) Translocation." },
+            { q: "What is the role of peptidyl transferase?", a: "It is a ribozyme that catalyzes the formation of a new peptide bond between the amino acid in the A site and the peptide chain in the P site." },
+            { q: "Describe the process of translocation.", a: "The ribosome moves along the mRNA towards its 3' end by a distance of one codon (three bases), shifting the dipeptidyl tRNA from the A site to the P site. It requires elongation factor eEF2 and GTP." },
+            { q: "What triggers the termination of protein synthesis?", a: "Termination is triggered when the ribosome reaches one of the three nonsense (stop) codons: UAA, UAG, or UGA in the A site, which is then recognized by releasing factors." }
+        ];
+
+        const essays = [
+            { q: "Discuss the major differences between eukaryotic and prokaryotic protein synthesis based on the provided text.", a: "Eukaryotes have larger 80S ribosomes (60S/40S), while prokaryotes have 70S (50S/30S). The initiator tRNA in eukaryotes is Met-tRNAMet, whereas in prokaryotes it is fMet-tRNAmet. The start signal in eukaryotes relies on a 5' cap preceding AUG, while prokaryotes use the Shine-Dalgarno sequence. Eukaryotes have at least nine initiation factors (eIFs) and a single release factor (eRF), whereas prokaryotes use three initiation factors (IF1, IF2, IF3) and three release factors (RF1, RF2, RF3)." },
+            { q: "Detail the process of 'Activation of Amino Acids'. Include the required enzymes and energy sources.", a: "Activation occurs in the cytosol where each of the 20 amino acids is covalently attached to its specific tRNA. This reaction requires ATP for energy and is catalyzed by the enzyme aminoacyl tRNA synthase (AAS) in the presence of Mg2+. The resulting aminoacyl tRNA can recognize a specific codon on the mRNA via its anticodon." },
+            { q: "Explain the first two steps of Initiation: Ribosomal Dissociation and Formation of the 43S Pre-initiation complex.", a: "1) Ribosomal dissociation: The 40S subunit binds initiation factors eIF3 and eIF-1A, causing the 80S ribosome to dissociate into 40S and 60S subunits. 2) 43S pre-initiation complex: GTP binds to eIF2, which then binds to Met-tRNAMet (ternary complex). This ternary complex binds to the 40S subunit, stabilized by eIF3 and eIF-1A, forming the 43S pre-initiation complex." },
+            { q: "Describe the formation of the 48S and 80S initiation complexes in eukaryotes.", a: "The 48S initiation complex forms when the 5' capped mRNA binds to the 43S complex, a process requiring Cap Binding Protein (CBP/eIF4) and ATP. The 80S initiation complex forms when the 60S subunit binds to the 48S complex. This involves the hydrolysis of GTP by eIF5 and release of initiation factors. At this point, the initiator tRNA is positioned at the P site paired with the AUG codon." },
+            { q: "Elaborate on the 'Binding of aminoacyl tRNA to the A site' during the elongation phase.", a: "The next aminoacyl tRNA, specified by the next mRNA codon, binds to an elongation factor complex (eEF-1α-GTP). This entire complex enters the A site of the ribosome. Upon proper binding and recognition, the GTP is hydrolyzed, and eEF-1α-GDP along with inorganic phosphate is released, leaving the new aminoacyl tRNA secured in the A site." },
+            { q: "Discuss the mechanism of peptide bond formation during translation.", a: "Peptide bond formation is the second step of elongation. It involves transferring the initiating methionine (or the growing peptide chain) from the tRNA in the P site to the amino group of the newly arrived amino acid in the A site. This crucial reaction is catalyzed by peptidyl transferase, which acts as a ribozyme. This leaves an empty tRNA in the P site and a dipeptidyl (or extended) tRNA in the A site." },
+            { q: "Explain the process and significance of Translocation in protein synthesis.", a: "Translocation is the third step of elongation where the ribosome moves exactly one codon (three bases) toward the 3' end of the mRNA. This shift moves the elongated peptidyl tRNA from the A site to the P site, ejects the empty tRNA from the P site into the cytosol, and opens the A site for the next aminoacyl tRNA. It requires elongation factor eEF2 (translocase) and energy from GTP hydrolysis." },
+            { q: "Describe the entire process of Termination in eukaryotic translation.", a: "Termination occurs when a nonsense codon (UAA, UAG, UGA) enters the A site. Since no tRNA matches these codons, a single eukaryotic release factor (eRF) recognizes the signal. Along with GTP and peptidyl transferase, eRF hydrolyzes the bond between the peptide and the tRNA in the P site. This releases the newly synthesized polypeptide and the tRNA. Finally, mRNA is released, and the ribosome dissociates into 60S and 40S subunits for recycling." },
+            { q: "Summarize the role of ATP and GTP at various stages of eukaryotic protein synthesis.", a: "ATP is primarily used during the activation of amino acids to form aminoacyl-tRNA and during initiation for the binding of mRNA to the 43S complex (forming 48S). GTP is used extensively: in forming the ternary complex (eIF2-GTP) during initiation, providing energy for the binding of new aminoacyl tRNAs to the A site (eEF-1α-GTP), facilitating translocation (eEF2-GTP), and aiding in the termination/release process with eRF." },
+            { q: "Outline the flow of the translation process by listing its four major stages and a one-sentence summary for each.", a: "1) Activation of amino acids: Amino acids are covalently bound to their specific tRNAs using ATP. 2) Initiation: The ribosome subunits assemble on the mRNA with the initiator tRNA positioned at the start codon. 3) Elongation: The peptide chain grows as tRNAs bring amino acids to the ribosome, peptide bonds form, and the ribosome translocates along the mRNA. 4) Termination: The process stops at a nonsense codon, releasing the completed polypeptide chain and recycling the ribosome components." }
+        ];
+
+        // --- Render Functions ---
+        
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqs.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700';
+                
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <button onclick="checkMCQ(this, ${index}, ${optIndex})" 
+                            class="option-btn w-full text-left p-4 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50 hover:border-primary/50 dark:hover:border-primary/50 mb-3 last:mb-0 focus:outline-none">
+                            <span class="font-semibold text-slate-500 dark:text-slate-400 mr-2">${String.fromCharCode(65 + optIndex)}.</span> ${opt}
+                        </button>
+                    `;
+                });
+
+                questionDiv.innerHTML = `
+                    <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100"><span class="text-primary mr-1">Q${index + 1}.</span> ${item.q}</h4>
+                    <div class="options-container" id="mcq-options-${index}">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function renderQA(data, containerId, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full';
+                
+                itemDiv.innerHTML = `
+                    <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100"><span class="text-primary mr-1">Q${index + 1}.</span> ${item.q}</h4>
+                    <div class="mt-auto pt-4">
+                        <button onclick="toggleExplanation('${prefix}-${index}')" class="text-sm font-semibold text-primary hover:text-primaryDark flex items-center gap-1 focus:outline-none">
+                            <svg class="w-4 h-4 transition-transform duration-200" id="icon-${prefix}-${index}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            Show Explanation
+                        </button>
+                        <div id="${prefix}-${index}" class="hidden mt-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-300 leading-relaxed text-sm slide-down">
+                            ${item.a}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // --- Interaction Logic ---
+
+        window.checkMCQ = function(buttonElem, qIndex, selectedOptIndex) {
+            const container = document.getElementById(`mcq-options-${qIndex}`);
+            const buttons = container.querySelectorAll('button');
+            const correctIndex = mcqs[qIndex].answer;
+
+            // Disable all buttons in this question
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedOptIndex === correctIndex) {
+                // Correct choice
+                buttonElem.classList.remove('border-slate-100', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700/50', 'hover:border-primary/50');
+                buttonElem.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/30', 'text-green-800', 'dark:text-green-300');
+                buttonElem.innerHTML += '<span class="float-right text-green-500">✓ Correct</span>';
+            } else {
+                // Wrong choice
+                buttonElem.classList.remove('border-slate-100', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700/50', 'hover:border-primary/50');
+                buttonElem.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/30', 'text-red-800', 'dark:text-red-300');
+                buttonElem.innerHTML += '<span class="float-right text-red-500">✗ Incorrect</span>';
+                
+                // Highlight correct choice
+                const correctBtn = buttons[correctIndex];
+                correctBtn.classList.remove('border-slate-100', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700/50');
+                correctBtn.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/30', 'text-green-800', 'dark:text-green-300');
+            }
+        };
+
+        window.toggleExplanation = function(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                el.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        };
+
+        window.scrollToSection = function(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // --- Dark Mode Logic ---
+        
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Initial setup based on OS preference or localStorage
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderQA(saqs, 'saq-container', 'saq');
+            renderQA(essays, 'essay-container', 'essay');
+        });
+
+    </script>
+</body>
+</html>
+

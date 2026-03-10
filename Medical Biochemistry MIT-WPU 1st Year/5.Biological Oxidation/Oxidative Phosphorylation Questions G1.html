@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxidative Phosphorylation - Study App</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .correct-btn {
+            background-color: #dcfce7 !important; /* green-100 */
+            border-color: #22c55e !important; /* green-500 */
+            color: #166534 !important; /* green-800 */
+        }
+        .wrong-btn {
+            background-color: #fee2e2 !important; /* red-100 */
+            border-color: #ef4444 !important; /* red-500 */
+            color: #991b1b !important; /* red-800 */
+        }
+        .dark .correct-btn {
+            background-color: #14532d !important; /* green-900 */
+            border-color: #4ade80 !important; /* green-400 */
+            color: #bbf7d0 !important; /* green-200 */
+        }
+        .dark .wrong-btn {
+            background-color: #7f1d1d !important; /* red-900 */
+            border-color: #f87171 !important; /* red-400 */
+            color: #fecaca !important; /* red-200 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 min-h-screen flex flex-col antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <h1 class="font-heading font-bold text-xl md:text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                PharmD Guru Quiz
+            </h1>
+            <div class="flex items-center gap-4">
+                <nav class="hidden md:flex gap-4 text-sm font-medium">
+                    <a href="#mcq-section" class="hover:text-primary transition-colors">MCQs</a>
+                    <a href="#saq-section" class="hover:text-primary transition-colors">Short Answers</a>
+                    <a href="#essay-section" class="hover:text-primary transition-colors">Essays</a>
+                </nav>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors" aria-label="Toggle Dark Mode">
+                    <!-- Sun Icon (visible in dark mode) -->
+                    <svg id="sun-icon" class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon Icon (visible in light mode) -->
+                    <svg id="moon-icon" class="w-5 h-5 block dark:hidden text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <div class="text-center mb-12">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Oxidative Phosphorylation</h2>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Master the mechanisms of biological energy generation, chemiosmotic theory, and shuttle systems with this comprehensive interactive quiz.</p>
+        </div>
+
+        <!-- MCQ Section -->
+        <section id="mcq-section" class="mb-16 scroll-mt-20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-primary/10 text-primary p-2 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="font-heading text-2xl font-semibold">20 Multiple Choice Questions</h3>
+            </div>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs will be injected here by JS -->
+            </div>
+        </section>
+
+        <hr class="border-slate-200 dark:border-slate-800 mb-16">
+
+        <!-- Short Answer Section -->
+        <section id="saq-section" class="mb-16 scroll-mt-20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-secondary/10 text-secondary p-2 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+                <h3 class="font-heading text-2xl font-semibold">10 Short Answer Questions</h3>
+            </div>
+            <div id="saq-container" class="space-y-6">
+                <!-- SAQs will be injected here by JS -->
+            </div>
+        </section>
+
+        <hr class="border-slate-200 dark:border-slate-800 mb-16">
+
+        <!-- Essay Section -->
+        <section id="essay-section" class="mb-16 scroll-mt-20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-emerald-500/10 text-emerald-500 p-2 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+                <h3 class="font-heading text-2xl font-semibold">10 Essay Questions</h3>
+            </div>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays will be injected here by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center">
+            <h4 class="text-xl md:text-2xl font-heading font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-4 tracking-wide">
+                Designed For My Bestie 💖
+            </h4>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-all border border-transparent hover:border-pink-200 dark:hover:border-pink-800">
+                <svg class="w-5 h-5 text-pink-500 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.834a1.18 1.18 0 100 2.36 1.18 1.18 0 000-2.36z"/>
+                </svg>
+                <span class="font-medium text-slate-700 dark:text-slate-300 group-hover:text-pink-600 dark:group-hover:text-pink-400">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // Dark Mode Toggle Logic
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            // Save preference to localStorage
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        }
+
+        // Initialize theme based on user preference or OS setting
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // --- Data Arrays --- //
+
+        const mcqsData = [
+            {
+                question: "1. The formation of ATP from ADP and Pi coupled with biological oxidation is termed:",
+                options: ["Substrate-level phosphorylation", "Biological oxidative phosphorylation", "Photophosphorylation", "Dephosphorylation"],
+                correct: 1
+            },
+            {
+                question: "2. Who proposed the chemiosmotic coupling hypothesis?",
+                options: ["James Watson", "Louis Pasteur", "Peter Mitchell", "Hans Krebs"],
+                correct: 2
+            },
+            {
+                question: "3. Which major electron carrier complexes act as proton pumps across the inner mitochondrial membrane?",
+                options: ["Complexes I, II, and III", "Complexes I, III, and IV", "Complexes II, III, and IV", "Complexes I, II, and IV"],
+                correct: 1
+            },
+            {
+                question: "4. Protons are pumped from the mitochondrial matrix to the:",
+                options: ["Cytoplasm", "Outer mitochondrial membrane", "Nucleus", "Intermembrane space"],
+                correct: 3
+            },
+            {
+                question: "5. What characteristic of the inner mitochondrial membrane is crucial for generating the electrochemical potential?",
+                options: ["It is highly permeable to protons", "It is impermeable to protons", "It is permeable to ATP only", "It breaks down easily"],
+                correct: 1
+            },
+            {
+                question: "6. During ATP synthesis, protons flow back into the mitochondrial matrix down their electrochemical gradient through which molecule?",
+                options: ["Complex I", "Cytochrome c", "FoF1 ATPase", "NADH dehydrogenase"],
+                correct: 2
+            },
+            {
+                question: "7. The P:O ratio measures the number of ATP molecules synthesized per:",
+                options: ["Molecule of carbon dioxide produced", "Molecule of NADH oxidized", "Atom of oxygen consumed", "Molecule of glucose utilized"],
+                correct: 2
+            },
+            {
+                question: "8. What is the P:O ratio for the oxidation of metabolites that yield NADH?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                question: "9. What is the P:O ratio for the oxidation of metabolites that yield FADH2?",
+                options: ["1", "2", "3", "4"],
+                correct: 1
+            },
+            {
+                question: "10. The production of ATP directly coupled to a metabolic process without involving the ETC or molecular O2 is called:",
+                options: ["Oxidative phosphorylation", "Chemiosmosis", "Photophosphorylation", "Substrate level phosphorylation"],
+                correct: 3
+            },
+            {
+                question: "11. Which of the following is an example of substrate-level phosphorylation?",
+                options: ["Formation of water from oxygen", "Conversion of Succinyl-CoA to succinate", "Pumping of protons to intermembrane space", "Flow of protons through ATPase"],
+                correct: 1
+            },
+            {
+                question: "12. The conversion of Phosphoenolpyruvate to pyruvate (yielding ATP) is catalyzed by which enzyme?",
+                options: ["Phosphoglycerate kinase", "Succinate thiokinase", "Pyruvate kinase", "Malate dehydrogenase"],
+                correct: 2
+            },
+            {
+                question: "13. Why is a shuttle system needed for cytosolic NADH generated by glycolysis?",
+                options: ["Cytosolic NADH is toxic", "The inner mitochondrial membrane is impermeable to NADH", "NADH cannot bind to Complex I", "Cytosolic NADH holds too much energy"],
+                correct: 1
+            },
+            {
+                question: "14. Which shuttle system transfers reducing equivalents to mitochondrial NAD+ resulting in the formation of 3 ATP?",
+                options: ["Glycerol phosphate shuttle", "Citrate shuttle", "Carnitine shuttle", "Malate-aspartate shuttle"],
+                correct: 3
+            },
+            {
+                question: "15. In the malate-aspartate shuttle, what carries the reducing equivalents across the inner membrane?",
+                options: ["NADH", "Aspartate", "Malate", "Oxaloacetate"],
+                correct: 2
+            },
+            {
+                question: "16. In the malate-aspartate shuttle, oxaloacetate is converted into what molecule to be transported back to the cytosolic side?",
+                options: ["Malate", "Glutamate", "Aspartate", "Alpha-ketoglutarate"],
+                correct: 2
+            },
+            {
+                question: "17. The glycerol phosphate shuttle yields how many ATP per cytosolic NADH?",
+                options: ["1", "2", "3", "4"],
+                correct: 1
+            },
+            {
+                question: "18. In the glycerol phosphate shuttle, cytosolic NADH transfers electrons to dihydroxyacetone phosphate to form:",
+                options: ["Pyruvate", "Glycerol-3-phosphate", "Malate", "Phosphoenolpyruvate"],
+                correct: 1
+            },
+            {
+                question: "19. In the glycerol phosphate shuttle, electrons from glycerol-3-phosphate are transferred to an enzyme complex containing:",
+                options: ["NAD+", "FAD", "Cytochrome c", "Ubiquinone"],
+                correct: 1
+            },
+            {
+                question: "20. Substrate-level phosphorylation from 1,3-Bisphosphoglycerate to 3-Phosphoglycerate is part of which metabolic pathway?",
+                options: ["TCA cycle", "Glycolysis", "Beta-oxidation", "Electron Transport Chain"],
+                correct: 1
+            }
+        ];
+
+        const saqData = [
+            { q: "1. Define Biological Oxidative Phosphorylation.", a: "It is the formation of ATP from ADP and inorganic phosphate (Pi) that is directly coupled with the biological oxidation process within the cells." },
+            { q: "2. What does the Chemiosmotic Theory state?", a: "Proposed by Peter Mitchell, it states that the energy released from oxidation generates an electrochemical potential by pumping protons across the inner mitochondrial membrane, and the energy in this potential is converted into ATP." },
+            { q: "3. Name the respiratory complexes that act as proton pumps.", a: "Complex I, Complex III, and Complex IV." },
+            { q: "4. What role does FoF1 ATPase play in oxidative phosphorylation?", a: "It acts as a channel for protons to flow back into the mitochondrial matrix down their electrochemical gradient, utilizing the released free energy to catalyze the addition of Pi to ADP to form ATP." },
+            { q: "5. Define the P:O ratio.", a: "The P:O ratio is a measure of the number of high-energy phosphates (ATP molecules) synthesized per atom of oxygen consumed or per molecule of water produced." },
+            { q: "6. What are the specific P:O ratios for NADH and FADH2?", a: "The P:O ratio for the oxidation of NADH is 3, and for FADH2 it is 2." },
+            { q: "7. Define Substrate Level Phosphorylation.", a: "The formation of ATP that is directly coupled to a metabolic process without the involvement of the electron transport chain and molecular O2." },
+            { q: "8. Give two examples of substrate-level phosphorylation from glycolysis.", a: "1) Conversion of 1,3-bisphosphoglycerate to 3-phosphoglycerate. 2) Conversion of phosphoenolpyruvate to pyruvate." },
+            { q: "9. Why are shuttle systems required for cytosolic NADH?", a: "Most NADH is generated inside the mitochondria, but the NADH generated by glycolysis in the cytosol cannot cross the impermeable inner mitochondrial membrane. Special shuttle systems carry their reducing equivalents inside." },
+            { q: "10. Name the two main shuttle systems for the oxidation of extramitochondrial NADH.", a: "1) The malate-aspartate shuttle system. 2) The glycerol phosphate shuttle system." }
+        ];
+
+        const essayData = [
+            { q: "1. Explain the Chemiosmotic Theory in detail, outlining its three basic principles.", a: "The chemiosmotic theory, proposed by Peter Mitchell, explains the mechanism of oxidative phosphorylation. It relies on three principles: 1) The major electron carriers are organized into complexes (I, III, IV) spanning the inner mitochondrial membrane. Energy released during electron transport pumps protons from the matrix to the intermembrane space. 2) The inner mitochondrial membrane is impermeable to protons, resulting in the generation of an electrochemical potential (proton gradient). 3) Driven by this proton-motive force, H+ ions flow back into the matrix through the FoF1 ATPase. The free energy released by this flow is coupled with the phosphorylation of ADP to form ATP." },
+            { q: "2. Discuss the concept and significance of the P:O ratio.", a: "The P:O ratio is a quantitative measure of oxidative phosphorylation efficiency. It represents the number of high-energy phosphate bonds (ATP) synthesized per atom of oxygen consumed. It highlights the energy yield differences between electron carriers: oxidation of metabolites yielding NADH produces a P:O ratio of 3 (generating 3 ATP), while those yielding FADH2 produce a P:O ratio of 2 (generating 2 ATP), because FADH2 enters the ETC at a lower energy level (bypassing Complex I)." },
+            { q: "3. Differentiate between oxidative phosphorylation and substrate-level phosphorylation with examples.", a: "Oxidative phosphorylation is the formation of ATP coupled to biological oxidation via the electron transport chain and requires molecular oxygen. Substrate-level phosphorylation is the direct formation of ATP coupled to a metabolic process, bypassing the ETC and oxygen. Examples of substrate-level phosphorylation include glycolysis steps (1,3-bisphosphoglycerate to 3-phosphoglycerate via phosphoglycerate kinase; phosphoenolpyruvate to pyruvate via pyruvate kinase) and a TCA cycle step (Succinyl-CoA to succinate via succinate thiokinase)." },
+            { q: "4. Describe the biochemical steps involved in the Malate-Aspartate shuttle.", a: "The Malate-Aspartate shuttle transports reducing equivalents from cytosolic NADH into the mitochondria. Steps: 1) Cytosolic NADH transfers electrons to oxaloacetate to yield malate (via cytosolic malate dehydrogenase). 2) Malate is transported across the inner membrane by a dicarboxylate transporter. 3) Inside, malate transfers electrons to mitochondrial NAD+ (via mitochondrial malate dehydrogenase), reforming NADH (which yields 3 ATP via ETC) and oxaloacetate. 4) Oxaloacetate is transaminated to aspartate. 5) Aspartate is transported back to the cytosol, where transamination regenerates oxaloacetate, completing the cycle." },
+            { q: "5. Detail the mechanism of the Glycerol Phosphate shuttle.", a: "The Glycerol Phosphate shuttle transports electrons from cytosolic NADH to the mitochondrial ETC. Steps: 1) Cytosolic NADH transfers an electron pair to dihydroxyacetone phosphate to form glycerol-3-phosphate (via cytosolic glycerol-3-phosphate dehydrogenase). 2) Glycerol-3-phosphate diffuses to the intermembrane space. 3) It is reoxidized to dihydroxyacetone phosphate by a membrane-bound FAD-containing isoenzyme on the outer surface of the inner membrane. 4) Electrons transfer to FAD, forming FADH2. 5) FADH2 enters the ETC to generate 2 ATP. 6) Dihydroxyacetone phosphate returns to the cytosol." },
+            { q: "6. Compare the ATP yields of the Malate-Aspartate and Glycerol Phosphate shuttles and explain the biochemical reason for the difference.", a: "The Malate-Aspartate shuttle yields 3 ATP per cytosolic NADH, whereas the Glycerol Phosphate shuttle yields only 2 ATP. This difference occurs because the Malate-Aspartate shuttle transfers electrons from cytosolic NADH directly to mitochondrial NAD+, forming mitochondrial NADH which enters the ETC at Complex I. The Glycerol Phosphate shuttle transfers electrons to an FAD-linked enzyme in the inner membrane, forming FADH2, which enters the ETC later, bypassing Complex I's proton pumping." },
+            { q: "7. Explain the role of FoF1 ATPase in mitochondrial energy production.", a: "FoF1 ATPase is the enzyme complex responsible for ATP synthesis in the final step of oxidative phosphorylation. According to the chemiosmotic theory, electron transport creates a high concentration of protons in the intermembrane space. FoF1 ATPase provides a channel for these protons to flow back into the mitochondrial matrix down their electrochemical gradient. The flow of protons through the complex causes a conformational change that provides the free energy necessary to catalyze the addition of inorganic phosphate to ADP, forming ATP." },
+            { q: "8. Discuss the importance of membrane impermeability in the chemiosmotic theory.", a: "The impermeability of the inner mitochondrial membrane to protons and specific metabolites (like NADH and oxaloacetate) is fundamental to mitochondrial function. Its impermeability to protons ensures that protons pumped into the intermembrane space by Complexes I, III, and IV cannot simply diffuse back into the matrix. This traps the protons, building up a strong electrochemical gradient (proton-motive force). This gradient is the direct energy source that drives FoF1 ATPase. If the membrane were permeable, the gradient would dissipate, and ATP synthesis would halt." },
+            { q: "9. Outline the specific examples of Substrate Level Phosphorylation provided in the study material.", a: "The study material highlights three specific reactions: 1) In glycolysis, the conversion of 1,3-Bisphosphoglycerate to 3-Phosphoglycerate, catalyzed by Phosphoglycerate kinase, converting ADP to ATP. 2) In glycolysis, the conversion of Phosphoenolpyruvate to Pyruvate, catalyzed by Pyruvate kinase, converting ADP to ATP. 3) In the TCA cycle, the conversion of Succinyl-CoA to Succinate, catalyzed by Succinate thiokinase, converting ADP to ATP." },
+            { q: "10. Trace the path of an electron generated in glycolysis through the Malate-Aspartate shuttle until ATP is produced.", a: "During glycolysis in the cytosol, NAD+ is reduced to NADH. The electron pair from this NADH is transferred to cytosolic oxaloacetate, forming malate. Malate crosses the inner mitochondrial membrane via a transporter. In the mitochondrial matrix, malate is oxidized back to oxaloacetate, and mitochondrial NAD+ is reduced to NADH. This newly formed mitochondrial NADH donates its electrons to Complex I of the ETC. The electrons travel through Complexes I, III, and IV, pumping protons out to create a gradient. Finally, protons flow back through FoF1 ATPase, utilizing the gradient's energy to synthesize 3 ATP molecules." }
+        ];
+
+        // --- Rendering Logic --- //
+
+        // 1. Render MCQs
+        const mcqContainer = document.getElementById('mcq-container');
+        mcqsData.forEach((mcq, index) => {
+            const mcqCard = document.createElement('div');
+            mcqCard.className = "bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 shadow-sm border border-slate-200 dark:border-slate-700 transition-colors";
+            
+            let optionsHTML = '';
+            mcq.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <button 
+                        class="w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-200 option-btn group relative overflow-hidden" 
+                        onclick="checkAnswer(this, ${optIndex}, ${mcq.correct})"
+                    >
+                        <span class="inline-block w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-900 text-center leading-6 text-sm mr-3 font-medium text-slate-500 dark:text-slate-400 group-hover:bg-primary group-hover:text-white transition-colors">${String.fromCharCode(65 + optIndex)}</span>
+                        <span class="font-medium text-slate-700 dark:text-slate-200">${opt}</span>
+                    </button>
+                `;
+            });
+
+            mcqCard.innerHTML = `
+                <h4 class="font-heading font-semibold text-lg mb-4 text-slate-800 dark:text-slate-100">${mcq.question}</h4>
+                <div class="space-y-3 options-group">
+                    ${optionsHTML}
+                </div>
+            `;
+            mcqContainer.appendChild(mcqCard);
+        });
+
+        // MCQ Interaction Logic
+        function checkAnswer(button, selectedIndex, correctIndex) {
+            const group = button.closest('.options-group');
+            const buttons = group.querySelectorAll('.option-btn');
+            
+            // Disable all buttons in this group after a selection
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === correctIndex) {
+                // Correct
+                button.classList.add('correct-btn');
+                button.innerHTML += `<svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            } else {
+                // Wrong
+                button.classList.add('wrong-btn');
+                button.innerHTML += `<svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                
+                // Highlight correct answer
+                buttons[correctIndex].classList.add('correct-btn');
+                buttons[correctIndex].innerHTML += `<svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            }
+        }
+
+        // 2. Render Short Answers & Essays (Helper Function)
+        function renderQnA(dataArray, containerId, prefixId) {
+            const container = document.getElementById(containerId);
+            dataArray.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 shadow-sm border border-slate-200 dark:border-slate-700 transition-colors";
+                
+                const uniqueId = `${prefixId}-exp-${index}`;
+                
+                card.innerHTML = `
+                    <h4 class="font-heading font-semibold text-lg mb-4 text-slate-800 dark:text-slate-100">${item.q}</h4>
+                    <button 
+                        onclick="toggleExplanation('${uniqueId}', this)" 
+                        class="text-sm font-medium text-primary hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 transition-colors"
+                    >
+                        <span>Show Explanation</span>
+                        <svg class="w-4 h-4 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="${uniqueId}" class="hidden mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">${item.a}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        renderQnA(saqData, 'saq-container', 'saq');
+        renderQnA(essayData, 'essay-container', 'essay');
+
+        // Explanation Toggle Logic
+        function toggleExplanation(elementId, btnElement) {
+            const expDiv = document.getElementById(elementId);
+            const isHidden = expDiv.classList.contains('hidden');
+            const textSpan = btnElement.querySelector('span');
+            const iconSvg = btnElement.querySelector('svg');
+            
+            if (isHidden) {
+                expDiv.classList.remove('hidden');
+                textSpan.textContent = "Hide Explanation";
+                iconSvg.classList.add('rotate-180');
+            } else {
+                expDiv.classList.add('hidden');
+                textSpan.textContent = "Show Explanation";
+                iconSvg.classList.remove('rotate-180');
+            }
+        }
+    </script>
+</body>
+</html>
+

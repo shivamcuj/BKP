@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation & DNA Repair - Study App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        primaryHover: '#4f46e5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .mcq-btn { transition: all 0.2s ease-in-out; }
+        .mcq-btn:disabled { cursor: not-allowed; }
+        .explanation-box { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; overflow: hidden; }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                <h1 class="text-xl font-bold tracking-tight">BioGenetics Prep</h1>
+            </div>
+            
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a href="#mcq-section" class="hover:text-primary transition-colors">MCQs</a>
+                <a href="#short-section" class="hover:text-primary transition-colors">Short Answers</a>
+                <a href="#essay-section" class="hover:text-primary transition-colors">Essays</a>
+            </nav>
+
+            <button id="theme-toggle" class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+                <!-- Sun Icon -->
+                <svg id="theme-icon-light" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="theme-icon-dark" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8 space-y-16">
+        
+        <!-- Welcome Section -->
+        <section class="text-center py-8">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Mutation & Repair Mechanisms</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Master the genetics of DNA mutations, substitution consequences, and the cellular repair pathways. Test your knowledge below.</p>
+        </section>
+
+        <!-- MCQs Section -->
+        <section id="mcq-section" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">
+                <div class="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-lg text-indigo-600 dark:text-indigo-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold">Multiple Choice Questions (20)</h3>
+            </div>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs dynamically injected here -->
+            </div>
+        </section>
+
+        <!-- Short Answers Section -->
+        <section id="short-section" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">
+                <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold">Short Answer Questions (10)</h3>
+            </div>
+            <div id="short-container" class="space-y-6">
+                <!-- Short Answers dynamically injected here -->
+            </div>
+        </section>
+
+        <!-- Essay Section -->
+        <section id="essay-section" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">
+                <div class="bg-rose-100 dark:bg-rose-900/50 p-2 rounded-lg text-rose-600 dark:text-rose-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold">Essay Questions (10)</h3>
+            </div>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays dynamically injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center space-y-3">
+            <div class="flex items-center gap-2 text-lg font-semibold text-slate-700 dark:text-slate-200">
+                <span>Designed For My Bestie</span>
+                <svg class="w-5 h-5 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+            </div>
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="flex items-center gap-2 text-slate-500 hover:text-pink-600 dark:text-slate-400 dark:hover:text-pink-400 transition-colors group">
+                <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-medium tracking-wide">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic and Data -->
+    <script>
+        // ---------------- DATA ----------------
+        const mcqData = [
+            {
+                q: "What refers to a permanent change in the DNA structure of a gene?",
+                options: ["Transcription", "Mutation", "Replication", "Translation"],
+                answer: 1,
+                explanation: "A mutation refers to a permanent change in the DNA structure of a gene. These changes are reflected in replication, transcription, and translation."
+            },
+            {
+                q: "Substances that induce mutations are collectively known as:",
+                options: ["Carcinogens", "Catalysts", "Mutagens", "Enzymes"],
+                answer: 2,
+                explanation: "The chemicals or substances that can induce mutations in the DNA are collectively known as mutagens."
+            },
+            {
+                q: "Which type of point mutation involves replacing a purine with another purine?",
+                options: ["Transition", "Transversion", "Deletion", "Insertion"],
+                answer: 0,
+                explanation: "A transition mutation occurs when a purine is replaced by another purine, or a pyrimidine is replaced by another pyrimidine."
+            },
+            {
+                q: "Sickle-cell anemia (HbS) is a classic example of which type of mutation?",
+                options: ["Silent mutation", "Partially acceptable missense mutation", "Nonsense mutation", "Unacceptable missense mutation"],
+                answer: 1,
+                explanation: "In HbS, glutamic acid is replaced by valine. This is a partially acceptable missense mutation, as the protein functions but with compromised efficiency."
+            },
+            {
+                q: "In Hb Hikari (an acceptable missense mutation), which amino acid is substituted for lysine?",
+                options: ["Valine", "Glutamic acid", "Tyrosine", "Asparagine"],
+                answer: 3,
+                explanation: "Hb Hikari is an acceptable missense mutation where asparagine substitutes for lysine at position 61 of the beta-globin chain without altering normal function."
+            },
+            {
+                q: "What type of mutation changes a functional amino acid codon into a stop signal (like UAA, UAG, or UGA)?",
+                options: ["Nonsense mutation", "Silent mutation", "Missense mutation", "Frameshift mutation"],
+                answer: 0,
+                explanation: "A nonsense mutation leads to the conversion of an amino acid codon to a termination (stop) codon, causing premature termination of the polypeptide chain."
+            },
+            {
+                q: "Which disease is cited as an example of a nonsense mutation in the provided notes?",
+                options: ["Cystic fibrosis", "Sickle cell anemia", "Xeroderma pigmentosum", "Thalassemia"],
+                answer: 3,
+                explanation: "Certain types of thalassemia occur due to a nonsense mutation (e.g., codon 17 of the beta-chain changing from UGG to UGA)."
+            },
+            {
+                q: "Cystic fibrosis is primarily associated with which type of mutation?",
+                options: ["Insertion frameshift", "Deletion frameshift", "Transition point mutation", "Transversion point mutation"],
+                answer: 1,
+                explanation: "Cystic fibrosis of the pancreas is an example of a deletion frameshift mutation, where a missing base alters the reading frame."
+            },
+            {
+                q: "The insertion or deletion of how many nucleotides will NOT cause a frameshift mutation?",
+                options: ["1 nucleotide", "2 nucleotides", "3 nucleotides", "None of the above"],
+                answer: 2,
+                explanation: "If nucleotides are added or deleted in multiples of three, a frameshift does not occur. Instead, an entire amino acid is added or missing."
+            },
+            {
+                q: "Which repair mechanism fixes damage to a single base (e.g., spontaneous depurination)?",
+                options: ["Base excision-repair", "Nucleotide excision-repair", "Mismatch repair", "Double-strand break repair"],
+                answer: 0,
+                explanation: "Base excision-repair removes and replaces a single damaged or defective base, such as uracil formed from deaminated cytosine."
+            },
+            {
+                q: "In base excision repair, which enzyme specifically removes the defective uracil base?",
+                options: ["Endonuclease", "Exinuclease", "Uracil DNA glycosylase", "DNA ligase"],
+                answer: 2,
+                explanation: "Uracil DNA glycosylase recognizes and removes the defective base uracil from the DNA strand during base excision repair."
+            },
+            {
+                q: "Xeroderma pigmentosum (XP) makes patients susceptible to skin cancers due to a defect in:",
+                options: ["Base excision-repair", "Nucleotide excision-repair", "Mismatch repair", "Double-strand break repair"],
+                answer: 1,
+                explanation: "XP is a rare autosomal recessive disease caused by a defect in nucleotide excision-repair, preventing the fixing of UV light-induced DNA damage."
+            },
+            {
+                q: "Mismatch repair specifically corrects errors that occur during which process?",
+                options: ["Transcription", "Translation", "Replication", "Recombination"],
+                answer: 2,
+                explanation: "Mismatch repair corrects single mismatched base pairs (copying errors) that occur during DNA replication."
+            },
+            {
+                q: "How does the mismatch repair system identify the newly synthesized (and potentially erroneous) DNA strand?",
+                options: ["It is shorter", "It is heavily methylated", "It is not yet methylated", "It contains uracil"],
+                answer: 2,
+                explanation: "The template strand is methylated, while the newly synthesized strand is unmethylated. This difference allows the system to identify the new strand."
+            },
+            {
+                q: "Which enzyme cuts the unmethylated new strand in the mismatch repair mechanism?",
+                options: ["Exinuclease", "Uracil DNA glycosylase", "GATC endonuclease", "DNA polymerase"],
+                answer: 2,
+                explanation: "GATC endonuclease cuts the unmethylated strand at an adjacent GATC sequence to initiate the removal of the defective piece."
+            },
+            {
+                q: "Hereditary nonpolyposis colon cancer (HNPCC) is associated with a fault in which repair pathway?",
+                options: ["Base excision repair", "Nucleotide excision repair", "Mismatch repair", "Double-strand break repair"],
+                answer: 2,
+                explanation: "HNPCC is linked to a faulty mismatch repair system, which fails to correct copying errors during replication."
+            },
+            {
+                q: "Double-strand breaks (DSBs) can be repaired by homologous recombination or:",
+                options: ["Non-homologous end joining", "Nucleotide excision", "Mismatch base correction", "Depurination"],
+                answer: 0,
+                explanation: "Double-strand breaks can be repaired by homologous recombination (common in yeast) or non-homologous end joining (dominant in mammals)."
+            },
+            {
+                q: "Methemoglobin (HbM) is generated by an unacceptable missense mutation that replaces histidine with:",
+                options: ["Valine", "Asparagine", "Tyrosine", "Glutamic acid"],
+                answer: 2,
+                explanation: "In HbM, histidine is replaced by tyrosine. This makes the hemoglobin nonfunctional and unable to transport oxygen."
+            },
+            {
+                q: "What causes a transversion mutation?",
+                options: ["A purine is replaced by a purine", "A purine is replaced by a pyrimidine (or vice versa)", "A base is deleted", "A base is inserted"],
+                answer: 1,
+                explanation: "A transversion point mutation is characterized by the replacement of a purine by a pyrimidine, or a pyrimidine by a purine."
+            },
+            {
+                q: "Which type of mutation results in an altered mRNA codon that still codes for the SAME amino acid due to code degeneracy?",
+                options: ["Silent mutation", "Missense mutation", "Nonsense mutation", "Frameshift mutation"],
+                answer: 0,
+                explanation: "A silent mutation changes a base but leads to the formation of a synonym codon, resulting in the exact same amino acid sequence."
+            }
+        ];
+
+        const shortData = [
+            {
+                q: "Define 'mutation' and 'mutagen'.",
+                explanation: "A mutation refers to a permanent change in the DNA structure of a gene. A mutagen is a substance or chemical that induces these genetic changes."
+            },
+            {
+                q: "Differentiate between transition and transversion mutations.",
+                explanation: "Both are point mutations. In a transition, a purine is replaced by another purine (or a pyrimidine by a pyrimidine). In a transversion, a purine is replaced by a pyrimidine, or vice versa."
+            },
+            {
+                q: "What is a silent mutation and why does it have no detectable effect?",
+                explanation: "A silent mutation alters a base but the new mRNA codon codes for the exact same amino acid due to the degeneracy of the genetic code (e.g., UCA and UCU both code for serine)."
+            },
+            {
+                q: "Provide an example of a partially acceptable missense mutation and its consequence.",
+                explanation: "Sickle-cell anemia (HbS) is an example. Glutamic acid is replaced by valine at position 6 of the beta-chain. The protein still functions but with reduced efficiency and altered physical properties."
+            },
+            {
+                q: "How does a nonsense mutation affect the synthesized protein?",
+                explanation: "It changes an amino acid-coding codon into a termination (stop) codon (UAA, UAG, UGA), leading to premature termination of the polypeptide. The resulting protein is usually nonfunctional (e.g., in some Thalassemias)."
+            },
+            {
+                q: "What causes a frameshift mutation?",
+                explanation: "It is caused by the insertion or deletion of one or more base pairs (not in multiples of three) in the DNA. This shifts the entire reading frame of the mRNA during translation."
+            },
+            {
+                q: "Name the enzyme responsible for removing uracil in the base excision-repair mechanism.",
+                explanation: "Uracil DNA glycosylase is the enzyme that recognizes and removes the defective base uracil (which forms from the spontaneous deamination of cytosine)."
+            },
+            {
+                q: "What is the clinical significance of a defect in nucleotide excision-repair?",
+                explanation: "A defect in this repair pathway causes Xeroderma pigmentosum (XP), making individuals highly sensitive to ultraviolet light and highly susceptible to developing skin cancers."
+            },
+            {
+                q: "How does the mismatch repair mechanism distinguish between the old and new DNA strands?",
+                explanation: "The system identifies the newly synthesized strand because it is not yet methylated, whereas the original template strand exists in a methylated form."
+            },
+            {
+                q: "What are the two main ways double-strand breaks are repaired?",
+                explanation: "Double-strand breaks are repaired by either homologous recombination (common in yeast) or non-homologous end joining (which dominates in mammals)."
+            }
+        ];
+
+        const essayData = [
+            {
+                q: "Elaborate on the different types of point mutations and their specific effects on proteins, using Hb Hikari, HbS, and HbM as examples.",
+                explanation: "Point mutations involve the replacement of a single base pair (Transitions or Transversions). Their effects vary widely based on what the new codon specifies: <br><br><b>1. Silent Mutations:</b> The new codon specifies the same amino acid due to code degeneracy; no phenotypic effect. <br><b>2. Missense Mutations:</b> Specifies a different amino acid. Its acceptability varies: <br> - <i>Acceptable:</i> Protein functions normally. Example: Hb Hikari (Asparagine replaces Lysine). <br> - <i>Partially Acceptable:</i> Protein function is compromised. Example: Sickle-cell anemia / HbS (Valine replaces Glutamic acid). <br> - <i>Unacceptable:</i> Protein is nonfunctional. Example: Methemoglobin / HbM (Tyrosine replaces Histidine, preventing oxygen transport). <br><b>3. Nonsense Mutations:</b> Creates a stop codon, truncating the protein entirely."
+            },
+            {
+                q: "Discuss the mechanisms and consequences of frameshift mutations. Why is an insertion or deletion of three nucleotides generally less severe?",
+                explanation: "Frameshift mutations occur when nucleotides are inserted or deleted in numbers that are not multiples of three. Because mRNA is read continuously in triplets (codons) without punctuation, adding or removing a base shifts the entire reading frame from that point onward. This results in completely altered amino acid sequences and usually encounters a premature stop codon, producing a totally nonfunctional protein. <br><br>If exactly three nucleotides (or multiples of three) are inserted or deleted, the reading frame remains intact. The resulting protein will simply have one extra or one missing amino acid, which often preserves the overall structural integrity and function of the protein much better than a frameshift."
+            },
+            {
+                q: "Detail the steps involved in the base excision-repair mechanism. What types of DNA damage does it correct?",
+                explanation: "Base excision-repair fixes damage to a single base caused by spontaneous alteration (like depurination) or chemicals. A common error is the spontaneous deamination of Cytosine to Uracil.<br><br><b>Steps:</b><br>1. <b>Identification & Excision:</b> An enzyme like Uracil DNA glycosylase recognizes the abnormal base (uracil) and cleaves it from the sugar-phosphate backbone.<br>2. <b>Incision:</b> An endonuclease cuts the DNA backbone near the defect, removing a few bases to create a gap.<br>3. <b>Synthesis:</b> Repair DNA polymerase synthesizes new DNA to fill the gap using the intact complementary strand as a template.<br>4. <b>Ligation:</b> DNA ligase seals the final nick, restoring the complete double helix."
+            },
+            {
+                q: "Explain the nucleotide excision-repair process. How does a failure in this system lead to Xeroderma pigmentosum (XP)?",
+                explanation: "Nucleotide excision-repair corrects large-scale, bulky DNA defects affecting a segment of DNA, typically caused by environmental factors like UV light (which causes pyrimidine dimers) or ionizing radiation.<br><br><b>Process:</b><br>1. The DNA double helix is unwound to expose the damaged segment.<br>2. An excision nuclease (exinuclease) makes cuts on both sides (upstream and downstream) of the damaged lesion.<br>3. The defective oligonucleotide piece (around 30 nucleotides long) is removed and degraded.<br>4. DNA polymerase fills the gap, and DNA ligase seals it.<br><br><b>Clinical Link (XP):</b> Xeroderma pigmentosum is an autosomal recessive disorder where the exinuclease or associated proteins are defective. Patients cannot repair UV-induced damage, leading to severe photosensitivity and a very high risk of skin cancer."
+            },
+            {
+                q: "Describe the mismatch repair system. What is its clinical relevance to hereditary diseases like HNPCC?",
+                explanation: "Mismatch repair corrects DNA copying errors (incorrect base pairings, e.g., C paired with A) that slip past the initial proofreading during replication.<br><br><b>Mechanism:</b> The system must distinguish the correct template strand from the faulty newly synthesized strand. It does this via methylation: the old template strand is methylated, while the new strand temporarily is not. <br>1. GATC endonuclease identifies the unmethylated strand and cuts it at an adjacent GATC sequence.<br>2. An exonuclease digests and removes the defective portion of the unmethylated strand.<br>3. DNA polymerase and ligase resynthesize and seal the strand correctly.<br><br><b>Clinical Relevance:</b> Defects in the genes encoding mismatch repair proteins lead to Hereditary Nonpolyposis Colon Cancer (HNPCC), drastically increasing the mutation rate across the genome and predisposing individuals to colon and other cancers."
+            },
+            {
+                q: "Compare and contrast the etiopathogenesis and consequences of mutations occurring in somatic cells versus germ cells.",
+                explanation: "Mutations can occur in any cell, but their location dictates their macroscopic consequences.<br><br><b>Somatic Cell Mutations:</b> These occur in non-reproductive tissues (e.g., skin, liver, lungs). These mutations are NOT passed on to the organism's offspring. However, they can alter cellular behavior, leading to uncontrolled division and are a primary etiopathogenic factor in the development of cancer, as well as some localized congenital malformations.<br><br><b>Germ Cell Mutations:</b> These occur in the reproductive cells (sperm or egg). While they may not affect the parent organism, they are passed down to the progeny. Every cell in the offspring's body will carry this mutation, leading to hereditary/inherited genetic diseases (like Cystic Fibrosis, Sickle Cell Anemia, or Hemophilia)."
+            },
+            {
+                q: "Critically analyze the role of DNA methylation in the fidelity of DNA replication and mismatch repair.",
+                explanation: "DNA methylation acts as a vital molecular tag that allows the cellular machinery to differentiate between 'old' and 'new' DNA. During replication, errors occasionally occur where the wrong base is inserted. <br><br>If the mismatch repair machinery detects a bulge (mismatch), it faces a dilemma: which of the two bases is the incorrect one? The cell relies on the fact that the parental (template) DNA strand has methyl groups attached to specific sequences (like GATC in E. coli). The newly synthesized strand takes time to become methylated. Therefore, the repair enzymes specifically target the unmethylated strand, assume it holds the error, cut it using GATC endonuclease, and replace the base. Without methylation, the repair system would guess randomly, leading to a 50% chance of solidifying the mutation permanently into the genome."
+            },
+            {
+                q: "Discuss the repair mechanisms responsible for handling severe DNA damage caused by ionizing radiation or free radicals.",
+                explanation: "Ionizing radiation, free radicals, and certain chemotherapies can cause double-strand breaks (DSBs), where both strands of the DNA helix are severed. This is extremely dangerous as it can lead to chromosomal translocation or cell death. Cells employ two main pathways to repair DSBs:<br><br><b>1. Homologous Recombination (HR):</b> Uses the identical sister chromatid as a template to flawlessly repair the break. This is highly accurate but mostly restricted to the S and G2 phases of the cell cycle when a sister chromatid is available. It is common in yeasts.<br><b>2. Non-Homologous End Joining (NHEJ):</b> The dominant pathway in mammals. It essentially shaves down the broken ends and glues (ligates) them back together without a template. While faster, it is 'error-prone' and often results in small insertions or deletions (indels) at the repair site, acting as a functional but messy patch to save the chromosome."
+            },
+            {
+                q: "Explain the concept of the degeneracy of the genetic code and how it acts as a buffer against certain types of mutations.",
+                explanation: "Degeneracy of the genetic code refers to the fact that there are 64 possible codons but only 20 standard amino acids. Consequently, multiple different codons can specify the exact same amino acid (e.g., UCA, UCU, UCC, and UCG all code for Serine). <br><br>This redundancy acts as a critical biological buffer against point mutations, particularly those occurring in the third position of a codon (the 'wobble' position). If a transition or transversion alters a base but results in a synonymous codon, a <b>Silent Mutation</b> occurs. The primary structure of the synthesized protein remains 100% identical, preserving its function entirely and shielding the organism from the potentially harmful effects of the genetic alteration."
+            },
+            {
+                q: "Summarize the overall importance of DNA repair mechanisms in maintaining genomic stability and preventing cancer, referencing specific pathways.",
+                explanation: "DNA is constantly subjected to endogenous (replication errors, spontaneous depurination) and exogenous (UV light, radiation, chemicals) damage. Without repair mechanisms, mutations would rapidly accumulate, destroying cellular function and leading to apoptosis or uncontrolled proliferation (cancer).<br><br>Specific pathways act as defensive shields:<br>- <b>Base Excision Repair:</b> Fixes daily wear-and-tear like deamination.<br>- <b>Nucleotide Excision Repair:</b> Protects against environmental radiation (UV). Failure leads to <i>Xeroderma pigmentosum</i> and skin cancer.<br>- <b>Mismatch Repair:</b> Acts as a proofreader for replication errors. Failure causes genomic instability and <i>HNPCC (colon cancer)</i>.<br>- <b>DSB Repair:</b> Prevents chromosomal shattering.<br><br>Ultimately, these mechanisms ensure the fidelity of the genetic code across generations and protect the somatic integrity of the organism, highlighting that carcinogenesis is deeply intertwined with the failure of these DNA repair systems."
+            }
+        ];
+
+        // ---------------- RENDER FUNCTIONS ----------------
+        
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((item, index) => {
+                const mcqId = `mcq-${index}`;
+                
+                const optionsHtml = item.options.map((opt, optIdx) => `
+                    <button onclick="handleMCQClick(this, ${optIdx}, ${item.answer}, '${mcqId}')" 
+                            class="mcq-btn w-full text-left px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-slate-700 dark:text-slate-300 font-medium">
+                        <span class="inline-block w-6 font-bold text-slate-400 dark:text-slate-500">${String.fromCharCode(65 + optIdx)}.</span> ${opt}
+                    </button>
+                `).join('');
+
+                const html = `
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                        <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100">
+                            <span class="text-primary mr-1">${index + 1}.</span> ${item.q}
+                        </h4>
+                        <div class="space-y-3 mb-4">
+                            ${optionsHtml}
+                        </div>
+                        <button onclick="toggleExplanation('${mcqId}')" class="text-sm font-semibold text-primary hover:text-primaryHover flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Show Explanation
+                        </button>
+                        <div id="${mcqId}" class="explanation-box max-h-0 opacity-0 mt-0 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl text-sm text-slate-700 dark:text-slate-300">
+                            <div class="p-4 border border-indigo-100 dark:border-indigo-800/50 rounded-xl">
+                                <strong class="text-indigo-600 dark:text-indigo-400 block mb-1">Explanation:</strong>
+                                ${item.explanation}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderShortAnswers() {
+            const container = document.getElementById('short-container');
+            shortData.forEach((item, index) => {
+                const shortId = `short-${index}`;
+                const html = `
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                        <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100">
+                            <span class="text-emerald-500 mr-1">Q${index + 1}.</span> ${item.q}
+                        </h4>
+                        <button onclick="toggleExplanation('${shortId}')" class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            Show Answer
+                        </button>
+                        <div id="${shortId}" class="explanation-box max-h-0 opacity-0 mt-0 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl text-sm text-slate-700 dark:text-slate-300">
+                            <div class="p-4 border border-emerald-100 dark:border-emerald-800/50 rounded-xl mt-4 leading-relaxed">
+                                ${item.explanation}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderEssays() {
+            const container = document.getElementById('essay-container');
+            essayData.forEach((item, index) => {
+                const essayId = `essay-${index}`;
+                const html = `
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                        <h4 class="text-lg font-semibold mb-4 text-slate-800 dark:text-slate-100 leading-snug">
+                            <span class="text-rose-500 mr-1">E${index + 1}.</span> ${item.q}
+                        </h4>
+                        <button onclick="toggleExplanation('${essayId}')" class="text-sm font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            View Detailed Explanation
+                        </button>
+                        <div id="${essayId}" class="explanation-box max-h-0 opacity-0 mt-0 bg-rose-50 dark:bg-rose-900/20 rounded-xl text-sm text-slate-700 dark:text-slate-300">
+                            <div class="p-5 border border-rose-100 dark:border-rose-800/50 rounded-xl mt-4 leading-relaxed">
+                                ${item.explanation}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // ---------------- INTERACTIVITY LOGIC ----------------
+
+        function handleMCQClick(btn, selectedIdx, correctIdx, explanationId) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            
+            // Disable all buttons in this question
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:border-indigo-400', 'hover:bg-indigo-50', 'dark:hover:border-indigo-500', 'dark:hover:bg-indigo-900/20');
+            });
+
+            // Color logic
+            if (selectedIdx === correctIdx) {
+                // Correctly answered
+                btn.classList.add('bg-emerald-500', 'dark:bg-emerald-600', 'text-white', 'border-emerald-600', 'dark:border-emerald-500');
+                btn.classList.remove('text-slate-700', 'dark:text-slate-300', 'bg-slate-50', 'dark:bg-slate-800/50');
+                btn.querySelector('span').classList.remove('text-slate-400', 'dark:text-slate-500');
+                btn.querySelector('span').classList.add('text-emerald-100');
+            } else {
+                // Incorrectly answered
+                btn.classList.add('bg-red-500', 'dark:bg-red-600', 'text-white', 'border-red-600', 'dark:border-red-500');
+                btn.classList.remove('text-slate-700', 'dark:text-slate-300', 'bg-slate-50', 'dark:bg-slate-800/50');
+                btn.querySelector('span').classList.remove('text-slate-400', 'dark:text-slate-500');
+                btn.querySelector('span').classList.add('text-red-100');
+                
+                // Highlight the actual correct answer
+                const correctBtn = buttons[correctIdx];
+                correctBtn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'border-emerald-500', 'text-emerald-800', 'dark:text-emerald-200');
+                correctBtn.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-800/50', 'text-slate-700', 'dark:text-slate-300');
+            }
+
+            // Auto-expand explanation
+            const explBox = document.getElementById(explanationId);
+            if(explBox.classList.contains('max-h-0')) {
+                toggleExplanation(explanationId);
+            }
+        }
+
+        function toggleExplanation(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('max-h-0')) {
+                el.classList.remove('max-h-0', 'opacity-0');
+                el.classList.add('max-h-[1000px]', 'opacity-100', 'mt-4'); // max-h big enough to fit content
+            } else {
+                el.classList.add('max-h-0', 'opacity-0');
+                el.classList.remove('max-h-[1000px]', 'opacity-100', 'mt-4');
+            }
+        }
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Check local storage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderShortAnswers();
+            renderEssays();
+        });
+
+    </script>
+</body>
+</html>
+
+

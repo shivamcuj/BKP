@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Replication | Study Notes</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2pdf.js for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Google Fonts for a romantic and readable typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        romantic: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            800: '#831843',
+                            900: '#500724',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(244,114,182,0.3)',
+                        'glow': '0 0 20px rgba(244,114,182,0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* Soft pastel background */
+            background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #fff1f2 100%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdf2f8; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fbcfe8; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f9a8d4; 
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans antialiased min-h-screen py-8 px-4 sm:px-8">
+
+    <!-- Floating Save to PDF Button -->
+    <button onclick="downloadPDF()" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 flex items-center gap-2 bg-romantic-500 hover:bg-romantic-400 text-white px-5 py-3 rounded-full shadow-soft transition-all duration-300 transform hover:scale-105 font-semibold">
+        <i data-lucide="download" class="w-5 h-5"></i>
+        <span class="hidden sm:inline">Save as PDF</span>
+    </button>
+
+    <!-- Main Content Container -->
+    <div id="printable-area" class="max-w-5xl mx-auto">
+        
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center justify-center p-4 bg-white rounded-full shadow-glow mb-4">
+                <i data-lucide="heart" class="w-8 h-8 text-romantic-400 fill-romantic-100"></i>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl font-semibold text-romantic-900 mb-3 tracking-wide">DNA Replication</h1>
+            <p class="text-romantic-800 text-lg font-light italic">Made with love for your success • Study peacefully</p>
+        </header>
+
+        <!-- Section 1: Detailed Explanations -->
+        <section class="glass-panel rounded-3xl p-6 sm:p-10 mb-10 shadow-soft">
+            <h2 class="font-serif text-3xl text-romantic-800 border-b-2 border-romantic-200 pb-3 mb-6 flex items-center gap-3">
+                <i data-lucide="book-open" class="text-romantic-400"></i>
+                Part 1: Detailed Explanations
+            </h2>
+
+            <!-- Introduction -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">1. Introduction to the Central Dogma</h3>
+                <p class="mb-3 leading-relaxed">Formulated by Francis Crick, the <strong>Central Dogma of Molecular Biology</strong> defines the three major steps in the processing of genetic information:</p>
+                <ol class="list-decimal pl-6 space-y-2 mb-4">
+                    <li><span class="font-semibold text-romantic-800">Replication:</span> Copying parent DNA to form identical daughter DNA molecules.</li>
+                    <li><span class="font-semibold text-romantic-800">Transcription:</span> Rewriting the genetic message from DNA into RNA.</li>
+                    <li><span class="font-semibold text-romantic-800">Translation:</span> Translating the RNA message into a protein structure via ribosomes.</li>
+                </ol>
+                <div class="bg-romantic-50 p-4 rounded-xl border border-romantic-100 flex items-center justify-center text-romantic-900 font-semibold space-x-4 text-sm sm:text-base">
+                    <span>DNA</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-romantic-400"></i>
+                    <span>RNA</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-romantic-400"></i>
+                    <span>Protein</span>
+                </div>
+            </div>
+
+            <!-- What is Replication -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">2. What is DNA Replication?</h3>
+                <p class="mb-3 leading-relaxed">To transfer genetic information during cellular reproduction, DNA must be duplicated. This process follows a <strong>semiconservative mechanism</strong>.</p>
+                <div class="bg-indigo-50 border-l-4 border-indigo-300 p-4 rounded-r-xl italic text-gray-700">
+                    <strong>💡 Analogy:</strong> Imagine copying a handwritten recipe. You keep one original page and pair it with a newly written page. In DNA, each replicated daughter molecule contains <em>one parent strand</em> and <em>one newly synthesized strand</em>.
+                </div>
+            </div>
+
+            <!-- Enzymes -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">3. The Builders: DNA Polymerases</h3>
+                <p class="mb-3 leading-relaxed">DNA synthesis is catalyzed by <strong>DNA-dependent DNA polymerases</strong>. They require a DNA template to work.</p>
+                
+                <h4 class="font-semibold text-lg mt-4 mb-2 text-romantic-900">Prokaryotic Polymerases:</h4>
+                <ul class="list-disc pl-6 space-y-2 mb-4">
+                    <li><strong>Pol I:</strong> Completes chain synthesis between Okazaki fragments on the lagging strand (fills gaps) and removes RNA primers.</li>
+                    <li><strong>Pol II:</strong> Mostly concerned with proofreading and DNA repair.</li>
+                    <li><strong>Pol III:</strong> The main workhorse! Catalyzes the synthesis of both the leading and lagging strands.</li>
+                </ul>
+
+                <h4 class="font-semibold text-lg mt-4 mb-2 text-romantic-900">Eukaryotic Polymerases (The Greek Letters):</h4>
+                <ul class="list-disc pl-6 space-y-2 mb-4">
+                    <li><strong>α (Alpha):</strong> Gap filling and synthesis between Okazaki fragments.</li>
+                    <li><strong>ε (Epsilon):</strong> DNA proofreading and DNA repair.</li>
+                    <li><strong>β (Beta):</strong> DNA repair.</li>
+                    <li><strong>γ (Gamma):</strong> Mitochondrial DNA synthesis.</li>
+                    <li><strong>δ (Delta):</strong> Leading and lagging strand synthesis.</li>
+                </ul>
+            </div>
+
+            <!-- Stages of Replication -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">4. The Three Stages of Replication</h3>
+                
+                <!-- Initiation -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4">
+                    <h4 class="font-bold text-lg text-romantic-800 flex items-center gap-2 mb-3">
+                        <span class="bg-romantic-100 text-romantic-800 rounded-full w-8 h-8 flex items-center justify-center text-sm">A</span>
+                        Initiation (The Setup)
+                    </h4>
+                    <p class="mb-2">Occurs at a specific site called the <strong>Origin of Replication (Ori)</strong>. In prokaryotes, there is one Ori; in eukaryotes, there are multiple consensus sequences.</p>
+                    <ul class="list-disc pl-6 space-y-1 mb-2">
+                        <li><strong>DNA A protein:</strong> Recognizes and binds to "ori" to start denaturing DNA.</li>
+                        <li><strong>Helicase (DNA B protein):</strong> Unwinds parental DNA, forming a 'V' shape known as the <em>Replication Fork</em>.</li>
+                        <li><strong>Topoisomerase:</strong> Relieves the twisting stress caused by unwinding by cutting and rejoining DNA strands.</li>
+                        <li><strong>SSB (Single-Stranded Binding) proteins:</strong> Stabilize separated strands so they don't snap back together.</li>
+                        <li><strong>Primase (RNA polymerase):</strong> Creates short RNA primers (5-50 nucleotides) to kickstart DNA synthesis, as DNA Pol III cannot start from scratch.</li>
+                    </ul>
+                    <div class="text-sm text-gray-500 italic mt-2">💡 Analogy: Helicase is like a zipper unzipping your jacket. Topoisomerase is you untangling the knotted strings on your hoodie.</div>
+                </div>
+
+                <!-- Elongation -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4">
+                    <h4 class="font-bold text-lg text-romantic-800 flex items-center gap-2 mb-3">
+                        <span class="bg-romantic-100 text-romantic-800 rounded-full w-8 h-8 flex items-center justify-center text-sm">B</span>
+                        Elongation (The Building Phase)
+                    </h4>
+                    <p class="mb-2">DNA Pol III adds nucleotides to the 3' end of the RNA primer. DNA is always synthesized in the <strong>5' to 3' direction</strong>.</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Leading Strand:</strong> The 3'→5' template is copied continuously towards the replication fork. Requires only one primer.</li>
+                        <li><strong>Lagging Strand:</strong> The 5'→3' template is copied discontinuously (away from the fork) in short segments called <strong>Okazaki fragments</strong>. Requires multiple RNA primers.</li>
+                        <li><strong>Cleanup:</strong> DNA Pol I removes the RNA primers and fills the gaps. Finally, <strong>DNA ligase</strong> acts as molecular glue, sealing the Okazaki fragments together with phosphodiester bonds.</li>
+                    </ul>
+                </div>
+
+                <!-- Termination -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                    <h4 class="font-bold text-lg text-romantic-800 flex items-center gap-2 mb-3">
+                        <span class="bg-romantic-100 text-romantic-800 rounded-full w-8 h-8 flex items-center justify-center text-sm">C</span>
+                        Termination (The End)
+                    </h4>
+                    <p>Specific termination sequences (e.g., "ter") exist. A <strong>ter-binding protein</strong> binds here, stopping the helicase from unwinding further, thus safely concluding the process.</p>
+                </div>
+            </div>
+
+            <!-- Proofreading -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">5. Proofreading (Quality Control)</h3>
+                <p class="leading-relaxed mb-2">DNA replication has high fidelity. The error rate is kept incredibly low (1 in 10<sup>8</sup> to 10<sup>12</sup> bases) via proofreading.</p>
+                <ul class="list-disc pl-6">
+                    <li>All three prokaryotic DNA polymerases have a <strong>3' to 5' exonuclease activity</strong> (backspacing to fix typos).</li>
+                    <li>DNA Pol I and II specialize in excising mismatched nucleotides before adding the next one.</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- Section 2: Quick Revision -->
+        <section class="glass-panel rounded-3xl p-6 sm:p-10 shadow-soft">
+            <h2 class="font-serif text-3xl text-romantic-800 border-b-2 border-romantic-200 pb-3 mb-6 flex items-center gap-3">
+                <i data-lucide="zap" class="text-romantic-400"></i>
+                Part 2: Quick Revision Notes
+            </h2>
+            
+            <p class="text-gray-600 italic mb-6">Perfect for that last-minute scan right before your exam! Take a deep breath, you've got this.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Core Concepts -->
+                <div class="bg-romantic-50 rounded-2xl p-5 border border-romantic-100">
+                    <h4 class="font-bold text-romantic-900 mb-3 border-b border-romantic-200 pb-1">🧬 Core Concepts</h4>
+                    <ul class="space-y-2 text-sm text-gray-800">
+                        <li><strong>Central Dogma:</strong> DNA → RNA → Protein.</li>
+                        <li><strong>Mechanism:</strong> Semiconservative (1 old strand + 1 new strand).</li>
+                        <li><strong>Synthesis Direction:</strong> Always 5' → 3'.</li>
+                        <li><strong>Leading Strand:</strong> Continuous synthesis.</li>
+                        <li><strong>Lagging Strand:</strong> Discontinuous, forms <em>Okazaki fragments</em>.</li>
+                    </ul>
+                </div>
+
+                <!-- Enzyme Cheat Sheet -->
+                <div class="bg-purple-50 rounded-2xl p-5 border border-purple-100">
+                    <h4 class="font-bold text-purple-900 mb-3 border-b border-purple-200 pb-1">🛠️ Enzyme Cheat Sheet</h4>
+                    <ul class="space-y-2 text-sm text-gray-800">
+                        <li><strong>Helicase:</strong> Unwinds DNA.</li>
+                        <li><strong>Topoisomerase:</strong> Relieves unwinding stress.</li>
+                        <li><strong>SSB Proteins:</strong> Keeps strands separated.</li>
+                        <li><strong>Primase:</strong> Lays down RNA primer.</li>
+                        <li><strong>Pol III / δ (Delta):</strong> Main builder.</li>
+                        <li><strong>Pol I / α (Alpha):</strong> Removes primers, fills gaps.</li>
+                        <li><strong>Ligase:</strong> Seals gaps (the glue).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="mt-8 overflow-x-auto">
+                <h4 class="font-bold text-romantic-900 mb-3">🌍 Prokaryotic vs Eukaryotic Replication</h4>
+                <table class="w-full text-left border-collapse bg-white rounded-xl overflow-hidden shadow-sm">
+                    <thead>
+                        <tr class="bg-romantic-100 text-romantic-900 text-sm">
+                            <th class="p-3 border-b border-romantic-200">Feature</th>
+                            <th class="p-3 border-b border-romantic-200">Prokaryotes</th>
+                            <th class="p-3 border-b border-romantic-200">Eukaryotes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="p-3 font-semibold">RNA Primer Length</td>
+                            <td class="p-3">~50 nucleotides</td>
+                            <td class="p-3">~9 nucleotides</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="p-3 font-semibold">DNA Polymerases</td>
+                            <td class="p-3">3 Types (I, II, III)</td>
+                            <td class="p-3">5 Types (α, β, γ, δ, ε)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="p-3 font-semibold">Origins of Replication</td>
+                            <td class="p-3">Single</td>
+                            <td class="p-3">Multiple</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="p-3 font-semibold">Okazaki Fragment Length</td>
+                            <td class="p-3">1000 - 2000 nucleotides</td>
+                            <td class="p-3">~200 nucleotides</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-semibold">Rate of Replication</td>
+                            <td class="p-3">~500 nucleotides/sec</td>
+                            <td class="p-3">~50 nucleotides/sec (10x slower)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 text-center pt-6 border-t border-romantic-200">
+                <p class="text-romantic-800 font-serif italic text-lg">"You are capable of amazing things. Best of luck on your exam!"</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // PDF Generation function
+        function downloadPDF() {
+            const element = document.getElementById('printable-area');
+            
+            // Configuration for html2pdf
+            const opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5], // top, left, bottom, right in inches
+                filename:     'DNA_Replication_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Add a temporary loading state to the button
+            const btn = document.querySelector('button');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span class="hidden sm:inline">Saving...</span>`;
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button state
+                btn.innerHTML = originalContent;
+                lucide.createIcons(); // Re-initialize icons inside the button
+            });
+        }
+    </script>
+</body>
+</html>

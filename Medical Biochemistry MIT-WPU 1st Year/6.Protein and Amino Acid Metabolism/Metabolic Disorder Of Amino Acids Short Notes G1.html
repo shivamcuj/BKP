@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolic Disorders of Amino Acids - Study Notes</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display for elegant headings, Nunito for readable study text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf.js for the Save to PDF functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#fff0f3',
+                        rose: '#ffccd5',
+                        deeprose: '#d9778c',
+                        textdark: '#4a363a',
+                        textlight: '#7d5c62',
+                        cardbg: 'rgba(255, 255, 255, 0.85)',
+                    },
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        body: ['"Nunito"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft-glow': '0 10px 40px -10px rgba(217, 119, 140, 0.25)',
+                        'inner-glow': 'inset 0 2px 10px rgba(255, 204, 213, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fff0f3;
+            background-image: radial-gradient(circle at top right, #ffe1e8, transparent 40%),
+                              radial-gradient(circle at bottom left, #ffe1e8, transparent 40%);
+            background-attachment: fixed;
+        }
+        .romantic-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ffccd5, transparent);
+            margin: 2rem 0;
+        }
+        .custom-bullet {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .custom-bullet::before {
+            content: "♥";
+            position: absolute;
+            left: 0;
+            color: #d9778c;
+            font-size: 0.9rem;
+            top: 0.1rem;
+        }
+        
+        /* Ensures backgrounds print correctly in PDF */
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body class="font-body text-textdark antialiased min-h-screen py-10 px-4 sm:px-6 lg:px-8 selection:bg-rose selection:text-textdark">
+
+    <!-- Top Action Bar -->
+    <div class="max-w-5xl mx-auto flex justify-end mb-6 no-print">
+        <button onclick="downloadPDF()" class="group flex items-center gap-2 bg-white/80 hover:bg-white text-deeprose font-semibold py-3 px-6 rounded-full shadow-soft-glow transition-all duration-300 border border-rose hover:scale-105 active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-y-1 transition-transform">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Save to PDF
+        </button>
+    </div>
+
+    <!-- Main Content Container (Targeted for PDF) -->
+    <div id="pdf-content" class="max-w-5xl mx-auto">
+        
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="font-heading text-4xl sm:text-5xl font-bold text-textdark mb-4 drop-shadow-sm">
+                Metabolic Disorders of Amino Acids
+            </h1>
+            <p class="text-textlight text-lg italic max-w-2xl mx-auto font-heading">
+                "Small steps every day. You've got this, lovely!" 
+                <span class="inline-block animate-pulse text-deeprose">♥</span>
+            </p>
+        </header>
+
+        <!-- Introduction section -->
+        <section class="bg-cardbg backdrop-blur-sm rounded-3xl p-8 sm:p-10 shadow-soft-glow border border-white mb-10">
+            <h2 class="font-heading text-3xl text-deeprose mb-6 flex items-center gap-3">
+                <svg class="w-8 h-8 opacity-70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                Introduction
+            </h2>
+            <div class="space-y-4 text-lg leading-relaxed">
+                <p>There are <strong>20 amino acids</strong> involved in metabolism, 9 of which are essential (cannot be synthesized in humans and must be obtained through food).</p>
+                <p>Amino acids act as the building blocks of proteins. They are also vital precursors for important molecules in the body, such as:</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 mb-6">
+                    <div class="bg-blush p-4 rounded-xl text-center border border-rose">Neurotransmitters</div>
+                    <div class="bg-blush p-4 rounded-xl text-center border border-rose">Hormones</div>
+                    <div class="bg-blush p-4 rounded-xl text-center border border-rose">Pigments</div>
+                    <div class="bg-blush p-4 rounded-xl text-center border border-rose">O₂ Carriers</div>
+                </div>
+                <p><strong>Hereditary Metabolic Disorders:</strong> These occur when defective genes (usually <em>autosomal recessive</em>) are passed from parents to children. They result from defects in either the breakdown of amino acids or the transport of amino acids into cells. They are typically diagnosed by analyzing amino acid concentrations in body fluids.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <div class="mb-4 flex items-center justify-center gap-4 mt-16">
+            <div class="h-px bg-rose flex-1"></div>
+            <h2 class="font-heading text-3xl font-bold text-textdark px-4 uppercase tracking-widest text-center">Section I: Detailed Notes</h2>
+            <div class="h-px bg-rose flex-1"></div>
+        </div>
+
+        <div class="space-y-8 mt-10">
+            
+            <!-- 1. Phenylketonuria -->
+            <article class="bg-cardbg rounded-3xl p-8 shadow-soft-glow border-l-8 border-l-deeprose relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-rose text-textdark px-4 py-1 rounded-bl-xl font-bold text-sm">Topic 01</div>
+                <h3 class="font-heading text-2xl font-bold mb-2">Phenylketonuria (PKU)</h3>
+                
+                <div class="mt-4 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">The Defect</h4>
+                        <p class="mb-2">Caused by decreased activity of <strong>Phenylalanine Hydroxylase (PAH)</strong>, an enzyme that converts the amino acid phenylalanine to <em>tyrosine</em>.</p>
+                        <p class="text-sm bg-blush p-3 rounded-lg border border-rose shadow-inner-glow"><strong>Note on Tyrosine:</strong> It is a crucial precursor for hormones, skin, hair, and eye pigments (melanin).</p>
+                        <p class="mt-3"><strong>Malignant PKU:</strong> A rare variant caused by dihydrobiopterin reductase deficiency (needed to convert dihydro to tetrahydrobiopterin, a cofactor for PAH). This also leads to a deficiency of dopamine and serotonin.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">Symptoms & Characteristics</h4>
+                        <ul class="space-y-2">
+                            <li class="custom-bullet">Accumulation of phenylalanine and its neurotoxic metabolites (phenylketones).</li>
+                            <li class="custom-bullet">Progressive developmental delay, small head circumference (microcephaly), seizures, and behavioral disturbances.</li>
+                            <li class="custom-bullet">Mousy odor, eczema, vomiting.</li>
+                            <li class="custom-bullet"><strong>Physical features:</strong> Lighter features (blond hair, blue eyes) compared to family members, due to decreased melanin.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 bg-green-50/50 p-4 rounded-xl border border-green-100">
+                    <h4 class="font-bold text-green-700 mb-1">Treatment Plan:</h4>
+                    <p>Dietary restriction of phenylalanine, tyrosine supplementation, special formulas. Medications like <em>Sapropterin</em> (cofactor supplementation) and <em>Pegvaliase</em> (to lyse phenylalanine).</p>
+                </div>
+            </article>
+
+            <!-- 2. Tyrosinemia -->
+            <article class="bg-cardbg rounded-3xl p-8 shadow-soft-glow border-l-8 border-l-deeprose relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-rose text-textdark px-4 py-1 rounded-bl-xl font-bold text-sm">Topic 02</div>
+                <h3 class="font-heading text-2xl font-bold mb-2">Tyrosinemia</h3>
+                <p class="mb-4">An inborn error where the body cannot effectively break down tyrosine, leading to toxic accumulations.</p>
+                
+                <div class="grid sm:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-blush p-4 rounded-xl border border-rose">
+                        <h4 class="font-bold text-textdark text-center border-b border-rose pb-2 mb-2">Type I (Classic/Hepatorenal)</h4>
+                        <p class="text-sm mb-2 text-deeprose font-semibold">Deficiency: Fumarylacetoacetate hydrolase (FAH)</p>
+                        <p class="text-sm">Most severe. Severe liver disease, kidney defects, cabbage-like odor, rickets. ~40% develop liver cancer by age 5 if untreated.</p>
+                    </div>
+                    <div class="bg-blush p-4 rounded-xl border border-rose">
+                        <h4 class="font-bold text-textdark text-center border-b border-rose pb-2 mb-2">Type II</h4>
+                        <p class="text-sm mb-2 text-deeprose font-semibold">Deficiency: Tyrosine aminotransferase (TAT)</p>
+                        <p class="text-sm">Presents in early childhood. Eye pain, redness, photophobia. Palmoplantar hyperkeratosis (thick painful skin on palms and soles), intellectual disabilities.</p>
+                    </div>
+                    <div class="bg-blush p-4 rounded-xl border border-rose">
+                        <h4 class="font-bold text-textdark text-center border-b border-rose pb-2 mb-2">Type III</h4>
+                        <p class="text-sm mb-2 text-deeprose font-semibold">Deficiency: 4-hydroxyphenylpyruvate dioxygenase (HPD)</p>
+                        <p class="text-sm">Intellectual disability, seizures, and intermittent ataxia.</p>
+                    </div>
+                </div>
+                <div class="bg-green-50/50 p-4 rounded-xl border border-green-100">
+                    <h4 class="font-bold text-green-700 mb-1">Treatment Plan:</h4>
+                    <p>Protein restriction, low tyrosine diet. <strong>Nitisinone (NTBC)</strong> is a potent inhibitor of the pathway that prevents toxic metabolites. Liver transplantation may be required for severe cases or cancer.</p>
+                </div>
+            </article>
+
+            <!-- 3. Homocystinuria -->
+            <article class="bg-cardbg rounded-3xl p-8 shadow-soft-glow border-l-8 border-l-deeprose relative overflow-hidden page-break-avoid">
+                <div class="absolute top-0 right-0 bg-rose text-textdark px-4 py-1 rounded-bl-xl font-bold text-sm">Topic 03</div>
+                <h3 class="font-heading text-2xl font-bold mb-2">Homocystinuria</h3>
+                
+                <div class="mt-4 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">The Defect</h4>
+                        <p>Defect in <strong>Cystathionine beta-synthase (CBS)</strong> (requires Pyridoxine/Vit B6), affecting methionine metabolism and leading to homocysteine accumulation.</p>
+                        <div class="mt-4 bg-blush p-4 rounded-xl border border-rose flex justify-center">
+                            <!-- Simplistic visual representation using text -->
+                            <div class="text-center text-sm font-semibold text-textlight">
+                                <p>Methionine</p>
+                                <p>↓</p>
+                                <p class="text-deeprose font-bold">Homocysteine <em>(Accumulates)</em></p>
+                                <p>↓ ✖ <span class="text-xs font-normal">(Blocked CBS Enzyme)</span></p>
+                                <p>Cystathionine → Cysteine</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">Symptoms & Characteristics</h4>
+                        <ul class="space-y-2">
+                            <li class="custom-bullet">Endothelial damage leading to <strong>thrombosis</strong> (vascular disease).</li>
+                            <li class="custom-bullet">Tall, thin frame with <em>Marfanoid features</em>.</li>
+                            <li class="custom-bullet">Dislocated lens (myopia) and osteoporosis (thinning bones).</li>
+                            <li class="custom-bullet">Pronounced flush of the cheeks.</li>
+                            <li class="custom-bullet">Intellectual disability and psychiatric disorders.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 bg-green-50/50 p-4 rounded-xl border border-green-100">
+                    <h4 class="font-bold text-green-700 mb-1">Treatment Plan:</h4>
+                    <p>High doses of Vitamin B6 (pyridoxine) helps ~50% of patients. Folic acid, <strong>Betaine</strong> (removes extra homocysteine), aspirin (for thrombosis risk), methionine restriction, and cysteine supplementation.</p>
+                </div>
+            </article>
+
+            <!-- 4. Non-ketotic Hyperglycinemia -->
+            <article class="bg-cardbg rounded-3xl p-8 shadow-soft-glow border-l-8 border-l-deeprose relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-rose text-textdark px-4 py-1 rounded-bl-xl font-bold text-sm">Topic 04</div>
+                <h3 class="font-heading text-2xl font-bold mb-2">Non-ketotic Hyperglycinemia (NKH)</h3>
+                
+                <div class="mt-4 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">The Defect</h4>
+                        <p>A rare genetic disorder caused by a defect in the <strong>Glycine Cleavage System</strong>. This results in the massive accumulation of the amino acid/neurotransmitter glycine in tissues, fluids, and especially the central nervous system.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">Symptoms & Treatment</h4>
+                        <ul class="space-y-2 mb-4">
+                            <li class="custom-bullet">Severe developmental impairment.</li>
+                            <li class="custom-bullet">Seizures, low muscle tone (hypotonia).</li>
+                            <li class="custom-bullet">Hiccups and breath-holding spells.</li>
+                        </ul>
+                        <div class="bg-green-50/50 p-3 rounded-lg border border-green-100 text-sm">
+                            <strong class="text-green-700">Treatment:</strong> No cure. Symptoms eased by glycine-blocking drugs (Dextromethorphan), low-protein diet, and glycine scavengers (Sodium benzoate).
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. Maple Syrup Urine Disease -->
+            <article class="bg-cardbg rounded-3xl p-8 shadow-soft-glow border-l-8 border-l-deeprose relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-rose text-textdark px-4 py-1 rounded-bl-xl font-bold text-sm">Topic 05</div>
+                <h3 class="font-heading text-2xl font-bold mb-2">Maple Syrup Urine Disease (MSUD)</h3>
+                
+                <div class="mt-4 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">The Defect</h4>
+                        <p>Deficiency of <strong>Branched-chain alpha-ketoacid dehydrogenase</strong>.</p>
+                        <p class="mt-2">This affects the breakdown of the branched-chain amino acids: <strong>Leucine, Isoleucine, and Valine</strong>. These, along with their oxoacids (e.g., alloisoleucine), accumulate in body fluids.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-deeprose mb-2 text-lg">Symptoms & Characteristics</h4>
+                        <ul class="space-y-2">
+                            <li class="custom-bullet">Characteristic "maple syrup" smell to the urine.</li>
+                            <li class="custom-bullet">Presents in infancy with poor feeding/irritability, progressing to lethargy, cerebral edema, seizures, coma, and potentially death.</li>
+                            <li class="custom-bullet">Common in the Mennonites of Pennsylvania.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 bg-green-50/50 p-4 rounded-xl border border-green-100">
+                    <h4 class="font-bold text-green-700 mb-1">Treatment Plan:</h4>
+                    <p>Strict dietary restriction of branched-chain amino acids (leucine, isoleucine, valine). Hemodialysis for acute crises. Milder forms may respond to high-dose Thiamin (Vitamin B1).</p>
+                </div>
+            </article>
+
+            <!-- Additional Disorders (from table) -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Alkaptonuria -->
+                <article class="bg-cardbg rounded-3xl p-6 shadow-soft-glow border border-rose">
+                    <h3 class="font-heading text-xl font-bold mb-2 flex justify-between items-center">
+                        Alkaptonuria
+                        <span class="text-xs bg-rose text-textdark px-2 py-1 rounded-full">Extra</span>
+                    </h3>
+                    <p class="text-sm font-semibold text-deeprose mb-2">Enzyme: Homogentisate Oxidase</p>
+                    <p class="text-sm mb-3">Homogentisic acid accumulates. Urine turns dark/black when exposed to air.</p>
+                    <ul class="text-sm space-y-1 mb-3">
+                        <li class="custom-bullet">Pigmentation of connective tissue (sclera, ear cartilage).</li>
+                        <li class="custom-bullet">Arthritis (joints/spine), cardiac valve involvement, kidney stones.</li>
+                    </ul>
+                    <p class="text-sm bg-green-50/50 p-2 rounded text-green-800"><strong>Rx:</strong> Nitisinone, restriction of tyrosine/phenylalanine, Vitamin C.</p>
+                </article>
+
+                <!-- Albinism -->
+                <article class="bg-cardbg rounded-3xl p-6 shadow-soft-glow border border-rose">
+                    <h3 class="font-heading text-xl font-bold mb-2 flex justify-between items-center">
+                        Albinism
+                        <span class="text-xs bg-rose text-textdark px-2 py-1 rounded-full">Extra</span>
+                    </h3>
+                    <p class="text-sm font-semibold text-deeprose mb-2">Enzyme: Tyrosinase</p>
+                    <p class="text-sm mb-3">Absence of melanin pigment in melanocytes.</p>
+                    <ul class="text-sm space-y-1 mb-3">
+                        <li class="custom-bullet">Colorless hair and skin.</li>
+                        <li class="custom-bullet">Lack of eye pigment causing photophobia.</li>
+                        <li class="custom-bullet">Increased risk of skin cancer.</li>
+                        <li class="custom-bullet font-semibold italic text-deeprose">No neurological deficits (unlike PKU).</li>
+                    </ul>
+                </article>
+            </div>
+
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- SECTION 2: QUICK REVISION NOTES -->
+        <div class="mb-8 mt-20 flex items-center justify-center gap-4">
+            <div class="h-px bg-rose flex-1"></div>
+            <h2 class="font-heading text-3xl font-bold text-textdark px-4 uppercase tracking-widest text-center flex items-center gap-2">
+                <svg class="w-6 h-6 text-deeprose" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                Section II: Quick Revision
+            </h2>
+            <div class="h-px bg-rose flex-1"></div>
+        </div>
+
+        <div class="bg-cardbg rounded-3xl shadow-soft-glow overflow-hidden border border-rose mb-12">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-blush text-deeprose font-heading text-lg">
+                            <th class="p-4 border-b border-rose font-bold">Disease</th>
+                            <th class="p-4 border-b border-rose font-bold">Enzyme Deficient</th>
+                            <th class="p-4 border-b border-rose font-bold">Key Identifying Features</th>
+                            <th class="p-4 border-b border-rose font-bold">Treatment (Key)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm sm:text-base divide-y divide-rose">
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Phenylketonuria (PKU)</td>
+                            <td class="p-4 text-textlight">Phenylalanine Hydroxylase (PAH)</td>
+                            <td class="p-4">Mousy odor, light features (blonde/blue eyes), mental retardation.</td>
+                            <td class="p-4">Restrict Phenylalanine, supplement Tyrosine.</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Tyrosinemia (Type 1)</td>
+                            <td class="p-4 text-textlight">Fumarylacetoacetate hydrolase (FAH)</td>
+                            <td class="p-4">Cabbage-like odor, severe liver/kidney failure, cancer risk.</td>
+                            <td class="p-4">Nitisinone (NTBC), restrict Tyrosine.</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Homocystinuria</td>
+                            <td class="p-4 text-textlight">Cystathionine β-synthase</td>
+                            <td class="p-4">Marfanoid habitus, lens dislocation (myopia), thrombosis.</td>
+                            <td class="p-4">High dose Vit B6, Betaine, restrict Methionine.</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Non-Ketotic Hyperglycinemia</td>
+                            <td class="p-4 text-textlight">Glycine Cleavage System</td>
+                            <td class="p-4">Hiccups, seizures, hypotonia, severe developmental impairment.</td>
+                            <td class="p-4">Sodium benzoate, Dextromethorphan.</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Maple Syrup Urine Disease</td>
+                            <td class="p-4 text-textlight">Branched-chain α-ketoacid dehydrogenase</td>
+                            <td class="p-4">Maple syrup urine smell, lethargy, cerebral edema. <br><span class="text-xs text-deeprose">Affects Leucine, Isoleucine, Valine.</span></td>
+                            <td class="p-4">Restrict branched-chain amino acids, Thiamin (B1).</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Alkaptonuria</td>
+                            <td class="p-4 text-textlight">Homogentisate Oxidase</td>
+                            <td class="p-4">Urine turns black in air, dark connective tissue, arthritis.</td>
+                            <td class="p-4">Nitisinone, Vit C.</td>
+                        </tr>
+                        <tr class="hover:bg-rose/10 transition-colors">
+                            <td class="p-4 font-bold text-textdark">Albinism</td>
+                            <td class="p-4 text-textlight">Tyrosinase</td>
+                            <td class="p-4">No pigment (skin/hair), photophobia, NO neuro deficits.</td>
+                            <td class="p-4">Sun protection.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <footer class="text-center mt-16 mb-8 text-textlight pb-10">
+            <p class="font-heading italic text-xl">"Success is the sum of small efforts, repeated day in and day out."</p>
+            <p class="text-sm mt-2 opacity-80">Good luck on your exams! You are brilliant. ✨</p>
+        </footer>
+
+    </div>
+
+    <!-- Script for PDF Export -->
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('pdf-content');
+            
+            // Temporary styles for better PDF output
+            element.style.padding = '20px';
+            element.style.backgroundColor = '#fff0f3'; 
+            
+            const opt = {
+                margin:       10,
+                filename:     'Amino_Acid_Disorders_Revision.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#fff0f3' },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Revert temporary styles
+                element.style.padding = '';
+                element.style.backgroundColor = '';
+            });
+        }
+    </script>
+</body>
+</html>
+

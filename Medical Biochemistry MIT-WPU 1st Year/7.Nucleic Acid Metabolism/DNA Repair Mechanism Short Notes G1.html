@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Repair Mechanisms - Study Notes</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2pdf.js for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        blush: '#FAF5F7',
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(225, 29, 72, 0.1)',
+                        'glow': '0 0 20px rgba(251, 113, 133, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fdfbfb;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        
+        .romantic-bg {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 50%, #fecdd3 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fb7185;
+        }
+
+        /* PDF print specific styles */
+        .pdf-page-break {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased min-h-screen bg-blush bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-50 via-blush to-white relative">
+
+    <!-- Ambient background soft lighting -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-rose-200/20 blur-3xl"></div>
+        <div class="absolute top-[40%] -right-[10%] w-[30%] h-[50%] rounded-full bg-pink-200/20 blur-3xl"></div>
+        <div class="absolute -bottom-[10%] left-[20%] w-[40%] h-[40%] rounded-full bg-rose-100/30 blur-3xl"></div>
+    </div>
+
+    <!-- Navigation / Header (Not printed in PDF) -->
+    <nav class="sticky top-0 z-50 glass-card shadow-soft px-6 py-4 flex justify-between items-center no-print border-b border-rose-100">
+        <div class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-rose-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <h1 class="font-serif text-xl font-bold text-rose-900">Study Notes <span class="text-rose-400 font-normal ml-1">| PharmD Guru</span></h1>
+        </div>
+        <button onclick="generatePDF()" class="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2 px-5 rounded-full shadow-glow transition duration-300 ease-in-out transform hover:-translate-y-0.5 flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>Save to PDF</span>
+        </button>
+    </nav>
+
+    <!-- Main Content Wrapper (This gets converted to PDF) -->
+    <main id="notes-content" class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Header inside PDF -->
+        <header class="text-center mb-12 pdf-page-break">
+            <p class="text-rose-500 font-semibold tracking-widest uppercase text-sm mb-2">Molecular Biology</p>
+            <h1 class="font-serif text-5xl font-bold text-gray-900 mb-4 tracking-tight">DNA Repair Mechanisms</h1>
+            <div class="w-24 h-1 bg-gradient-to-r from-rose-300 to-rose-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Damage to DNA caused by replication errors or mutations may have serious consequences. The cell possesses an inbuilt system to repair damaged DNA to maintain genetic integrity.
+            </p>
+        </header>
+
+        <!-- SECTION 1: Detailed Explanations -->
+        <section class="mb-16">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="bg-rose-100 p-2 rounded-full"><svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>
+                <h2 class="font-serif text-3xl font-bold text-gray-800">I. Detailed Explanations</h2>
+            </div>
+
+            <!-- 1. Base Excision Repair -->
+            <article class="glass-card rounded-2xl p-8 mb-8 shadow-sm hover:shadow-soft transition-shadow pdf-page-break border border-rose-50">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 border-b border-rose-100 pb-2">1. Base Excision-Repair</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Certain bases can undergo spontaneous depurination or alteration (e.g., cytosine, adenine, and guanine forming uracil, hypoxanthine, and xanthine). Because these altered bases do not belong in normal DNA, they must be excised and replaced.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-rose-400 mr-2">✦</span> Mechanism Steps:</h4>
+                        <ul class="space-y-2 text-gray-600 pl-2">
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> Recognition and removal of the defective base by <strong>N-glycosylase</strong>.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> An <strong>endonuclease</strong> cuts the DNA backbone near the defect, removing the abasic sugar.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> The gap is filled by <strong>DNA polymerase</strong>.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> The nick is sealed by <strong>DNA ligase</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 rounded-xl p-5 border border-rose-100">
+                        <h4 class="font-bold text-rose-900 mb-2 font-serif">Specific Example</h4>
+                        <p class="text-gray-700 text-sm">
+                            If cytosine is deaminated to form uracil, the enzyme <strong>uracil DNA glycosylase</strong> identifies and removes the uracil base. The remaining backbone is cut, cleared, and the correct cytosine is re-inserted and sealed.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Nucleotide Excision Repair -->
+            <article class="glass-card rounded-2xl p-8 mb-8 shadow-sm hover:shadow-soft transition-shadow pdf-page-break border border-rose-50">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 border-b border-rose-100 pb-2">2. Nucleotide Excision-Repair</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    This mechanism repairs large-scale defects such as modifications, strand breaks, or cross-linkages caused by environmental factors like ultraviolet (UV) light and ionizing radiation.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-rose-400 mr-2">✦</span> Mechanism Steps:</h4>
+                        <ul class="space-y-2 text-gray-600 pl-2">
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> Identification of the defective DNA segment and unwinding of the double helix.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> An <strong>exinuclease</strong> (excision nuclease) cuts the DNA on both sides (upstream and downstream) of the damage.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> The defective fragment (approx. 30 nt length) is degraded.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> <strong>DNA polymerase</strong> fills the gap, and <strong>DNA ligase</strong> seals it.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 rounded-xl p-5 border border-rose-100">
+                        <h4 class="font-bold text-rose-900 mb-2 font-serif">Clinical Example</h4>
+                        <p class="text-gray-700 text-sm">
+                            <strong>Xeroderma pigmentosum (XP)</strong>: A rare autosomal recessive disease characterized by extreme photosensitivity and a high susceptibility to skin cancers. It is caused by a genetic defect in the nucleotide excision repair system.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Mismatch Repair -->
+            <article class="glass-card rounded-2xl p-8 mb-8 shadow-sm hover:shadow-soft transition-shadow pdf-page-break border border-rose-50">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 border-b border-rose-100 pb-2">3. Mismatch Repair</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Corrects copying errors made during replication (e.g., incorporating C instead of T opposite to A, creating 1-5 base unpaired loops). 
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-rose-400 mr-2">✦</span> Mechanism Steps:</h4>
+                        <ul class="space-y-2 text-gray-600 pl-2">
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> The repair system distinguishes the template strand (which is <strong>methylated</strong>) from the newly synthesized strand (unmethylated).</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> <strong>GATC endonuclease</strong> cuts the new strand at an adjacent methylated GATC sequence.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> An <strong>exonuclease</strong> digests the defective strand to remove the mismatch.</li>
+                            <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1 text-xs">●</span> <strong>DNA polymerase</strong> and <strong>ligase</strong> synthesize and seal the new strand.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 rounded-xl p-5 border border-rose-100">
+                        <h4 class="font-bold text-rose-900 mb-2 font-serif">Clinical Example</h4>
+                        <p class="text-gray-700 text-sm">
+                            <strong>Hereditary nonpolyposis colon cancer (HNPCC)</strong>: One of the most common inherited cancers, which is directly linked to a faulty mismatch repair system in the DNA.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. Double-Strand Break Repair -->
+            <article class="glass-card rounded-2xl p-8 shadow-sm hover:shadow-soft transition-shadow pdf-page-break border border-rose-50">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 border-b border-rose-100 pb-2">4. Double-Strand Break (DSB) Repair</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    DSBs are highly dangerous and can lead to genetic recombination, chromosomal translocation, broken chromosomes, and cell death. They are typically caused by ionizing radiations, free radicals, or chemotherapy.
+                </p>
+                <div class="bg-white rounded-xl p-6 border border-rose-100">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-rose-400 mr-2">✦</span> Repair Mechanisms:</h4>
+                    <p class="text-gray-600 mb-3">Repair involves unwinding, alignment, and ligation, accomplished via two main pathways:</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="flex items-start p-3 bg-rose-50/50 rounded-lg">
+                            <span class="text-rose-500 font-bold mr-2">1.</span>
+                            <p class="text-sm text-gray-700"><strong>Homologous Recombination:</strong> Dominant mechanism occurring primarily in yeasts.</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-rose-50/50 rounded-lg">
+                            <span class="text-rose-500 font-bold mr-2">2.</span>
+                            <p class="text-sm text-gray-700"><strong>Non-Homologous End Joining:</strong> The dominant repair mechanism in mammals.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- SECTION 2: Short Notes for Revision -->
+        <section class="mt-16 pdf-page-break">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="bg-rose-100 p-2 rounded-full"><svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                <h2 class="font-serif text-3xl font-bold text-gray-800">II. Quick Revision Notes</h2>
+            </div>
+            
+            <p class="text-rose-600/80 italic text-sm mb-6 ml-2">Perfect for your last-minute exam prep! ✨</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-2xl border border-rose-100 shadow-sm hover:-translate-y-1 transition-transform">
+                    <h4 class="font-serif font-bold text-rose-700 text-lg mb-2">1. Base Excision</h4>
+                    <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+                        <li><strong>Damage:</strong> Single base alteration (spontaneous, chemical, radiation).</li>
+                        <li><strong>Key Enzymes:</strong> N-glycosylase, Endonuclease, DNA Pol, Ligase.</li>
+                        <li><strong>Process:</strong> Remove base &rarr; remove sugar &rarr; replace &rarr; seal.</li>
+                        <li><strong>Example:</strong> C deaminates to U &rarr; Uracil DNA glycosylase fixes it.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-2xl border border-rose-100 shadow-sm hover:-translate-y-1 transition-transform">
+                    <h4 class="font-serif font-bold text-rose-700 text-lg mb-2">2. Nucleotide Excision</h4>
+                    <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+                        <li><strong>Damage:</strong> DNA segment damage (UV, radiation, cross-links).</li>
+                        <li><strong>Key Enzymes:</strong> Exinuclease, DNA Pol, Ligase.</li>
+                        <li><strong>Process:</strong> Cut 30 nt segment (upstream & downstream) &rarr; replace.</li>
+                        <li><strong>Clinical:</strong> Xeroderma pigmentosum (XP) - photosensitive, skin cancer risk.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-2xl border border-rose-100 shadow-sm hover:-translate-y-1 transition-transform">
+                    <h4 class="font-serif font-bold text-rose-700 text-lg mb-2">3. Mismatch Repair</h4>
+                    <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+                        <li><strong>Damage:</strong> Copying errors (unpaired loops).</li>
+                        <li><strong>Identification:</strong> Template strand is methylated, new strand isn't.</li>
+                        <li><strong>Key Enzymes:</strong> GATC endonuclease, Exonuclease.</li>
+                        <li><strong>Clinical:</strong> Hereditary nonpolyposis colon cancer (HNPCC).</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-2xl border border-rose-100 shadow-sm hover:-translate-y-1 transition-transform">
+                    <h4 class="font-serif font-bold text-rose-700 text-lg mb-2">4. Double-Strand Break</h4>
+                    <ul class="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
+                        <li><strong>Damage:</strong> Broken chromosomes from ionizing radiation/chemo.</li>
+                        <li><strong>Risk:</strong> Chromosomal translocation, cell death.</li>
+                        <li><strong>Mammals:</strong> Non-homologous end joining dominates.</li>
+                        <li><strong>Yeasts:</strong> Homologous recombination dominates.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer inside PDF -->
+        <footer class="mt-16 text-center text-rose-300 text-sm pt-8 border-t border-rose-100 pdf-page-break">
+            <p>Study Notes compiled from PharmD Guru • Good luck with your studies! ♡</p>
+        </footer>
+
+    </main>
+
+    <!-- Script for generating PDF -->
+    <script>
+        function generatePDF() {
+            const element = document.getElementById('notes-content');
+            
+            // Add a temporary class to adjust styles for PDF generation if needed
+            element.classList.add('pdf-generating');
+
+            const opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5], // top, left, bottom, right
+                filename:     'DNA_Repair_Mechanism_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Start the generation process
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Remove temporary class after generation
+                element.classList.remove('pdf-generating');
+            });
+        }
+    </script>
+</body>
+</html>
+

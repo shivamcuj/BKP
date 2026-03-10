@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyrimidine Metabolism Study Guide</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration for Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1', // Indigo 500
+                        primaryDark: '#4f46e5', // Indigo 600
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c7d2fe;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        /* MCQ Dynamic Classes */
+        .correct-ans {
+            background-color: #10b981 !important; /* Emerald 500 */
+            color: #ffffff !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+        }
+        .wrong-ans {
+            background-color: #ef4444 !important; /* Red 500 */
+            color: #ffffff !important;
+            border-color: #ef4444 !important;
+        }
+        .disabled-options {
+            pointer-events: none;
+        }
+        
+        /* Smooth transitions */
+        .collapsible-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+        }
+        .collapsible-content.open {
+            grid-template-rows: 1fr;
+        }
+        .collapsible-inner {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-200 antialiased selection:bg-indigo-200 selection:text-indigo-900">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-gray-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary text-white p-2 rounded-lg shadow-md">
+                    <i class="fa-solid fa-dna text-xl"></i>
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                    Pyrimidine Metabolism
+                </h1>
+            </div>
+            
+            <button id="theme-toggle" class="p-2.5 rounded-full bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+                <i id="theme-icon-dark" class="fa-solid fa-moon text-gray-600 dark:text-gray-300 hidden"></i>
+                <i id="theme-icon-light" class="fa-solid fa-sun text-amber-500 hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-16">
+        
+        <!-- Welcome Banner -->
+        <section class="text-center py-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ultimate Exam Revision Guide</h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">Master the synthesis, regulation, and catabolism of Pyrimidine Nucleotides with this interactive quiz suite.</p>
+        </section>
+
+        <!-- Section: MCQs -->
+        <section id="mcq-section">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-list-check text-2xl text-primary"></i>
+                <h2 class="text-2xl font-bold">Multiple Choice Questions</h2>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Select an option to check your answer. Green is correct, Red is incorrect.</p>
+            
+            <div id="mcq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- MCQs will be injected here via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="border-gray-200 dark:border-slate-800">
+
+        <!-- Section: Short Answers -->
+        <section id="short-answer-section">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-pen-to-square text-2xl text-emerald-500"></i>
+                <h2 class="text-2xl font-bold">Short Answer Questions</h2>
+            </div>
+            
+            <div id="short-answer-container" class="space-y-4">
+                <!-- Short Answers will be injected here -->
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <hr class="border-gray-200 dark:border-slate-800">
+
+        <!-- Section: Essay Questions -->
+        <section id="essay-section">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-book-open text-2xl text-purple-500"></i>
+                <h2 class="text-2xl font-bold">Essay Questions</h2>
+            </div>
+            
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays will be injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white mt-12 py-10 border-t-4 border-primary">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+            <div class="flex items-center gap-2 text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-indigo-400 mb-2">
+                <i class="fa-solid fa-heart text-pink-500"></i>
+                Designed For My Bestie
+                <i class="fa-solid fa-heart text-pink-500"></i>
+            </div>
+            
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105">
+                <i class="fa-brands fa-instagram text-2xl text-pink-400"></i>
+                <span class="font-medium text-lg tracking-wide">@shivamcuj</span>
+            </a>
+            
+            <p class="text-slate-400 text-sm mt-4">Happy Studying! You're going to ace this.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // --- DATA SETS --- //
+
+        const mcqData = [
+            { q: "What are the primary pyrimidine nucleotides?", options: ["AMP, GMP, TMP", "CMP, UMP, TMP", "ATP, GTP, UTP", "CMP, GMP, UMP"], ans: 1 },
+            { q: "Unlike purines, the pyrimidine ring is synthesized...", options: ["Simultaneously with the ribose sugar", "Directly on the ribose phosphate", "First, and then attached to the ribose phosphate", "Inside the mitochondria entirely"], ans: 2 },
+            { q: "Which molecule donates the ribose phosphate in pyrimidine synthesis?", options: ["ATP", "PRPP", "NAD+", "THF"], ans: 1 },
+            { q: "Which amino acid provides the N3 atom for the pyrimidine ring?", options: ["Aspartic acid", "Glutamine", "Glycine", "Serine"], ans: 1 },
+            { q: "Which atoms are furnished by Aspartic acid in the pyrimidine ring?", options: ["N3 only", "C2 only", "C4, C5, C6, and N1", "N1, C2, and N3"], ans: 2 },
+            { q: "What provides the C2 atom in the pyrimidine ring?", options: ["Carbon dioxide", "Formate", "Glutamine", "Methylene-THF"], ans: 0 },
+            { q: "What is the first enzyme involved in the de novo synthesis of pyrimidines?", options: ["Carbamoyl phosphate synthase-I", "Carbamoyl phosphate synthase-II", "Aspartate transcarbamoylase", "Dihydro-orotase"], ans: 1 },
+            { q: "Where is Carbamoyl phosphate synthase-II (CPS-II) located?", options: ["Mitochondria", "Nucleus", "Lysosome", "Cytosol"], ans: 3 },
+            { q: "What is considered the committed step in the biosynthesis of pyrimidines?", options: ["Formation of carbamoyl phosphate", "Condensation of carbamoyl phosphate with aspartate", "Oxidation of dihydro-orotic acid", "Methylation of dUMP"], ans: 1 },
+            { q: "Which enzyme catalyzes the committed step in pyrimidine biosynthesis?", options: ["CPS-II", "Dihydro-orotase", "Aspartate transcarbamoylase", "Orotidylate decarboxylase"], ans: 2 },
+            { q: "Which enzyme is responsible for closing the pyrimidine ring to form dihydro-orotic acid?", options: ["Dihydro-orotase", "Kinase", "Orotate phosphoribosyl transferase", "Ribonucleotide reductase"], ans: 0 },
+            { q: "Which of the following is the ONLY mitochondrial enzyme in pyrimidine biosynthesis?", options: ["Aspartate transcarbamoylase", "Dihydro-orotate dehydrogenase", "CPS-II", "CTP synthase"], ans: 1 },
+            { q: "What reaction does Orotate phosphoribosyl transferase catalyze?", options: ["Orotate to OMP", "OMP to UMP", "UDP to dUDP", "dUMP to dTMP"], ans: 0 },
+            { q: "By what chemical process is UMP formed from OMP?", options: ["Phosphorylation", "Oxidation", "Decarboxylation", "Amination"], ans: 2 },
+            { q: "UTP is aminated to form CTP. Which amino acid acts as the amino group donor?", options: ["Aspartate", "Glutamate", "Glutamine", "Asparagine"], ans: 2 },
+            { q: "Which enzyme is responsible for converting UDP to dUDP?", options: ["Kinase", "Thymidylate synthase", "Ribonucleotide reductase", "CPS-II"], ans: 2 },
+            { q: "What acts as the methyl donor in the conversion of dUMP to dTMP by thymidylate synthase?", options: ["S-adenosylmethionine (SAM)", "N5,N10-methylene-THF", "Vitamin B12", "Biotin"], ans: 1 },
+            { q: "How is Carbamoyl phosphate synthase-II (CPS-II) allosterically regulated?", options: ["Inhibited by ATP, Activated by CTP", "Inhibited by UTP, Activated by PRPP", "Inhibited by PRPP, Activated by UTP", "Inhibited by CTP, Activated by ATP"], ans: 1 },
+            { q: "How is Aspartate transcarbamoylase allosterically regulated?", options: ["Inhibited by CTP, Activated by ATP", "Inhibited by ATP, Activated by CTP", "Inhibited by UTP, Activated by PRPP", "Inhibited by PRPP, Activated by UTP"], ans: 0 },
+            { q: "Unlike purine catabolism, pyrimidine catabolism results in end products that are:", options: ["Highly toxic", "Sparingly soluble (like uric acid)", "Highly water soluble", "Used solely for lipid synthesis"], ans: 2 }
+        ];
+
+        const shortAnswerData = [
+            { q: "How does the formation of the pyrimidine ring fundamentally differ from purine synthesis?", a: "Unlike purine synthesis where the ring is built directly on a ribose sugar, the six-membered pyrimidine ring is synthesized first as a free base and is subsequently attached to a ribose phosphate (donated by PRPP)." },
+            { q: "List the three precursor molecules that provide the carbon and nitrogen atoms for the pyrimidine ring.", a: "1. Glutamine (provides N3)\n2. Aspartic acid (provides C4, C5, C6, and N1)\n3. Carbon dioxide (provides C2)" },
+            { q: "State the primary differences between Carbamoyl Phosphate Synthase-I (CPS-I) and CPS-II.", a: "CPS-I is located in the mitochondria and is utilized in the urea cycle. CPS-II is located in the cytosol and is the first enzyme used in the de novo synthesis of pyrimidine nucleotides." },
+            { q: "Describe the committed step in pyrimidine biosynthesis.", a: "The committed step is the condensation of carbamoyl phosphate with aspartate to form carbamoyl aspartate. This reaction is catalyzed by the enzyme aspartate transcarbamoylase." },
+            { q: "What is unique about the enzyme Dihydro-orotate dehydrogenase in this pathway?", a: "It is the only mitochondrial enzyme in the entire pyrimidine biosynthesis pathway; all other enzymes involved in the pathway are located in the cytosol." },
+            { q: "How is Uridine Monophosphate (UMP) converted into Uridine Triphosphate (UTP)?", a: "UMP is first phosphorylated to UDP by a kinase enzyme using ATP as a phosphate donor. UDP is then further phosphorylated by another ATP-dependent kinase reaction to produce UTP." },
+            { q: "Explain the enzymatic reaction that generates Cytidine Triphosphate (CTP).", a: "CTP is generated from UTP via an amination reaction catalyzed by CTP synthase. Glutamine serves as the donor for the amino group, and the reaction requires ATP." },
+            { q: "Detail the conversion of dUMP to dTMP.", a: "Deoxyuridine monophosphate (dUMP) undergoes a methylation reaction catalyzed by the enzyme thymidylate synthase. The methyl group donor for this reaction is N5,N10-methylene tetrahydrofolate (THF)." },
+            { q: "Identify the allosteric regulators of the enzyme Aspartate transcarbamoylase.", a: "Aspartate transcarbamoylase is allosterically activated by ATP and feedback inhibited by CTP." },
+            { q: "What are the ultimate metabolic fates of the catabolic products β-alanine and β-aminoisobutyrate?", a: "β-alanine can serve as a precursor for acetyl-CoA. β-aminoisobutyrate is transaminated to methylmalonate semialdehyde, which is then converted into succinyl-CoA via methylmalonyl-CoA." }
+        ];
+
+        const essayData = [
+            { q: "Describe the complete de novo synthesis pathway of Uridine Monophosphate (UMP) starting from its basic precursors. Detail each enzymatic step.", a: "The synthesis of UMP involves 6 main steps:\n1. Glutamine, ATP, and CO2 are converted to Carbamoyl phosphate by cytosolic Carbamoyl phosphate synthase-II (CPS-II).\n2. Carbamoyl phosphate condenses with Aspartate to form Carbamoyl aspartate, catalyzed by Aspartate transcarbamoylase (the committed step).\n3. Water is removed by Dihydro-orotase to close the ring, forming Dihydro-orotic acid.\n4. Dihydro-orotic acid is oxidized to Orotic acid by the mitochondrial enzyme Dihydro-orotate dehydrogenase.\n5. Ribose phosphate is acquired from PRPP to form Orotidine monophosphate (OMP), catalyzed by Orotate phosphoribosyl transferase.\n6. Finally, OMP is decarboxylated by Orotidylate decarboxylase to yield Uridine monophosphate (UMP)." },
+            { q: "Discuss the mechanisms of allosteric regulation in pyrimidine nucleotide synthesis. Highlight specific enzymes, their activators, and their inhibitors.", a: "Regulation primarily occurs at the first two enzymes of the pathway:\n\n1. Carbamoyl Phosphate Synthase-II (CPS-II): This is the initial step of the pathway. It is allosterically activated by PRPP (indicating a high availability of the sugar-phosphate backbone) and feedback inhibited by UTP, which is the end product of the primary pathway.\n\n2. Aspartate transcarbamoylase: This is the committed step of the pathway. It is activated by ATP (a purine, ensuring a balance between purine and pyrimidine pools for DNA/RNA synthesis) and feedback inhibited by CTP (the final pyrimidine triphosphate product)." },
+            { q: "Explain the complete sequence of reactions required to synthesize deoxythymidine monophosphate (dTMP) starting from UDP.", a: "The conversion from UDP to dTMP involves three crucial steps:\n1. Reduction: Ribonucleotide reductase converts UDP into deoxyuridine diphosphate (dUDP). This reaction requires NADPH+H+.\n2. Dephosphorylation: dUDP is dephosphorylated (loses a phosphate group and H2O) to become deoxyuridine monophosphate (dUMP).\n3. Methylation: dUMP acts as the substrate for Thymidylate synthase. It is methylated using N5,N10-methylene tetrahydrofolate (THF) as the methyl donor to finally form deoxythymidine monophosphate (dTMP)." },
+            { q: "Provide a detailed overview of pyrimidine catabolism. Include the characteristics of the end products and their metabolic integration.", a: "Unlike purine catabolism, which produces sparingly soluble uric acid, pyrimidine catabolism yields highly water-soluble end products: CO2, NH3, β-alanine, and β-aminoisobutyrate. \n\nThe degradation pathways differ slightly based on the base:\n- Cytosine and Uracil degrade to form β-alanine, which can subsequently be utilized as a precursor for the formation of acetyl-CoA.\n- Thymine degrades into β-aminoisobutyrate. In humans, this is transaminated to methylmalonate semialdehyde and ultimately converted to succinyl-CoA via methylmalonyl-CoA.\nBoth acetyl-CoA and succinyl-CoA can readily enter the TCA (Krebs) cycle for energy production." },
+            { q: "Analyze the exact sources of the carbon and nitrogen atoms that make up the six-membered pyrimidine ring.", a: "The pyrimidine ring is constructed from three relatively simple precursor molecules that contribute specific atoms to the final structure:\n- Glutamine: Contributes the Nitrogen at position 3 (N3).\n- Carbon Dioxide (CO2): Contributes the Carbon at position 2 (C2).\n- Aspartic Acid: Is the largest single contributor, providing four atoms to the ring: Carbon 4 (C4), Carbon 5 (C5), Carbon 6 (C6), and Nitrogen 1 (N1)." },
+            { q: "Compare and contrast the initial steps of pyrimidine synthesis with the urea cycle, focusing on the formation of carbamoyl phosphate.", a: "Both pathways begin with the formation of carbamoyl phosphate, but they utilize different isoenzymes with distinct locations and nitrogen sources.\n\nUrea Cycle: Uses Carbamoyl Phosphate Synthase-I (CPS-I). It is located in the mitochondria and utilizes free ammonia (NH3) as its nitrogen source.\n\nPyrimidine Synthesis: Uses Carbamoyl Phosphate Synthase-II (CPS-II). It is located in the cytosol and utilizes the amide nitrogen of Glutamine as its nitrogen source. Furthermore, CPS-II is allosterically regulated by PRPP and UTP, unlike CPS-I." },
+            { q: "Discuss the biological significance of forming highly water-soluble degradation products in pyrimidine catabolism.", a: "The water solubility of pyrimidine catabolites (like β-alanine and β-aminoisobutyrate) is biologically advantageous because it prevents pathological crystallization in tissues and joints. In contrast, purine catabolism produces uric acid, which is sparingly soluble; excess uric acid can precipitate as urate crystals, leading to disorders like Gout. The solubility of pyrimidine byproducts ensures they are easily flushed via urine or safely transported in blood to be converted into TCA cycle intermediates (Acetyl-CoA and Succinyl-CoA)." },
+            { q: "Outline the specific roles of ATP and Glutamine throughout the entire pyrimidine synthesis pathway.", a: "ATP and Glutamine are critical at multiple stages:\n\nGlutamine:\n1. Acts as the nitrogen donor (N3) in the very first step catalyzed by CPS-II.\n2. Acts as the amino group donor in the conversion of UTP to CTP, catalyzed by CTP synthase.\n\nATP:\n1. Provides energy for the formation of carbamoyl phosphate (Step 1).\n2. Acts as a phosphate donor in the kinase reactions converting UMP to UDP, and UDP to UTP.\n3. Acts as an allosteric activator for the enzyme Aspartate transcarbamoylase, accelerating the pathway when energy and purine levels are high." },
+            { q: "Examine the role of tetrahydrofolate (THF) derivatives in pyrimidine synthesis.", a: "THF derivatives are essential for the synthesis of the DNA-specific pyrimidine, thymine. Specifically, the enzyme Thymidylate synthase requires the coenzyme N5,N10-methylene-tetrahydrofolate. This folate derivative acts as a one-carbon donor, specifically transferring a methyl group to deoxyuridine monophosphate (dUMP) to convert it into deoxythymidine monophosphate (dTMP). During this process, the folate is oxidized to dihydrofolate (DHF), linking pyrimidine synthesis heavily to folate metabolism." },
+            { q: "Summarize the cellular compartmentalization of the de novo pyrimidine synthesis pathway.", a: "Pyrimidine synthesis is almost entirely a cytosolic process, with one crucial exception.\n\nSteps 1 through 3 (formation of carbamoyl phosphate, condensation with aspartate, and ring closure to dihydro-orotic acid) occur in the cytosol.\nStep 4, the oxidation of dihydro-orotic acid to orotic acid, takes place in the mitochondria. This reaction is catalyzed by Dihydro-orotate dehydrogenase, the only mitochondrial enzyme in the sequence.\nThe remaining steps (addition of PRPP to form OMP, decarboxylation to UMP, and subsequent phosphorylations and modifications) all resume and take place within the cytosol." }
+        ];
+
+        // --- RENDER LOGIC --- //
+
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-slate-700 transition-colors";
+                
+                const questionHTML = `
+                    <div class="flex gap-3 mb-4">
+                        <span class="flex-shrink-0 bg-indigo-100 text-primary dark:bg-slate-700 dark:text-indigo-400 font-bold rounded-full w-8 h-8 flex items-center justify-center">${index + 1}</span>
+                        <h3 class="font-semibold text-lg leading-tight mt-1">${item.q}</h3>
+                    </div>
+                    <div class="space-y-3 options-container" id="mcq-options-${index}">
+                        ${item.options.map((opt, optIndex) => `
+                            <button onclick="handleMCQClick(${index}, ${optIndex}, this)" 
+                                    class="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-slate-600 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors font-medium text-gray-700 dark:text-gray-300">
+                                ${String.fromCharCode(65 + optIndex)}. ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                card.innerHTML = questionHTML;
+                container.appendChild(card);
+            });
+        }
+
+        window.handleMCQClick = function(questionIndex, selectedIndex, buttonElement) {
+            const correctAnswer = mcqData[questionIndex].ans;
+            const container = document.getElementById(`mcq-options-${questionIndex}`);
+            const buttons = container.querySelectorAll('button');
+            
+            // Disable all buttons in this question
+            container.classList.add('disabled-options');
+            
+            if (selectedIndex === correctAnswer) {
+                // Correct answer selected
+                buttonElement.classList.add('correct-ans');
+                buttonElement.innerHTML += ' <i class="fa-solid fa-circle-check float-right mt-1"></i>';
+            } else {
+                // Wrong answer selected
+                buttonElement.classList.add('wrong-ans');
+                buttonElement.innerHTML += ' <i class="fa-solid fa-circle-xmark float-right mt-1"></i>';
+                
+                // Highlight correct answer
+                const correctBtn = buttons[correctAnswer];
+                correctBtn.classList.add('correct-ans');
+                correctBtn.innerHTML += ' <i class="fa-solid fa-circle-check float-right mt-1"></i>';
+            }
+        }
+
+        function renderQASection(data, containerId, badgeColorClass, iconClass) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden";
+                
+                card.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex gap-3 mb-4">
+                            <span class="flex-shrink-0 ${badgeColorClass} font-bold rounded-md px-3 py-1 flex items-center justify-center self-start">Q${index + 1}</span>
+                            <h3 class="font-semibold text-lg">${item.q}</h3>
+                        </div>
+                        <button onclick="toggleExplanation(this)" class="flex items-center gap-2 text-sm font-medium text-primary hover:text-primaryDark dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors ml-14">
+                            <i class="fa-solid fa-eye"></i> <span>Show Explanation</span>
+                        </button>
+                        <div class="collapsible-content mt-2 ml-14">
+                            <div class="collapsible-inner">
+                                <div class="bg-gray-50 dark:bg-slate-700/50 p-4 rounded-lg border-l-4 border-primary text-gray-700 dark:text-gray-300 mt-2 whitespace-pre-line">
+                                    ${item.a}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.toggleExplanation = function(btn) {
+            const content = btn.nextElementSibling;
+            const span = btn.querySelector('span');
+            const icon = btn.querySelector('i');
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                span.innerText = "Show Explanation";
+                icon.className = "fa-solid fa-eye";
+            } else {
+                content.classList.add('open');
+                span.innerText = "Hide Explanation";
+                icon.className = "fa-solid fa-eye-slash";
+            }
+        }
+
+        // --- DARK MODE LOGIC --- //
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const htmlElement = document.documentElement;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.classList.remove('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Init theme
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            setTheme(!htmlElement.classList.contains('dark'));
+        });
+
+        // --- INITIALIZE ALL --- //
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderQASection(shortAnswerData, 'short-answer-container', 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400');
+            renderQASection(essayData, 'essay-container', 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400');
+        });
+
+    </script>
+</body>
+</html>
+

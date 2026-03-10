@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation & DNA Repair | Study Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        blush: '#Fdf2f8',
+                    },
+                    boxShadow: {
+                        'soft-glow': '0 10px 40px -10px rgba(253, 164, 175, 0.4)',
+                        'inner-glow': 'inset 0 2px 4px 0 rgba(253, 164, 175, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdf2f8;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(343,100%,96%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(328,100%,94%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, hsla(343,100%,96%,1) 0, transparent 50%), 
+                radial-gradient(at 0% 100%, hsla(328,100%,94%,1) 0, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        .tab-btn.active {
+            background-color: white;
+            color: #9f1239;
+            box-shadow: 0 4px 6px -1px rgba(253, 164, 175, 0.2), 0 2px 4px -1px rgba(253, 164, 175, 0.1);
+            border-bottom: 2px solid #fb7185;
+        }
+
+        .tab-btn:not(.active):hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #be123c;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 228, 230, 0.8);
+        }
+
+        /* Custom Scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fb7185; 
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <!-- Header Area -->
+    <header class="text-center w-full max-w-4xl mb-10">
+        <div class="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-rose-100 text-rose-500 shadow-soft-glow">
+            <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-serif font-semibold text-rose-900 mb-3 tracking-tight">Mutation & DNA Repair</h1>
+        <p class="text-lg text-rose-800/70 font-medium flex items-center justify-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            Crafted with care for your successful studies
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+        </p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="w-full max-w-4xl mb-8 flex p-1.5 bg-rose-50/50 backdrop-blur-md rounded-2xl border border-rose-100 shadow-inner-glow">
+        <button onclick="switchTab('detailed')" id="btn-detailed" class="tab-btn active flex-1 py-3 px-6 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 text-rose-400">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            Detailed Explanations
+        </button>
+        <button onclick="switchTab('revision')" id="btn-revision" class="tab-btn flex-1 py-3 px-6 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 text-rose-400">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+            Quick Revision Notes
+        </button>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-4xl relative">
+
+        <!-- ==========================================
+             SECTION 1: DETAILED EXPLANATIONS
+             ========================================== -->
+        <div id="detailed" class="content-section active space-y-8">
+            
+            <!-- Introduction -->
+            <section class="glass-card rounded-3xl p-8 shadow-soft-glow transition-transform hover:-translate-y-1 duration-300">
+                <h2 class="text-2xl font-serif text-rose-800 mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
+                    <i data-lucide="dna" class="text-rose-400"></i> Introduction to Mutations
+                </h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The genetic macromolecule DNA is highly stable, but it is not entirely exempt from gradual changes. A <strong>mutation</strong> refers to a permanent change in the DNA structure of a gene. 
+                </p>
+                <div class="bg-rose-50 rounded-xl p-4 border border-rose-100 flex gap-4 items-start">
+                    <i data-lucide="info" class="text-rose-400 mt-1 flex-shrink-0"></i>
+                    <p class="text-sm text-gray-700">
+                        <strong>Mutagens</strong> are the substances or chemicals that induce these changes. The alterations in DNA are subsequently reflected during cellular processes like <em>replication, transcription, and translation</em>. If mutations occur in somatic cells, they may lead to cancer, whereas mutations in germ cells are inherited by the progeny.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Types of Mutations -->
+            <section class="glass-card rounded-3xl p-8 shadow-soft-glow transition-transform hover:-translate-y-1 duration-300">
+                <h2 class="text-2xl font-serif text-rose-800 mb-6 flex items-center gap-2 border-b border-rose-100 pb-3">
+                    <i data-lucide="git-branch" class="text-rose-400"></i> Types of Mutations
+                </h2>
+                
+                <div class="space-y-8">
+                    <!-- Point Mutations -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-rose-900 mb-3 bg-rose-50 inline-block px-4 py-1 rounded-full">1. Point Mutations (Base Substitution)</h3>
+                        <p class="text-gray-700 mb-3 ml-2">Occurs when a single base pair in the DNA is replaced by another. They are classified into two subtypes:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4 mb-4">
+                            <li><strong class="text-rose-800">Transitions:</strong> A purine is replaced by another purine (A ↔ G), or a pyrimidine is replaced by another pyrimidine (C ↔ T).</li>
+                            <li><strong class="text-rose-800">Transversions:</strong> A purine is replaced by a pyrimidine, or vice versa (e.g., A ↔ C or G ↔ T).</li>
+                        </ul>
+
+                        <div class="ml-2 border-l-2 border-rose-200 pl-4 space-y-4">
+                            <h4 class="font-serif text-lg text-gray-800">Consequences of Point Mutations:</h4>
+                            
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                                <strong class="text-rose-600 block mb-1">A. Silent Mutation</strong>
+                                <p class="text-sm">The altered mRNA codon still codes for the <em>same amino acid</em> due to the degeneracy of the genetic code. There is no detectable effect on the protein.</p>
+                                <p class="text-sm mt-1 text-gray-500 italic">Example: UCA (Serine) changes to UCU (still Serine).</p>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                                <strong class="text-rose-600 block mb-1">B. Missense Mutation</strong>
+                                <p class="text-sm mb-2">The altered base codes for a <em>different amino acid</em>. The severity depends on where it occurs and what the new amino acid is.</p>
+                                <ul class="text-sm space-y-1 text-gray-600 list-disc list-inside ml-2">
+                                    <li><strong>Acceptable:</strong> The protein still functions normally. <em>(e.g., Hb Hikari: Asparagine substitutes Lysine at position 61 of the β-globin chain)</em>.</li>
+                                    <li><strong>Partially Acceptable:</strong> The protein has compromised function. <em>(e.g., HbS / Sickle-cell anemia: Glutamic acid is replaced by Valine at position 6 of the β-chain)</em>.</li>
+                                    <li><strong>Unacceptable:</strong> The protein becomes nonfunctional. <em>(e.g., HbM / Methemoglobin: Histidine is replaced by Tyrosine, making Hb unable to transport oxygen)</em>.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                                <strong class="text-rose-600 block mb-1">C. Nonsense Mutation</strong>
+                                <p class="text-sm">The altered codon becomes a stop/termination signal (UAA, UAG, UGA), causing premature termination of protein synthesis. The resulting protein is usually nonfunctional.</p>
+                                <p class="text-sm mt-1 text-gray-500 italic">Example: Certain types of Thalassemia (e.g., UGG Tryptophan → UGA Stop codon).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frameshift Mutations -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-rose-900 mb-3 bg-rose-50 inline-block px-4 py-1 rounded-full">2. Frameshift Mutations</h3>
+                        <p class="text-gray-700 mb-3 ml-2">Occurs when one or more base pairs are inserted into or deleted from the DNA sequence. Because the genetic code is read in triplets without punctuation, adding or removing nucleotides (not in multiples of 3) shifts the entire reading frame.</p>
+                        
+                        <div class="grid sm:grid-cols-2 gap-4 ml-2">
+                            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <h4 class="font-bold text-rose-800 mb-2 flex items-center gap-2">
+                                    <i data-lucide="minus-circle" class="w-4 h-4 text-rose-400"></i> Deletion
+                                </h4>
+                                <p class="text-sm text-gray-600 mb-2">A base is removed, altering the reading frame from that point onward.</p>
+                                <p class="text-sm text-gray-500 italic"><strong>Example:</strong> Cystic Fibrosis (often caused by deletion).</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <h4 class="font-bold text-rose-800 mb-2 flex items-center gap-2">
+                                    <i data-lucide="plus-circle" class="w-4 h-4 text-rose-400"></i> Insertion
+                                </h4>
+                                <p class="text-sm text-gray-600 mb-2">A new base is added, pushing the rest of the sequence out of frame.</p>
+                                <p class="text-sm text-gray-500 italic"><strong>Example:</strong> Certain forms of Thalassemia.</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-3 ml-2 italic">Note: If nucleotides are inserted/deleted in multiples of 3, a frameshift does not occur; instead, an entire amino acid is added or missing, which is generally less severe.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DNA Repair Mechanisms -->
+            <section class="glass-card rounded-3xl p-8 shadow-soft-glow transition-transform hover:-translate-y-1 duration-300">
+                <h2 class="text-2xl font-serif text-rose-800 mb-6 flex items-center gap-2 border-b border-rose-100 pb-3">
+                    <i data-lucide="wrench" class="text-rose-400"></i> DNA Repair Mechanisms
+                </h2>
+                <p class="text-gray-700 mb-6">Cells possess innate systems to repair damaged DNA, preventing serious consequences. There are four major mechanisms:</p>
+
+                <div class="space-y-4">
+                    <!-- Mechanism 1 -->
+                    <div class="group bg-white rounded-2xl p-5 border border-rose-50 hover:border-rose-200 transition-colors shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 font-bold group-hover:scale-110 transition-transform">1</div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Base Excision-Repair</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Fixes:</strong> Damage to a single base (e.g., spontaneous depurination where cytosine turns to uracil).</p>
+                                <p class="text-sm text-gray-700"><strong>Mechanism:</strong> <span class="text-rose-600 font-semibold">Uracil DNA glycosylase</span> removes the defective base. An <span class="text-rose-600 font-semibold">Endonuclease</span> cuts the backbone, removing a few bases. <span class="text-rose-600 font-semibold">DNA polymerase</span> and <span class="text-rose-600 font-semibold">DNA ligase</span> fill and seal the gap.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanism 2 -->
+                    <div class="group bg-white rounded-2xl p-5 border border-rose-50 hover:border-rose-200 transition-colors shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 font-bold group-hover:scale-110 transition-transform">2</div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Nucleotide Excision-Repair</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Fixes:</strong> Large-scale defects in a DNA segment caused by UV light, radiation, or chemicals (e.g., cross-linkages).</p>
+                                <p class="text-sm text-gray-700 mb-2"><strong>Mechanism:</strong> DNA is unwound. An <span class="text-rose-600 font-semibold">Exinuclease (excision nuclease)</span> cuts the DNA on both sides of the defect. The segment is removed and replaced by DNA polymerase and ligase.</p>
+                                <div class="bg-red-50 text-red-800 text-xs px-3 py-2 rounded-lg inline-block border border-red-100">
+                                    <strong>Clinical Note:</strong> Defects here cause <em>Xeroderma pigmentosum (XP)</em>, making patients highly sensitive to UV light and skin cancers.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanism 3 -->
+                    <div class="group bg-white rounded-2xl p-5 border border-rose-50 hover:border-rose-200 transition-colors shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 font-bold group-hover:scale-110 transition-transform">3</div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Mismatch Repair</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Fixes:</strong> Copying errors during replication (e.g., matching C with A instead of T with A).</p>
+                                <p class="text-sm text-gray-700 mb-2"><strong>Mechanism:</strong> The system identifies the new, incorrect strand because it is <em>not yet methylated</em> (unlike the template). <span class="text-rose-600 font-semibold">GATC endonuclease</span> cuts the unmethylated strand, <span class="text-rose-600 font-semibold">Exonuclease</span> removes the defect, and new DNA is synthesized and ligated.</p>
+                                <div class="bg-red-50 text-red-800 text-xs px-3 py-2 rounded-lg inline-block border border-red-100">
+                                    <strong>Clinical Note:</strong> Defects here are linked to <em>Hereditary nonpolyposis colon cancer (HNPCC)</em>.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanism 4 -->
+                    <div class="group bg-white rounded-2xl p-5 border border-rose-50 hover:border-rose-200 transition-colors shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 font-bold group-hover:scale-110 transition-transform">4</div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Double-Strand Break Repair</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Fixes:</strong> Severe damage from ionizing radiation, free radicals, or chemotherapy.</p>
+                                <p class="text-sm text-gray-700"><strong>Mechanism:</strong> Requires unwinding, alignment, and ligation. Repaired via <em>homologous recombination</em> (common in yeast) or <em>non-homologous end joining</em> (dominant in mammals).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+             SECTION 2: QUICK REVISION (SHORT NOTES)
+             ========================================== -->
+        <div id="revision" class="content-section space-y-6">
+            
+            <div class="glass-card rounded-3xl p-6 shadow-soft-glow border-t-4 border-t-rose-400">
+                <h2 class="text-2xl font-serif text-rose-800 mb-4 text-center">Flash Notes: Mutations</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Basic Definitions -->
+                    <div class="bg-white/60 rounded-xl p-4">
+                        <h3 class="font-bold text-rose-900 border-b border-rose-200 pb-2 mb-2">Core Concepts</h3>
+                        <ul class="text-sm space-y-2 text-gray-800">
+                            <li><span class="text-rose-600 font-bold">Mutation:</span> Permanent DNA change.</li>
+                            <li><span class="text-rose-600 font-bold">Mutagen:</span> Chemical/factor inducing mutation.</li>
+                            <li><span class="text-rose-600 font-bold">Somatic vs Germ:</span> Somatic = cancer risk; Germ = inherited diseases.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Point Mutations -->
+                    <div class="bg-white/60 rounded-xl p-4">
+                        <h3 class="font-bold text-rose-900 border-b border-rose-200 pb-2 mb-2">Point Mutations (Base Sub.)</h3>
+                        <ul class="text-sm space-y-2 text-gray-800">
+                            <li><strong>Transition:</strong> Purine↔Purine or Pyr↔Pyr.</li>
+                            <li><strong>Transversion:</strong> Purine↔Pyrimidine.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Consequences -->
+                    <div class="bg-white/60 rounded-xl p-4 md:col-span-2">
+                        <h3 class="font-bold text-rose-900 border-b border-rose-200 pb-2 mb-2">Consequences of Point Mutations</h3>
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <div>
+                                <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded text-xs font-bold block mb-1 w-max">Silent</span>
+                                <p class="text-xs text-gray-700">Same amino acid. No effect.</p>
+                            </div>
+                            <div>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs font-bold block mb-1 w-max">Missense</span>
+                                <p class="text-xs text-gray-700">Different amino acid.<br>
+                                • <em>Acceptable:</em> Hb Hikari<br>
+                                • <em>Partial:</em> HbS (Sickle cell)<br>
+                                • <em>Unacceptable:</em> HbM</p>
+                            </div>
+                            <div>
+                                <span class="bg-red-100 text-red-800 px-2 py-0.5 rounded text-xs font-bold block mb-1 w-max">Nonsense</span>
+                                <p class="text-xs text-gray-700">Creates STOP codon. Premature termination (e.g., Thalassemia).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frameshift -->
+                    <div class="bg-white/60 rounded-xl p-4 md:col-span-2">
+                        <h3 class="font-bold text-rose-900 border-b border-rose-200 pb-2 mb-2">Frameshift Mutations</h3>
+                        <ul class="text-sm space-y-2 text-gray-800">
+                            <li>Insertion or Deletion of 1 or 2 bases. Alters entire reading frame.</li>
+                            <li><strong>Deletion Ex:</strong> Cystic Fibrosis.</li>
+                            <li><strong>Insertion Ex:</strong> Thalassemia.</li>
+                            <li><em>Note:</em> Insert/Delete of 3 bases = no frameshift, just missing/extra amino acid.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 shadow-soft-glow border-t-4 border-t-rose-400">
+                <h2 class="text-2xl font-serif text-rose-800 mb-4 text-center">Flash Notes: DNA Repair</h2>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border-l-4 border-pink-400">
+                        <span class="font-bold text-rose-800 w-1/4">Base Excision</span>
+                        <p class="text-sm text-gray-700 w-3/4">Fixes single base (e.g., U instead of C). <br><span class="text-xs text-gray-500">Key Enzyme: Uracil DNA Glycosylase.</span></p>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border-l-4 border-pink-400">
+                        <span class="font-bold text-rose-800 w-1/4">Nucleotide Excision</span>
+                        <p class="text-sm text-gray-700 w-3/4">Fixes large defects (UV damage). <br><span class="text-xs text-red-500 font-medium">Disease link: Xeroderma pigmentosum (XP).</span></p>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border-l-4 border-pink-400">
+                        <span class="font-bold text-rose-800 w-1/4">Mismatch Repair</span>
+                        <p class="text-sm text-gray-700 w-3/4">Fixes replication errors. Targets <em>unmethylated</em> new strand. <br><span class="text-xs text-red-500 font-medium">Disease link: HNPCC (Colon cancer).</span></p>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border-l-4 border-pink-400">
+                        <span class="font-bold text-rose-800 w-1/4">Double-Strand Break</span>
+                        <p class="text-sm text-gray-700 w-3/4">Fixes major radiation damage. Uses non-homologous end joining (mammals) or homologous recombination.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-rose-400/80 text-sm pb-8 flex items-center gap-2 justify-center">
+        <span>Happy Studying</span>
+        <i data-lucide="coffee" class="w-4 h-4"></i>
+    </footer>
+
+    <!-- Script for Tabs and Icons -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active state from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active state to clicked button
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
+

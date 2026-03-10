@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolism of Pyrimidine Nucleotides</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2pdf for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        blush: {
+                            50: '#fff0f5', // Lavender blush
+                            100: '#ffe4e1', // Misty rose
+                            200: '#ffc0cb', // Pink
+                            300: '#ffb6c1', // Light pink
+                            800: '#8e3a59', // Deep romantic mauve
+                            900: '#5c1e34', // Dark text
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            background-attachment: fixed;
+            color: #5c1e34;
+        }
+        
+        /* Soft, romantic glowing cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(220, 150, 160, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 12px 40px 0 rgba(220, 150, 160, 0.25);
+        }
+
+        .highlight-box {
+            background: linear-gradient(120deg, rgba(255,228,225,0.8) 0%, rgba(255,240,245,0.8) 100%);
+            border-left: 4px solid #ffb6c1;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb6c1; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffc0cb; 
+        }
+
+        /* Print adjustments */
+        @media print {
+            body { background: white; color: black; }
+            .no-print { display: none !important; }
+            .glass-card { box-shadow: none; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-blush-900 leading-relaxed min-h-screen pb-12">
+
+    <!-- Sticky Navigation / Header -->
+    <nav class="fixed top-0 w-full z-50 glass-card border-b-0 py-3 px-6 flex justify-between items-center shadow-sm no-print">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-heart text-blush-300 text-xl animate-pulse"></i>
+            <h1 class="font-serif font-bold text-xl text-blush-800">Biochemistry Notes</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <a href="#detailed-notes" class="hidden sm:block text-sm font-semibold hover:text-blush-300 transition-colors">Detailed Guide</a>
+            <a href="#quick-revision" class="hidden sm:block text-sm font-semibold hover:text-blush-300 transition-colors">Quick Revision</a>
+            <button onclick="downloadPDF()" class="bg-gradient-to-r from-blush-300 to-blush-200 text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-download"></i> Save as PDF
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container for PDF -->
+    <div id="pdf-content" class="max-w-5xl mx-auto pt-24 px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-blush-800 mb-4 drop-shadow-sm">
+                Metabolism of Pyrimidine Nucleotides
+            </h1>
+            <p class="text-lg italic text-blush-800 opacity-80">
+                "Study with love, remember with ease."
+            </p>
+            <div class="w-24 h-1 bg-blush-300 mx-auto mt-6 rounded-full opacity-50"></div>
+        </header>
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <section id="detailed-notes" class="mb-16 scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-book-open text-2xl text-blush-800"></i>
+                <h2 class="font-serif text-3xl font-semibold text-blush-800">Part I: Comprehensive Guide</h2>
+            </div>
+
+            <!-- Intro & Precursors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="glass-card rounded-2xl p-6 md:p-8">
+                    <h3 class="font-serif text-xl font-bold mb-3 border-b border-blush-200 pb-2"><i class="fa-solid fa-seedling mr-2 text-blush-300"></i> Introduction</h3>
+                    <p class="mb-3">The primary pyrimidine nucleotides are essential building blocks for DNA and RNA:</p>
+                    <ul class="list-disc pl-5 space-y-1 mb-4">
+                        <li><strong>CMP:</strong> Cytidine monophosphate</li>
+                        <li><strong>UMP:</strong> Uridine monophosphate</li>
+                        <li><strong>TMP:</strong> Thymidine monophosphate</li>
+                    </ul>
+                    <div class="highlight-box p-4 rounded-xl text-sm mt-4">
+                        <strong><i class="fa-solid fa-lightbulb text-yellow-500 mr-1"></i> Key Concept:</strong> Unlike purines (where the ring is built directly on the sugar), the six-membered <strong>pyrimidine ring is synthesized first</strong> and then attached to the ribose phosphate, which is donated by PRPP.
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 md:p-8">
+                    <h3 class="font-serif text-xl font-bold mb-3 border-b border-blush-200 pb-2"><i class="fa-solid fa-puzzle-piece mr-2 text-blush-300"></i> Ring Precursors</h3>
+                    <p class="mb-3">De novo synthesis requires three fundamental precursors to form the pyrimidine ring:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="bg-blush-100 px-2 py-1 rounded text-xs font-bold mr-3 mt-1 shadow-sm">N3</span>
+                            <span>Provided by <strong>Glutamine</strong></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blush-100 px-2 py-1 rounded text-xs font-bold mr-3 mt-1 shadow-sm">C4, C5, C6, N1</span>
+                            <span>Furnished by <strong>Aspartic Acid</strong></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blush-100 px-2 py-1 rounded text-xs font-bold mr-3 mt-1 shadow-sm">C2</span>
+                            <span>Provided by <strong>Carbon Dioxide (CO<sub>2</sub>)</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- The 12 Steps -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+                <h3 class="font-serif text-2xl font-bold mb-6 text-center text-blush-800">The 12 Major Steps of De Novo Synthesis</h3>
+                
+                <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-blush-200 before:to-transparent">
+                    
+                    <!-- Step 1-4: Ring Formation -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-1 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Carbamoyl Phosphate Formation</h4>
+                            <p class="text-sm">Glutamine + ATP + CO<sub>2</sub> → Carbamoyl phosphate. Catalyzed by cytosolic <strong>Carbamoyl phosphate synthase-II (CPS-II)</strong>. <br><em class="text-xs text-blush-800/70">(Note: CPS-I is mitochondrial and used for the urea cycle).</em></p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-300 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-2 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0 highlight-box">
+                            <h4 class="font-bold text-lg mb-1">The Committed Step</h4>
+                            <p class="text-sm">Carbamoyl phosphate condenses with <strong>Aspartate</strong> to form Carbamoyl aspartate. Catalyzed by <strong>Aspartate transcarbamoylase</strong>. This is the main regulatory committed step!</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-3 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Ring Closure</h4>
+                            <p class="text-sm">Removal of water (H<sub>2</sub>O) from carbamoyl aspartate by <strong>Dihydro-orotase</strong> closes the ring, forming Dihydro-orotic acid.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-4 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Oxidation to Orotate</h4>
+                            <p class="text-sm">Dihydro-orotic acid is oxidized to Orotic acid by <strong>Dihydro-orotate dehydrogenase</strong>. <br><em>(Unique fact: This is the ONLY mitochondrial enzyme in this pathway; the rest are cytosolic!)</em></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 5-9: Sugar addition & Phosphorylation -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-5 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Acquisition of Ribose Phosphate</h4>
+                            <p class="text-sm">Orotate + PRPP → Orotidine monophosphate (OMP). Catalyzed by <strong>Orotate phosphoribosyl transferase</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-6 font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Formation of UMP</h4>
+                            <p class="text-sm">OMP undergoes decarboxylation (loss of CO<sub>2</sub>) to yield Uridylate (UMP). Enzyme: <strong>Orotidylate decarboxylase</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-200 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-arrow-down font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Phosphorylation to UDP, UTP & CTP</h4>
+                            <ul class="list-none text-sm space-y-2 mt-2">
+                                <li><strong>Step 7:</strong> UMP + ATP → UDP (Catalyzed by Kinase)</li>
+                                <li><strong>Step 8:</strong> UDP + ATP → UTP (Catalyzed by Kinase)</li>
+                                <li><strong>Step 9:</strong> UTP + Glutamine → CTP (Catalyzed by <strong>CTP synthase</strong>, amination step)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Step 10-12: Deoxy formation -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blush-300 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                            <i class="fa-solid fa-dna font-bold text-sm"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/60 p-4 rounded-xl shadow-sm ml-4 md:ml-0 md:group-odd:mr-0 md:group-even:ml-0">
+                            <h4 class="font-bold text-lg mb-1">Deoxyribonucleotide & dTMP Synthesis</h4>
+                            <ul class="list-none text-sm space-y-2 mt-2">
+                                <li><strong>Step 10:</strong> UDP → dUDP (by <strong>Ribonucleotide reductase</strong>, requires NADPH).</li>
+                                <li><strong>Step 11:</strong> dUDP is dephosphorylated to dUMP.</li>
+                                <li><strong>Step 12:</strong> dUMP is methylated by N<sup>5</sup>,N<sup>10</sup>-methylene THF to form <strong>dTMP</strong> (Catalyzed by <strong>Thymidylate synthase</strong>).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regulation & Catabolism -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Regulation -->
+                <div class="glass-card rounded-2xl p-6 md:p-8">
+                    <h3 class="font-serif text-xl font-bold mb-4 text-blush-800"><i class="fa-solid fa-sliders mr-2"></i> Regulation of De Novo Synthesis</h3>
+                    <p class="text-sm mb-4">Regulation primarily occurs via allosteric control of the first two enzymes:</p>
+                    
+                    <div class="bg-white/50 p-4 rounded-xl mb-3 border border-blush-100">
+                        <h4 class="font-bold text-blush-900 mb-2">1. Carbamoyl Phosphate Synthase-II (CPS-II)</h4>
+                        <div class="flex gap-2 text-sm">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded"><i class="fa-solid fa-minus-circle mr-1"></i> Inhibited by: <strong>UTP</strong></span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded"><i class="fa-solid fa-plus-circle mr-1"></i> Activated by: <strong>PRPP</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/50 p-4 rounded-xl border border-blush-100">
+                        <h4 class="font-bold text-blush-900 mb-2">2. Aspartate Transcarbamoylase</h4>
+                        <div class="flex gap-2 text-sm">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded"><i class="fa-solid fa-minus-circle mr-1"></i> Inhibited by: <strong>CTP</strong></span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded"><i class="fa-solid fa-plus-circle mr-1"></i> Activated by: <strong>ATP</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catabolism -->
+                <div class="glass-card rounded-2xl p-6 md:p-8">
+                    <h3 class="font-serif text-xl font-bold mb-4 text-blush-800"><i class="fa-solid fa-recycle mr-2"></i> Catabolism of Pyrimidines</h3>
+                    <p class="text-sm mb-4">Unlike purines (which degrade to sparingly soluble uric acid), pyrimidines degrade into <strong>highly water-soluble products</strong>.</p>
+                    
+                    <h4 class="font-bold text-sm mb-2 mt-4 text-blush-900">End Products:</h4>
+                    <ul class="grid grid-cols-2 gap-2 text-sm mb-4">
+                        <li class="bg-white/60 p-2 rounded text-center shadow-sm">CO<sub>2</sub></li>
+                        <li class="bg-white/60 p-2 rounded text-center shadow-sm">NH<sub>3</sub></li>
+                        <li class="bg-white/60 p-2 rounded text-center shadow-sm">&beta;-alanine</li>
+                        <li class="bg-white/60 p-2 rounded text-center shadow-sm">&beta;-aminoisobutyrate</li>
+                    </ul>
+
+                    <h4 class="font-bold text-sm mb-1 text-blush-900">Metabolic Fates:</h4>
+                    <ul class="text-sm space-y-2 list-disc pl-5">
+                        <li><strong>&beta;-alanine:</strong> Serves as a precursor for <strong>acetyl-CoA</strong>.</li>
+                        <li><strong>&beta;-aminoisobutyrate:</strong> Transaminated to methylmalonate semialdehyde &rarr; methylmalonyl-CoA &rarr; <strong>succinyl-CoA</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider line -->
+        <div class="flex items-center justify-center gap-4 my-12 text-blush-300 opacity-60">
+            <div class="h-px bg-blush-300 w-1/4"></div>
+            <i class="fa-solid fa-leaf"></i>
+            <div class="h-px bg-blush-300 w-1/4"></div>
+        </div>
+
+        <!-- SECTION 2: QUICK REVISION -->
+        <section id="quick-revision" class="mb-16 scroll-mt-24">
+            <div class="flex items-center justify-center gap-3 mb-8">
+                <i class="fa-solid fa-bolt text-2xl text-yellow-500"></i>
+                <h2 class="font-serif text-3xl font-semibold text-blush-800 text-center">Part II: Last-Minute Exam Revision</h2>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 border-4 border-blush-100 shadow-xl relative overflow-hidden">
+                <!-- Decorative elements -->
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blush-200 rounded-full opacity-50 blur-xl"></div>
+                <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-pink-200 rounded-full opacity-40 blur-xl"></div>
+
+                <div class="relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        
+                        <!-- Column 1 -->
+                        <div>
+                            <h4 class="text-lg font-bold bg-blush-100 inline-block px-3 py-1 rounded-lg mb-3">1. The Basics</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-sm mb-6">
+                                <li><strong>Rule:</strong> Ring is made FIRST, then ribose (PRPP) is added.</li>
+                                <li><strong>Precursors:</strong> Glutamine (N3), Aspartic Acid (C4,C5,C6,N1), CO<sub>2</sub> (C2).</li>
+                            </ul>
+
+                            <h4 class="text-lg font-bold bg-blush-100 inline-block px-3 py-1 rounded-lg mb-3">2. Vital Enzymes</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-sm mb-6">
+                                <li><strong>CPS-II:</strong> First step (cytosolic). Forms Carbamoyl phosphate.</li>
+                                <li><strong>Aspartate transcarbamoylase:</strong> The <em>Committed Step</em>.</li>
+                                <li><strong>Dihydro-orotate dehydrogenase:</strong> The ONLY mitochondrial enzyme in the pathway.</li>
+                                <li><strong>Thymidylate synthase:</strong> Converts dUMP &rarr; dTMP using N<sup>5</sup>,N<sup>10</sup>-methylene THF.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div>
+                            <h4 class="text-lg font-bold bg-blush-100 inline-block px-3 py-1 rounded-lg mb-3">3. Regulation Cheat Sheet</h4>
+                            <div class="bg-white/70 p-3 rounded-lg text-sm mb-6 border-l-4 border-blush-300">
+                                <p class="mb-2"><strong>CPS-II:</strong> <br>
+                                    <span class="text-green-600 font-bold">(+)</span> PRPP &nbsp; | &nbsp; 
+                                    <span class="text-red-600 font-bold">(-)</span> UTP
+                                </p>
+                                <p><strong>Aspartate Transcarbamoylase:</strong> <br>
+                                    <span class="text-green-600 font-bold">(+)</span> ATP &nbsp; | &nbsp; 
+                                    <span class="text-red-600 font-bold">(-)</span> CTP
+                                </p>
+                            </div>
+
+                            <h4 class="text-lg font-bold bg-blush-100 inline-block px-3 py-1 rounded-lg mb-3">4. Catabolism Outcomes</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>End products are <strong>highly water-soluble</strong>.</li>
+                                <li>Cytosine/Uracil &rarr; <strong>&beta;-alanine</strong> &rarr; Acetyl-CoA.</li>
+                                <li>Thymine &rarr; <strong>&beta;-aminoisobutyrate</strong> &rarr; Succinyl-CoA.</li>
+                                <li>Also produces CO<sub>2</sub> and NH<sub>3</sub>.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <p class="font-serif italic text-blush-800 text-lg">Take a deep breath. You've got this! <i class="fa-solid fa-heart text-blush-300 ml-1"></i></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script for PDF Generation -->
+    <script>
+        function downloadPDF() {
+            // Options for the PDF generation
+            const opt = {
+                margin:       [10, 10, 10, 10], // top, left, bottom, right
+                filename:     'Pyrimidine_Metabolism_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Select the content to be converted (exclude navbar by targeting 'pdf-content')
+            const element = document.getElementById('pdf-content');
+
+            // Add a temporary class to format better for PDF if needed
+            element.classList.add('pdf-mode');
+
+            // Generate and save the PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.classList.remove('pdf-mode');
+            });
+        }
+    </script>
+</body>
+</html>
+

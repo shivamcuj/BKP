@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amino Acid Catabolism | Study Notes</title>
+    
+    <!-- Google Fonts for Romantic/Elegant yet readable typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- HTML2PDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Lucide Icons for aesthetic touch -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-blush': '#FFE4E1',
+                        'soft-peach': '#FFDAB9',
+                        'deep-burgundy': '#722F37',
+                        'warm-gray': '#5A5A5A',
+                        'blush-pink': '#FFB6C1',
+                        'card-bg': 'rgba(255, 255, 255, 0.85)'
+                    },
+                    fontFamily: {
+                        'serif': ['Lora', 'serif'],
+                        'sans': ['Nunito', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'romantic': '0 10px 40px -10px rgba(255, 182, 193, 0.4)',
+                        'card': '0 4px 20px rgba(0, 0, 0, 0.03)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #fff5ee 100%);
+            background-attachment: fixed;
+            color: #4A4A4A;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb6c1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff69b4; 
+        }
+
+        /* Print styles to ensure the PDF looks clean without UI elements */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white;
+            }
+            .glass-card {
+                box-shadow: none;
+                border: 1px solid #eee;
+                background: white;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen pb-12">
+
+    <!-- Sticky Navigation / Action Bar -->
+    <div class="sticky top-0 z-50 p-4 sm:p-6 flex justify-between items-center max-w-5xl mx-auto w-full no-print">
+        <div class="flex items-center gap-2 text-deep-burgundy">
+            <i data-lucide="book-heart" class="w-6 h-6"></i>
+            <span class="font-serif font-semibold text-lg hidden sm:inline">BioChem Notes</span>
+        </div>
+        
+        <button onclick="downloadPDF()" class="group relative px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-400 to-rose-400 text-white font-semibold shadow-romantic hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 overflow-hidden">
+            <span class="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full z-0"></span>
+            <i data-lucide="download" class="w-4 h-4 relative z-10"></i>
+            <span class="relative z-10">Save to PDF</span>
+        </button>
+    </div>
+
+    <!-- Main Content Container (Target for PDF export) -->
+    <main id="export-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Header Section -->
+        <header class="text-center pt-8 pb-4">
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-deep-burgundy mb-4 tracking-tight">Amino Acid Catabolism</h1>
+            <p class="text-warm-gray text-lg italic max-w-2xl mx-auto">Comprehensive study notes and quick revision material for your exams.</p>
+            <div class="w-24 h-1 bg-gradient-to-r from-pink-300 to-rose-300 mx-auto mt-6 rounded-full"></div>
+        </header>
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <section>
+            <h2 class="font-serif text-3xl font-semibold text-deep-burgundy mb-6 flex items-center gap-3">
+                <i data-lucide="flower-2" class="text-pink-400 w-8 h-8"></i>
+                Detailed Explanations
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Introduction Card -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-card border-l-4 border-l-pink-400">
+                    <h3 class="font-serif text-2xl font-medium text-deep-burgundy mb-4">1. Introduction & Overview</h3>
+                    <ul class="space-y-3 text-warm-gray leading-relaxed list-none">
+                        <li class="flex items-start gap-3">
+                            <span class="text-pink-400 mt-1">•</span>
+                            <span><strong>Energy Contribution:</strong> In adults, only <strong>20%</strong> of amino acids from protein degradation are catabolized for energy (contributing 5-10% of total body energy). The remaining 80% are recycled for protein biosynthesis.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-pink-400 mt-1">•</span>
+                            <span><strong>No Storage:</strong> Unlike fats or carbohydrates, amino acids cannot be stored. Any excess protein consumed is immediately catabolized for energy.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-pink-400 mt-1">•</span>
+                            <span><strong>Increased Catabolism:</strong> Catabolism rates surge during starvation, uncontrolled diabetes, or when on a high-protein diet.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-pink-400 mt-1">•</span>
+                            <span><strong>Other Uses:</strong> Amino acids also act as precursors for creatine, hormones, glutathione, purines, and pyrimidines.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stages of Catabolism Card -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-card border-l-4 border-l-rose-400">
+                    <h3 class="font-serif text-2xl font-medium text-deep-burgundy mb-4">2. The Two Main Stages of Catabolism</h3>
+                    <p class="text-warm-gray mb-4">The degradation of amino acids universally follows a two-stage process:</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white/50 rounded-2xl p-5 border border-rose-100">
+                            <div class="font-serif text-lg text-deep-burgundy mb-2">Stage 1: Amino Group Removal</div>
+                            <p class="text-warm-gray text-sm">The α-amino group is removed to form <strong>ammonia ($NH_3$)</strong>. Because ammonia is toxic, the body rapidly converts it into urea, which is safely excreted via urine.</p>
+                        </div>
+                        <div class="bg-white/50 rounded-2xl p-5 border border-rose-100">
+                            <div class="font-serif text-lg text-deep-burgundy mb-2">Stage 2: Carbon Skeleton Fate</div>
+                            <p class="text-warm-gray text-sm">The remaining α-keto acids (carbon skeletons) are transformed into TCA cycle intermediates or Acetyl-CoA. They are then oxidized for energy, or used to synthesize glucose/ketone bodies.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deamination Methods Card -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-card border-l-4 border-l-purple-400">
+                    <h3 class="font-serif text-2xl font-medium text-deep-burgundy mb-6">3. Deamination (Removal of Amino Groups)</h3>
+                    
+                    <div class="space-y-8">
+                        <!-- Transamination -->
+                        <div>
+                            <h4 class="font-serif text-xl text-deep-burgundy mb-2">A. Transamination</h4>
+                            <p class="text-warm-gray mb-3">The transfer of an α-amino group from an amino acid to an α-keto acid acceptor (usually α-ketoglutarate).</p>
+                            <ul class="text-warm-gray space-y-2 text-sm bg-white/40 p-4 rounded-xl">
+                                <li><strong>Enzymes:</strong> Transaminases (Aminotransferases), located in mitochondria and cytosol.</li>
+                                <li><strong>Cofactor:</strong> Pyridoxal phosphate (PLP).</li>
+                                <li><strong>Goal:</strong> Collects amino groups into <em>Glutamate</em>.</li>
+                                <li><strong>Example:</strong> Aspartate + α-Ketoglutarate ⇌ Oxaloacetate + Glutamate (Catalyzed by Aspartate Amino Transferase).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Oxidative Deamination -->
+                        <div>
+                            <h4 class="font-serif text-xl text-deep-burgundy mb-2">B. Oxidative Deamination</h4>
+                            <p class="text-warm-gray mb-3">The liberation of the collected amino groups as free ammonia.</p>
+                            <ul class="text-warm-gray space-y-2 text-sm bg-white/40 p-4 rounded-xl">
+                                <li><strong>Primary Mechanism:</strong> Glutamate Dehydrogenase acts on Glutamate to produce α-ketoglutarate and Ammonia ($NH_3$). Requires $NAD^+$ or $NADP^+$.</li>
+                                <li><strong>Regulation:</strong> ATP and GTP are allosteric inhibitors; ADP and GDP are activators.</li>
+                                <li><strong>Direct Oxidases:</strong> D-amino acid oxidase (FAD-dependent, acts on glycine) and L-amino acid oxidase (FMN-dependent). They convert amino acids to imino acids, followed by hydrolytic loss of ammonia.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Non-oxidative Deamination -->
+                        <div>
+                            <h4 class="font-serif text-xl text-deep-burgundy mb-2">C. Non-Oxidative Deamination</h4>
+                            <p class="text-warm-gray mb-3">Specific enzymes remove ammonia without oxidation.</p>
+                            <ul class="text-warm-gray space-y-2 text-sm bg-white/40 p-4 rounded-xl">
+                                <li><strong>Serine Dehydratase:</strong> Converts Serine → Pyruvate + $NH_3$ + $H_2O$. (Requires PLP).</li>
+                                <li><strong>Cysteine Desulfhydrase:</strong> Converts Cysteine → Pyruvate + $NH_3$ + $H_2S$. (Requires PLP, found in bacteria).</li>
+                                <li><strong>Threonine Dehydratase:</strong> Acts on threonine.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decarboxylation Card -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-card border-l-4 border-l-pink-500">
+                    <h3 class="font-serif text-2xl font-medium text-deep-burgundy mb-4">4. Decarboxylation</h3>
+                    <p class="text-warm-gray mb-3">The removal of a $CO_2$ group from the carboxyl group of an amino acid, resulting in the formation of physiologically significant <strong>biogenic amines</strong>.</p>
+                    <ul class="space-y-2 text-warm-gray bg-white/40 p-4 rounded-xl mb-4 text-sm">
+                        <li><strong>Enzymes:</strong> Amino acid decarboxylases.</li>
+                        <li><strong>Cofactor:</strong> Pyridoxal phosphate (PLP).</li>
+                        <li><strong>Locations:</strong> Liver, spleen, kidney, intestine, lung, and brain.</li>
+                    </ul>
+                    <div class="bg-pink-50/50 rounded-xl p-4 border border-pink-100">
+                        <strong class="text-deep-burgundy block mb-2 font-serif">Important Examples:</strong>
+                        <ul class="grid sm:grid-cols-3 gap-2 text-sm text-warm-gray">
+                            <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-pink-400"></i> Histidine → <strong>Histamine</strong></li>
+                            <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-pink-400"></i> Tryptophan → <strong>Tryptamine</strong></li>
+                            <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-pink-400"></i> Tyrosine → <strong>Tyramine</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Visual Divider -->
+        <div class="flex items-center justify-center gap-4 py-4">
+            <div class="w-16 h-[1px] bg-pink-300"></div>
+            <i data-lucide="sparkles" class="text-pink-400 w-5 h-5"></i>
+            <div class="w-16 h-[1px] bg-pink-300"></div>
+        </div>
+
+        <!-- SECTION 2: SHORT NOTES (LAST MINUTE REVISION) -->
+        <section class="mb-12">
+            <h2 class="font-serif text-3xl font-semibold text-deep-burgundy mb-6 flex items-center gap-3">
+                <i data-lucide="zap" class="text-amber-400 w-8 h-8 fill-amber-100"></i>
+                Short Notes (Exam Revision)
+            </h2>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+                
+                <!-- Flashcard 1 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">Basic Facts</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li>• Only <strong>20%</strong> of degraded AAs used for energy.</li>
+                        <li>• AAs cannot be stored; excess = energy.</li>
+                        <li>• Catabolism ↑ in starvation, diabetes, high protein diet.</li>
+                    </ul>
+                </div>
+
+                <!-- Flashcard 2 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">The Two Stages</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li><strong>1. Deamination:</strong> Amino group removed → Ammonia ($NH_3$) → Urea (urine).</li>
+                        <li><strong>2. Carbon Skeleton:</strong> Converted to TCA intermediates / Acetyl-CoA → Energy / Glucose / Ketones.</li>
+                    </ul>
+                </div>
+
+                <!-- Flashcard 3 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">Transamination</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li>• Transfer of $NH_2$ to α-ketoglutarate.</li>
+                        <li>• Forms <strong>Glutamate</strong> (collecting point).</li>
+                        <li>• <strong>Enzyme:</strong> Transaminases.</li>
+                        <li>• <strong>Cofactor required:</strong> Pyridoxal phosphate (PLP).</li>
+                    </ul>
+                </div>
+
+                <!-- Flashcard 4 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">Oxidative Deamination</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li>• <strong>Glutamate Dehydrogenase:</strong> Glutamate → α-ketoglutarate + $NH_3$.</li>
+                        <li>• Requires $NAD^+$ / $NADP^+$.</li>
+                        <li>• <strong>Regulators:</strong> Inhibited by ATP/GTP. Activated by ADP/GDP.</li>
+                    </ul>
+                </div>
+
+                <!-- Flashcard 5 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">Non-Oxidative Deamination</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li>• Direct removal of $NH_3$.</li>
+                        <li>• <strong>Serine dehydratase:</strong> Serine → Pyruvate.</li>
+                        <li>• <strong>Cysteine desulfhydrase:</strong> Cysteine → Pyruvate + $H_2S$.</li>
+                    </ul>
+                </div>
+
+                <!-- Flashcard 6 -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-romantic transition-shadow duration-300">
+                    <h4 class="font-serif font-semibold text-lg text-deep-burgundy border-b border-pink-100 pb-2 mb-3">Decarboxylation</h4>
+                    <ul class="text-sm text-warm-gray space-y-2">
+                        <li>• Removal of $CO_2$ to form <strong>biogenic amines</strong>.</li>
+                        <li>• <strong>Cofactor:</strong> PLP.</li>
+                        <li>• Histidine → Histamine</li>
+                        <li>• Tryptophan → Tryptamine</li>
+                        <li>• Tyrosine → Tyramine</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center pb-8 pt-4">
+            <p class="font-serif italic text-pink-400">Happy Studying! You're going to ace this exam.</p>
+        </footer>
+
+    </main>
+
+    <!-- Script to handle Lucide Icons and PDF Generation -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // PDF Generation Function
+        function downloadPDF() {
+            const element = document.getElementById('export-content');
+            
+            // Add a temporary class to adjust styles slightly for PDF if needed
+            element.classList.add('pdf-export-mode');
+
+            // Options for html2pdf
+            const opt = {
+                margin:       [15, 15, 15, 15], // Top, Right, Bottom, Left margins in mm
+                filename:     'Amino_Acid_Catabolism_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    letterRendering: true,
+                    backgroundColor: '#ffffff'
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Inform user
+            const btn = document.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="relative z-10 flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Saving...</span>';
+            lucide.createIcons();
+
+            // Generate PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button state
+                btn.innerHTML = originalText;
+                lucide.createIcons();
+                element.classList.remove('pdf-export-mode');
+            }).catch(err => {
+                console.error("PDF generation failed", err);
+                btn.innerHTML = originalText;
+                lucide.createIcons();
+                alert("There was an issue generating the PDF. Please try again.");
+            });
+        }
+    </script>
+</body>
+</html>
+

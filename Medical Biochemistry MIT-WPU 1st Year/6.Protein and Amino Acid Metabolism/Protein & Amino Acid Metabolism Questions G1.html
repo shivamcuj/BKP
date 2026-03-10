@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein & Amino Acid Metabolism | Study Quiz</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .correct-ans {
+            background-color: #10b981 !important; /* Emerald 500 */
+            color: white !important;
+            border-color: #10b981 !important;
+        }
+        .wrong-ans {
+            background-color: #ef4444 !important; /* Red 500 */
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+        .disabled-btn {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .dark .glass-header {
+            background: rgba(30, 41, 59, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-header border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary-500 text-white p-2 rounded-lg shadow-md">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <h1 class="font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white">
+                    Metabolism Study Hub
+                </h1>
+            </div>
+            
+            <!-- Dark Mode Toggle -->
+            <button id="theme-toggle" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500" aria-label="Toggle Dark Mode">
+                <i id="theme-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-16">
+        
+        <div class="text-center max-w-2xl mx-auto space-y-4">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Protein & Amino Acid Catabolism</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">Test your knowledge with these targeted MCQs, short answers, and essay questions. Master the pathways!</p>
+        </div>
+
+        <!-- Section 1: MCQs -->
+        <section id="mcq-section" class="space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <i class="fas fa-tasks text-2xl text-primary-500"></i>
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Multiple Choice Questions</h2>
+            </div>
+            <div id="mcq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- MCQs will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Section 2: Short Answer Questions -->
+        <section id="saq-section" class="space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <i class="fas fa-pen-nib text-2xl text-emerald-500"></i>
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Short Answer Questions</h2>
+            </div>
+            <div id="saq-container" class="space-y-4">
+                <!-- SAQs will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Section 3: Essay Questions -->
+        <section id="essay-section" class="space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <i class="fas fa-book-open text-2xl text-rose-500"></i>
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Essay Questions</h2>
+            </div>
+            <div id="essay-container" class="space-y-4">
+                <!-- Essays will be injected here by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-8 mt-12 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center space-y-3">
+            <div class="flex items-center gap-2 text-lg font-medium text-slate-700 dark:text-slate-300">
+                Designed For My Bestie <i class="fas fa-heart text-rose-500 animate-pulse"></i>
+            </div>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors bg-primary-50 dark:bg-slate-900 px-4 py-2 rounded-full border border-primary-100 dark:border-slate-800 shadow-sm">
+                <i class="fab fa-instagram text-xl"></i>
+                <span class="font-semibold tracking-wide">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // --- DATA STRUCTURES ---
+
+        const mcqs = [
+            { q: "A 70 kg human adult body contains about how much protein?", options: ["400 gm", "6 kg", "12 kg", "20 kg"], ans: 2 },
+            { q: "Approximately how much body protein is synthesized and degraded per day?", options: ["50 gm", "100 gm", "400 gm", "1000 gm"], ans: 2 },
+            { q: "Which small polypeptide tags proteins and facilitates their degradation?", options: ["Glutamate", "Ubiquitin", "Pyridoxal phosphate", "Serine"], ans: 1 },
+            { q: "Proteins with the PEST sequence are rapidly degraded. What does the 'E' stand for?", options: ["Glutamate/Glutamine", "Epinephrine", "Enolase", "Ethanolamine"], ans: 0 },
+            { q: "When nitrogen intake is greater than nitrogen excretion, the condition is termed:", options: ["Nitrogen equilibrium", "Positive nitrogen balance", "Negative nitrogen balance", "Nitrogen depletion"], ans: 1 },
+            { q: "Which of the following situations is associated with negative nitrogen balance?", options: ["Growing infants", "Pregnancy", "Starvation", "Normal adult health"], ans: 2 },
+            { q: "Which of the following is NOT one of the three stages of complete amino acid catabolism?", options: ["Removal of alpha-amino group", "Disposal of ammonia as urea", "Gluconeogenesis pathway activation", "Disposal of carbon skeleton"], ans: 2 },
+            { q: "All transaminases require which coenzyme?", options: ["FAD", "NAD+", "Pyridoxal phosphate (PLP)", "Ubiquitin"], ans: 2 },
+            { q: "Which of the following amino acids does NOT participate in transamination?", options: ["Alanine", "Glutamate", "Aspartate", "Lysine"], ans: 3 },
+            { q: "The mechanism of transamination proposed by Snell and Braustein is known as:", options: ["Lock and Key", "Induced Fit", "Ping Pong Bi Bi", "Feedback Inhibition"], ans: 2 },
+            { q: "Which amino acid serves as a 'collection centre' for amino groups before oxidative deamination?", options: ["Glutamate", "Pyruvate", "Glutamine", "Alpha-ketoglutarate"], ans: 0 },
+            { q: "What is a unique feature of the enzyme Glutamate dehydrogenase (GDH)?", options: ["It requires no coenzyme", "It can utilize either NAD+ or NADP+", "It acts on D-amino acids only", "It requires FMN"], ans: 1 },
+            { q: "Which pair of molecules allosterically inhibits Glutamate dehydrogenase?", options: ["ADP and GDP", "ATP and GTP", "NAD+ and NADH", "Pyruvate and Lactate"], ans: 1 },
+            { q: "L-amino acid oxidase possesses which coenzyme?", options: ["FAD", "FMN", "PLP", "NAD+"], ans: 1 },
+            { q: "The role of D-amino acid oxidase is to convert unnatural D-amino acids into:", options: ["L-amino acids via D-keto acids", "Urea directly", "Ammonia and water", "Biogenic amines"], ans: 0 },
+            { q: "Serine undergoes non-oxidative deamination catalyzed by dehydratases to produce:", options: ["Histamine", "Urocanate", "Pyruvate and NH3", "Glutamate"], ans: 2 },
+            { q: "The enzyme histidase acts on histidine to liberate NH3 and form:", options: ["Urocanate", "Histamine", "Glutamine", "Pyruvate"], ans: 0 },
+            { q: "Decarboxylation of amino acids requires the catalytic action of which coenzyme?", options: ["FAD", "NAD+", "PLP (Vitamin B6)", "Zinc"], ans: 2 },
+            { q: "Histidine is transformed to which physiologically significant biogenic amine via decarboxylation?", options: ["Tyramine", "Tryptamine", "Histamine", "Serotonin"], ans: 2 },
+            { q: "Which of the following amino acids is converted to tryptamine?", options: ["Tyrosine", "Threonine", "Tryptophan", "Serine"], ans: 2 }
+        ];
+
+        const saqs = [
+            { q: "What is protein turnover?", a: "Protein turnover is the continuous synthesis and degradation of proteins in the body. It represents the dynamic state of body proteins, where about 300-400g of protein is degraded and synthesized daily depending on physiological needs." },
+            { q: "What is the PEST sequence?", a: "The PEST sequence is a specific amino acid sequence containing Proline (P), Glutamate/Glutamine (E), Serine (S), and Threonine (T). Proteins containing this sequence are rapidly targeted for degradation." },
+            { q: "Define Nitrogen equilibrium.", a: "Nitrogen equilibrium is a state where nitrogen intake (from dietary protein) is exactly equal to nitrogen excretion. This is typically seen in normal, healthy adults where the rate of protein synthesis equals the rate of degradation." },
+            { q: "List the three main stages of complete amino acid catabolism.", a: "1) Removal of the alpha-amino group (via transamination and deamination). 2) Disposal of ammonia in the form of urea. 3) Disposal of the remaining carbon skeleton via the citric acid cycle for energy, glucose, or fat synthesis." },
+            { q: "Name the amino acids that do NOT participate in transamination.", a: "Lysine, threonine, proline, and hydroxyproline do not participate in transamination reactions." },
+            { q: "What is the primary reaction catalyzed by Glutamate Dehydrogenase (GDH)?", a: "GDH catalyzes the reversible oxidative deamination of glutamate to alpha-ketoglutarate, liberating free ammonia (NH3) for urea synthesis. It uniquely uses either NAD+ or NADP+ as a coenzyme." },
+            { q: "How is Glutamate Dehydrogenase (GDH) allosterically regulated?", a: "GDH is allosterically inhibited by ATP, GTP, and steroid/thyroid hormones (high energy state). It is activated by ADP and GDP (low energy state), promoting the degradation of glutamate for energy." },
+            { q: "What is the physiological role of D-amino acid oxidase?", a: "D-amino acid oxidase (an FAD-containing enzyme) converts unnatural D-amino acids obtained from the diet into D-keto acids. These keto acids are then transaminated to form usable L-amino acids." },
+            { q: "Give an example of an amino acid that undergoes non-oxidative desulfhydration.", a: "Cysteine is a sulfur-containing amino acid that undergoes non-oxidative deamination coupled with desulfhydration, yielding pyruvate, ammonia (NH3), and hydrogen sulfide (H2S)." },
+            { q: "What is decarboxylation and what are its products?", a: "Decarboxylation is the removal of carbon dioxide (CO2) from the carboxyl group of an amino acid. Catalyzed by PLP-dependent decarboxylases, it results in the formation of corresponding physiologically active biogenic amines (e.g., Histidine to Histamine)." }
+        ];
+
+        const essays = [
+            { q: "Discuss the medical and biological importance of protein and amino acid metabolism.", a: "Body proteins continuously undergo degradation and resynthesis, functioning as a quality control mechanism to remove damaged or aged proteins. This turnover is crucial for cellular adaptation, shaping tissues during pregnancy, and regulating enzyme activity. The amino acid pool cannot be stored; excess must be catabolized by removing the toxic amino group (excreted as urea) while utilizing the carbon skeleton for energy, glucose, or fat synthesis. Impairments in these degradative pathways lead to severe inherited metabolic diseases." },
+            { q: "Describe the three possible situations of nitrogen balance with physiological examples.", a: "1) Nitrogen Equilibrium: Intake equals excretion, seen in normal, healthy adults indicating balanced protein turnover. 2) Positive Nitrogen Balance: Intake exceeds excretion, meaning protein is being retained and laid down in tissues. This is typical in growing infants, pregnant women, and during recovery. 3) Negative Nitrogen Balance: Excretion exceeds intake, indicating net protein loss. This occurs during starvation, severe illness, major trauma, or diseases like Kwashiorkor and Marasmus, and can be fatal if prolonged." },
+            { q: "Explain the process of Transamination, outlining its salient features and significance.", a: "Transamination is the transfer of an amino group from an amino acid to a keto acid, catalyzed by transaminases requiring Pyridoxal Phosphate (PLP). It redistributes amino groups without liberating free ammonia, and is highly reversible. It channels amino groups primarily to form Glutamate, which later undergoes oxidative deamination. All amino acids undergo transamination except Lysine, Threonine, Proline, and Hydroxyproline. It is vital for generating non-essential amino acids and diverting excess amino acids toward energy production." },
+            { q: "Detail the mechanism of Transamination as proposed by Snell and Braustein.", a: "The reaction follows a 'Ping Pong Bi Bi' mechanism occurring in two stages. First, the amino acid binds to the enzyme-PLP complex (which initially forms a Schiff base with a lysine residue). The amino group transfers to PLP, forming pyridoxamine phosphate, and the corresponding keto acid is released. In the second stage, a new keto acid binds, accepts the amino group from pyridoxamine phosphate, forming a new amino acid and regenerating the original enzyme-PLP Schiff base complex." },
+            { q: "Discuss Oxidative Deamination with special emphasis on the role of Glutamate Dehydrogenase (GDH).", a: "Oxidative deamination liberates free ammonia coupled with oxidation, primarily in the liver and kidneys. Glutamate serves as a collection center for nitrogen via transamination. GDH then converts Glutamate into alpha-ketoglutarate and NH3. This reaction reversibly links amino acid metabolism with the TCA cycle. GDH is unique as it can use either NAD+ or NADP+. It is allosterically regulated: activated by low-energy signals (ADP, GDP) to provide TCA cycle intermediates, and inhibited by high-energy signals (ATP, GTP) and steroid hormones." },
+            { q: "Compare the roles of L-amino acid oxidase and D-amino acid oxidase in metabolism.", a: "Both are flavoproteins catalyzing oxidative deamination and producing hydrogen peroxide. L-amino acid oxidase uses FMN but has very low activity in tissues and does not play a significant metabolic role. Conversely, D-amino acid oxidase uses FAD and exhibits high activity in the liver and kidneys. Its crucial role is to act on unnatural D-amino acids (ingested from plants/microbes), converting them to alpha-keto acids which are subsequently transaminated into usable L-amino acids for the body." },
+            { q: "Describe the processes of Non-Oxidative Deamination with suitable examples.", a: "Non-oxidative deamination removes ammonia without oxidation. It includes: 1) Amino acid dehydratases (PLP-dependent), which act on hydroxy amino acids like Serine and Threonine (e.g., Serine -> Pyruvate + NH3). 2) Amino acid desulfhydrases, which act on sulfur-containing amino acids like Cysteine, removing ammonia and hydrogen sulfide (Cysteine -> Pyruvate + NH3 + H2S). 3) Histidase, which deaminates histidine directly to urocanate and free ammonia." },
+            { q: "Explain the process of Decarboxylation of amino acids and its physiological significance.", a: "Decarboxylation removes carbon dioxide from the carboxyl group of amino acids, utilizing PLP-dependent decarboxylases. Instead of entering catabolic energy pathways, this reaction generates corresponding biogenic amines which often have potent physiological or neurotransmitter functions. Examples include the conversion of Histidine to Histamine (mediates allergic/inflammatory responses), Tryptophan to Tryptamine, and Tyrosine to Tyramine. These amines play critical roles in cellular signaling and vascular regulation." },
+            { q: "How is protein turnover controlled at the molecular and cellular levels?", a: "Protein turnover is dynamically controlled to suit physiological needs. A key mechanism is the ubiquitin-proteasome system, where a small polypeptide called ubiquitin tags aged, damaged, or specific regulatory proteins, marking them for destruction. Additionally, the inherent structure of the protein dictates its half-life; proteins containing the 'PEST sequence' (Proline, Glutamate/Glutamine, Serine, Threonine) are recognized and degraded very rapidly. Environmental stressors like starvation, fever, and cancer upregulate these degradation pathways." },
+            { q: "Summarize the complete catabolism of an amino acid starting from its separation from a protein.", a: "Once an amino acid is freed via protein degradation, its catabolism involves three stages. First, the alpha-amino group is removed. This usually happens via transamination (transferring the amino group to alpha-ketoglutarate to form glutamate) followed by oxidative deamination of glutamate to release free ammonia. Second, the highly toxic ammonia is transported to the liver and converted into non-toxic urea via the urea cycle for excretion. Third, the remaining carbon skeleton (keto acid) enters pathways like the TCA cycle, yielding energy, glucose (gluconeogenesis), or fat." }
+        ];
+
+
+        // --- RENDERING LOGIC ---
+
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            
+            mcqs.forEach((mcq, index) => {
+                html += `
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-slate-800 dark:text-slate-100 mb-4 text-base"><span class="text-primary-500 mr-2">${index + 1}.</span> ${mcq.q}</h3>
+                    <div class="space-y-2" id="mcq-options-${index}">
+                        ${mcq.options.map((opt, optIndex) => `
+                            <button onclick="checkAnswer(${index}, ${optIndex}, this)" 
+                                    class="w-full text-left px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm text-slate-700 dark:text-slate-300 transition-colors duration-200 flex justify-between items-center group">
+                                <span>${opt}</span>
+                                <i class="fas fa-circle text-slate-300 dark:text-slate-600 group-hover:text-primary-400 transition-colors text-[10px]"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // Make checkAnswer globally accessible
+        window.checkAnswer = function(qIndex, selectedOptIndex, btnElement) {
+            const correctAnswer = mcqs[qIndex].ans;
+            const optionsContainer = document.getElementById(`mcq-options-${qIndex}`);
+            const buttons = optionsContainer.querySelectorAll('button');
+
+            // Disable all buttons in this question
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('disabled-btn');
+                btn.classList.remove('hover:bg-slate-50', 'dark:hover:bg-slate-700');
+            });
+
+            // Check if correct
+            if (selectedOptIndex === correctAnswer) {
+                btnElement.classList.add('correct-ans');
+                btnElement.querySelector('i').className = 'fas fa-check-circle text-white text-lg';
+            } else {
+                btnElement.classList.add('wrong-ans');
+                btnElement.querySelector('i').className = 'fas fa-times-circle text-white text-lg';
+                
+                // Highlight the correct answer
+                const correctBtn = buttons[correctAnswer];
+                correctBtn.classList.add('correct-ans');
+                correctBtn.querySelector('i').className = 'fas fa-check-circle text-white text-lg';
+            }
+        };
+
+        function renderQASection(data, containerId, typePrefix, iconClass) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            data.forEach((item, index) => {
+                const uniqueId = `${typePrefix}-ans-${index}`;
+                html += `
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 sm:p-6 overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <h3 class="font-medium text-slate-800 dark:text-slate-100 text-base flex-1">
+                            <span class="${iconClass} mr-2 font-bold">Q${index + 1}.</span> ${item.q}
+                        </h3>
+                        <button onclick="toggleAnswer('${uniqueId}')" class="shrink-0 text-sm font-medium px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <i class="fas fa-eye mr-1"></i> Show Explanation
+                        </button>
+                    </div>
+                    <div id="${uniqueId}" class="hidden mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            <strong class="text-slate-800 dark:text-slate-200">Explanation:</strong><br>
+                            ${item.a}
+                        </p>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        window.toggleAnswer = function(elementId) {
+            const element = document.getElementById(elementId);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+                // Optional: change button text
+                const btn = element.previousElementSibling.querySelector('button');
+                btn.innerHTML = '<i class="fas fa-eye-slash mr-1"></i> Hide Explanation';
+            } else {
+                element.classList.add('hidden');
+                const btn = element.previousElementSibling.querySelector('button');
+                btn.innerHTML = '<i class="fas fa-eye mr-1"></i> Show Explanation';
+            }
+        }
+
+        // --- DARK MODE LOGIC ---
+        
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement;
+
+        // Check local storage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            htmlElement.classList.remove('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // --- INITIALIZE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderQASection(saqs, 'saq-container', 'saq', 'text-emerald-500');
+            renderQASection(essays, 'essay-container', 'essay', 'text-rose-500');
+        });
+
+    </script>
+</body>
+</html>
+

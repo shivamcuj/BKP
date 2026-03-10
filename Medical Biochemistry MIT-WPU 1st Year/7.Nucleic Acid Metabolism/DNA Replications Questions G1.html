@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Replication | Interactive Quiz</title>
+    
+    <!-- Google Fonts: Poppins for a modern, clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .smooth-expand {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+        }
+        .smooth-expand.open {
+            grid-template-rows: 1fr;
+        }
+        .smooth-expand-inner {
+            overflow: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen antialiased">
+
+    <!-- Navbar / Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="dna" class="text-primary-600 dark:text-primary-500 w-6 h-6"></i>
+                <h1 class="font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white">DNA MasterClass</h1>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                <i data-lucide="moon" id="theme-icon-dark" class="w-5 h-5 text-slate-700 hidden dark:block dark:text-slate-300"></i>
+                <i data-lucide="sun" id="theme-icon-light" class="w-5 h-5 text-slate-700 block dark:hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-10 sm:py-16">
+        
+        <!-- Intro -->
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 text-slate-900 dark:text-white">DNA Replication Quiz</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">Test your knowledge of the Central Dogma, enzymes, and replication stages. Perfect for quick revision!</p>
+        </div>
+
+        <!-- Section 1: MCQs -->
+        <section class="mb-20">
+            <div class="flex items-center gap-3 mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-primary-100 dark:bg-primary-900/30 p-2 rounded-lg text-primary-600 dark:text-primary-400">
+                    <i data-lucide="check-square" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Multiple Choice Questions</h3>
+            </div>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs injected via JS -->
+            </div>
+        </section>
+
+        <!-- Section 2: Short Answers -->
+        <section class="mb-20">
+            <div class="flex items-center gap-3 mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-emerald-100 dark:bg-emerald-900/30 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
+                    <i data-lucide="align-left" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Short Answer Questions</h3>
+            </div>
+            <div id="short-container" class="space-y-4">
+                <!-- Short Qs injected via JS -->
+            </div>
+        </section>
+
+        <!-- Section 3: Essay Questions -->
+        <section class="mb-10">
+            <div class="flex items-center gap-3 mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg text-purple-600 dark:text-purple-400">
+                    <i data-lucide="file-text" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Essay Questions</h3>
+            </div>
+            <div id="essay-container" class="space-y-4">
+                <!-- Essay Qs injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-12 mt-10">
+        <div class="max-w-4xl mx-auto flex flex-col items-center justify-center text-center px-4">
+            <p class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent mb-3">
+                Designed For My Bestie ❤️
+            </p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-all duration-300">
+                <i data-lucide="instagram" class="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-pink-500 transition-colors"></i>
+                <span class="font-medium text-slate-700 dark:text-slate-300 group-hover:text-pink-600 dark:group-hover:text-pink-400">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA ---
+        const mcqs = [
+            { q: "Who formulated the central dogma of molecular biology?", options: ["James Watson", "Francis Crick", "Rosalind Franklin", "Gregor Mendel"], a: 1, exp: "The central dogma, defining the flow of genetic information from DNA to RNA to protein, was formulated by Francis Crick." },
+            { q: "What is the second step in the central dogma?", options: ["Replication", "Translation", "Transcription", "Mutation"], a: 2, exp: "The second step is transcription, where the genetic messages in DNA are rewritten in the form of RNA." },
+            { q: "DNA replication follows which mechanism?", options: ["Conservative", "Dispersive", "Semiconservative", "Non-conservative"], a: 2, exp: "It is semiconservative; each replicated DNA molecule contains one parent strand and one newly synthesized strand." },
+            { q: "Which enzyme catalyzes the synthesis of new DNA strands?", options: ["RNA polymerase", "DNA ligase", "DNA dependent DNA polymerase", "Topoisomerase"], a: 2, exp: "DNA synthesis is catalyzed by DNA dependent DNA polymerases, which require a DNA template." },
+            { q: "Which prokaryotic polymerase is primarily responsible for completing chain synthesis between Okazaki fragments?", options: ["Polymerase I", "Polymerase II", "Polymerase III", "Polymerase alpha"], a: 0, exp: "DNA polymerase I completes chain synthesis between Okazaki fragments and removes RNA primers." },
+            { q: "In eukaryotes, which polymerase is responsible for mitochondrial DNA synthesis?", options: ["Alpha (\u03B1)", "Beta (\u03B2)", "Gamma (\u03B3)", "Delta (\u03B4)"], a: 2, exp: "Polymerase \u03B3 (gamma) handles mitochondrial DNA synthesis in eukaryotes." },
+            { q: "What is the primary function of Helicase (DNA B protein)?", options: ["Seal nicks", "Unwind parental DNA", "Synthesize primers", "Relieve twisting stress"], a: 1, exp: "Helicase binds to the replication origin and unwinds the parental DNA to form the replication fork." },
+            { q: "Which enzyme relieves the stress produced due to DNA unwinding?", options: ["Topoisomerase", "Ligase", "Primase", "Helicase"], a: 0, exp: "Topoisomerases release the stress by cutting either one or both DNA strands." },
+            { q: "What prevents separated single-stranded DNA from reassociating?", options: ["Helicase", "SSB proteins", "DNA polymerase I", "Ter binding proteins"], a: 1, exp: "Single stranded binding (SSB) proteins stabilize the separated strands and prevent them from snapping back together." },
+            { q: "In which direction is a new DNA chain always synthesized?", options: ["3' to 5'", "5' to 3'", "Both directions", "Depends on the strand"], a: 1, exp: "DNA polymerase III can synthesize a new chain only by adding to the 3' end, making the direction strictly 5' to 3'." },
+            { q: "Which strand is synthesized continuously during replication?", options: ["Lagging strand", "Leading strand", "Template strand", "Coding strand"], a: 1, exp: "The leading strand is copied continuously towards the replication fork." },
+            { q: "What enzyme seals the Okazaki fragments on the lagging strand?", options: ["DNA Polymerase III", "Topoisomerase", "DNA ligase", "Primase"], a: 2, exp: "DNA ligase catalyzes the formation of phosphodiester bonds to seal the Okazaki fragments." },
+            { q: "What sequence directs the termination of replication in prokaryotes?", options: ["ori sequence", "TATA box", "ter sequence", "AUG codon"], a: 2, exp: "Termination sequences like 'ter' direct termination. A ter binding protein binds here to stop helicase." },
+            { q: "Proofreading by DNA polymerases utilizes which specific activity?", options: ["5' to 3' exonuclease", "3' to 5' exonuclease", "5' to 3' endonuclease", "Ligase activity"], a: 1, exp: "All three prokaryotic DNA polymerases have 3' to 5' exonuclease activity for proofreading." },
+            { q: "How many origins of replication do prokaryotic circular chromosomes typically have?", options: ["Single", "Two", "Multiple", "None"], a: 0, exp: "Prokaryotes have a single origin of replication ('ori'), while eukaryotes have multiple." },
+            { q: "What is the approximate length of an Okazaki fragment in eukaryotes?", options: ["10-50 nucleotides", "200 nucleotides", "1000-2000 nucleotides", "5000 nucleotides"], a: 1, exp: "Eukaryotic Okazaki fragments are much shorter, roughly 200 nucleotides in length." },
+            { q: "What is the approximate rate of DNA replication in prokaryotes?", options: ["50 nucleotides/sec", "200 nucleotides/sec", "500 nucleotides/sec", "1000 nucleotides/sec"], a: 2, exp: "The rate is ~500 nucleotides per second, which is about 10 times faster than in eukaryotes." },
+            { q: "Eukaryotic origins of replication (consensus sequences) are exclusively composed of which base pairs?", options: ["G-C", "A-T", "A-G", "C-T"], a: 1, exp: "Eukaryotic replication begins at multiple sites composed almost exclusively of A-T base pairs." },
+            { q: "Which eukaryotic polymerase catalyzes both leading and lagging strand synthesis?", options: ["Alpha (\u03B1)", "Beta (\u03B2)", "Delta (\u03B4)", "Epsilon (\u03B5)"], a: 2, exp: "Polymerase \u03B4 (delta) handles leading and lagging strand synthesis in eukaryotes." },
+            { q: "Which prokaryotic enzyme is mainly concerned with proofreading and DNA repair but not bulk synthesis?", options: ["DNA Pol I", "DNA Pol II", "DNA Pol III", "DNA Ligase"], a: 1, exp: "Pol II is mostly concerned with proofreading and DNA repair." }
+        ];
+
+        const shorts = [
+            { q: "Define the central dogma of molecular biology.", a: "Formulated by Francis Crick, it defines the three steps of genetic info processing: Replication (DNA to DNA), Transcription (DNA to RNA), and Translation (RNA to Protein)." },
+            { q: "What is semi-conservative replication?", a: "It is the mechanism where each replicated daughter DNA molecule contains one original parent strand and one newly synthesized strand." },
+            { q: "List the three types of prokaryotic DNA polymerases and their main roles.", a: "Pol I: completes synthesis between Okazaki fragments. Pol II: proofreading and repair. Pol III: main enzyme for leading and lagging strand synthesis." },
+            { q: "What is the 'ori' site?", a: "The 'origin of replication' is a specific site on the DNA where unwinding begins and active synthesis of new DNA is initiated." },
+            { q: "What is the role of primase in DNA replication?", a: "Primase is an RNA polymerase that synthesizes short RNA primers (5-50 nucleotides) to provide a 3' starting point for DNA polymerase III." },
+            { q: "Explain the difference between the leading and lagging strands.", a: "The leading strand is synthesized continuously in the 5' to 3' direction towards the fork. The lagging strand is synthesized discontinuously in short pieces (Okazaki fragments) away from the fork." },
+            { q: "What are Okazaki fragments?", a: "Short segments of DNA synthesized on the lagging strand, required because DNA polymerase can only synthesize in the 5' to 3' direction." },
+            { q: "How does DNA ligase function?", a: "DNA ligase acts as the molecular glue. It catalyzes the formation of phosphodiester bonds to seal the nicks between Okazaki fragments after primers are removed." },
+            { q: "What is the function of the ter-binding protein?", a: "It binds to specific termination sequences ('ter') on the DNA and prevents Helicase from further unwinding the DNA, stopping replication." },
+            { q: "Why is proofreading necessary, and how does it occur?", a: "Proofreading maintains high fidelity (accuracy) in DNA copying. Polymerases use 3' to 5' exonuclease activity to back up and remove incorrectly paired nucleotides before adding the next one." }
+        ];
+
+        const essays = [
+            { q: "Describe in detail the three major steps defined by the central dogma of molecular biology.", a: "The central dogma explains the flow of genetic information. 1) Replication: DNA duplicates itself so daughter cells receive identical copies. 2) Transcription: The DNA sequence is copied into a messenger RNA (mRNA) format. 3) Translation: Ribosomes read the mRNA sequence to assemble amino acids into a specific protein structure." },
+            { q: "Compare and contrast the functions of prokaryotic and eukaryotic DNA polymerases.", a: "Prokaryotes have 3 main polymerases (I, II, III). Pol III does bulk synthesis, Pol I replaces primers, and Pol II repairs. Eukaryotes have 5 main polymerases (\u03B1, \u03B2, \u03B3, \u03B4, \u03B5). \u03B4 does bulk synthesis (like Pol III), \u03B1 handles gap filling/priming (like Pol I), \u03B2 and \u03B5 handle repair/proofreading, and \u03B3 uniquely handles mitochondrial DNA." },
+            { q: "Detail the initiation stage of DNA replication, outlining the sequence of events and proteins involved.", a: "Initiation starts at the 'ori'. DNA A protein binds and begins denaturation. Helicase (DNA B protein) binds and further unwinds the double helix, creating a replication fork. Topoisomerase relieves the torsional strain ahead of the fork. SSB proteins bind to the separated single strands to prevent them from re-annealing. Finally, Primase lays down a short RNA primer to allow Pol III to begin synthesis." },
+            { q: "Explain the elongation phase of DNA replication, focusing on why continuous and discontinuous synthesis occurs.", a: "DNA Polymerase III can only add nucleotides to a 3' end (synthesizing 5' to 3'). Because DNA strands are anti-parallel, one template (3'->5') allows continuous 5'->3' synthesis towards the fork (Leading Strand). The other template (5'->3') forces polymerase to synthesize backwards away from the fork in short bursts called Okazaki fragments (Lagging Strand), requiring multiple primers." },
+            { q: "Discuss the enzymatic processes required to finalize the lagging strand after Okazaki fragments are formed.", a: "Once Pol III finishes an Okazaki fragment, it detaches. DNA Polymerase I steps in to remove the RNA primers using its exonuclease activity and replaces the RNA with DNA nucleotides. However, Pol I cannot join the final sugar-phosphate backbone gap. DNA Ligase is required to catalyze a phosphodiester bond, sealing the nicks and creating a continuous DNA strand." },
+            { q: "What mechanisms ensure the high fidelity of DNA replication, and what happens if incorrect nucleotides are incorporated?", a: "DNA replication is highly accurate (1 error per 10^8-10^12 bases) primarily due to proofreading. All three prokaryotic polymerases have a 3' to 5' exonuclease activity. If a wrong base is added, the enzyme pauses, moves backward, cuts out the wrong base, and tries again. If these mechanisms fail, mutations become permanently integrated into the genome." },
+            { q: "Create a comparative analysis of DNA replication in prokaryotes versus eukaryotes based on structural and kinetic features.", a: "1) Origins: Prokaryotes have a single origin; eukaryotes have multiple A-T rich origins. 2) Rate: Prokaryotes replicate fast (~500 nt/sec); eukaryotes are slower (~50 nt/sec). 3) Primer length: Prokaryotes use ~50 nt primers; eukaryotes use short ~9 nt primers. 4) Okazaki fragments: Prokaryotic fragments are long (1000-2000 nt); eukaryotic fragments are short (~200 nt). 5) Polymerases: 3 types vs 5 types." },
+            { q: "Discuss the structural problems created by the unwinding of double-stranded DNA and how Helicase, Topoisomerase, and SSB proteins solve them.", a: "Unwinding a twisted double helix creates severe overwinding (supercoiling) ahead of the fork. Helicase forces the strands apart like a zipper. Topoisomerase solves the supercoiling problem by making temporary cuts in the DNA backbone, allowing it to untwist, and resealing it. Once separated, the bases naturally want to hydrogen bond back together; SSB proteins coat the strands to keep them apart and accessible." },
+            { q: "Why is an RNA primer required for DNA replication, and how is it subsequently dealt with?", a: "DNA polymerases cannot initiate a new strand from nothing; they require an existing 3'-OH group to add the first nucleotide. Primase (an RNA polymerase) doesn't have this limitation and can start from scratch, creating a short RNA sequence. Later, this RNA must be removed (by Pol I in prokaryotes) and replaced with DNA, because RNA is less stable and doesn't belong in the final genome." },
+            { q: "Explain the termination phase of replication. How does the replication machinery know when to stop?", a: "In prokaryotes, the circular chromosome contains specific termination sequences (e.g., 'ter' sites) situated opposite the origin. A specific protein called the ter-binding protein binds to these sequences. When the replication fork reaches this protein complex, it physically blocks Helicase from further unwinding the DNA, safely halting the replication machinery and allowing the two new circular chromosomes to separate." }
+        ];
+
+        // --- RENDER LOGIC ---
+        
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqs.forEach((mcq, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl p-5 sm:p-7 shadow-sm border border-slate-200 dark:border-slate-700 transition-all";
+                
+                let optionsHtml = '';
+                mcq.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <button onclick="checkMCQ(${index}, ${optIdx}, this)" 
+                                class="mcq-btn w-full text-left p-4 rounded-lg border border-slate-200 dark:border-slate-600 mb-3 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                            <span class="font-medium mr-2 text-slate-500 dark:text-slate-400">${String.fromCharCode(65 + optIdx)}.</span> 
+                            ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h4 class="font-semibold text-lg mb-4 leading-snug"><span class="text-primary-600 dark:text-primary-400 mr-2">Q${index + 1}.</span>${mcq.q}</h4>
+                    <div class="options-container" id="mcq-opts-${index}">
+                        ${optionsHtml}
+                    </div>
+                    <div id="mcq-exp-${index}" class="hidden mt-4 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-800 dark:text-blue-200 text-sm">
+                        <strong>Explanation:</strong> ${mcq.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderQA(dataArray, containerId, prefix) {
+            const container = document.getElementById(containerId);
+            dataArray.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl p-5 sm:p-7 shadow-sm border border-slate-200 dark:border-slate-700 transition-all";
+                
+                const uniqueId = `${prefix}-ans-${index}`;
+                
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <h4 class="font-semibold text-lg leading-snug flex-1"><span class="text-primary-600 dark:text-primary-400 mr-2">${index + 1}.</span>${item.q}</h4>
+                        <button onclick="toggleAnswer('${uniqueId}')" class="shrink-0 flex items-center justify-center gap-2 text-sm font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                            <i data-lucide="eye" class="w-4 h-4"></i> Show Answer
+                        </button>
+                    </div>
+                    <div id="${uniqueId}" class="smooth-expand">
+                        <div class="smooth-expand-inner">
+                            <div class="mt-5 p-4 sm:p-5 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                                ${item.a}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- INTERACTIVITY LOGIC ---
+
+        function checkMCQ(questionIndex, selectedIndex, btnElement) {
+            const mcq = mcqs[questionIndex];
+            const container = document.getElementById(`mcq-opts-${questionIndex}`);
+            const buttons = container.querySelectorAll('button');
+            const explanation = document.getElementById(`mcq-exp-${questionIndex}`);
+
+            // Disable all buttons
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-50', 'dark:hover:bg-slate-700/50');
+                
+                if (idx === mcq.a) {
+                    // Highlight correct answer green
+                    btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-800', 'dark:bg-emerald-900/40', 'dark:text-emerald-200');
+                    btn.classList.remove('border-slate-200', 'dark:border-slate-600');
+                } else if (idx === selectedIndex && selectedIndex !== mcq.a) {
+                    // Highlight wrong answer red
+                    btn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-800', 'dark:bg-rose-900/40', 'dark:text-rose-200');
+                    btn.classList.remove('border-slate-200', 'dark:border-slate-600');
+                } else {
+                    // Dim others
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // Show explanation
+            explanation.classList.remove('hidden');
+        }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            const btn = el.previousElementSibling.querySelector('button');
+            const icon = btn.querySelector('i');
+            
+            if (el.classList.contains('open')) {
+                el.classList.remove('open');
+                btn.innerHTML = `<i data-lucide="eye" class="w-4 h-4"></i> Show Answer`;
+            } else {
+                el.classList.add('open');
+                btn.innerHTML = `<i data-lucide="eye-off" class="w-4 h-4"></i> Hide Answer`;
+            }
+            lucide.createIcons();
+        }
+
+        // --- DARK MODE LOGIC ---
+        
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // Check local storage or system pref
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // --- INITIALIZATION ---
+        
+        window.onload = () => {
+            renderMCQs();
+            renderQA(shorts, 'short-container', 'short');
+            renderQA(essays, 'essay-container', 'essay');
+            lucide.createIcons();
+        };
+
+    </script>
+</body>
+</html>
+

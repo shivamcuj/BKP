@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolism of Purine Nucleotides</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2pdf.js for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lora', 'serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        blush: {
+                            50: '#fff0f3',
+                            100: '#ffe5ec',
+                            200: '#ffc2d1',
+                            300: '#ffb3c6',
+                            400: '#ff8fab',
+                            500: '#fb6f92',
+                            800: '#70112d',
+                            900: '#590d22',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(255, 179, 198, 0.4)',
+                        'glow': '0 0 20px rgba(251, 111, 146, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffffff 100%);
+            background-attachment: fixed;
+            color: #590d22;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fff0f3; }
+        ::-webkit-scrollbar-thumb { background: #ffb3c6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff8fab; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .glass-card { border: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-blush-200 selection:text-blush-900 font-sans pb-20">
+
+    <!-- Navigation / Header -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-blush-200 shadow-sm no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
+            <h1 class="text-2xl md:text-3xl font-serif font-bold text-blush-800 flex items-center gap-2">
+                <i data-lucide="heart-pulse" class="text-blush-500"></i>
+                Purine Metabolism
+            </h1>
+            <div class="flex gap-4">
+                <a href="#detailed-section" class="text-sm font-medium text-blush-800 hover:text-blush-500 transition-colors">Detailed Guide</a>
+                <a href="#notes-section" class="text-sm font-medium text-blush-800 hover:text-blush-500 transition-colors">Quick Notes</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        
+        <!-- Welcome Section -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-blush-900 mb-6 leading-tight">
+                The Beautiful Science of<br/> <span class="text-blush-500">Nucleotide Life</span>
+            </h2>
+            <p class="text-lg text-blush-800/80 leading-relaxed">
+                Dive into the elegant pathways that build the foundation of our DNA and RNA. Grab a warm cup of tea, relax, and let's explore the de novo and salvage pathways of purine metabolism.
+            </p>
+        </div>
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <section id="detailed-section" class="mb-24 space-y-12">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-px bg-blush-300 flex-grow"></div>
+                <h3 class="text-3xl font-serif font-bold text-blush-800 text-center">Comprehensive Guide</h3>
+                <div class="h-px bg-blush-300 flex-grow"></div>
+            </div>
+
+            <!-- Intro Card -->
+            <article class="glass-card rounded-3xl p-8 md:p-10 shadow-soft hover:shadow-glow transition-all duration-300">
+                <h4 class="text-2xl font-serif font-bold text-blush-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="book-open" class="text-blush-500 h-6 w-6"></i>
+                    Introduction to Nucleic Acid Metabolism
+                </h4>
+                <div class="space-y-4 text-blush-900/80 leading-relaxed">
+                    <p>Nucleotides are the building blocks of life. <strong>Deoxyribonucleotides</strong> are crafted for DNA synthesis, while <strong>ribonucleotides</strong> breathe life into RNA synthesis.</p>
+                    <p>The biosynthesis of purine and pyrimidine nucleotides is absolutely essential for DNA replication, cell division, and the growth of all mammalian cells, bacteria, and viruses.</p>
+                    <div class="bg-blush-50 border-l-4 border-blush-400 p-4 rounded-r-xl mt-4">
+                        <p class="font-medium text-blush-900">💡 Example to Clarify:</p>
+                        <p class="text-sm mt-1">If the supply of nucleotides is blocked, cell division halts. This is why many <strong>anti-tumor, anti-bacterial, and anti-viral agents</strong> function as inhibitors of nucleotide biosynthesis. By starving a cancer cell of purines, we stop it from multiplying!</p>
+                    </div>
+                    <p>Remarkably, purines and pyrimidines are <em>dietary nonessential</em>. Our bodies don't rely on the food we eat to build endogenous nucleic acids; instead, humans synthesize them <strong>de novo</strong> (from scratch) using amphibolic intermediates.</p>
+                </div>
+            </article>
+
+            <!-- Precursors & De Novo Card -->
+            <article class="glass-card rounded-3xl p-8 md:p-10 shadow-soft hover:shadow-glow transition-all duration-300">
+                <h4 class="text-2xl font-serif font-bold text-blush-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="text-blush-500 h-6 w-6"></i>
+                    De Novo Biosynthesis Pathway
+                </h4>
+                <p class="mb-6 text-blush-900/80">The two primary purine nucleotides are <strong>AMP (Adenosine monophosphate)</strong> and <strong>GMP (Guanosine monophosphate)</strong>. In the <em>de novo</em> pathway, the purine ring is meticulously assembled directly onto a ribose-5-phosphate foundation.</p>
+                
+                <h5 class="text-xl font-serif font-semibold text-blush-800 mb-3">The Molecular Contributors (Precursors)</h5>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <li class="bg-white/50 rounded-xl p-4 flex items-start gap-3 border border-blush-100">
+                        <div class="bg-blush-200 rounded-full p-2 mt-1"><i data-lucide="leaf" class="h-4 w-4 text-blush-800"></i></div>
+                        <div><strong class="block text-blush-900">Glycine</strong> Provides carbon-4 (C4), C5, and nitrogen-7 (N7).</div>
+                    </li>
+                    <li class="bg-white/50 rounded-xl p-4 flex items-start gap-3 border border-blush-100">
+                        <div class="bg-blush-200 rounded-full p-2 mt-1"><i data-lucide="droplet" class="h-4 w-4 text-blush-800"></i></div>
+                        <div><strong class="block text-blush-900">Aspartate</strong> Provides nitrogen-1 (N1).</div>
+                    </li>
+                    <li class="bg-white/50 rounded-xl p-4 flex items-start gap-3 border border-blush-100">
+                        <div class="bg-blush-200 rounded-full p-2 mt-1"><i data-lucide="hexagon" class="h-4 w-4 text-blush-800"></i></div>
+                        <div><strong class="block text-blush-900">Glutamine</strong> Provides nitrogen-3 (N3) and nitrogen-9 (N9).</div>
+                    </li>
+                    <li class="bg-white/50 rounded-xl p-4 flex items-start gap-3 border border-blush-100">
+                        <div class="bg-blush-200 rounded-full p-2 mt-1"><i data-lucide="wind" class="h-4 w-4 text-blush-800"></i></div>
+                        <div><strong class="block text-blush-900">THF & CO₂</strong> Tetrahydrofolate derivatives furnish C2 and C8. Respiratory CO₂ provides C6.</div>
+                    </li>
+                </ul>
+
+                <h5 class="text-xl font-serif font-semibold text-blush-800 mb-3">Major Steps to IMP, AMP, & GMP</h5>
+                <div class="space-y-3 text-blush-900/80 list-decimal pl-5">
+                    <p><strong>1. Initiation:</strong> Ribose-5-phosphate (from the pentose phosphate pathway) is converted to <strong>PRPP</strong> (phospho-ribosyl-pyrophosphate) by <em>PRPP synthetase</em> using ATP.</p>
+                    <p><strong>2. The Committed Step:</strong> PRPP receives an amide group from Glutamine to form 5-phosphoribosylamine. Catalyzed by <em>PRPP-amidotransferase</em>. This is the rate-limiting step!</p>
+                    <p><strong>3-11. Building the Ring:</strong> Through a series of additions involving Glycine, THF, CO₂, and Aspartate, the structure eventually undergoes ring closure via <em>IMP cyclohydrolase</em> to form <strong>Inosine Monophosphate (IMP)</strong>, the parent purine nucleotide.</p>
+                    <p><strong>12-15. Branching out:</strong> 
+                        <br>- IMP + Aspartate + GTP → Adenylosuccinate → <strong>AMP</strong>
+                        <br>- IMP + NAD⁺ → XMP + Glutamine + ATP → <strong>GMP</strong>
+                    </p>
+                </div>
+            </article>
+
+            <!-- Regulation & Salvage Card -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <article class="glass-card rounded-3xl p-8 shadow-soft hover:shadow-glow transition-all duration-300">
+                    <h4 class="text-2xl font-serif font-bold text-blush-900 mb-4 flex items-center gap-2">
+                        <i data-lucide="sliders" class="text-blush-500 h-6 w-6"></i>
+                        Feedback Regulation
+                    </h4>
+                    <p class="text-blush-900/80 mb-4">The body elegantly ensures it doesn't overproduce purines through feedback inhibition:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-blush-800">
+                            <i data-lucide="check-circle-2" class="h-5 w-5 text-blush-500"></i>
+                            <span><strong>PRPP Synthetase:</strong> Inhibited by AMP and GMP.</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-blush-800">
+                            <i data-lucide="check-circle-2" class="h-5 w-5 text-blush-500"></i>
+                            <span><strong>PRPP-amidotransferase:</strong> Inhibited by AMP and GMP.</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-blush-800">
+                            <i data-lucide="check-circle-2" class="h-5 w-5 text-blush-500"></i>
+                            <span><strong>Branchpoints:</strong> AMP inhibits adenylosuccinate synthase; GMP inhibits IMP dehydrogenase.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="glass-card rounded-3xl p-8 shadow-soft hover:shadow-glow transition-all duration-300">
+                    <h4 class="text-2xl font-serif font-bold text-blush-900 mb-4 flex items-center gap-2">
+                        <i data-lucide="recycle" class="text-blush-500 h-6 w-6"></i>
+                        Salvage Pathway
+                    </h4>
+                    <p class="text-blush-900/80 mb-4">Nature's recycling program! Free purine bases formed during nucleic acid degradation are "salvaged" and attached to PRPP to form nucleotides, saving immense cellular energy.</p>
+                    <div class="bg-blush-50 p-4 rounded-xl border border-blush-200">
+                        <p class="font-medium text-blush-900 mb-2">Two key enzymes:</p>
+                        <ul class="list-disc pl-5 text-sm space-y-2 text-blush-800">
+                            <li><strong>APRTase:</strong> Adenine + PRPP → AMP</li>
+                            <li><strong>HGPRTase:</strong> Hypoxanthine + PRPP → IMP<br>Guanine + PRPP → GMP</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Catabolism Card -->
+            <article class="glass-card rounded-3xl p-8 md:p-10 shadow-soft hover:shadow-glow transition-all duration-300">
+                <h4 class="text-2xl font-serif font-bold text-blush-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="flame" class="text-blush-500 h-6 w-6"></i>
+                    Catabolism to Uric Acid
+                </h4>
+                <p class="text-blush-900/80 mb-4">In humans, purines are ultimately degraded down to <strong>Uric Acid</strong>, which is sparingly soluble.</p>
+                <div class="relative pl-6 border-l-2 border-blush-300 space-y-6 my-6 text-blush-800">
+                    <div>
+                        <div class="absolute w-3 h-3 bg-blush-500 rounded-full -left-[7px] mt-1.5"></div>
+                        <p><strong>Dephosphorylation:</strong> AMP & GMP lose phosphate via <em>nucleotidase</em> to become Adenosine and Guanosine.</p>
+                    </div>
+                    <div>
+                        <div class="absolute w-3 h-3 bg-blush-500 rounded-full -left-[7px] mt-1.5"></div>
+                        <p><strong>Deamination & Cleavage:</strong> Adenosine is deaminated to inosine (via <em>adenosine deaminase</em>). Inosine and Guanosine are cleaved to their free bases (Hypoxanthine and Guanine) via <em>nucleoside phosphorylase</em>.</p>
+                    </div>
+                    <div>
+                        <div class="absolute w-3 h-3 bg-blush-500 rounded-full -left-[7px] mt-1.5"></div>
+                        <p><strong>Final Oxidation:</strong> Hypoxanthine → Xanthine → Uric Acid. Guanine → Xanthine → Uric Acid. The superstar enzyme here is <strong>Xanthine Oxidase</strong>.</p>
+                    </div>
+                </div>
+                <div class="bg-white/60 p-4 rounded-xl text-sm text-blush-900 italic border border-blush-100">
+                    <strong>Conceptual Example:</strong> Because uric acid is sparingly soluble, an overproduction or under-excretion of it leads to its crystallization in joints—a painful condition widely known as <strong>Gout</strong>.
+                </div>
+            </article>
+
+        </section>
+
+        <!-- SECTION 2: SHORT NOTES FOR REVISION -->
+        <div class="flex items-center gap-4 mb-8 pt-10 mt-10" id="notes-section">
+            <div class="h-px bg-blush-300 flex-grow"></div>
+            <h3 class="text-3xl font-serif font-bold text-blush-800 text-center">Last-Minute Revision</h3>
+            <div class="h-px bg-blush-300 flex-grow"></div>
+        </div>
+
+        <div class="text-right mb-4">
+            <button onclick="downloadPDF()" class="inline-flex items-center gap-2 bg-blush-500 hover:bg-blush-800 text-white font-medium py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                Save Notes to PDF
+            </button>
+        </div>
+
+        <!-- This container is what will be converted to PDF -->
+        <section id="pdf-content" class="glass-card rounded-3xl p-8 md:p-12 shadow-soft bg-white">
+            
+            <div class="text-center mb-8 pb-6 border-b-2 border-blush-100">
+                <h2 class="text-3xl font-serif font-bold text-blush-900">Purine Metabolism Cheat Sheet</h2>
+                <p class="text-blush-400 mt-2 font-medium">Quick recall for exams</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">1. The Basics</h3>
+                    <ul class="list-disc pl-5 space-y-1.5 text-blush-900/90 text-sm mb-6">
+                        <li><strong>Need:</strong> DNA (deoxyribonucleotides) & RNA (ribonucleotides).</li>
+                        <li><strong>Dietary Need:</strong> Nonessential. Humans synthesize <em>de novo</em>.</li>
+                        <li><strong>Inhibitors:</strong> Act as anti-tumor/viral/bacterial drugs by stopping cell division.</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">2. De Novo Precursors</h3>
+                    <ul class="space-y-1.5 text-blush-900/90 text-sm mb-6 bg-blush-50 p-4 rounded-lg">
+                        <li><strong>Glycine:</strong> C4, C5, N7</li>
+                        <li><strong>Aspartate:</strong> N1</li>
+                        <li><strong>Glutamine:</strong> N3, N9</li>
+                        <li><strong>THF (Folate):</strong> C2, C8</li>
+                        <li><strong>CO₂:</strong> C6</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">3. Key De Novo Enzymes</h3>
+                    <ul class="list-disc pl-5 space-y-1.5 text-blush-900/90 text-sm">
+                        <li><strong>Start:</strong> Ribose-5-P → PRPP <em>(PRPP Synthetase)</em></li>
+                        <li><strong>Rate-Limiting/Committed:</strong> PRPP → 5-phosphoribosylamine <em>(PRPP-amidotransferase)</em></li>
+                        <li><strong>Parent Nucleotide:</strong> IMP (Inosine Monophosphate)</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">4. Regulation</h3>
+                    <ul class="list-disc pl-5 space-y-1.5 text-blush-900/90 text-sm mb-6">
+                        <li><strong>Activator:</strong> High PRPP concentration.</li>
+                        <li><strong>Feedback Inhibition:</strong> AMP & GMP inhibit both <em>PRPP synthetase</em> and <em>PRPP-amidotransferase</em>.</li>
+                        <li>AMP inhibits its own synthesis from IMP; GMP does the same.</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">5. Salvage Pathway</h3>
+                    <p class="text-xs text-blush-500 mb-2 italic">Recycles free purines + PRPP → Nucleotides</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-blush-900/90 text-sm mb-6">
+                        <li><strong>APRTase:</strong> Rescues Adenine → AMP.</li>
+                        <li><strong>HGPRTase:</strong> Rescues Hypoxanthine → IMP and Guanine → GMP.</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-blush-800 uppercase tracking-wider mb-3 border-b border-blush-100 pb-1">6. Catabolism (Degradation)</h3>
+                    <ul class="list-none space-y-2 text-blush-900/90 text-sm bg-blush-50 p-4 rounded-lg">
+                        <li>👉 <strong>End Product:</strong> Uric Acid (sparingly soluble)</li>
+                        <li>👉 <strong>Key Enzyme 1:</strong> <em>Adenosine Deaminase</em> (Adenosine → Inosine)</li>
+                        <li>👉 <strong>Key Enzyme 2:</strong> <em>Xanthine Oxidase</em> (Converts Hypoxanthine & Xanthine into Uric Acid, reducing O₂ to H₂O₂)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-xs text-blush-400">
+                Created with love for high-yield studying. Best of luck on your exams!
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-8 text-center text-blush-500 text-sm no-print">
+        <p>&copy; Biology Study Notes | Designed for Clarity & Peace of Mind</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // PDF Generation Function
+        function downloadPDF() {
+            const element = document.getElementById('pdf-content');
+            
+            // Configuration for html2pdf
+            const opt = {
+                margin:       [10, 10, 10, 10], // top, left, bottom, right in mm
+                filename:     'Purine_Metabolism_Short_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Temporary styling to ensure the PDF looks like a clean white sheet
+            const originalBg = element.style.background;
+            const originalShadow = element.style.boxShadow;
+            element.style.background = '#ffffff';
+            element.style.boxShadow = 'none';
+
+            // Generate PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore styling after saving
+                element.style.background = originalBg;
+                element.style.boxShadow = originalShadow;
+            });
+        }
+    </script>
+</body>
+</html>
+

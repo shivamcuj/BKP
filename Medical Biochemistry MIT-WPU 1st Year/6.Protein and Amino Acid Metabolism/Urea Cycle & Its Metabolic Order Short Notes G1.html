@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urea Cycle & Metabolic Disorders - Study Notes</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts for romantic and readable typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf.js for saving the notes as PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#FDF2F8',
+                        rosewater: '#FCE7F3',
+                        mauve: '#F3E8FF',
+                        wine: '#9F1239',
+                        textMain: '#334155',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Nunito"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow': '0 10px 40px -10px rgba(244, 114, 182, 0.3)',
+                        'glow-lg': '0 20px 50px -10px rgba(244, 114, 182, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFF0F5 0%, #FDF4F7 50%, #F5F3FF 100%);
+            background-attachment: fixed;
+        }
+        
+        .romantic-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(252, 231, 243, 0.8);
+        }
+
+        /* Heart list style */
+        ul.hearts > li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        ul.hearts > li::before {
+            content: '♥';
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            color: #F472B6;
+            font-size: 0.9rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF2F8; }
+        ::-webkit-scrollbar-thumb { background: #FBCFE8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #F472B6; }
+
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .romantic-card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body class="font-sans text-textMain antialiased min-h-screen py-8 px-4 sm:px-8 lg:px-16 selection:bg-pink-200 selection:text-wine">
+
+    <!-- Header & Controls -->
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center mb-10 no-print gap-4">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-serif text-wine font-bold drop-shadow-sm flex items-center gap-3">
+                Biochemistry Notes <span class="text-pink-400 text-3xl">✨</span>
+            </h1>
+            <p class="text-pink-600 mt-2 font-medium">Urea Cycle & Its Metabolic Disorders</p>
+        </div>
+        <button onclick="downloadPDF()" class="group relative px-6 py-3 font-semibold text-white bg-gradient-to-r from-pink-400 to-rose-400 rounded-full shadow-glow hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-4 focus:ring-pink-200">
+            <span class="relative flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+                Save to PDF
+            </span>
+        </button>
+    </div>
+
+    <!-- Main Content Area to be converted to PDF -->
+    <div id="pdf-content" class="max-w-5xl mx-auto space-y-12">
+        
+        <!-- Document Title for PDF only -->
+        <div class="hidden print:block text-center mb-8">
+            <h1 class="text-4xl font-serif text-wine font-bold">Urea Cycle & Its Metabolic Disorders</h1>
+            <p class="text-gray-500 mt-2">Comprehensive Study Guide & Quick Revision</p>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: DETAILED EXPLANATIONS           -->
+        <!-- ========================================== -->
+        <section class="romantic-card rounded-[2rem] p-6 md:p-10 shadow-glow">
+            <div class="border-b-2 border-pink-100 pb-4 mb-8">
+                <h2 class="text-3xl font-serif text-wine mb-2 flex items-center gap-2">
+                    <span class="bg-pink-100 text-pink-500 rounded-full w-10 h-10 flex items-center justify-center text-xl shadow-sm">I</span>
+                    Detailed Explanations
+                </h2>
+                <p class="text-pink-600 font-medium">Deep dive into the Krebs-Henseleit cycle</p>
+            </div>
+
+            <!-- Introduction -->
+            <div class="mb-10">
+                <h3 class="text-2xl font-serif text-pink-800 mb-4">1. Introduction to the Urea Cycle</h3>
+                <div class="bg-rosewater/30 rounded-2xl p-6 border border-pink-50 text-gray-700 leading-relaxed space-y-3">
+                    <p>Ammonia is highly toxic to the Central Nervous System (CNS), even in microscopic traces. To protect the body, the liver acts as a vital filtration hub, rapidly removing ammonia from circulation and converting it into a non-toxic, water-soluble compound known as <strong>Urea</strong>.</p>
+                    <ul class="hearts space-y-2 mt-3 pl-2">
+                        <li><strong>Alternative Name:</strong> The Krebs-Henseleit cycle (named after the scientists who proposed it).</li>
+                        <li><strong>Site of Synthesis:</strong> Predominantly the liver. Reactions occur across both the <strong>mitochondria</strong> and the <strong>cytosol</strong>.</li>
+                        <li><strong>Nature of Process:</strong> It is highly energy-dependent (requires ATP).</li>
+                        <li><strong>Amino Acid Intermediates:</strong> Interestingly, the intermediates in this cycle are amino acids for which no genetic codons exist (e.g., Ornithine, Citrulline).</li>
+                    </ul>
+                </div>
+                
+                <!-- Clarification Box -->
+                <div class="mt-4 bg-indigo-50/50 rounded-xl p-5 border-l-4 border-indigo-300">
+                    <p class="text-sm text-indigo-800"><strong class="font-bold">✨ Concept Clarification:</strong> Think of ammonia as a hazardous exhaust fume generated by protein breakdown. The liver acts like a catalytic converter, using energy (ATP) to safely package these fumes into a harmless fluid (urea) that the kidneys can easily flush away.</p>
+                </div>
+            </div>
+
+            <!-- Reactions -->
+            <div class="mb-10">
+                <h3 class="text-2xl font-serif text-pink-800 mb-4">2. The 5 Reactions of Urea Formation</h3>
+                <p class="mb-6 text-gray-600 italic">Note: The first reaction is a preparatory step essential for the cycle, while the remaining four constitute the actual cyclic process.</p>
+                
+                <div class="space-y-6">
+                    <!-- Reaction 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-pink-200 transition-colors">
+                        <h4 class="text-xl font-bold text-wine mb-2">Step 1: Formation of Carbamoyl Phosphate</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div class="bg-pink-50 rounded-lg p-3"><strong>📍 Location:</strong> Mitochondria</div>
+                            <div class="bg-pink-50 rounded-lg p-3"><strong>🧬 Enzyme:</strong> Carbamoyl Phosphate Synthetase-I</div>
+                        </div>
+                        <p class="text-gray-700 mb-2">Ammonia condenses with HCO<sub>3</sub><sup>-</sup> at the expense of 2 high-energy bonds (2 ATP &rarr; 2 ADP + 2 Pi) to form carbamoyl phosphate. One Pi is consumed.</p>
+                        <p class="text-gray-700"><strong>Requirement:</strong> Needs N-acetyl glutamate (activator) and Mg<sup>2+</sup>. This is a thermodynamically strong step that pulls the entire cycle forward.</p>
+                    </div>
+
+                    <!-- Reaction 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-pink-200 transition-colors">
+                        <h4 class="text-xl font-bold text-wine mb-2">Step 2: Formation of Citrulline</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div class="bg-purple-50 rounded-lg p-3"><strong>📍 Location:</strong> Mitochondria &rarr; Cytosol</div>
+                            <div class="bg-purple-50 rounded-lg p-3"><strong>🧬 Enzyme:</strong> Ornithine Transcarbamoylase</div>
+                        </div>
+                        <p class="text-gray-700">Carbamoyl phosphate condenses with <strong>ornithine</strong> to form <strong>citrulline</strong>. Citrulline then crosses the inner mitochondrial membrane into the cytosol via a specific transporter.</p>
+                    </div>
+
+                    <!-- Reaction 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-pink-200 transition-colors">
+                        <h4 class="text-xl font-bold text-wine mb-2">Step 3: Formation of Argininosuccinate</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div class="bg-indigo-50 rounded-lg p-3"><strong>📍 Location:</strong> Cytosol</div>
+                            <div class="bg-indigo-50 rounded-lg p-3"><strong>🧬 Enzyme:</strong> Argininosuccinate Synthetase</div>
+                        </div>
+                        <p class="text-gray-700">Citrulline condenses with <strong>aspartate</strong> (which provides the second nitrogen for urea). This consumes 2 high-energy bonds (ATP &rarr; AMP + PPi, and PPi is further hydrolyzed to 2 Pi).</p>
+                    </div>
+
+                    <!-- Reaction 4 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-pink-200 transition-colors">
+                        <h4 class="text-xl font-bold text-wine mb-2">Step 4: Cleavage to Arginine and Fumarate</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div class="bg-blue-50 rounded-lg p-3"><strong>📍 Location:</strong> Cytosol</div>
+                            <div class="bg-blue-50 rounded-lg p-3"><strong>🧬 Enzyme:</strong> Argininosuccinase (Argininosuccinate lyase)</div>
+                        </div>
+                        <p class="text-gray-700">Argininosuccinate is cleaved, resulting in <strong>arginine</strong> (continues in cycle) and <strong>fumarate</strong> (exits cycle).</p>
+                        <p class="text-sm text-blue-700 mt-2 bg-blue-100/50 p-2 rounded"><em>Fate of Fumarate:</em> Recycled back to aspartate (Fumarate &rarr; Malate &rarr; Oxaloacetate &rarr; Aspartate) linking to the TCA cycle.</p>
+                    </div>
+
+                    <!-- Reaction 5 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-pink-200 transition-colors">
+                        <h4 class="text-xl font-bold text-wine mb-2">Step 5: Formation of Urea and Ornithine</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div class="bg-emerald-50 rounded-lg p-3"><strong>📍 Location:</strong> Cytosol</div>
+                            <div class="bg-emerald-50 rounded-lg p-3"><strong>🧬 Enzyme:</strong> Arginase</div>
+                        </div>
+                        <p class="text-gray-700">Arginine is hydrolyzed to produce <strong>Urea</strong> and regenerate <strong>Ornithine</strong>. Ornithine re-enters the mitochondria to start the cycle anew.</p>
+                    </div>
+                </div>
+
+                <!-- Overall Equation -->
+                <div class="mt-8 bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-6 text-center shadow-sm">
+                    <h4 class="text-lg font-serif text-wine mb-3">Overall Equation for Urea Formation</h4>
+                    <p class="text-lg md:text-xl font-mono text-gray-800 bg-white/60 inline-block px-4 py-2 rounded-lg">
+                        NH<sub>3</sub> + HCO<sub>3</sub><sup>-</sup> + Aspartate + 4ATP &rarr; Urea + Fumarate + 4ADP + 4Pi
+                    </p>
+                </div>
+            </div>
+
+            <!-- Disorders -->
+            <div>
+                <h3 class="text-2xl font-serif text-pink-800 mb-4">3. Metabolic Disorders of the Urea Cycle</h3>
+                <p class="text-gray-700 mb-6">These are inherited genetic defects with an incidence of about 1 in 2500. Defective enzymes lead to <strong>ammonia intoxication</strong> (hyperammonemia). Symptoms include vomiting, lethargy, irritability, mental retardation, and coma.</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse bg-white rounded-2xl overflow-hidden shadow-sm">
+                        <thead>
+                            <tr class="bg-rose-100 text-wine text-sm uppercase tracking-wider">
+                                <th class="p-4 font-bold">Disorder</th>
+                                <th class="p-4 font-bold">Defective Enzyme</th>
+                                <th class="p-4 font-bold">Accumulated Product</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700 divide-y divide-rose-50">
+                            <tr class="hover:bg-rose-50/50 transition-colors">
+                                <td class="p-4 font-semibold">Hyperammonemia Type-I</td>
+                                <td class="p-4">Carbamoyl phosphate synthetase-I</td>
+                                <td class="p-4 text-rose-600 font-medium">Ammonia</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/50 transition-colors">
+                                <td class="p-4 font-semibold">Hyperammonemia Type-II <br><span class="text-xs text-gray-400 font-normal">(Most common, causes orotic acid in urine)</span></td>
+                                <td class="p-4">Ornithine transcarbamoylase</td>
+                                <td class="p-4 text-rose-600 font-medium">Ammonia (diverted to pyrimidines)</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/50 transition-colors">
+                                <td class="p-4 font-semibold">Citrullinemia</td>
+                                <td class="p-4">Argininosuccinate synthetase</td>
+                                <td class="p-4 text-rose-600 font-medium">Citrulline</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/50 transition-colors">
+                                <td class="p-4 font-semibold">Argininosuccinic aciduria</td>
+                                <td class="p-4">Argininosuccinate lyase (Argininosuccinase)</td>
+                                <td class="p-4 text-rose-600 font-medium">Argininosuccinate</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/50 transition-colors">
+                                <td class="p-4 font-semibold">Argininemia</td>
+                                <td class="p-4">Arginase</td>
+                                <td class="p-4 text-rose-600 font-medium">Arginine</td>
+                            </tr>
+                            <tr class="hover:bg-rose-50/50 transition-colors border-b border-rose-50">
+                                <td class="p-4 font-semibold">N-Acetylglutamate Synthetase Deficiency</td>
+                                <td class="p-4">N-acetyl glutamate synthetase</td>
+                                <td class="p-4 text-rose-600 font-medium">Ammonia (Hyperammonemia)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-6 bg-pink-50 rounded-xl p-5 border border-pink-100">
+                    <h4 class="font-bold text-wine mb-2">💊 Clinical Treatment:</h4>
+                    <p class="text-sm text-gray-700">Treatments focus on removing excess ammonia and reducing dietary nitrogen. <strong>Peritoneal dialysis</strong> clears blood ammonia. Administration of <strong>Benzoic acid</strong> and <strong>Phenyl acetate</strong> increases alternative nitrogen excretion pathways.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: SHORT NOTES (QUICK REVISION)    -->
+        <!-- ========================================== -->
+        <section class="romantic-card rounded-[2rem] p-6 md:p-10 shadow-glow mb-10">
+            <div class="border-b-2 border-indigo-100 pb-4 mb-8">
+                <h2 class="text-3xl font-serif text-indigo-900 mb-2 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-500 rounded-full w-10 h-10 flex items-center justify-center text-xl shadow-sm">II</span>
+                    Quick Revision Notes
+                </h2>
+                <p class="text-indigo-600 font-medium">High-yield bullet points for last-minute exam prep</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Fundamentals Box -->
+                <div class="bg-white border-l-4 border-rose-400 p-5 rounded-r-xl shadow-sm">
+                    <h3 class="font-bold text-rose-800 text-lg mb-3 flex items-center gap-2">
+                        <span>📌</span> Core Facts
+                    </h3>
+                    <ul class="text-sm text-gray-700 space-y-2 list-disc pl-4 marker:text-rose-300">
+                        <li><strong>Site:</strong> Liver (Mitochondria & Cytosol).</li>
+                        <li><strong>Purpose:</strong> Convert toxic $NH_3$ to non-toxic Urea.</li>
+                        <li><strong>Regulation:</strong> Rate-limiting enzyme is <em>Carbamoyl Phosphate Synthetase-I</em>, activated by N-acetylglutamate.</li>
+                        <li><strong>Nitrogen Sources:</strong> 1 from free Ammonia, 1 from Aspartate.</li>
+                        <li><strong>Carbon Source:</strong> $HCO_3^-$ (from $CO_2$).</li>
+                        <li><strong>Blood Urea Norm:</strong> 16 - 36 mg/100 ml.</li>
+                        <li><strong>Excretion:</strong> 10-25 gm/day in urine.</li>
+                    </ul>
+                </div>
+
+                <!-- Pathway Summary Box -->
+                <div class="bg-white border-l-4 border-indigo-400 p-5 rounded-r-xl shadow-sm">
+                    <h3 class="font-bold text-indigo-800 text-lg mb-3 flex items-center gap-2">
+                        <span>🔄</span> The 5 Steps (Mnemonics)
+                    </h3>
+                    <div class="text-sm text-gray-700 space-y-3">
+                        <p class="font-semibold text-indigo-600 bg-indigo-50 inline-block px-2 py-1 rounded">Mnemonic for Intermediates: "Ordinarily Careless Crappers Are Also Frivolous About Urination"</p>
+                        <p class="text-xs text-gray-500 mb-2">Ornithine &rarr; Carbamoyl phosphate &rarr; Citrulline &rarr; Aspartate &rarr; Argininosuccinate &rarr; Fumarate &rarr; Arginine &rarr; Urea</p>
+                        
+                        <ol class="list-decimal pl-4 space-y-1 marker:text-indigo-400 font-medium">
+                            <li><span class="text-gray-800">Ammonia + $CO_2$ &rarr; Carbamoyl PO4</span> <span class="text-xs font-normal text-gray-500">(Uses 2 ATP, Mito)</span></li>
+                            <li><span class="text-gray-800">+ Ornithine &rarr; Citrulline</span> <span class="text-xs font-normal text-gray-500">(Mito &rarr; Cyto)</span></li>
+                            <li><span class="text-gray-800">+ Aspartate &rarr; Argininosuccinate</span> <span class="text-xs font-normal text-gray-500">(Uses ATP, Cyto)</span></li>
+                            <li><span class="text-gray-800">Cleavage &rarr; Arginine + Fumarate</span> <span class="text-xs font-normal text-gray-500">(Cyto)</span></li>
+                            <li><span class="text-gray-800">Arginine hydrolysis &rarr; Urea + Ornithine</span> <span class="text-xs font-normal text-gray-500">(Cyto)</span></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Pathologies Box -->
+                <div class="bg-white border-l-4 border-amber-400 p-5 rounded-r-xl shadow-sm md:col-span-2">
+                    <h3 class="font-bold text-amber-800 text-lg mb-3 flex items-center gap-2">
+                        <span>⚠️</span> Pathology Cheat Sheet
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <span class="block text-xs text-amber-600 font-bold uppercase tracking-wide">Type I Hyperammonemia</span>
+                            <span class="font-semibold text-gray-800">CPS-I Defect</span>
+                            <span class="block text-xs text-gray-600 mt-1">High $NH_3$</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <span class="block text-xs text-amber-600 font-bold uppercase tracking-wide">Type II Hyperammonemia</span>
+                            <span class="font-semibold text-gray-800">OTC Defect</span>
+                            <span class="block text-xs text-gray-600 mt-1">High $NH_3$, Orotic acid in urine</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <span class="block text-xs text-amber-600 font-bold uppercase tracking-wide">Citrullinemia</span>
+                            <span class="font-semibold text-gray-800">Arg.succinate Synthase</span>
+                            <span class="block text-xs text-gray-600 mt-1">High Citrulline</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <span class="block text-xs text-amber-600 font-bold uppercase tracking-wide">Argininosuccinic aciduria</span>
+                            <span class="font-semibold text-gray-800">Arg.succinate Lyase</span>
+                            <span class="block text-xs text-gray-600 mt-1">High Argininosuccinate</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <span class="block text-xs text-amber-600 font-bold uppercase tracking-wide">Argininemia</span>
+                            <span class="font-semibold text-gray-800">Arginase Defect</span>
+                            <span class="block text-xs text-gray-600 mt-1">High Arginine</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 flex items-center justify-center text-center">
+                            <span class="text-xs font-medium text-amber-700">Treatment: Low Protein Diet, Phenylacetate, Benzoic Acid, Dialysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-pink-500 font-serif pb-8 no-print">
+            <p>Made with love for your exams. Good luck! 🌸</p>
+        </footer>
+
+    </div>
+
+    <!-- Script for PDF Generation -->
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('pdf-content');
+            
+            // Configuration for html2pdf
+            const opt = {
+                margin:       [10, 10, 10, 10], // top, left, bottom, right in mm
+                filename:     'Urea_Cycle_Study_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true,
+                    letterRendering: true
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Add a temporary class to ensure backgrounds render nicely in PDF
+            document.body.style.background = '#ffffff';
+            
+            // Promise-based generation
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore beautiful background after generation
+                document.body.style.background = 'linear-gradient(135deg, #FFF0F5 0%, #FDF4F7 50%, #F5F3FF 100%)';
+            });
+        }
+    </script>
+</body>
+</html>
+

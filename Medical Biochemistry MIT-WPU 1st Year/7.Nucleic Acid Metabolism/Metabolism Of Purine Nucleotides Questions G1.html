@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purine Metabolism Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth transitions for dark mode */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .explanation-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease;
+            opacity: 0;
+        }
+        .explanation-content.show {
+            max-height: 500px; /* arbitrary large value */
+            opacity: 1;
+        }
+        
+        /* Custom radio button styles */
+        .mcq-option {
+            transition: all 0.2s ease;
+        }
+        .mcq-option.correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .dark .mcq-option.correct {
+            background-color: #14532d !important;
+            border-color: #4ade80 !important;
+            color: #bbf7d0 !important;
+        }
+        .mcq-option.wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .dark .mcq-option.wrong {
+            background-color: #7f1d1d !important;
+            border-color: #f87171 !important;
+            color: #fecaca !important;
+        }
+        .mcq-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-500">
+                🧬 Purine Metabolism Quiz
+            </h1>
+            <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                <!-- Sun Icon (shows in dark mode) -->
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 2.32a1 1 0 011.415 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.636 15.636a1 1 0 010 1.415l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.415 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-2.32a1 1 0 01-1.415 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm2.32-4.22a1 1 0 010-1.415l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 01-1.415 1.415zM10 5a5 5 0 100 10 5 5 0 000-10z"></path>
+                </svg>
+                <!-- Moon Icon (shows in light mode) -->
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        
+        <div class="text-center space-y-4 mb-10">
+            <h2 class="text-3xl font-serif font-bold text-gray-800 dark:text-gray-100">Study Guide & Test</h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Master the De Novo and Salvage pathways of purine nucleotide synthesis and catabolism. Answer the questions below to test your knowledge.</p>
+        </div>
+
+        <!-- Section: Multiple Choice Questions -->
+        <section id="mcq-section">
+            <h3 class="text-2xl font-bold mb-6 text-primary-600 dark:text-primary-400 border-b border-gray-200 dark:border-gray-700 pb-2">Part I: Multiple Choice Questions</h3>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs will be injected here via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Section: Short Answer Questions -->
+        <section id="short-answer-section">
+            <h3 class="text-2xl font-bold mb-6 text-primary-600 dark:text-primary-400 border-b border-gray-200 dark:border-gray-700 pb-2">Part II: Short Answer Questions</h3>
+            <div id="short-answer-container" class="space-y-6">
+                <!-- Short Answers will be injected here via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Section: Essay Questions -->
+        <section id="essay-section">
+            <h3 class="text-2xl font-bold mb-6 text-primary-600 dark:text-primary-400 border-b border-gray-200 dark:border-gray-700 pb-2">Part III: Essay Questions</h3>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays will be injected here via JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 shadow-inner mt-12 py-8 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+            <p class="text-lg font-serif italic text-gray-600 dark:text-gray-300">Designed For My Bestie</p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-medium tracking-wide">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Data Configuration
+        const mcqData = [
+            {
+                question: "What is the end product of purine catabolism in humans?",
+                options: ["Urea", "Xanthine", "Uric acid", "Allantoin"],
+                answer: 2,
+                explanation: "In humans, purines are ultimately degraded to uric acid, which is sparingly soluble and excreted. This process involves the oxidation of hypoxanthine and xanthine by xanthine oxidase."
+            },
+            {
+                question: "Which amino acid provides Carbon-4, Carbon-5, and Nitrogen-7 for the de novo purine ring?",
+                options: ["Aspartate", "Glutamine", "Glycine", "Alanine"],
+                answer: 2,
+                explanation: "Glycine directly incorporates into the growing purine ring, supplying C4, C5, and N7 during the formation of glycinamide ribosyl-5-phosphate."
+            },
+            {
+                question: "What is the rate-limiting (committed) step in de novo purine nucleotide synthesis?",
+                options: ["Synthesis of PRPP from Ribose-5-phosphate", "Conversion of PRPP to 5-phosphoribosylamine", "Ring closure to form IMP", "Conversion of IMP to AMP"],
+                answer: 1,
+                explanation: "The committed step is the conversion of PRPP into phosphoribosylamine by PRPP glutamyl-amidotransferase. This step is strongly feedback-inhibited by AMP and GMP."
+            },
+            {
+                question: "Which molecule provides Nitrogen-1 (N1) of the purine ring?",
+                options: ["Glutamine", "Aspartate", "Glycine", "Ammonia"],
+                answer: 1,
+                explanation: "Aspartate condenses with aminoimidazole carboxylate ribosyl-5-phosphate (VIII). After fumarate is liberated, the remaining nitrogen becomes N1 of the purine structure."
+            },
+            {
+                question: "Carbon-2 and Carbon-8 of the purine ring are provided by:",
+                options: ["Respiratory CO2", "Glycine", "Tetrahydrofolate derivatives", "Glutamine"],
+                answer: 2,
+                explanation: "N5, N10-methenyl THF and N10-formyl THF serve as one-carbon carriers, providing C8 and C2 respectively during the purine ring assembly."
+            },
+            {
+                question: "Which enzyme is required to synthesize Phosphoribosylpyrophosphate (PRPP)?",
+                options: ["PRPP-amidotransferase", "PRPP synthetase", "Adenylosuccinase", "IMP cyclohydrolase"],
+                answer: 1,
+                explanation: "PRPP synthetase catalyzes the transfer of a pyrophosphate group from ATP to the C-1 of ribose-5-phosphate to form PRPP."
+            },
+            {
+                question: "What is the first complete parent purine nucleotide formed in the de novo pathway?",
+                options: ["AMP", "GMP", "IMP", "XMP"],
+                answer: 2,
+                explanation: "Inosine monophosphate (IMP) is the first full purine nucleotide synthesized. It acts as a branch point to synthesize either AMP or GMP."
+            },
+            {
+                question: "What is the role of the salvage enzyme HGPRTase?",
+                options: ["Converts adenine to AMP", "Converts ribose-5-phosphate to PRPP", "Degrades uric acid", "Converts hypoxanthine to IMP and guanine to GMP"],
+                answer: 3,
+                explanation: "Hypoxanthine-Guanine Phosphoribosyltransferase (HGPRTase) salvages free bases by attaching them to PRPP, forming IMP (from hypoxanthine) and GMP (from guanine)."
+            },
+            {
+                question: "During purine catabolism, which enzyme converts adenosine to inosine?",
+                options: ["Nucleotidase", "Adenosine deaminase", "Nucleoside phosphorylase", "Xanthine oxidase"],
+                answer: 1,
+                explanation: "Adenosine deaminase removes the amino group from adenosine, yielding inosine. A deficiency in this enzyme leads to Severe Combined Immunodeficiency (SCID)."
+            },
+            {
+                question: "Which of the following compounds feedback inhibit PRPP synthetase?",
+                options: ["ATP and GTP", "AMP and GMP", "Uric acid and Xanthine", "Ribose-5-phosphate"],
+                answer: 1,
+                explanation: "The end products of purine synthesis, AMP and GMP, provide feedback inhibition to PRPP synthetase to prevent the overproduction of purine nucleotides."
+            },
+            {
+                question: "Which high-energy molecule is specifically required to synthesize AMP from IMP?",
+                options: ["ATP", "UTP", "CTP", "GTP"],
+                answer: 3,
+                explanation: "The conversion of IMP to adenylosuccinate (on the way to AMP) requires energy derived from GTP. Conversely, ATP is used for synthesizing GMP from IMP."
+            },
+            {
+                question: "Which amino acid donates an amino group to Xanthosine monophosphate (XMP) to form GMP?",
+                options: ["Glutamine", "Glutamate", "Aspartate", "Asparagine"],
+                answer: 0,
+                explanation: "XMP accepts an amino group from glutamine in the presence of ATP and guanosine phosphate synthetase to become Guanosine monophosphate (GMP)."
+            },
+            {
+                question: "What is the source of Carbon-6 (C6) in the purine ring?",
+                options: ["Tetrahydrofolate", "Respiratory CO2", "Glycine", "Aspartate"],
+                answer: 1,
+                explanation: "Carbon dioxide (CO2) from respiration is added to aminoimidazole ribosyl-5-phosphate to form the C6 atom of the purine structure."
+            },
+            {
+                question: "Why do many anti-tumor agents target nucleotide biosynthesis?",
+                options: ["They stimulate cell division", "Nucleotides are required for protein digestion", "Blocking nucleotide synthesis halts DNA replication and cell division", "They increase uric acid excretion"],
+                answer: 2,
+                explanation: "Since nucleotides are essential for DNA replication, inhibiting their synthesis starves rapidly dividing cells (like cancer cells or bacteria) of the materials needed to grow."
+            },
+            {
+                question: "Which enzyme is responsible for the final oxidative steps converting hypoxanthine to uric acid?",
+                options: ["Guanase", "Xanthine oxidase", "Adenosine deaminase", "Nucleotidase"],
+                answer: 1,
+                explanation: "Xanthine oxidase, a molybdenum- and iron-containing enzyme, oxidizes hypoxanthine to xanthine, and subsequently xanthine to uric acid."
+            },
+            {
+                question: "The starting material for purine synthesis, Ribose-5-phosphate, is primarily derived from which pathway?",
+                options: ["Glycolysis", "Citric acid cycle", "Pentose phosphate pathway", "Gluconeogenesis"],
+                answer: 2,
+                explanation: "Ribose-5-phosphate is a key intermediate generated in the oxidative and non-oxidative phases of the Pentose Phosphate Pathway."
+            },
+            {
+                question: "Are purines and pyrimidines required in the human diet?",
+                options: ["Yes, they are essential macronutrients", "No, they are dietary nonessential", "Only purines are essential", "Only pyrimidines are essential"],
+                answer: 1,
+                explanation: "They are dietary nonessential. Humans can synthesize purine and pyrimidine nucleotides de novo from amphibolic intermediates like amino acids and CO2."
+            },
+            {
+                question: "What enzyme removes the phosphate group from AMP and GMP during degradation?",
+                options: ["Nucleoside phosphorylase", "Adenosine deaminase", "Nucleotidase", "PRPP synthetase"],
+                answer: 2,
+                explanation: "Nucleotidase is the enzyme responsible for dephosphorylating AMP into adenosine, and GMP into guanosine, initiating the catabolic pathway."
+            },
+            {
+                question: "Which enzyme salvages Adenine to form AMP?",
+                options: ["HGPRTase", "APRTase", "Guanase", "Adenylosuccinase"],
+                answer: 1,
+                explanation: "Adenine Phosphoribosyltransferase (APRTase) specifically catalyzes the transfer of the ribose phosphate moiety of PRPP to adenine, forming AMP."
+            },
+            {
+                question: "In the salvage pathway, why is it preferred over the de novo pathway when possible?",
+                options: ["It requires far less energy", "It produces more uric acid", "It utilizes dietary nucleotides directly", "It bypasses the need for Ribose-5-phosphate entirely"],
+                answer: 0,
+                explanation: "The salvage pathway is a single-step reaction that uses significantly less ATP/energy compared to building the entire purine ring step-by-step from scratch."
+            }
+        ];
+
+        const shortAnswerData = [
+            {
+                question: "1. Differentiate between the de novo and salvage pathways of purine synthesis.",
+                explanation: "The de novo pathway synthesizes purine rings from scratch using precursors like amino acids (glycine, aspartate, glutamine), CO2, and THF derivatives, requiring significant energy. The salvage pathway recycles free purine bases (from nucleic acid degradation) by attaching them directly to PRPP in a single, energy-saving step."
+            },
+            {
+                question: "2. Name the two major purine nucleotides of nucleic acids.",
+                explanation: "The two major purine nucleotides are Adenosine monophosphate (AMP) and Guanosine monophosphate (GMP)."
+            },
+            {
+                question: "3. List the raw molecular precursors required for the de novo synthesis of the purine ring.",
+                explanation: "The precursors include Glycine (provides C4, C5, N7), Aspartate (N1), Glutamine (N3, N9), Tetrahydrofolate (THF) derivatives (C2, C8), and Respiratory CO2 (C6)."
+            },
+            {
+                question: "4. What is the committed (rate-limiting) step in purine nucleotide biosynthesis?",
+                explanation: "The committed step is the conversion of Phosphoribosylpyrophosphate (PRPP) to 5-phosphoribosylamine. It is catalyzed by the enzyme PRPP-amidotransferase, which adds an amide group from glutamine."
+            },
+            {
+                question: "5. What is the role of Ribose-5-phosphate in purine metabolism?",
+                explanation: "Ribose-5-phosphate (derived from the pentose phosphate pathway) serves as the foundational sugar structure. It is converted to PRPP, upon which the entire purine ring is assembled in the de novo pathway, or to which free bases are attached in the salvage pathway."
+            },
+            {
+                question: "6. How is the enzyme PRPP synthetase regulated?",
+                explanation: "PRPP synthetase is an allosteric enzyme that undergoes feedback inhibition by the end-products of the pathway, specifically the purine nucleotides AMP and GMP. This ensures purines are not overproduced."
+            },
+            {
+                question: "7. Name the two main enzymes involved in the purine salvage pathway and their substrates.",
+                explanation: "1) Adenine phosphoribosyl transferase (APRTase) converts Adenine to AMP. 2) Hypoxanthine-Guanine phosphoribosyl transferase (HGPRTase) converts Hypoxanthine to IMP, and Guanine to GMP."
+            },
+            {
+                question: "8. Trace the first two enzymatic steps in the catabolism of AMP.",
+                explanation: "First, AMP is dephosphorylated by Nucleotidase to form Adenosine. Second, Adenosine is deaminated by Adenosine Deaminase to form Inosine."
+            },
+            {
+                question: "9. Why is the salvage pathway biologically significant?",
+                explanation: "It allows cells to reuse free purine bases generated from nucleic acid degradation, conserving massive amounts of cellular energy (ATP) that would otherwise be spent on de novo synthesis."
+            },
+            {
+                question: "10. What is the final fate of Guanine during purine catabolism in humans?",
+                explanation: "Guanine is deaminated by guanase to yield Xanthine. Xanthine is then oxidized by Xanthine oxidase to form Uric acid, which is excreted from the body."
+            }
+        ];
+
+        const essayData = [
+            {
+                question: "1. Describe the de novo pathway for the biosynthesis of Inosine Monophosphate (IMP), detailing the precursors and key enzymes.",
+                explanation: "De novo synthesis builds the purine ring on a ribose-5-phosphate base. 1) PRPP synthetase converts ribose-5-P to PRPP. 2) The committed step is catalyzed by PRPP glutamyl-amidotransferase, adding an amino group from glutamine to form 5-phosphoribosylamine. Subsequent steps sequentially add atoms: Glycine adds C4, C5, N7; formyl-THF adds C8; Glutamine adds N3; Ring closure occurs; CO2 adds C6; Aspartate adds N1; and formyl-THF adds C2. A final ring closure catalyzed by IMP cyclohydrolase forms Inosine monophosphate (IMP), the parent nucleotide."
+            },
+            {
+                question: "2. Discuss the specific origin of each carbon and nitrogen atom in the assembled purine ring.",
+                explanation: "The purine ring consists of 9 atoms. N1 is derived from the amino group of Aspartate. C2 is provided by N10-formyl-THF. N3 comes from the amide group of Glutamine. C4, C5, and N7 are completely incorporated from the amino acid Glycine. C6 is derived from respiratory CO2. C8 is provided by N5, N10-methenyl-THF. Finally, N9 is provided by the amide group of Glutamine during the very first committed step forming 5-phosphoribosylamine."
+            },
+            {
+                question: "3. Elaborate on the feedback regulation mechanisms of de novo purine nucleotide synthesis.",
+                explanation: "Regulation occurs primarily through feedback inhibition to prevent excess nucleotide production. 1) PRPP synthetase is inhibited by AMP and GMP, decreasing the available PRPP pool. 2) The committed step enzyme, PRPP glutamyl-amidotransferase, is strongly feedback-inhibited by AMP and GMP. 3) Branch-point regulation: AMP inhibits adenylosuccinate synthetase (its own specific pathway from IMP), and GMP inhibits IMP dehydrogenase (its own specific pathway from IMP). Furthermore, cross-regulation exists as GTP is required to make AMP, and ATP is required to make GMP, balancing their production."
+            },
+            {
+                question: "4. Explain the salvage pathway of purine nucleotides and justify its physiological significance compared to de novo synthesis.",
+                explanation: "The salvage pathway converts free purine bases (adenine, guanine, hypoxanthine) directly into their corresponding nucleotides (AMP, GMP, IMP) by attaching them to PRPP. This is mediated by APRTase and HGPRTase. Its physiological significance lies in its extreme energy efficiency. De novo synthesis requires up to 6 ATP molecules just to build IMP from ribose-5-P. By recycling existing bases, the cell saves immense energy. Defects in salvage enzymes (like HGPRTase in Lesch-Nyhan syndrome) lead to forced reliance on de novo synthesis and massive overproduction of uric acid."
+            },
+            {
+                question: "5. Detail the catabolic pathway of AMP and GMP leading to the formation of uric acid.",
+                explanation: "Both AMP and GMP are first dephosphorylated by nucleotidase to adenosine and guanosine. Adenosine is deaminated by adenosine deaminase to inosine. Purine nucleoside phosphorylase then cleaves inosine and guanosine to release ribose-1-P and free bases (hypoxanthine and guanine, respectively). Guanase deaminates guanine to form xanthine. Hypoxanthine is oxidized by xanthine oxidase to xanthine. Finally, xanthine oxidase acts again to oxidize xanthine into uric acid, which is sparingly soluble and excreted in human urine."
+            },
+            {
+                question: "6. Describe the branch points involved in the conversion of IMP to AMP and GMP, highlighting the energy sources and enzymes involved.",
+                explanation: "IMP is the common precursor. To form AMP: IMP condenses with Aspartate, catalyzed by adenylosuccinate synthetase, specifically utilizing GTP for energy. Adenylosuccinase then removes fumarate to leave AMP. To form GMP: IMP is first oxidized to Xanthosine monophosphate (XMP) by IMP dehydrogenase (requiring NAD+). XMP then accepts an amide group from Glutamine, catalyzed by guanosine phosphate synthetase, utilizing ATP for energy to form GMP. This crossed energy requirement balances AMP/GMP ratios."
+            },
+            {
+                question: "7. Explain the pharmacological principle behind using nucleotide biosynthesis inhibitors as anti-tumor and anti-viral agents.",
+                explanation: "DNA replication and RNA synthesis are absolute requirements for cell division and viral replication. Because tumors (and viruses) proliferate rapidly, they have a massive, continuous demand for de novo synthesized deoxyribonucleotides and ribonucleotides. By deploying structural analogs or enzyme inhibitors that block the de novo synthesis pathways (e.g., inhibiting THF utilization or PRPP-amidotransferase), the supply of nucleotides is choked off. Without a sufficient nucleotide pool, the growth and replication of cancer cells, bacteria, and viruses are effectively halted."
+            },
+            {
+                question: "8. Discuss the role and importance of tetrahydrofolate (THF) derivatives in purine biosynthesis.",
+                explanation: "Tetrahydrofolate (THF) acts as a crucial one-carbon carrier in metabolism. In de novo purine synthesis, THF derivatives provide two critical carbon atoms for the purine ring. Specifically, N5,N10-methenyl-THF provides Carbon-8 via formyl transferase, and N10-formyl-THF provides Carbon-2. Because of their essential role, drugs that inhibit folate metabolism (like methotrexate or sulfonamides) indirectly stall purine synthesis, making them potent anti-cancer and anti-bacterial drugs."
+            },
+            {
+                question: "9. Trace the degradation of Adenosine monophosphate (AMP) to uric acid, naming all intermediates and enzymes.",
+                explanation: "1) AMP + H2O -> Adenosine + Pi (Enzyme: Nucleotidase). 2) Adenosine + H2O -> Inosine + NH3 (Enzyme: Adenosine deaminase). 3) Inosine + Pi -> Hypoxanthine + Ribose-1-P (Enzyme: Purine nucleoside phosphorylase). 4) Hypoxanthine + H2O + O2 -> Xanthine + H2O2 (Enzyme: Xanthine oxidase). 5) Xanthine + H2O + O2 -> Uric acid + H2O2 (Enzyme: Xanthine oxidase). This final product, uric acid, is then excreted."
+            },
+            {
+                question: "10. Summarize the complete metabolic lifecycle of a purine nucleotide, from de novo synthesis to degradation.",
+                explanation: "The lifecycle begins with Ribose-5-phosphate converted to PRPP. Amino acids, CO2, and THF incrementally build the purine ring to form IMP. IMP branches to form AMP or GMP, which are utilized for nucleic acid (DNA/RNA) synthesis or energy transfer. During cellular turnover, nucleic acids are degraded to free purines. The salvage pathway captures many of these bases (via APRTase/HGPRTase) to reform nucleotides, conserving energy. Bases not salvaged undergo catabolism: removal of phosphates, deamination, and final oxidation by xanthine oxidase to yield uric acid, which exits the body as waste."
+            }
+        ];
+
+        // UI Generation Functions
+        function generateMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((mcq, index) => {
+                const questionHTML = `
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors">
+                        <p class="font-semibold text-lg mb-4 text-gray-800 dark:text-gray-200"><span class="text-primary-600 dark:text-primary-400 mr-2">${index + 1}.</span>${mcq.question}</p>
+                        <div class="space-y-3" id="mcq-options-${index}">
+                            ${mcq.options.map((opt, optIdx) => `
+                                <button class="mcq-option w-full text-left px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300" 
+                                    onclick="checkMCQ(${index}, ${optIdx}, this)">
+                                    <span class="font-medium mr-2">${String.fromCharCode(65 + optIdx)}.</span> ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div class="mt-4">
+                            <button onclick="toggleExplanation('mcq-exp-${index}')" class="text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Show Explanation
+                            </button>
+                            <div id="mcq-exp-${index}" class="explanation-content bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 rounded-lg mt-2 text-sm italic">
+                                <div class="p-4 border-l-4 border-primary-500">${mcq.explanation}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        function generateTextQuestions(data, containerId, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, index) => {
+                const html = `
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors">
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">${item.question}</p>
+                        <button onclick="toggleExplanation('${prefix}-exp-${index}')" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md text-sm font-medium transition-colors flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            Show Answer
+                        </button>
+                        <div id="${prefix}-exp-${index}" class="explanation-content bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 rounded-lg mt-3 text-sm leading-relaxed">
+                            <div class="p-4 border-l-4 border-green-500">${item.explanation}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Interactivity Functions
+        function checkMCQ(questionIndex, selectedOptionIndex, buttonElement) {
+            const correctAnswer = mcqData[questionIndex].answer;
+            const optionsContainer = document.getElementById(`mcq-options-${questionIndex}`);
+            const allButtons = optionsContainer.querySelectorAll('button');
+
+            // Disable all buttons after selection
+            allButtons.forEach(btn => btn.classList.add('disabled'));
+
+            if (selectedOptionIndex === correctAnswer) {
+                buttonElement.classList.add('correct');
+            } else {
+                buttonElement.classList.add('wrong');
+                // Highlight correct answer
+                allButtons[correctAnswer].classList.add('correct');
+                allButtons[correctAnswer].classList.remove('disabled'); // make the green pop more
+            }
+        }
+
+        function toggleExplanation(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('show')) {
+                el.classList.remove('show');
+            } else {
+                el.classList.add('show');
+            }
+        }
+
+        // Dark Mode Setup
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        function updateIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+            }
+            updateIcons();
+        });
+
+        // Initialize App
+        function init() {
+            // Check system/local storage preference for dark mode
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            updateIcons();
+
+            // Render content
+            generateMCQs();
+            generateTextQuestions(shortAnswerData, 'short-answer-container', 'sa');
+            generateTextQuestions(essayData, 'essay-container', 'essay');
+        }
+
+        // Run init on load
+        window.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>
+
+

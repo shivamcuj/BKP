@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetic Code & Protein Synthesis - Study Guide</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .mcq-option {
+            transition: all 0.2s ease;
+        }
+        .mcq-option.correct {
+            background-color: #22c55e !important;
+            color: white !important;
+            border-color: #22c55e !important;
+        }
+        .mcq-option.wrong {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+        .mcq-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .explanation-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .explanation-content.show {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="dna" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h1 class="font-heading text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">PharmD Guru Quiz</h1>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                <i data-lucide="moon" id="theme-icon-dark" class="w-5 h-5 text-slate-800 hidden"></i>
+                <i data-lucide="sun" id="theme-icon-light" class="w-5 h-5 text-yellow-400"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16 w-full">
+        
+        <div class="text-center space-y-4 max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl sm:text-4xl font-heading font-bold text-slate-900 dark:text-white">Genetic Code & Protein Synthesis</h2>
+            <p class="text-slate-600 dark:text-slate-400 text-lg">Test your knowledge with these curated questions covering codons, the wobble hypothesis, and antibiotics.</p>
+        </div>
+
+        <!-- Section 1: MCQs -->
+        <section id="mcq-section" class="space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-primary-100 dark:bg-primary-900/50 p-2 rounded-lg text-primary-600 dark:text-primary-400">
+                    <i data-lucide="mouse-pointer-click" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-bold">Multiple Choice Questions</h3>
+            </div>
+            <div id="mcq-container" class="grid grid-cols-1 gap-6">
+                <!-- JS will inject MCQs here -->
+            </div>
+        </section>
+
+        <!-- Section 2: Short Answer Questions -->
+        <section id="short-q-section" class="space-y-6 mt-16">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-amber-100 dark:bg-amber-900/50 p-2 rounded-lg text-amber-600 dark:text-amber-400">
+                    <i data-lucide="message-square-text" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-bold">Short Answer Questions</h3>
+            </div>
+            <div id="short-q-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- JS will inject Short Qs here -->
+            </div>
+        </section>
+
+        <!-- Section 3: Essay Questions -->
+        <section id="essay-q-section" class="space-y-6 mt-16">
+            <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-bold">Essay Questions</h3>
+            </div>
+            <div id="essay-q-container" class="grid grid-cols-1 gap-6">
+                <!-- JS will inject Essay Qs here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-8 mt-12">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+            <p class="font-heading text-lg font-semibold text-pink-500 flex items-center gap-2">
+                Designed For My Bestie <i data-lucide="heart" class="w-5 h-5 fill-pink-500"></i>
+            </p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+                @shivamcuj
+            </a>
+            <p class="text-sm text-slate-400 mt-4">Study smart, not hard. Good luck with your exams!</p>
+        </div>
+    </footer>
+
+    <!-- Scripts Data and Logic -->
+    <script>
+        // Data Structures
+        const mcqs = [
+            { q: "How many possible codon sequences are there in the genetic code?", options: ["20", "32", "61", "64"], answer: 3 },
+            { q: "Which of the following sets represents the nonsense (stop) codons?", options: ["AUG, UGG, UAA", "UAA, UAG, UGA", "UAA, UCA, UCG", "UGC, UAG, UGA"], answer: 1 },
+            { q: "The term 'degenerate' in the context of the genetic code means:", options: ["One codon codes for multiple amino acids", "The code degrades over time", "One amino acid may be coded by more than one codon", "The code is not universal"], answer: 2 },
+            { q: "Which two amino acids have only one single codon specifying them?", options: ["Methionine and Tryptophan", "Arginine and Leucine", "Serine and Proline", "Valine and Glycine"], answer: 0 },
+            { q: "In human mitochondria, what does the codon UGA code for?", options: ["Stop signal", "Tryptophan", "Methionine", "Threonine"], answer: 1 },
+            { q: "In human mitochondria, the codon AUA normally codes for Isoleucine, but instead it codes for:", options: ["Leucine", "Tryptophan", "Methionine", "Stop signal"], answer: 2 },
+            { q: "What does the Wobble hypothesis primarily explain?", options: ["Why there are 64 codons", "How ribosomes bind to mRNA", "How a single tRNA can recognize several codons", "The process of peptide bond formation"], answer: 2 },
+            { q: "According to Crick's Wobble hypothesis, which base of the codon undergoes non-standard pairing?", options: ["First base", "Second base", "Third base", "All bases"], answer: 2 },
+            { q: "If the first base of the anticodon is Inosine (I), how many different codons can it read?", options: ["One", "Two", "Three", "Four"], answer: 2 },
+            { q: "According to the wobble hypothesis, what is the minimum number of tRNAs required to translate all 61 amino acid codons?", options: ["20", "32", "61", "64"], answer: 1 },
+            { q: "Which antibiotic mimics the 3' end of aminoacyl-tRNA and causes premature chain termination?", options: ["Tetracycline", "Puromycin", "Erythromycin", "Chloramphenicol"], answer: 1 },
+            { q: "Tetracycline inhibits protein synthesis by:", options: ["Blocking peptidyl transferase", "Inhibiting translocation", "Preventing the binding of aminoacyl tRNA to the A site", "Causing misreading of the genetic code"], answer: 2 },
+            { q: "Which antibiotic binds to the 50S ribosomal subunit and blocks the peptidyl transferase reaction in prokaryotes?", options: ["Chloramphenicol", "Streptomycin", "Tetracycline", "Puromycin"], answer: 0 },
+            { q: "Erythromycin exerts its effect by binding to the 50S subunit and inhibiting:", options: ["Peptidyl transferase", "The translocation reaction", "Aminoacyl tRNA binding", "Oligosaccharide attachment"], answer: 1 },
+            { q: "Which of the following binds to the 30S subunit and causes misreading of the genetic code?", options: ["Cycloheximide", "Lincomycin", "Streptomycin", "Chloramphenicol"], answer: 2 },
+            { q: "Cycloheximide is unique among the listed inhibitors because it specifically blocks:", options: ["Prokaryotic 30S subunits", "Prokaryotic 50S subunits", "Eukaryotic 60S subunit peptidyl transferase activity", "Eukaryotic elongation factor"], answer: 2 },
+            { q: "How does Diphtheria toxin inhibit eukaryotic protein synthesis?", options: ["It blocks the A site", "It inactivates the elongation factor", "It prevents mRNA binding", "It mimics aminoacyl-tRNA"], answer: 1 },
+            { q: "Which inhibitor prevents the attachment of oligosaccharide side chains to certain glycoproteins?", options: ["Tunicamycin", "Puromycin", "Streptomycin", "Clindamycin"], answer: 0 },
+            { q: "Codons that designate the same amino acid are termed:", options: ["Homonyms", "Antonyms", "Synonyms", "Isotopes"], answer: 2 },
+            { q: "The genetic code is read sequentially as a continuous sequence without spacer bases. This characteristic is called:", options: ["Degenerate", "Unambiguous", "Universal", "Non-overlapping and without punctuation"], answer: 3 }
+        ];
+
+        const shortQs = [
+            { q: "Define a 'codon' and state its function.", a: "A codon is a group of three adjacent nucleotide bases in mRNA that specifies a single amino acid during protein synthesis." },
+            { q: "Name the three nonsense codons and their alternate names.", a: "The three nonsense codons are UAA (ochre), UAG (amber), and UGA (opal). They normally signal the termination of a polypeptide chain." },
+            { q: "What does it mean that the genetic code is 'unambiguous'?", a: "It means that although an amino acid may have multiple codons, each specific codon will only ever specify one and the same amino acid." },
+            { q: "State the primary exception to the universality of the genetic code.", a: "Exceptions are found in human mitochondria. For example, UGA codes for tryptophan (instead of stop), AUA codes for methionine (instead of isoleucine), and CUA codes for threonine (instead of leucine)." },
+            { q: "Explain the concept of 'wobble' in codon-anticodon interaction.", a: "Wobble refers to the flexibility in base pairing at the third position of an mRNA codon. It allows a single tRNA (with a specific anticodon) to recognize and bind to multiple synonymous codons." },
+            { q: "What is the consequence of the wobble hypothesis regarding the number of tRNAs needed?", a: "It implies that a cell does not need 61 different tRNAs for the 61 amino acid codons. A minimum of just 32 tRNAs is sufficient to translate all of them." },
+            { q: "How do Lincomycin and Clindamycin inhibit protein synthesis?", a: "They bind to the 50S ribosomal subunit of prokaryotes and inhibit peptidyl transferase, thereby preventing peptide bond formation." },
+            { q: "Describe the mechanism of action of Puromycin.", a: "It structurally mimics the 3' end of an aminoacyl-tRNA. It gets incorporated into the growing polypeptide chain but cannot be extended, causing premature chain termination in both prokaryotes and eukaryotes." },
+            { q: "How does Streptomycin affect prokaryotic translation?", a: "It binds to the 30S subunit, causing a misreading of the genetic code and interfering with the binding of initiating tRNA, which inhibits chain elongation." },
+            { q: "Which specific ribosomal target does Chloramphenicol block, and in which organisms?", a: "It binds to the 50S ribosomal subunit in prokaryotes (bacteria) and blocks the peptidyl transferase reaction." }
+        ];
+
+        const essayQs = [
+            { q: "Discuss the five key characteristics of the Genetic Code in detail.", a: "A comprehensive essay should cover: 1. Number of codons (64 total, $4^3$). 2. Stop/Nonsense codons (UAA, UAG, UGA). 3. Degenerate but unambiguous nature (multiple codons per amino acid, but one amino acid per codon). 4. Almost universal (with mitochondrial exceptions). 5. Non-overlapping and without punctuation (read in continuous triplets)." },
+            { q: "Elaborate on the Wobble Hypothesis and detail Crick's four rules of wobble.", a: "The essay should explain that wobble solves how fewer tRNAs read more codons via loose 3rd-base pairing. It must list Crick's rules: 1) First two bases strictly Watson-Crick pair. 2) Differing 1st/2nd bases need different tRNAs. 3) First base of anticodon dictates wobble (C/A reads 1; U/G reads 2; I reads 3). 4) Minimum 32 tRNAs required." },
+            { q: "Describe the mechanism by which antibiotics inhibit protein synthesis at the 30S ribosomal subunit.", a: "Focus on prokaryote-specific antibiotics: Tetracycline (prevents binding of aminoacyl-tRNA to the A site) and Streptomycin (causes misreading of the genetic code and interferes with initiating tRNA binding to prevent elongation)." },
+            { q: "Describe the mechanism by which antibiotics inhibit protein synthesis at the 50S ribosomal subunit.", a: "Discuss inhibitors like Chloramphenicol (blocks peptidyl transferase), Erythromycin (inhibits translocation), and Lincomycin/Clindamycin (inhibits peptidyl transferase and peptide bond formation)." },
+            { q: "Compare and contrast inhibitors that affect prokaryotes versus eukaryotes.", a: "Compare prokaryotic inhibitors (Tetracycline, Chloramphenicol, Streptomycin) targeting 30S/50S subunits with eukaryotic inhibitors (Cycloheximide targeting 60S peptidyl transferase, Diphtheria toxin inactivating elongation factor). Mention Puromycin affects both." },
+            { q: "Explain the protective advantage of degeneracy in the genetic code.", a: "The essay should argue that having multiple codons (synonyms) for a single amino acid minimizes the deleterious effects of mutations. If the third base mutates, the wobble effect ensures the same amino acid is often still incorporated, preventing disastrous changes to the resulting protein." },
+            { q: "Detail the specific exceptions to the universal genetic code found in human mitochondria.", a: "Discuss that 'universal' means codons mean the same across organisms, but in human mitochondria: UGA normally signals Stop, but codes for Tryptophan; AUA normally Isoleucine, codes for Methionine; CUA normally Leucine, codes for Threonine." },
+            { q: "Analyze the role and consequence of Puromycin in translation.", a: "Detail its origin (mold), its structural similarity to the 3' end of aminoacyl-tRNA, its integration into the A site, the formation of peptidyl puromycin, and how the absence of a linkable group causes immediate discharge from the ribosome, terminating the chain early in both prokaryotes and eukaryotes." },
+            { q: "Differentiate between the disruption of 'Peptidyl Transferase' and 'Translocation' during protein synthesis, providing antibiotic examples.", a: "Peptidyl transferase creates the peptide bond (blocked by Chloramphenicol, Lincomycin, Cycloheximide). Translocation moves the ribosome along the mRNA to the next codon (blocked by Erythromycin). Explain how halting either stops elongation but at different micro-steps." },
+            { q: "Explain the cellular function of Tunicamycin and Diphtheria toxin beyond the standard ribosome targeting.", a: "Tunicamycin does not directly block ribosomal RNA; it prevents the attachment of oligosaccharide side chains to glycoproteins, halting proper post-translational modification. Diphtheria toxin bypasses the ribosome directly and inactivates the eukaryotic elongation factor, halting synthesis entirely." }
+        ];
+
+        // Rendering Functions
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqs.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700";
+                
+                const questionHeader = document.createElement('h4');
+                questionHeader.className = "text-lg font-semibold mb-4 text-slate-800 dark:text-slate-200";
+                questionHeader.innerText = `${index + 1}. ${item.q}`;
+                card.appendChild(questionHeader);
+
+                const optionsGrid = document.createElement('div');
+                optionsGrid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+
+                item.options.forEach((opt, optIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = "mcq-option text-left px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium";
+                    btn.innerText = opt;
+                    
+                    btn.onclick = () => {
+                        // Disable all buttons in this question
+                        const allBtns = optionsGrid.querySelectorAll('button');
+                        allBtns.forEach(b => b.classList.add('disabled'));
+                        
+                        // Check logic
+                        if (optIndex === item.answer) {
+                            btn.classList.add('correct');
+                        } else {
+                            btn.classList.add('wrong');
+                            // Highlight correct answer
+                            allBtns[item.answer].classList.add('correct');
+                        }
+                    };
+                    optionsGrid.appendChild(btn);
+                });
+                card.appendChild(optionsGrid);
+                container.appendChild(card);
+            });
+        }
+
+        function renderQASection(dataArray, containerId, bgColorClass) {
+            const container = document.getElementById(containerId);
+            dataArray.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full";
+                
+                const qText = document.createElement('h4');
+                qText.className = "text-md font-semibold mb-4 text-slate-800 dark:text-slate-200 flex-grow";
+                qText.innerText = `Q${index + 1}. ${item.q}`;
+                card.appendChild(qText);
+
+                const answerDiv = document.createElement('div');
+                answerDiv.className = `explanation-content mt-4 p-4 rounded-lg ${bgColorClass} text-slate-800 dark:text-slate-200 text-sm border border-slate-200 dark:border-slate-600`;
+                answerDiv.innerHTML = `<strong>Explanation:</strong> <br/> ${item.a}`;
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = "mt-auto self-start text-sm font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1 transition-colors";
+                toggleBtn.innerHTML = `<span>Show Explanation</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>`;
+                
+                let isOpen = false;
+                toggleBtn.onclick = () => {
+                    isOpen = !isOpen;
+                    if(isOpen) {
+                        answerDiv.classList.add('show');
+                        toggleBtn.innerHTML = `<span>Hide Explanation</span> <i data-lucide="chevron-up" class="w-4 h-4"></i>`;
+                    } else {
+                        answerDiv.classList.remove('show');
+                        toggleBtn.innerHTML = `<span>Show Explanation</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>`;
+                    }
+                    lucide.createIcons();
+                };
+
+                card.appendChild(toggleBtn);
+                card.appendChild(answerDiv);
+                container.appendChild(card);
+            });
+        }
+
+        // Dark/Light Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const htmlElement = document.documentElement;
+
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIconDark.classList.add('hidden');
+                themeIconLight.classList.remove('hidden');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIconLight.classList.add('hidden');
+                themeIconDark.classList.remove('hidden');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // Initialize Theme Based on Preference
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            themeIconLight.classList.add('hidden');
+            themeIconDark.classList.remove('hidden');
+        } else {
+            htmlElement.classList.remove('dark');
+            themeIconDark.classList.add('hidden');
+            themeIconLight.classList.remove('hidden');
+        }
+
+        // Initialization
+        window.onload = () => {
+            renderMCQs();
+            renderQASection(shortQs, 'short-q-container', 'bg-amber-50 dark:bg-amber-900/20');
+            renderQASection(essayQs, 'essay-q-container', 'bg-emerald-50 dark:bg-emerald-900/20');
+            lucide.createIcons(); // Initialize all icons once DOM is ready
+        };
+
+    </script>
+</body>
+</html>
+

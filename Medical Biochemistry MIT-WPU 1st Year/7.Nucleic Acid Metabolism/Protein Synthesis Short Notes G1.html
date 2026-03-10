@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Synthesis Notes</title>
+    <!-- Tailwind CSS for layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for romantic and highly readable typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-gradient-start: #fce3e7;
+            --bg-gradient-end: #f9d8e0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #4a3f44;
+            --text-heading: #884b5c;
+            --accent-color: #d88c9a;
+            --accent-glow: rgba(216, 140, 154, 0.4);
+            --button-hover: #c47685;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-heading);
+        }
+
+        .romantic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px var(--accent-glow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .romantic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(216, 140, 154, 0.5);
+        }
+
+        .table-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--accent-color);
+        }
+
+        th {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        tr:nth-child(even) td {
+            background-color: rgba(252, 227, 231, 0.4);
+        }
+
+        .btn-romantic {
+            background: linear-gradient(135deg, var(--accent-color), var(--button-hover));
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px var(--accent-glow);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-romantic:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(196, 118, 133, 0.6);
+        }
+
+        .heart-icon {
+            color: #ffb6c1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        ul.custom-bullets {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.custom-bullets > li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+        }
+
+        ul.custom-bullets > li::before {
+            content: '🌸';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.85em;
+        }
+
+        /* Hide elements during PDF generation */
+        .html2pdf__container .no-print {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <!-- Top Action Bar -->
+    <div class="max-w-5xl mx-auto mb-8 flex justify-end no-print">
+        <button onclick="downloadPDF()" class="btn-romantic cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Save Notes to PDF
+        </button>
+    </div>
+
+    <!-- Main Content Area to be Printed -->
+    <div id="notes-container" class="max-w-5xl mx-auto space-y-10">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 flex items-center justify-center gap-3">
+                <span class="heart-icon">♥</span> Protein Synthesis <span class="heart-icon">♥</span>
+            </h1>
+            <p class="text-lg italic text-gray-700 font-serif">A comprehensive guide to the beautiful pathway of Translation</p>
+        </div>
+
+        <!-- SECTION 1: DETAILED EXPLANATIONS -->
+        <section class="romantic-card p-8 md:p-10">
+            <h2 class="text-3xl border-b-2 pb-3 mb-6" style="border-color: var(--accent-color);">Part 1: Detailed Explanations</h2>
+
+            <!-- Introduction -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-3">Introduction to Translation</h3>
+                <p class="mb-4 text-gray-800 text-justify">
+                    The pathway of protein biosynthesis is called <strong>translation</strong>. It is the poetic process by which ribosomes convert the information carried by mRNA—written in the form of a genetic code—into the synthesis of a brand new protein. 
+                </p>
+                <ul class="custom-bullets text-gray-800 mb-4">
+                    <li>Translation occurs in the cytosol on ribosomes and is intricately guided by mRNA.</li>
+                    <li>While the basic blueprint is similar across all life forms, eukaryotic translation involves more protein components and delicate, intricate steps compared to prokaryotes.</li>
+                </ul>
+                
+                <h4 class="text-xl font-semibold mt-6 mb-3">Eukaryotes vs. Prokaryotes</h4>
+                <div class="table-container overflow-x-auto">
+                    <table class="min-w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="p-3 border-b">Characters</th>
+                                <th class="p-3 border-b">Eukaryotes</th>
+                                <th class="p-3 border-b">Prokaryotes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm md:text-base">
+                            <tr>
+                                <td class="p-3 border-b font-semibold text-gray-700">Ribosome</td>
+                                <td class="p-3 border-b">Larger, 80S (consists of 60S and 40S subunits)</td>
+                                <td class="p-3 border-b">Smaller, 70S (consists of 50S and 30S subunits)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border-b font-semibold text-gray-700">Initiator tRNA</td>
+                                <td class="p-3 border-b">Met-tRNA<sup>Met</sup></td>
+                                <td class="p-3 border-b">metf-tRNA<sup>met</sup></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border-b font-semibold text-gray-700">Start Signal</td>
+                                <td class="p-3 border-b">Initiating AUG of mRNA is preceded by a methylguanosyl triphosphate cap</td>
+                                <td class="p-3 border-b">Initiating AUG of mRNA is preceded by a purine-rich sequence (Shine-Dalgarno)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border-b font-semibold text-gray-700">Initiation Factors</td>
+                                <td class="p-3 border-b">Nine are known; prefix 'eIF' denotes a eukaryotic initiation factor</td>
+                                <td class="p-3 border-b">Contains three initiation factors: IF₁, IF₂, and IF₃</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border-b font-semibold text-gray-700">Termination Factors</td>
+                                <td class="p-3 border-b">Carried out by a single release factor (eRF)</td>
+                                <td class="p-3 border-b">Carried out by three releasing factors (RF1, RF2, RF3)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Basic Requirements -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-3">Basic Requirements for Translation</h3>
+                <div class="bg-white bg-opacity-50 p-5 rounded-xl border border-pink-100">
+                    <p class="mb-2">Before the magical assembly of a protein begins, the cell gathers these essential ingredients:</p>
+                    <ul class="custom-bullets text-gray-800">
+                        <li><strong>mRNA:</strong> The messenger carrying the genetic recipe.</li>
+                        <li><strong>tRNAs:</strong> The dedicated carriers bringing specific amino acids.</li>
+                        <li><strong>Ribosomes:</strong> The workbench where assembly happens.</li>
+                        <li><strong>Energy:</strong> Sourced from ATP and GTP.</li>
+                        <li><strong>Enzymes & Factors:</strong> E.g., aminoacyl tRNA synthases, initiation factors, and elongation factors.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Stages of Translation -->
+            <div>
+                <h3 class="text-2xl font-semibold mb-5">The 4 Beautiful Stages of Eukaryotic Translation</h3>
+                
+                <div class="space-y-6">
+                    <!-- Stage 1 -->
+                    <div class="bg-pink-50 bg-opacity-40 p-6 rounded-xl shadow-sm">
+                        <h4 class="text-xl font-bold mb-2 flex items-center gap-2 text-[#884b5c]">
+                            <span class="bg-[#d88c9a] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">1</span>
+                            Activation of Amino Acids
+                        </h4>
+                        <p class="text-gray-800 mb-2">
+                            Taking place in the cytosol, this is where amino acids are "woken up" and prepared for their journey. Each of the 20 amino acids is covalently attached to their specific tRNA.
+                        </p>
+                        <p class="text-gray-700 italic text-sm border-l-4 pl-3" style="border-color: var(--accent-color);">
+                            <strong>Concept Clarification:</strong> This attachment costs energy (ATP) and is facilitated by the enzyme <em>aminoacyl tRNA synthase (AAS)</em>. Once attached, it forms <strong>aminoacyl tRNA</strong>, which uses its anticodon to recognize the exact matching codon on the mRNA.
+                        </p>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div class="bg-pink-50 bg-opacity-40 p-6 rounded-xl shadow-sm">
+                        <h4 class="text-xl font-bold mb-2 flex items-center gap-2 text-[#884b5c]">
+                            <span class="bg-[#d88c9a] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">2</span>
+                            Initiation
+                        </h4>
+                        <p class="text-gray-800 mb-3">Initiation is a highly coordinated dance involving four precise steps:</p>
+                        <ul class="list-decimal list-inside space-y-2 text-gray-800 ml-2">
+                            <li><strong>Ribosomal Dissociation:</strong> The 80S ribosome splits into 40S and 60S subunits, aided by factors eIF3 and eIF-1A. This opens the A (aminoacyl) and P (peptidyl) binding sites.</li>
+                            <li><strong>Formation of 43S Pre-initiation Complex:</strong> GTP and eIF2 bind to the initiator tRNA (Met-tRNA<sup>Met</sup>). This complex then attaches to the 40S subunit.</li>
+                            <li><strong>Formation of 48S Initiation Complex:</strong> The mRNA, capped at its 5' end, binds to the 43S complex. This step requires Cap Binding Protein (eIF4) and ATP.</li>
+                            <li><strong>Formation of 80S Initiation Complex:</strong> The large 60S subunit rejoins the group. GTP is hydrolyzed, releasing initiation factors. The initiator tRNA is beautifully positioned at the <strong>P site</strong>, paired with the start codon (AUG).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="bg-pink-50 bg-opacity-40 p-6 rounded-xl shadow-sm">
+                        <h4 class="text-xl font-bold mb-2 flex items-center gap-2 text-[#884b5c]">
+                            <span class="bg-[#d88c9a] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">3</span>
+                            Elongation
+                        </h4>
+                        <p class="text-gray-800 mb-3">The polypeptide chain grows through a repeating three-step cycle:</p>
+                        <ul class="custom-bullets text-gray-800">
+                            <li><strong>Binding to A Site:</strong> The next aminoacyl tRNA, guided by elongation factor eEF-1α and GTP, enters the A site.</li>
+                            <li><strong>Peptide Bond Formation:</strong> The enzyme <em>peptidyl transferase</em> transfers the amino acid from the P site to the new amino acid in the A site, forging a peptide bond.</li>
+                            <li><strong>Translocation:</strong> The ribosome shifts exactly one codon (three bases) towards the 3' end of the mRNA. The empty tRNA exits, the growing chain moves to the P site, and the A site opens up for the next arrival. This requires factor eEF2 and GTP.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Stage 4 -->
+                    <div class="bg-pink-50 bg-opacity-40 p-6 rounded-xl shadow-sm">
+                        <h4 class="text-xl font-bold mb-2 flex items-center gap-2 text-[#884b5c]">
+                            <span class="bg-[#d88c9a] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">4</span>
+                            Termination
+                        </h4>
+                        <p class="text-gray-800">
+                            The cycle repeats until a nonsense/termination codon (<strong>UAA, UAG, or UGA</strong>) glides into the A site. 
+                            <br><br>
+                            Because no tRNA matches these stop signals, a single eukaryotic release factor (<strong>eRF</strong>) binds instead. With the help of GTP, it triggers the hydrolysis of the bond holding the polypeptide to the tRNA. The newly minted protein floats free, the mRNA is released, and the ribosome gently dissociates back into 60S and 40S subunits, ready for a new beginning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SHORT NOTES -->
+        <section class="romantic-card p-8 md:p-10 mb-8" id="short-notes-section">
+            <h2 class="text-3xl border-b-2 pb-3 mb-6 flex items-center gap-3" style="border-color: var(--accent-color);">
+                Part 2: Quick Revision Notes <span class="text-xl">✨</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Quick Facts Card -->
+                <div class="bg-white rounded-lg p-5 shadow-sm border border-pink-100">
+                    <h3 class="text-lg font-bold text-[#884b5c] mb-3 border-b border-pink-100 pb-2">🎯 Core Concepts</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Definition:</strong> Conversion of mRNA genetic code into protein by ribosomes.</li>
+                        <li><strong>Location:</strong> Cytosol, on ribosomes.</li>
+                        <li><strong>Key Ingredients:</strong> mRNA, tRNA, Ribosomes (80S in eukaryotes), Energy (ATP/GTP), Enzymes.</li>
+                        <li><strong>Eukaryote start signal:</strong> Capped 5' end.</li>
+                        <li><strong>Prokaryote start signal:</strong> Shine-Dalgarno sequence.</li>
+                    </ul>
+                </div>
+
+                <!-- Stage 1 & 2 Card -->
+                <div class="bg-white rounded-lg p-5 shadow-sm border border-pink-100">
+                    <h3 class="text-lg font-bold text-[#884b5c] mb-3 border-b border-pink-100 pb-2">🚀 1. Activation & 2. Initiation</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Activation:</strong> Amino acid + tRNA + ATP → Aminoacyl tRNA (Enzyme: <em>Aminoacyl tRNA synthase</em>).</li>
+                        <li><strong>Initiation:</strong>
+                            <ul class="list-disc pl-4 mt-1 space-y-1">
+                                <li>80S splits to 40S & 60S.</li>
+                                <li><strong>43S Complex:</strong> 40S + eIF2 + GTP + Met-tRNA.</li>
+                                <li><strong>48S Complex:</strong> 43S + mRNA (requires Cap Binding Protein).</li>
+                                <li><strong>80S Complex:</strong> 48S + 60S. Met-tRNA is safely in the <strong>P site</strong>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stage 3 Card -->
+                <div class="bg-white rounded-lg p-5 shadow-sm border border-pink-100">
+                    <h3 class="text-lg font-bold text-[#884b5c] mb-3 border-b border-pink-100 pb-2">🧬 3. Elongation</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Bind to A site:</strong> Next aminoacyl tRNA enters A site (uses eEF-1α & GTP).</li>
+                        <li><strong>Peptide Bond:</strong> Formed by <em>peptidyl transferase</em>. Chain transfers from P site to A site.</li>
+                        <li><strong>Translocation:</strong> Ribosome moves 1 codon (3 bases) towards 3' end. Empty tRNA leaves. Growing chain moves to P site. (Uses eEF2 & GTP).</li>
+                    </ul>
+                </div>
+
+                <!-- Stage 4 Card -->
+                <div class="bg-white rounded-lg p-5 shadow-sm border border-pink-100">
+                    <h3 class="text-lg font-bold text-[#884b5c] mb-3 border-b border-pink-100 pb-2">🛑 4. Termination</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Stop Codons:</strong> UAA, UAG, UGA enter the A site.</li>
+                        <li><strong>Release Factor:</strong> Single factor <strong>eRF</strong> binds (Prokaryotes use RF1, 2, 3).</li>
+                        <li><strong>Action:</strong> Hydrolysis of peptidyl tRNA bond.</li>
+                        <li><strong>Result:</strong> Polypeptide is freed, mRNA leaves, ribosome splits to 40S and 60S for recycling.</li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="mt-6 text-center text-sm font-serif text-gray-500 italic">
+                "Breathe. You've got this. Happy Studying!"
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script to handle PDF generation -->
+    <script>
+        function downloadPDF() {
+            // Target the entire notes container for the PDF
+            const element = document.getElementById('notes-container');
+            
+            // Generate a beautiful, romantic filename
+            const filename = 'Beautiful_Protein_Synthesis_Notes.pdf';
+
+            // Configure PDF options
+            const opt = {
+                margin:       [10, 10, 10, 10], // [top, left, bottom, right]
+                filename:     filename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Add a visual cue to the button
+            const btn = document.querySelector('.btn-romantic');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Saving your notes... ♥';
+            btn.style.opacity = '0.7';
+
+            // Generate and save
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button state after saving
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+            }).catch(err => {
+                console.error('Error generating PDF:', err);
+                btn.innerHTML = 'Error generating PDF :(';
+                setTimeout(() => { btn.innerHTML = originalText; btn.style.opacity = '1'; }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>
+

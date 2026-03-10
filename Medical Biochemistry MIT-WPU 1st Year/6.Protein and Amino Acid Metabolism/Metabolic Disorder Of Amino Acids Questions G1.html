@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolic Disorders of Amino Acids - Study Guide</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5', // Indigo 600
+                        primaryHover: '#4338CA', // Indigo 700
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .correct-ans {
+            background-color: #10B981 !important; /* Emerald 500 */
+            color: white !important;
+            border-color: #10B981 !important;
+        }
+        .wrong-ans {
+            background-color: #EF4444 !important; /* Red 500 */
+            color: white !important;
+            border-color: #EF4444 !important;
+        }
+        .explanation-content {
+            display: none;
+            transition: all 0.3s ease-in-out;
+        }
+        .explanation-content.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-xl sm:text-2xl font-bold text-primary dark:text-indigo-400">Amino Acid Metabolism</h1>
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" aria-label="Toggle Dark Mode">
+                <!-- Sun Icon (shows in dark mode) -->
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+                <!-- Moon Icon (shows in light mode) -->
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Navigation / Tabs -->
+        <div class="flex flex-wrap gap-2 mb-8 justify-center border-b border-gray-200 dark:border-gray-700 pb-4">
+            <button onclick="scrollToSection('mcq-section')" class="px-4 py-2 bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200 rounded-full text-sm font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-800 transition">Multiple Choice</button>
+            <button onclick="scrollToSection('short-section')" class="px-4 py-2 bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200 rounded-full text-sm font-semibold hover:bg-emerald-200 dark:hover:bg-emerald-800 transition">Short Answer</button>
+            <button onclick="scrollToSection('essay-section')" class="px-4 py-2 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200 rounded-full text-sm font-semibold hover:bg-purple-200 dark:hover:bg-purple-800 transition">Essay Questions</button>
+        </div>
+
+        <!-- MCQs Section -->
+        <section id="mcq-section" class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-lg shadow-md">1</div>
+                <h2 class="text-2xl font-bold">Multiple Choice Questions</h2>
+            </div>
+            <div id="mcq-container" class="space-y-6">
+                <!-- MCQs injected via JS -->
+            </div>
+        </section>
+
+        <!-- Short Answer Section -->
+        <section id="short-section" class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-md">2</div>
+                <h2 class="text-2xl font-bold">Short Answer Questions</h2>
+            </div>
+            <div id="short-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Shorts injected via JS -->
+            </div>
+        </section>
+
+        <!-- Essay Section -->
+        <section id="essay-section" class="mb-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg shadow-md">3</div>
+                <h2 class="text-2xl font-bold">Essay Questions</h2>
+            </div>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-auto transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center gap-3">
+            <p class="text-lg font-medium text-gray-700 dark:text-gray-300">Designed For My Bestie 💖</p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors font-semibold group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                @shivamcuj
+            </a>
+        </div>
+    </footer>
+
+    <!-- Data and App Logic -->
+    <script>
+        // Data sources strictly based on the provided PDF
+        const mcqData = [
+            {
+                q: "Which enzyme is deficient in classic Phenylketonuria (PKU)?",
+                options: ["Phenylalanine hydroxylase (PAH)", "Tyrosinase", "Homogentisate oxidase", "Cystathionine beta-synthase (CBS)"],
+                correct: 0,
+                exp: "PKU is caused by decreased activity of phenylalanine hydroxylase (PAH), which converts phenylalanine to tyrosine."
+            },
+            {
+                q: "Patients with PKU often have lighter features (blond hair, blue eyes) due to decreased production of which pigment?",
+                options: ["Hemoglobin", "Melanin", "Bilirubin", "Carotene"],
+                correct: 1,
+                exp: "Due to a decreased amount of the pigment melanin (which requires tyrosine), persons with PKU tend to have lighter features."
+            },
+            {
+                q: "What is the characteristic clinical sign of Maple Syrup Urine Disease (MSUD)?",
+                options: ["Accumulation of glycine", "Defect in phenylalanine metabolism", "Accumulation of branched-chain amino acids", "Excessive homocysteine production"],
+                correct: 2,
+                exp: "MSUD is a disorder of branched-chain amino acid metabolism that leads to the accumulation of leucine, isoleucine, valine, and their corresponding oxoacids."
+            },
+            {
+                q: "Which medication is a potent inhibitor of the tyrosine catabolic pathway used to treat Tyrosinemia?",
+                options: ["Betaine", "Nitisinone (NTBC)", "Sodium benzoate", "Pyridoxine"],
+                correct: 1,
+                exp: "Treatment with Nitisinone (NTBC), a potent inhibitor of the tyrosine catabolic pathway, prevents the production of toxic metabolites in Tyrosinemia."
+            },
+            {
+                q: "Homocystinuria is primarily caused by a defect in which enzyme?",
+                options: ["Cystathionine beta-synthase", "Fumarylacetoacetate hydrolase", "Glycine cleavage system", "Branched-chain alpha-ketoacid dehydrogenase"],
+                correct: 0,
+                exp: "Homocystinuria is caused by a defect in cystathionine beta-synthase (CBS), an enzyme that participates in methionine metabolism."
+            },
+            {
+                q: "Approximately 50 percent of persons with homocystinuria are responsive to treatment with which vitamin?",
+                options: ["Vitamin C", "Vitamin B1 (Thiamin)", "Vitamin B6 (Pyridoxine)", "Vitamin B12"],
+                correct: 2,
+                exp: "Approximately 50% of persons with homocystinuria are responsive to treatment with vitamin B6 (pyridoxine), improving intellectual prognosis."
+            },
+            {
+                q: "Non-ketotic hyperglycinemia is characterized by the accumulation of which substance in the central nervous system?",
+                options: ["Dopamine", "Serotonin", "Glycine", "Glutamate"],
+                correct: 2,
+                exp: "It is caused by elevated levels of the neurotransmitter glycine in the central nervous system, due to a defect in the glycine cleavage system."
+            },
+            {
+                q: "What is a distinctive symptom of Alkaptonuria?",
+                options: ["Skin turns blue", "Urine turns dark/black when exposed to air", "Sweat smells like cabbage", "Tears become excessive"],
+                correct: 1,
+                exp: "In Alkaptonuria, homogentisic acid accumulates. A key clinical feature is that the urine turns dark/black when exposed to air."
+            },
+            {
+                q: "Albinism is caused by the absence of melanin pigment due to a deficiency in which enzyme?",
+                options: ["Tyrosinase", "Phenylalanine hydroxylase", "Homogentisate oxidase", "Dihydrobiopterin reductase"],
+                correct: 0,
+                exp: "Albinism occurs due to the deficiency of the enzyme Tyrosinase, resulting in the absence of melanin pigment."
+            },
+            {
+                q: "Which of the following disorders is characterized by an absence of neurological deficits, contrasting sharply with PKU?",
+                options: ["Homocystinuria", "Tyrosinemia Type III", "Albinism", "Non-ketotic hyperglycinemia"],
+                correct: 2,
+                exp: "Albinism primarily causes skin, hair, and eye pigmentation loss and photophobia, but there are NO neurological deficits, unlike PKU."
+            },
+            {
+                q: "Malignant PKU is caused by a deficiency in which essential cofactor required by PAH?",
+                options: ["Dihydrobiopterin reductase", "Pyridoxine", "Nitisinone", "Betaine"],
+                correct: 0,
+                exp: "Malignant PKU involves a dihydrobiopterin reductase deficiency; this enzyme is needed to convert dihydrobiopterin to tetrahydrobiopterin, a cofactor for PAH."
+            },
+            {
+                q: "Which of the following amino acids is NOT a branched-chain amino acid involved in MSUD?",
+                options: ["Leucine", "Isoleucine", "Valine", "Tyrosine"],
+                correct: 3,
+                exp: "MSUD leads to the accumulation of the branched-chain amino acids leucine, isoleucine, and valine. Tyrosine is involved in Tyrosinemia and PKU."
+            },
+            {
+                q: "Type I tyrosinemia (hepatorenal tyrosinemia) can result in what severe complication by age 5 if left untreated?",
+                options: ["Lens dislocation", "Liver cancer (hepatocellular carcinoma)", "Severe eczema", "Albinism"],
+                correct: 1,
+                exp: "Approximately 40 percent of persons with classic (Type I) tyrosinemia develop liver cancer by the age of 5 if untreated."
+            },
+            {
+                q: "What physical features are commonly associated with Homocystinuria?",
+                options: ["Palmoplantar hyperkeratosis", "Marfanoid features (tall, thin frame, lens dislocation)", "Mousy odor", "Cabbage-like odor"],
+                correct: 1,
+                exp: "Symptoms of homocystinuria include a tall, thin frame, lens dislocation, vascular disease, and osteoporosis (Marfanoid features)."
+            },
+            {
+                q: "Which medication is used as a glycine-scavenging agent in Non-ketotic hyperglycinemia?",
+                options: ["Betaine", "Nitisinone", "Sodium benzoate", "Aspirin"],
+                correct: 2,
+                exp: "Drugs that block glycine action (dextromethorphan) and glycine-scavenging medications like sodium benzoate may ease symptoms of NKH."
+            },
+            {
+                q: "The classic form of MSUD presents in infancy with lethargy and progressive neurological deterioration. It is notably common in which population?",
+                options: ["Mennonites of Pennsylvania", "Ashkenazi Jews", "Mediterranean populations", "Scandinavians"],
+                correct: 0,
+                exp: "The disorder (MSUD) is noted to be common in the Mennonites of Pennsylvania."
+            },
+            {
+                q: "Type II Tyrosinemia primarily presents with symptoms affecting which areas?",
+                options: ["Liver and Kidneys", "Heart and Lungs", "Eyes and Skin (palmoplantar hyperkeratosis)", "Bones and Joints"],
+                correct: 2,
+                exp: "Type II presents in early childhood with eye pain, excessive tearing, photophobia, and thick painful skin on palms and soles (palmoplantar hyperkeratosis)."
+            },
+            {
+                q: "What is the general inheritance pattern for the amino acid metabolism disorders discussed in the text?",
+                options: ["Autosomal dominant", "X-linked recessive", "Autosomal recessive", "Mitochondrial inheritance"],
+                correct: 2,
+                exp: "The introduction states: 'These disorders are autosomal recessive, and all may be diagnosed by analyzing amino acid concentrations in body fluids.'"
+            },
+            {
+                q: "In which disorder does homogentisic acid accumulate, causing pigmentation of connective tissue like the sclera or ear cartilage?",
+                options: ["Albinism", "Alkaptonuria", "Tyrosinemia Type I", "PKU"],
+                correct: 1,
+                exp: "Alkaptonuria involves homogentisate oxidase deficiency, leading to homogentisic acid accumulation which causes pigmentation in connective tissue and arthritis."
+            },
+            {
+                q: "Which treatment utilizes an alternative pathway to remove extra homocysteine from the body?",
+                options: ["Folic acid", "Pyridoxine", "Betaine", "Thiamin"],
+                correct: 2,
+                exp: "Therapy with betaine (a medication that removes extra homocysteine from the body via an alternative pathway) may be of benefit in homocystinuria."
+            }
+        ];
+
+        const shortData = [
+            {
+                q: "What are the primary dietary treatments for a patient with classic Phenylketonuria (PKU)?",
+                exp: "Treatment involves providing special formulas and foods that are low in phenylalanine and restricting dietary protein to maintain normal phenylalanine levels, along with tyrosine supplementation."
+            },
+            {
+                q: "Why do patients with PKU often present with lighter hair and eyes compared to unaffected family members?",
+                exp: "Because phenylalanine cannot be converted to tyrosine efficiently, there is a decreased amount of tyrosine available to synthesize melanin, the pigment responsible for skin, hair, and eye color."
+            },
+            {
+                q: "Identify the three amino acids that accumulate in Maple Syrup Urine Disease (MSUD).",
+                exp: "The branched-chain amino acids Leucine, Isoleucine, and Valine (along with their corresponding oxoacids) accumulate in body fluids."
+            },
+            {
+                q: "What is the biochemical defect in Non-ketotic hyperglycinemia (NKH)?",
+                exp: "NKH is caused by a genetic defect in the glycine cleavage system, the enzyme system responsible for breaking down the amino acid glycine, leading to its accumulation in the CNS."
+            },
+            {
+                q: "Explain how betaine acts in the management of Homocystinuria.",
+                exp: "Betaine acts as a medication that helps remove extra homocysteine from the body by promoting an alternative metabolic pathway to convert homocysteine back to methionine."
+            },
+            {
+                q: "What distinguishes Albinism from PKU regarding neurological clinical manifestations?",
+                exp: "While PKU causes severe neurological deficits like developmental delay, seizures, and intellectual disability if untreated, Albinism purely affects pigmentation and has no neurological deficits."
+            },
+            {
+                q: "What are the classic symptoms of Alkaptonuria?",
+                exp: "Symptoms include urine turning dark/black when exposed to air, pigmentation of connective tissues (like the eye sclera and ear cartilage), arthritis of joints and spine, and kidney/prostate stones."
+            },
+            {
+                q: "What are the distinct clinical features of Type II Tyrosinemia?",
+                exp: "Type II presents in early childhood with ocular and cutaneous symptoms: eye pain, excessive tearing, photophobia, and thick, painful skin on the palms and soles (palmoplantar hyperkeratosis)."
+            },
+            {
+                q: "How are hereditary disorders of amino acid metabolism generally diagnosed?",
+                exp: "Since they are autosomal recessive, they may all be diagnosed by analyzing and measuring specific amino acid concentrations in body fluids (like blood or urine)."
+            },
+            {
+                q: "What is Malignant PKU and why does it not respond consistently to standard PKU diet therapy?",
+                exp: "Malignant PKU results from a deficiency of dihydrobiopterin reductase, an enzyme needed to convert dihydrobiopterin to tetrahydrobiopterin (a vital cofactor for PAH). It requires sapropterin/biopterin supplementation, not just a restricted diet, because the PAH enzyme itself is intact but lacks its cofactor."
+            }
+        ];
+
+        const essayData = [
+            {
+                q: "Discuss the pathophysiology, systemic manifestations, and management strategies of Phenylketonuria (PKU).",
+                exp: "Pathophysiology: PKU is caused by decreased activity of phenylalanine hydroxylase (PAH), preventing the conversion of phenylalanine to tyrosine. This leads to toxic accumulation of phenylalanine and decreased tyrosine (a precursor for melanin, dopamine, and hormones). Manifestations: Progressive developmental delay, microcephaly, seizures, mousy odor, eczema, and lighter hair/skin (due to low melanin). Management: Strict dietary restriction of phenylalanine, tyrosine supplementation, and in cases of malignant PKU, sapropterin (tetrahydrobiopterin) supplementation to assist enzyme function."
+            },
+            {
+                q: "Compare and contrast the three types of Tyrosinemia regarding their specific enzyme deficiencies and clinical presentations.",
+                exp: "Type I (Tyrosinosis): Deficient in fumarylacetoacetate hydrolase (FAH). Most severe; presents in infancy with severe liver/kidney failure, cabbage-like odor, and high risk of hepatocellular carcinoma (liver cancer). Type II: Deficient in tyrosine aminotransferase (TAT). Presents with eye pain, photophobia, and palmoplantar hyperkeratosis (thick skin on palms/soles). Type III: Deficient in 4-hydroxyphenylpyruvate dioxygenase (HPD). Presents mainly with intellectual disability, seizures, and intermittent ataxia. All types require a tyrosine/phenylalanine-restricted diet and often nitisinone."
+            },
+            {
+                q: "Explain the metabolic defect in Homocystinuria and detail the various pharmacological and dietary interventions used in its treatment.",
+                exp: "Defect: Homocystinuria is caused by a defect in cystathionine beta-synthase (CBS), an enzyme requiring vitamin B6 that converts homocysteine to cystathionine. This leads to homocysteine accumulation, which causes endothelial damage, thrombosis, osteoporosis, lens dislocation, and Marfanoid features. Interventions: Dietary restriction of methionine, supplementation with cysteine. Pharmacologically, high-dose Vitamin B6 (pyridoxine) helps 50% of patients. Folic acid and Vitamin B12 assist the pathway, while Betaine promotes an alternative pathway to convert excess homocysteine back into methionine."
+            },
+            {
+                q: "Describe the biochemical basis of Maple Syrup Urine Disease (MSUD) and the consequences of acute metabolic crises.",
+                exp: "MSUD is caused by a deficiency in the branched-chain alpha-ketoacid dehydrogenase complex. This prevents the breakdown of branched-chain amino acids: leucine, isoleucine, and valine. Accumulation of these amino acids and their ketoacids produces a characteristic 'maple syrup' odor in the urine. If untreated, it presents in infancy with poor feeding, lethargy, progressive neurological deterioration, cerebral edema, seizures, coma, and death. Treatment requires immediate protein restriction and specific formulas deficient in branched-chain amino acids."
+            },
+            {
+                q: "Analyze the role of the glycine cleavage system in Non-ketotic hyperglycinemia (NKH) and the challenges in treating this condition.",
+                exp: "NKH results from a genetic defect in the glycine cleavage system, halting the breakdown of glycine. This causes massive accumulation of glycine, an active neurotransmitter, in the central nervous system. This overstimulation leads to severe seizures, hypotonia, hiccups, breath-holding, and profound developmental impairment. Treatment is extremely challenging as there is no cure. Current management relies on symptom mitigation using drugs that block glycine receptors (e.g., dextromethorphan) and glycine-scavenging agents (e.g., sodium benzoate) to lower glycine levels, alongside a low-protein diet."
+            },
+            {
+                q: "Elaborate on the critical role of specific vitamin and cofactor supplements (e.g., B6, thiamin, and biopterin) in the management of metabolic amino acid disorders.",
+                exp: "Vitamins and cofactors are crucial for enzyme function. In Homocystinuria, Vitamin B6 (pyridoxine) acts as a cofactor for the deficient cystathionine beta-synthase; high doses can push residual enzyme activity, helping 50% of patients. In mild MSUD, administration of Vitamin B1 (thiamin) can sometimes boost the deficient dehydrogenase enzyme complex. In malignant PKU, the primary issue is a lack of tetrahydrobiopterin (a PAH cofactor); administering this cofactor (sapropterin) bypasses the dihydrobiopterin reductase defect, restoring normal phenylalanine breakdown."
+            },
+            {
+                q: "Discuss the long-term systemic effects of homogentisic acid accumulation in Alkaptonuria.",
+                exp: "Alkaptonuria is caused by homogentisate oxidase deficiency. The accumulated homogentisic acid polymerizes and deposits in connective tissues, a condition called ochronosis. Long-term systemic effects include dark pigmentation of the sclera of the eye and ear cartilage, severe arthritis (especially of the spine and large joints) due to cartilage damage, and the formation of kidney and prostate stones. A hallmark diagnostic sign is that the patient's urine turns dark or black when exposed to air due to the oxidation of homogentisic acid."
+            },
+            {
+                q: "Evaluate the importance of newborn screening in the context of autosomal recessive amino acid metabolism disorders.",
+                exp: "Newborn screening is vital because infants with these autosomal recessive disorders often appear normal at birth due to maternal clearance of toxic metabolites during gestation. Once they begin feeding, toxic metabolites (e.g., phenylalanine in PKU, leucine in MSUD) rapidly accumulate, causing irreversible brain damage, severe liver disease (in Tyrosinemia), or death. Early diagnosis through blood spot screening allows immediate implementation of dietary restrictions and therapies (like nitisinone for Tyrosinemia) before symptoms develop, ensuring normal intellectual and physical development."
+            },
+            {
+                q: "Contrast Albinism and Phenylketonuria in terms of their biochemical origins and clinical outcomes.",
+                exp: "Both disorders involve the tyrosine pathway but at different steps. PKU is a defect in converting phenylalanine to tyrosine (PAH deficiency). It causes toxic systemic accumulation of phenylalanine, leading to severe neurological damage and mental retardation, along with secondary hypopigmentation due to low tyrosine. Albinism is a downstream defect specifically in Tyrosinase, the enzyme that converts tyrosine to melanin in melanocytes. Therefore, there is no toxic systemic accumulation of upstream amino acids. The clinical outcome is purely cosmetic and dermatological (colorless hair/skin, photophobia, high skin cancer risk) with completely normal neurological and intellectual function."
+            },
+            {
+                q: "Synthesize the general principles of dietary management for hereditary amino acid metabolism disorders, referencing PKU, MSUD, and Tyrosinemia.",
+                exp: "The cornerstone of dietary management is restricting the specific precursor amino acid that cannot be metabolized, while supplementing the deficient downstream products to maintain anabolism. In PKU, this means a strict diet low in phenylalanine (the precursor) and high in tyrosine (the product). In MSUD, it requires formulas specifically stripped of the branched-chain amino acids (leucine, isoleucine, valine). In Tyrosinemia, the diet must restrict both tyrosine and its precursor phenylalanine to prevent the buildup of toxic intermediates downstream. Across all these conditions, achieving the minimum daily requirements for protein synthesis while avoiding toxic threshold levels requires highly specialized, lifelong medical nutrition therapy."
+            }
+        ];
+
+        // Render Functions
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((mcq, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300";
+                
+                let optionsHtml = '';
+                mcq.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <button onclick="checkAnswer(this, ${index}, ${optIndex}, ${mcq.correct})" 
+                                class="mcq-btn w-full text-left p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition font-medium text-gray-700 dark:text-gray-200 mb-3">
+                            <span class="font-bold mr-2 text-primary dark:text-indigo-400">${String.fromCharCode(65 + optIndex)}.</span> ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100"><span class="text-primary dark:text-indigo-400">Q${index + 1}.</span> ${mcq.q}</h3>
+                    <div class="options-container" id="mcq-opts-${index}">
+                        ${optionsHtml}
+                    </div>
+                    <button onclick="toggleExp('mcq-exp-${index}')" class="mt-4 text-sm font-semibold text-primary dark:text-indigo-400 hover:underline flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Show Explanation
+                    </button>
+                    <div id="mcq-exp-${index}" class="explanation-content mt-4 p-4 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-lg text-sm border border-indigo-100 dark:border-indigo-800">
+                        <strong>Explanation:</strong> ${mcq.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderShorts() {
+            const container = document.getElementById('short-container');
+            shortData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300 flex flex-col h-full";
+                
+                card.innerHTML = `
+                    <h3 class="text-md font-semibold mb-4 text-gray-800 dark:text-gray-100 flex-grow"><span class="text-emerald-500">Q${index + 1}.</span> ${item.q}</h3>
+                    <button onclick="toggleExp('short-exp-${index}')" class="mt-auto text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline w-max flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        Show Answer
+                    </button>
+                    <div id="short-exp-${index}" class="explanation-content mt-4 p-4 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200 rounded-lg text-sm border border-emerald-100 dark:border-emerald-800">
+                        ${item.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderEssays() {
+            const container = document.getElementById('essay-container');
+            essayData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300";
+                
+                card.innerHTML = `
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100 leading-relaxed"><span class="text-purple-500">Q${index + 1}.</span> ${item.q}</h3>
+                    <button onclick="toggleExp('essay-exp-${index}')" class="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Show Detailed Answer
+                    </button>
+                    <div id="essay-exp-${index}" class="explanation-content mt-4 p-5 bg-purple-50 dark:bg-purple-900/30 text-purple-900 dark:text-purple-100 rounded-lg text-md leading-relaxed border border-purple-100 dark:border-purple-800">
+                        ${item.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Interaction Logic
+        function checkAnswer(btn, qIndex, selectedIndex, correctIndex) {
+            const container = document.getElementById(`mcq-opts-${qIndex}`);
+            const buttons = container.querySelectorAll('button');
+            
+            // Disable all buttons in this question
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:bg-gray-50', 'dark:hover:bg-gray-700', 'cursor-pointer');
+                b.classList.add('cursor-not-allowed', 'opacity-70');
+            });
+
+            if (selectedIndex === correctIndex) {
+                // Correct answer selected
+                btn.classList.add('correct-ans', 'opacity-100');
+            } else {
+                // Wrong answer selected
+                btn.classList.add('wrong-ans', 'opacity-100');
+                // Highlight correct answer
+                buttons[correctIndex].classList.add('correct-ans', 'opacity-100');
+            }
+
+            // Automatically expand explanation after answering
+            const expDiv = document.getElementById(`mcq-exp-${qIndex}`);
+            if (!expDiv.classList.contains('show')) {
+                expDiv.classList.add('show');
+            }
+        }
+
+        function toggleExp(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('show')) {
+                el.classList.remove('show');
+            } else {
+                el.classList.add('show');
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Check user preference on load
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // Initialize App
+        window.onload = () => {
+            renderMCQs();
+            renderShorts();
+            renderEssays();
+        };
+    </script>
+</body>
+</html>
+

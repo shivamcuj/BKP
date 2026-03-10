@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urea Cycle Mastery</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        heading: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass-card shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-flask text-brand-600 dark:text-brand-500 text-2xl"></i>
+                    <span class="font-heading font-bold text-xl tracking-tight">Biochem<span class="text-brand-600 dark:text-brand-500">Mastery</span></span>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none">
+                    <i id="theme-icon" class="fa-solid fa-moon text-xl text-slate-600 dark:text-slate-300"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="py-12 text-center px-4">
+        <h1 class="font-heading text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">Urea Cycle & Metabolic Disorders</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Test your knowledge and review key concepts with this comprehensive study guide. Designed to help you ace your exams!</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 w-full space-y-16 pb-16">
+
+        <!-- Section 1: MCQs -->
+        <section id="mcq-section">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 p-3 rounded-lg">
+                    <i class="fa-solid fa-list-check text-xl"></i>
+                </div>
+                <h2 class="font-heading text-3xl font-bold">Multiple Choice Questions</h2>
+            </div>
+            <div id="mcq-container" class="grid gap-6 md:grid-cols-2">
+                <!-- MCQs dynamically generated here -->
+            </div>
+        </section>
+
+        <hr class="border-slate-200 dark:border-slate-800">
+
+        <!-- Section 2: Short Answer Questions -->
+        <section id="saq-section">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 p-3 rounded-lg">
+                    <i class="fa-solid fa-pen-nib text-xl"></i>
+                </div>
+                <h2 class="font-heading text-3xl font-bold">Short Answer Questions</h2>
+            </div>
+            <div id="saq-container" class="space-y-6">
+                <!-- SAQs dynamically generated here -->
+            </div>
+        </section>
+
+        <hr class="border-slate-200 dark:border-slate-800">
+
+        <!-- Section 3: Essay Questions -->
+        <section id="essay-section">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 p-3 rounded-lg">
+                    <i class="fa-solid fa-book-open text-xl"></i>
+                </div>
+                <h2 class="font-heading text-3xl font-bold">Essay Questions</h2>
+            </div>
+            <div id="essay-container" class="space-y-6">
+                <!-- Essays dynamically generated here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10 mt-auto">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h3 class="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-4">
+                Designed For My Bestie ❤️
+            </h3>
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium text-lg bg-slate-100 dark:bg-slate-800 py-2 px-6 rounded-full">
+                <i class="fa-brands fa-instagram text-xl"></i>
+                @shivamcuj
+            </a>
+            <p class="mt-6 text-sm text-slate-500 dark:text-slate-500">Study hard, you've got this! ✨</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Data base for questions
+        const mcqData = [
+            { q: "Where is the primary site of urea synthesis in the human body?", options: ["Kidneys", "Liver", "Brain", "Muscles"], correct: 1 },
+            { q: "Why does the body convert ammonia to urea?", options: ["To generate ATP", "Ammonia is toxic to the CNS", "To synthesize proteins", "To excrete carbon dioxide"], correct: 1 },
+            { q: "The urea cycle is also known by which other name?", options: ["Cori Cycle", "Krebs-Henseleit cycle", "Citric Acid Cycle", "Calvin Cycle"], correct: 1 },
+            { q: "How many reactions are involved in the complete formation of urea from ammonia?", options: ["3", "4", "5", "6"], correct: 2 },
+            { q: "Where do the first two reactions of the urea cycle occur?", options: ["Cytosol", "Mitochondria", "Nucleus", "Endoplasmic Reticulum"], correct: 1 },
+            { q: "Which of the following is an intermediate amino acid in the urea cycle that has no genetic codon?", options: ["Glutamate", "Aspartate", "Ornithine", "Arginine"], correct: 2 },
+            { q: "Which enzyme catalyzes the formation of carbamoyl phosphate?", options: ["Ornithine transcarbamoylase", "Arginase", "Carbamoyl phosphate synthetase-I", "Argininosuccinase"], correct: 2 },
+            { q: "What is the allosteric activator required by Carbamoyl phosphate synthetase-I?", options: ["ATP", "N-acetyl glutamate", "Mg2+", "Citrulline"], correct: 1 },
+            { q: "How many high-energy bonds (ATP molecules) are hydrolyzed in the first reaction of the cycle?", options: ["1", "2", "3", "4"], correct: 1 },
+            { q: "Which enzyme is responsible for the formation of citrulline?", options: ["Ornithine transcarbamoylase", "Argininosuccinate synthetase", "Arginase", "Argininosuccinate lyase"], correct: 0 },
+            { q: "Citrulline moves from the mitochondria to the cytosol through:", options: ["Passive diffusion", "Specific transporters", "Vesicles", "Osmosis"], correct: 1 },
+            { q: "Which amino acid serves as the donor for the second molecule of ammonia in urea?", options: ["Glutamate", "Aspartate", "Alanine", "Glutamine"], correct: 1 },
+            { q: "Which enzyme cleaves argininosuccinate?", options: ["Argininosuccinate synthetase", "Arginase", "Argininosuccinase (lyase)", "Fumarase"], correct: 2 },
+            { q: "What are the products of the cleavage of argininosuccinate?", options: ["Urea and Ornithine", "Arginine and Fumarate", "Citrulline and Aspartate", "Malate and Oxaloacetate"], correct: 1 },
+            { q: "The regeneration of ornithine and formation of urea is catalyzed by:", options: ["Arginase", "Urease", "Fumarase", "Argininosuccinase"], correct: 0 },
+            { q: "What is the normal blood urea level?", options: ["5-10 mg/100 ml", "16-36 mg/100 ml", "40-60 mg/100 ml", "80-100 mg/100 ml"], correct: 1 },
+            { q: "Hyperammonemia Type-II is caused by a deficiency of which enzyme?", options: ["Carbamoyl phosphate synthetase-I", "Ornithine transcarbamoylase", "Arginase", "Argininosuccinate lyase"], correct: 1 },
+            { q: "The presence of orotic acid and uracil in urine is characteristic of:", options: ["Hyperammonemia Type-I", "Citrullinemia", "Hyperammonemia Type-II", "Argininemia"], correct: 2 },
+            { q: "Which of the following accumulates in the blood and urine in Citrullinemia?", options: ["Argininosuccinate", "Citrulline", "Arginine", "Ammonia"], correct: 1 },
+            { q: "Which compound is administered to increase nitrogen excretion in urea cycle disorders?", options: ["Acetic acid", "Benzoic acid", "Ascorbic acid", "Citric acid"], correct: 1 }
+        ];
+
+        const saqData = [
+            { q: "Why is the liver the primary site of urea synthesis?", a: "The liver is equipped with all the necessary enzymes (both mitochondrial and cytosolic) to rapidly remove highly toxic ammonia from the circulation and convert it into water-soluble, non-toxic urea, preventing CNS damage." },
+            { q: "What is the biological significance of N-acetyl glutamate in the urea cycle?", a: "N-acetyl glutamate acts as an essential allosteric activator for the enzyme Carbamoyl phosphate synthetase-I. Without it, the first and rate-limiting step of the urea cycle cannot proceed." },
+            { q: "Explain the energy dependency of the first reaction of the urea cycle.", a: "The condensation of ammonia and HCO3- requires the hydrolysis of 2 ATP molecules into 2 ADP and 2 Pi. Because carbamoyl phosphate is a high-energy compound, its formation thermodynamically pulls the subsequent reactions forward." },
+            { q: "How does citrulline reach the cytosol to continue the urea cycle?", a: "Citrulline is formed inside the mitochondria. Since the subsequent enzymes are located in the cytosol, citrulline exits the mitochondria through a specific transporter present in the inner mitochondrial membrane." },
+            { q: "What is the fate of fumarate produced during the urea cycle?", a: "Fumarate is recycled by being converted to malate (via cytosolic fumarase), then to oxaloacetate, and finally transaminated to aspartate, which can re-enter the urea cycle." },
+            { q: "State the normal blood urea level and the amount excreted daily.", a: "The normal blood urea level is 16-36 mg/100 ml. Approximately 10-25 grams of urea is excreted in the urine per day, making up 80-90% of total excreted nitrogen." },
+            { q: "What biochemical anomaly causes orotic acid and uracil to appear in the urine of Hyperammonemia Type-II patients?", a: "Due to a deficiency in ornithine transcarbamoylase, carbamoyl phosphate accumulates in the mitochondria, leaks into the cytosol, and is diverted into the pyrimidine synthesis pathway, producing excess orotic acid and uracil." },
+            { q: "What accumulates in the blood in Argininosuccinic aciduria, and which enzyme is defective?", a: "Argininosuccinate accumulates in the blood and is excreted in urine due to a deficiency of the enzyme argininosuccinase (argininosuccinate lyase)." },
+            { q: "Why does high protein intake increase urea formation?", a: "High protein intake leads to an increased formation of N-acetylglutamate, which allosterically activates Carbamoyl phosphate synthetase-I, thereby upregulating the entire urea cycle to handle the excess nitrogen load." },
+            { q: "Name two compounds used in the treatment of urea cycle disorders and their general mechanism.", a: "Benzoic acid and phenyl acetate are used. They conjugate with amino acids (glycine and glutamine, respectively) to form water-soluble compounds that are excreted in the urine, providing an alternative pathway for nitrogen excretion." }
+        ];
+
+        const essayData = [
+            { q: "Describe the complete reaction sequence of urea formation, indicating the location and enzymes involved.", a: "The cycle involves 5 steps. 1) Mitochondria: Ammonia + HCO3- + 2ATP form Carbamoyl Phosphate (Enzyme: Carbamoyl phosphate synthetase-I). 2) Mitochondria: Carbamoyl phosphate + Ornithine form Citrulline (Enzyme: Ornithine transcarbamoylase). Citrulline moves to the cytosol. 3) Cytosol: Citrulline + Aspartate form Argininosuccinate utilizing ATP (Enzyme: Argininosuccinate synthetase). 4) Cytosol: Argininosuccinate is cleaved into Arginine and Fumarate (Enzyme: Argininosuccinase). 5) Cytosol: Arginine is hydrolyzed into Urea and Ornithine (Enzyme: Arginase). Ornithine re-enters the mitochondria." },
+            { q: "Discuss the formation of carbamoyl phosphate in detail, including its energy requirements and regulation.", a: "This is the preparatory and rate-limiting step. Ammonia condenses with bicarbonate (HCO3-) in the mitochondria. It consumes 2 ATP molecules (yielding 2 ADP + 2 Pi). The reaction is catalyzed by Carbamoyl phosphate synthetase-I, which has an absolute requirement for the allosteric activator N-acetyl glutamate and Mg2+. Because carbamoyl phosphate is a high-energy compound, this step thermodynamically drives the rest of the cycle." },
+            { q: "Trace the metabolic pathway of fumarate generated in the urea cycle and explain how it links to aspartate formation.", a: "Fumarate produced in step 4 is recycled to maintain the cycle. Cytosolic fumarase converts fumarate to malate. Malate can be converted to oxaloacetate directly by malate dehydrogenase, or via malic enzyme to pyruvate, then to oxaloacetate by pyruvate carboxylase. Finally, oxaloacetate undergoes transamination (often using glutamate) to regenerate aspartate, which donates the second nitrogen atom in the urea cycle." },
+            { q: "Provide a comprehensive overview of the regulation of the urea cycle.", a: "The urea cycle is primarily regulated by the enzyme Carbamoyl phosphate synthetase-I, which catalyzes the committed step. This enzyme requires N-acetylglutamate as an allosteric activator. N-acetylglutamate synthesis from Acetyl-CoA and glutamate is upregulated during states of high protein intake or during starvation (due to protein breakdown). Thus, nitrogen availability directly controls the rate of the cycle. Inherited deficiencies in N-acetylglutamate synthetase result in severe hyperammonemia." },
+            { q: "Detail the clinical manifestations, biochemical basis, and treatment of Hyperammonemia Type-II.", a: "Hyperammonemia Type-II is the most common urea cycle disorder, caused by a deficiency in Ornithine transcarbamoylase (OTC). Biochemically, ammonia and carbamoyl phosphate accumulate. The excess carbamoyl phosphate is diverted to the pyrimidine synthesis pathway, causing the diagnostic excretion of orotic acid and uracil in urine. Symptoms include vomiting, lethargy, seizures, mental retardation, and coma. Treatment involves a low-protein diet, peritoneal dialysis to clear ammonia, and administering benzoate or phenylacetate to excrete nitrogen alternatively." },
+            { q: "Compare and contrast Hyperammonemia Type I and Type II.", a: "Type I is caused by a deficiency in Carbamoyl phosphate synthetase-I, leading to the accumulation of ammonia without an increase in carbamoyl phosphate. The primary symptom is severe mental retardation and neurological toxicity. Type II is caused by an Ornithine transcarbamoylase deficiency. While it also causes ammonia accumulation and severe neurological symptoms, it uniquely results in the accumulation of carbamoyl phosphate, which is shunted into pyrimidine synthesis, leading to the hallmark presence of orotic acid in the urine." },
+            { q: "Discuss the overall stoichiometry and energy cost of synthesizing one molecule of urea.", a: "The overall equation is: NH3 + HCO3- + Aspartate + 4ATP → Urea + Fumarate + 4ADP + 4Pi. The cycle requires a significant energy investment. Two ATP are consumed in the first step to form carbamoyl phosphate. A third ATP is hydrolyzed to AMP and PPi during the formation of argininosuccinate, and the subsequent hydrolysis of PPi to 2Pi consumes the equivalent of a fourth high-energy phosphate bond. Thus, synthesizing one urea molecule costs 4 high-energy bonds." },
+            { q: "Describe the reaction catalyzed by argininosuccinate synthetase and its significance.", a: "Argininosuccinate synthetase catalyzes the third reaction, occurring in the cytosol. It condenses citrulline with aspartate to form argininosuccinate. This step is significant because aspartate provides the second nitrogen atom required to form the final urea molecule. The reaction is energy-dependent, utilizing ATP which is broken down to AMP and Pyrophosphate (PPi). The subsequent rapid hydrolysis of PPi makes this reaction highly exergonic and irreversible under cellular conditions." },
+            { q: "Explain the biochemical principles behind the treatment strategies for urea cycle disorders.", a: "Treatments aim to lower blood ammonia levels. 1) Dietary management: Restricting dietary protein reduces the nitrogen load the body must process. 2) Dialysis: Peritoneal dialysis physically filters toxic ammonia from the blood during acute crises. 3) Pharmacological scavenging: Drugs like sodium benzoate and phenylacetate conjugate with amino acids (glycine and glutamine). These conjugates (hippurate and phenylacetylglutamine) are rapidly excreted by the kidneys, effectively draining nitrogen from the amino acid pool and bypassing the defective urea cycle." },
+            { q: "Describe the role of N-acetylglutamate synthetase and the consequences of its deficiency.", a: "N-acetylglutamate synthetase produces N-acetylglutamate from Acetyl-CoA and glutamate. N-acetylglutamate is the obligatory allosteric activator of CPS-I. A rare genetic deficiency in this enzyme prevents the activation of CPS-I, functionally halting the entire urea cycle and leading to severe hyperammonemia and aminoaciduria. Because carbamoyl glutamate is a structural analog of N-acetylglutamate, administration of carbamoyl glutamate can medically bypass the defect, activate CPS-I, and alleviate symptoms." }
+        ];
+
+        // --- Render functions ---
+
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((mcq, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700";
+                
+                let optionsHtml = '';
+                mcq.options.forEach((opt, optIndex) => {
+                    const isCorrect = optIndex === mcq.correct;
+                    optionsHtml += `
+                        <button 
+                            class="w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-600 mb-2 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-slate-700 dark:text-slate-300"
+                            data-correct="${isCorrect}"
+                            onclick="handleMCQ(this, ${isCorrect}, ${index})"
+                        >
+                            <span class="mr-2 font-bold text-brand-500">${String.fromCharCode(65 + optIndex)}.</span> ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <p class="font-bold text-lg mb-4 text-slate-800 dark:text-white"><span class="text-brand-500 mr-1">${index + 1}.</span> ${mcq.q}</p>
+                    <div id="mcq-opts-${index}">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderQAs(data, containerId, prefixColor) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all hover:shadow-md";
+                
+                card.innerHTML = `
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-${prefixColor}-100 dark:bg-${prefixColor}-900/50 text-${prefixColor}-600 dark:text-${prefixColor}-400 flex items-center justify-center font-bold">
+                            ${index + 1}
+                        </div>
+                        <div class="flex-grow">
+                            <p class="font-semibold text-lg mb-3 text-slate-800 dark:text-white">${item.q}</p>
+                            <button onclick="toggleExplanation(this)" class="text-sm font-semibold py-2 px-4 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                                <i class="fa-solid fa-eye mr-2"></i>Show Explanation
+                            </button>
+                            <div class="hidden mt-4 p-4 rounded-xl bg-${prefixColor}-50 dark:bg-slate-700/50 border border-${prefixColor}-100 dark:border-slate-600 text-slate-700 dark:text-slate-200 leading-relaxed">
+                                ${item.a}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- Interaction Logic ---
+
+        function handleMCQ(button, isCorrect, questionIndex) {
+            const container = document.getElementById(`mcq-opts-${questionIndex}`);
+            const buttons = container.querySelectorAll('button');
+            
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-50', 'dark:hover:bg-slate-700');
+                
+                if (btn.dataset.correct === 'true') {
+                    // Highlight correct answer green
+                    btn.classList.remove('border-slate-200', 'dark:border-slate-600', 'text-slate-700', 'dark:text-slate-300');
+                    btn.classList.add('bg-green-100', 'dark:bg-green-900/40', 'border-green-500', 'text-green-800', 'dark:text-green-300');
+                } else if (btn === button && !isCorrect) {
+                    // Highlight wrong answer red
+                    btn.classList.remove('border-slate-200', 'dark:border-slate-600', 'text-slate-700', 'dark:text-slate-300');
+                    btn.classList.add('bg-red-100', 'dark:bg-red-900/40', 'border-red-500', 'text-red-800', 'dark:text-red-300');
+                } else {
+                    // Fade out others
+                    btn.classList.add('opacity-50');
+                }
+            });
+        }
+
+        function toggleExplanation(button) {
+            const contentDiv = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (contentDiv.classList.contains('hidden')) {
+                contentDiv.classList.remove('hidden');
+                button.innerHTML = '<i class="fa-solid fa-eye-slash mr-2"></i>Hide Explanation';
+            } else {
+                contentDiv.classList.add('hidden');
+                button.innerHTML = '<i class="fa-solid fa-eye mr-2"></i>Show Explanation';
+            }
+        }
+
+        // --- Theme Toggle ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Initialize
+        window.onload = () => {
+            renderMCQs();
+            renderQAs(saqData, 'saq-container', 'purple');
+            renderQAs(essayData, 'essay-container', 'amber');
+        };
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxidative Phosphorylation - Study Notes</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- html2pdf for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        blush: {
+                            50: '#fdf8f9',
+                            100: '#fce8eb',
+                            200: '#fad1d9',
+                            300: '#f6aab8',
+                            400: '#ef768d',
+                            500: '#e54665',
+                            600: '#d1294d',
+                            700: '#b01d3c',
+                            800: '#931a35',
+                            900: '#7b1930',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #fcedf2 50%, #f4e6f0 100%);
+            background-attachment: fixed;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(229, 70, 101, 0.15);
+        }
+        .soft-glow {
+            text-shadow: 0 0 15px rgba(229, 70, 101, 0.2);
+        }
+        /* Hide PDF button when printing */
+        @media print {
+            #pdf-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-700 font-sans antialiased min-h-screen relative pb-20">
+
+    <!-- Floating Save to PDF Button -->
+    <button id="pdf-btn" onclick="generatePDF()" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-blush-400 to-blush-600 text-white px-6 py-3 rounded-full shadow-[0_8px_20px_rgba(229,70,101,0.3)] hover:shadow-[0_8px_25px_rgba(229,70,101,0.5)] hover:-translate-y-1 transition-all duration-300 font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Save to PDF
+    </button>
+
+    <!-- Main Content Container (Target for PDF) -->
+    <div id="study-material" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="inline-block mb-3 px-4 py-1 rounded-full bg-blush-100 text-blush-700 text-xs font-semibold tracking-widest uppercase">
+                PharmD Guru Study Notes
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-4 soft-glow">
+                Oxidative Phosphorylation
+            </h1>
+            <p class="text-slate-500 font-light max-w-2xl mx-auto">
+                A comprehensive guide to understanding biological energy generation, tailored for clarity, retention, and a touch of elegance.
+            </p>
+        </header>
+
+        <!-- SECTION 1: Detailed Explanations -->
+        <section class="mb-16 relative">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-blush-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                    </svg>
+                </span>
+                <h2 class="text-3xl font-serif font-bold text-slate-800">Comprehensive Explanations</h2>
+            </div>
+
+            <!-- Card 1: Introduction & Chemiosmotic Theory -->
+            <div class="glass-card rounded-3xl p-8 mb-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blush-100 rounded-bl-full opacity-50 -z-10"></div>
+                
+                <h3 class="text-2xl font-serif font-semibold text-blush-700 border-b border-blush-100 pb-3 mb-5">
+                    1. What is Oxidative Phosphorylation?
+                </h3>
+                <p class="mb-6 leading-relaxed text-slate-600">
+                    The formation of <strong>ATP</strong> from <strong>ADP</strong> and inorganic phosphate (<strong>Pi</strong>) is termed Phosphorylation. Because this phosphorylation is directly coupled with biological oxidation within the body, the overall process is called <em>biological oxidative phosphorylation</em>.
+                </p>
+
+                <h3 class="text-2xl font-serif font-semibold text-blush-700 border-b border-blush-100 pb-3 mb-5">
+                    2. Chemiosmotic Theory (Mechanism)
+                </h3>
+                <p class="mb-4 leading-relaxed text-slate-600">
+                    Proposed by British biochemist <strong>Peter Mitchell</strong>, this is the most widely accepted hypothesis explaining the mechanism of oxidative phosphorylation. It states that the energy released from oxidation generates an electrochemical potential by pumping protons across the inner mitochondrial membrane, which is then converted into ATP.
+                </p>
+                <div class="bg-blush-50 rounded-xl p-6 border border-blush-100">
+                    <h4 class="font-semibold text-blush-800 mb-3">Three Basic Principles of the Theory:</h4>
+                    <ul class="space-y-4 text-slate-600">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blush-500 mt-1">✿</span>
+                            <span><strong>Proton Pumping:</strong> The major electron carriers are organized into three complexes (Complex I, III, and IV) spanning the inner mitochondrial membrane. As electrons are transported, the energy released pumps protons (H<sup>+</sup>) from the mitochondrial matrix to the intermembrane space.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blush-500 mt-1">✿</span>
+                            <span><strong>Electrochemical Potential:</strong> Because the inner mitochondrial membrane is impermeable to protons, the pumping action generates a significant electrochemical gradient (a difference in pH and charge).</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blush-500 mt-1">✿</span>
+                            <span><strong>ATP Synthesis:</strong> Driven by the proton-motive force, H<sup>+</sup> ions flow back into the matrix through the <strong>F<sub>0</sub>F<sub>1</sub> ATPase</strong> molecule. The free energy released by this downward flow is coupled with the phosphorylation of ADP to form ATP.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 2: P:O Ratio & Substrate Level Phosphorylation -->
+            <div class="glass-card rounded-3xl p-8 mb-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-100 rounded-bl-full opacity-50 -z-10"></div>
+                
+                <h3 class="text-2xl font-serif font-semibold text-blush-700 border-b border-blush-100 pb-3 mb-5">
+                    3. The P:O Ratio
+                </h3>
+                <p class="mb-4 leading-relaxed text-slate-600">
+                    The P:O ratio measures the number of high-energy phosphates (ATP molecules) synthesized per atom of oxygen consumed or per molecule of water produced.
+                </p>
+                <ul class="list-disc list-inside mb-8 text-slate-600 pl-4 space-y-2">
+                    <li>Oxidation of metabolites yielding <strong>NADH</strong> gives a P:O ratio of <strong>3</strong> (Generates 3 ATP).</li>
+                    <li>Oxidation of metabolites yielding <strong>FADH<sub>2</sub></strong> gives a P:O ratio of <strong>2</strong> (Generates 2 ATP).</li>
+                </ul>
+
+                <h3 class="text-2xl font-serif font-semibold text-blush-700 border-b border-blush-100 pb-3 mb-5">
+                    4. Substrate Level Phosphorylation
+                </h3>
+                <p class="mb-4 leading-relaxed text-slate-600">
+                    This is the formation of ATP directly coupled to a metabolic process, completely bypassing the electron transport chain (ETC) and molecular oxygen (O<sub>2</sub>).
+                </p>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-100">
+                    <h4 class="font-semibold text-slate-800 mb-3 text-sm tracking-wide uppercase">Examples of Substrate Level Phosphorylation:</h4>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-gradient-to-br from-rose-50 to-pink-50 rounded-lg border border-pink-100 text-center">
+                            <span class="block text-xs text-pink-500 font-semibold mb-1">Glycolysis</span>
+                            <span class="text-sm font-medium text-slate-700">Phosphoenolpyruvate<br><span class="text-pink-400">↓</span><br>Pyruvate</span>
+                        </div>
+                        <div class="p-4 bg-gradient-to-br from-rose-50 to-pink-50 rounded-lg border border-pink-100 text-center">
+                            <span class="block text-xs text-pink-500 font-semibold mb-1">Glycolysis</span>
+                            <span class="text-sm font-medium text-slate-700">1,3-Bisphosphoglycerate<br><span class="text-pink-400">↓</span><br>3-Phosphoglycerate</span>
+                        </div>
+                        <div class="p-4 bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-lg border border-purple-100 text-center">
+                            <span class="block text-xs text-purple-500 font-semibold mb-1">TCA Cycle</span>
+                            <span class="text-sm font-medium text-slate-700">Succinyl-CoA<br><span class="text-purple-400">↓</span><br>Succinate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Shuttle Systems -->
+            <div class="glass-card rounded-3xl p-8 mb-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-pink-100 rounded-bl-full opacity-50 -z-10"></div>
+                
+                <h3 class="text-2xl font-serif font-semibold text-blush-700 border-b border-blush-100 pb-3 mb-5">
+                    5. Shuttle Systems for Extramitochondrial NADH
+                </h3>
+                <p class="mb-4 leading-relaxed text-slate-600">
+                    While most NADH and FADH<sub>2</sub> are generated inside the mitochondria (via Krebs cycle and β-oxidation), NADH generated by glycolysis in the cytosol cannot cross the impermeable inner mitochondrial membrane. Special shuttle systems carry <em>reducing equivalents</em> (not the NADH itself) into the mitochondria.
+                </p>
+                
+                <div class="space-y-6">
+                    <!-- Shuttle 1 -->
+                    <div class="bg-blush-50 rounded-2xl p-6 border border-blush-100 border-l-4 border-l-blush-400">
+                        <h4 class="text-lg font-serif font-bold text-blush-800 mb-2">A) The Malate-Aspartate Shuttle</h4>
+                        <ul class="space-y-2 text-sm text-slate-600 list-disc list-inside">
+                            <li>Cytosolic NADH transfers electrons to oxaloacetate, forming <strong>malate</strong> (via cytosolic malate dehydrogenase).</li>
+                            <li>Malate crosses the inner membrane via a dicarboxylate transporter.</li>
+                            <li>Inside the matrix, malate transfers electrons to mitochondrial NAD<sup>+</sup>, reforming NADH and oxaloacetate.</li>
+                            <li>This matrix NADH enters the ETC, generating <strong>3 ATP</strong>.</li>
+                            <li>Oxaloacetate is converted to <strong>aspartate</strong> to shuttle back out to the cytosol, completing the cycle.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Shuttle 2 -->
+                    <div class="bg-purple-50 rounded-2xl p-6 border border-purple-100 border-l-4 border-l-purple-400">
+                        <h4 class="text-lg font-serif font-bold text-purple-800 mb-2">B) The Glycerol Phosphate Shuttle</h4>
+                        <ul class="space-y-2 text-sm text-slate-600 list-disc list-inside">
+                            <li>Cytosolic NADH transfers electrons to dihydroxyacetone phosphate (DHAP), forming <strong>glycerol-3-phosphate</strong>.</li>
+                            <li>Glycerol-3-phosphate diffuses into the intermembrane space.</li>
+                            <li>It transfers its electrons to an FAD-containing enzyme on the inner membrane, forming <strong>FADH<sub>2</sub></strong> and reforming DHAP.</li>
+                            <li>The FADH<sub>2</sub> enters the ETC, generating <strong>2 ATP</strong>.</li>
+                            <li>DHAP returns to the cytosol to be reused.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Quick Revision Notes -->
+        <section class="mt-16">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-blush-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                    </svg>
+                </span>
+                <h2 class="text-3xl font-serif font-bold text-slate-800">Last-Minute Revision Notes</h2>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 shadow-lg border-2 border-blush-200 bg-white/90">
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <!-- Col 1 -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-blush-600 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blush-400"></span> Definitions
+                        </h4>
+                        <ul class="text-sm text-slate-700 space-y-3 mb-6">
+                            <li><strong>Oxidative Phosphorylation:</strong> ATP formation from ADP + Pi, coupled with biological oxidation.</li>
+                            <li><strong>Substrate Level Phosphorylation:</strong> Direct ATP formation without ETC/O<sub>2</sub>. <em>(Ex: PEP → Pyruvate, Succinyl-CoA → Succinate)</em>.</li>
+                            <li><strong>P:O Ratio:</strong> ATP made per Oxygen atom consumed.</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold text-blush-600 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blush-400"></span> Energy Yields
+                        </h4>
+                        <div class="flex gap-4">
+                            <div class="bg-blush-50 px-4 py-3 rounded-xl border border-blush-100 flex-1 text-center">
+                                <span class="block text-blush-800 font-bold">1 NADH</span>
+                                <span class="text-blush-500 font-semibold">= 3 ATP</span>
+                            </div>
+                            <div class="bg-purple-50 px-4 py-3 rounded-xl border border-purple-100 flex-1 text-center">
+                                <span class="block text-purple-800 font-bold">1 FADH<sub>2</sub></span>
+                                <span class="text-purple-500 font-semibold">= 2 ATP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Col 2 -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-blush-600 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blush-400"></span> Chemiosmotic Theory (Mitchell)
+                        </h4>
+                        <ul class="text-sm text-slate-700 space-y-2 mb-6 bg-slate-50 p-4 rounded-xl">
+                            <li><strong>1. Pump:</strong> Complexes I, III, IV pump H<sup>+</sup> from matrix to intermembrane space.</li>
+                            <li><strong>2. Gradient:</strong> Inner membrane is impermeable; creates electrochemical potential.</li>
+                            <li><strong>3. ATP Synthesis:</strong> H<sup>+</sup> flows back via <strong>F<sub>0</sub>F<sub>1</sub> ATPase</strong>, releasing energy to form ATP.</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold text-blush-600 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blush-400"></span> Cytosolic NADH Shuttles
+                        </h4>
+                        <ul class="text-sm text-slate-700 space-y-2">
+                            <li class="p-2 border border-slate-100 rounded bg-white">
+                                <strong>Malate-Aspartate Shuttle:</strong> Yields NADH in matrix → <strong>3 ATP</strong>.
+                            </li>
+                            <li class="p-2 border border-slate-100 rounded bg-white">
+                                <strong>Glycerol Phosphate Shuttle:</strong> Yields FADH<sub>2</sub> in matrix → <strong>2 ATP</strong>.
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                
+                <div class="mt-6 pt-6 border-t border-slate-100 text-center text-xs text-slate-400">
+                    Keep calm and trust your preparation. You've got this! 💖
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            // Target the main study material container
+            const element = document.getElementById('study-material');
+            
+            // Temporary styles for better PDF output
+            const originalBackground = document.body.style.background;
+            document.body.style.background = '#ffffff';
+            
+            // Setup options for html2pdf
+            const opt = {
+                margin:       [10, 10, 10, 10], // top, left, bottom, right
+                filename:     'Oxidative_Phosphorylation_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Add loading state to button
+            const btn = document.getElementById('pdf-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Generating PDF...`;
+            btn.disabled = true;
+
+            // Generate the PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button and styles
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                document.body.style.background = originalBackground;
+            });
+        }
+    </script>
+</body>
+</html>
+

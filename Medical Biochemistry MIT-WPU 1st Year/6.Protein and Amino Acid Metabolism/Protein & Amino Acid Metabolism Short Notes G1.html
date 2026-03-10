@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein & Amino Acid Metabolism | Study Notes</title>
+    
+    <!-- Google Fonts for romantic and readable typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html2pdf.js for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Tailwind Configuration for Custom Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        blush: '#fff0f5',
+                    },
+                    boxShadow: {
+                        'soft-glow': '0 10px 40px -10px rgba(251, 113, 133, 0.15)',
+                        'inner-glow': 'inset 0 2px 4px 0 rgba(251, 113, 133, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 50%, #fce7f3 100%);
+            background-attachment: fixed;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fb7185; 
+        }
+
+        /* Print styles to ensure beautiful PDFs */
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .shadow-soft-glow { box-shadow: none !important; border: 1px solid #fecdd3; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 antialiased selection:bg-rose-200 selection:text-rose-900">
+
+    <!-- Floating Navigation / Header -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-rose-100 shadow-sm transition-all duration-300 no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-rose-800 font-serif font-semibold text-xl">
+                <i class="fas fa-heart text-rose-400 text-lg shadow-rose-300 drop-shadow-md"></i>
+                StudyLove Notes
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#detailed-section" class="text-sm font-semibold text-gray-600 hover:text-rose-600 transition-colors hidden sm:block">Detailed Notes</a>
+                <a href="#revision-section" class="text-sm font-semibold text-gray-600 hover:text-rose-600 transition-colors hidden sm:block">Quick Revision</a>
+                <button onclick="downloadPDF()" class="group relative px-5 py-2 font-semibold text-white bg-gradient-to-r from-rose-400 to-pink-500 rounded-full overflow-hidden shadow-[0_4px_15px_rgba(251,113,133,0.4)] hover:shadow-[0_6px_20px_rgba(251,113,133,0.6)] hover:-translate-y-0.5 transition-all duration-300">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <i class="fas fa-file-pdf"></i> Save to PDF
+                    </span>
+                    <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-pink-500 to-rose-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container (This gets exported to PDF) -->
+    <main id="pdf-content" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-16 relative">
+            <div class="absolute inset-0 flex justify-center items-center opacity-5 pointer-events-none">
+                <i class="fas fa-dna text-9xl text-rose-900"></i>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-rose-900 mb-4 tracking-tight drop-shadow-sm relative z-10">
+                Protein & Amino Acid Metabolism
+            </h1>
+            <p class="font-serif text-lg text-rose-700 italic max-w-2xl mx-auto relative z-10">
+                "Understanding the dynamic balance of life's building blocks."
+            </p>
+            <div class="h-1 w-24 bg-gradient-to-r from-transparent via-rose-300 to-transparent mx-auto mt-6"></div>
+        </header>
+
+        <!-- ==========================================
+             SECTION 1: DETAILED EXPLANATIONS
+             ========================================== -->
+        <section id="detailed-section" class="space-y-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-8 w-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-500">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2 class="font-serif text-3xl font-bold text-gray-800 tracking-wide">Detailed Explanations</h2>
+            </div>
+
+            <!-- Topic 1: Biological Importance -->
+            <article class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-50 to-transparent rounded-bl-full opacity-50 transition-transform group-hover:scale-110"></div>
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-microscope text-rose-400 text-lg"></i> Medical & Biological Importance
+                </h3>
+                <div class="space-y-4 text-gray-700 leading-relaxed">
+                    <p>Proteins form the structural and functional foundation of our bodies. A typical 70 kg adult contains about <strong>12 kg of protein</strong>.</p>
+                    <ul class="list-none space-y-3 pl-2 mt-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-rose-400 mt-1 flex-shrink-0"></i>
+                            <span><strong>Continuous Turnover:</strong> About 400 gm of body protein is synthesized and degraded daily (approx. 6 gm/kg/day). This continuous re-synthesis acts as a quality control mechanism to remove aged, damaged, or non-functional proteins.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-rose-400 mt-1 flex-shrink-0"></i>
+                            <span><strong>Adaptation:</strong> Protein degradation increases during starvation, diabetes, and tissue injury. It is vital for shaping tissues during pregnancy and cellular adaptation.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-rose-400 mt-1 flex-shrink-0"></i>
+                            <span><strong>Amino Acid Pool:</strong> Normal plasma concentration is 40–60 mg%. Excess amino acids <em>cannot</em> be stored; they are degraded. The amino group is extracted as toxic ammonia (later converted to urea in the liver), and the carbon skeleton is oxidized for energy, glucose formation (gluconeogenesis), or fat synthesis.</span>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Topic 2: Protein Turnover & Nitrogen Balance -->
+            <article class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Turnover -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white">
+                    <h3 class="font-serif text-xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-sync text-rose-400"></i> Protein Turnover
+                    </h3>
+                    <p class="mb-4">Body proteins are in a dynamic state. Turnover is influenced by physiological needs (high synthesis during growth/lactation, high degradation during fever/starvation).</p>
+                    <div class="bg-rose-50 p-4 rounded-xl border border-rose-100">
+                        <h4 class="font-semibold text-rose-900 mb-2">Mechanisms of Control:</h4>
+                        <ul class="list-disc pl-5 space-y-1 text-sm">
+                            <li><strong>Ubiquitin:</strong> A small polypeptide (mol. wt. 8,500) that tags proteins for destruction.</li>
+                            <li><strong>PEST Sequence:</strong> Proteins rich in <strong>P</strong>roline, <strong>E</strong> (Glutamate/Glutamine), <strong>S</strong>erine, and <strong>T</strong>hreonine are rapidly degraded.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nitrogen Balance -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white">
+                    <h3 class="font-serif text-xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-balance-scale text-rose-400"></i> Nitrogen Balance
+                    </h3>
+                    <p class="mb-4">Evaluates the relationship between dietary nitrogen intake (protein) and nitrogen excretion.</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-gray-400">
+                            <strong>1. Equilibrium:</strong> Intake = Excretion. Seen in normal, healthy adults.
+                        </li>
+                        <li class="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
+                            <strong>2. Positive (+ve):</strong> Intake > Excretion. Protein is laid down. Seen in growing infants and pregnant women.
+                        </li>
+                        <li class="p-3 bg-rose-50 rounded-lg border-l-4 border-rose-400">
+                            <strong>3. Negative (-ve):</strong> Intake < Excretion. Seen in severe illness, major trauma, advanced cancer, or starvation (Kwashiorkor/Marasmus).
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Topic 3: Catabolism of Amino Acids Overview -->
+            <article class="bg-gradient-to-br from-rose-800 to-pink-900 text-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(159,18,57,0.3)]">
+                <h3 class="font-serif text-2xl font-semibold text-rose-100 mb-4 flex items-center gap-2">
+                    <i class="fas fa-project-diagram text-rose-300"></i> Stages of Amino Acid Catabolism
+                </h3>
+                <p class="text-rose-100 mb-6">The complete breakdown of an amino acid follows three distinct stages:</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+                        <div class="text-rose-300 font-bold text-xl mb-2">Stage 1</div>
+                        <h4 class="font-semibold mb-2 text-white">Removal of $\alpha$-amino group</h4>
+                        <p class="text-sm text-rose-100/80">Occurs via <strong>Transamination</strong> (shifting the group) and <strong>Deamination</strong> (liberating the group as $NH_3$).</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+                        <div class="text-rose-300 font-bold text-xl mb-2">Stage 2</div>
+                        <h4 class="font-semibold mb-2 text-white">Disposal of Ammonia</h4>
+                        <p class="text-sm text-rose-100/80">Toxic ammonia ($NH_3$) is transported to the liver and converted into relatively non-toxic <strong>Urea</strong>.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
+                        <div class="text-rose-300 font-bold text-xl mb-2">Stage 3</div>
+                        <h4 class="font-semibold mb-2 text-white">Carbon Skeleton Catabolism</h4>
+                        <p class="text-sm text-rose-100/80">The remaining keto acid is oxidized in the Citric Acid Cycle for $CO_2$, $H_2O$, and energy.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Topic 4: Transamination -->
+            <article class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-exchange-alt text-rose-400"></i> Transamination
+                </h3>
+                <p class="text-gray-700 mb-4">The transfer of an amino ($-NH_2$) group from an amino acid to a keto acid. It involves the interconversion of a pair of amino acids and a pair of keto acids, catalyzed by <strong>transaminases (aminotransferases)</strong>.</p>
+                
+                <div class="flex flex-col md:flex-row gap-8 mt-6">
+                    <div class="flex-1 space-y-4">
+                        <h4 class="font-serif font-semibold text-rose-900 text-lg border-b border-rose-100 pb-2">Salient Features</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                            <li>Requires <strong>Pyridoxal Phosphate (PLP)</strong> (Vitamin B6 derivative) as a coenzyme.</li>
+                            <li>Does <strong>not</strong> liberate free $NH_3$; it only transfers it.</li>
+                            <li>Highly reversible process.</li>
+                            <li>Concentrates nitrogen in <strong>Glutamate</strong>, which then undergoes oxidative deamination.</li>
+                            <li>All amino acids participate EXCEPT Lysine, Threonine, Proline, and Hydroxyproline.</li>
+                        </ul>
+                    </div>
+                    <div class="flex-1 bg-rose-50 p-6 rounded-2xl border border-rose-100 shadow-inner">
+                        <h4 class="font-serif font-semibold text-rose-900 text-lg mb-3">Mechanism (Ping Pong Bi Bi)</h4>
+                        <ol class="list-decimal pl-5 space-y-3 text-sm text-gray-700">
+                            <li>The enzyme's PLP forms a <em>Schiff base</em> (imine linkage) with a lysine residue.</li>
+                            <li>Incoming amino acid binds, displacing lysine to form an <strong>amino-acid-PLP-Schiff base</strong>.</li>
+                            <li>Amino group is transferred to PLP, forming <em>pyridoxamine phosphate</em> and releasing a new keto acid.</li>
+                            <li>A new keto acid binds, receives the amino group, forming a new amino acid, and regenerating the enzyme-PLP complex.</li>
+                        </ol>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Topic 5: Deamination -->
+            <article class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-cut text-rose-400"></i> Deamination
+                </h3>
+                <p class="text-gray-700 mb-6">The direct removal of the amino group as free $NH_3$ (ammonia). Occurs simultaneously with transamination (often called <em>transdeamination</em>).</p>
+
+                <div class="space-y-6">
+                    <!-- Oxidative Deamination -->
+                    <div class="border border-rose-100 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-rose-400"></div>
+                        <h4 class="font-serif text-xl font-semibold text-rose-800 mb-3">1. Oxidative Deamination</h4>
+                        <p class="text-sm text-gray-600 mb-4">Liberation of $NH_3$ coupled with oxidation, mostly in the liver and kidney.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-rose-50/50 p-4 rounded-xl">
+                                <strong class="text-rose-900 block mb-1">Glutamate Dehydrogenase (GDH)</strong>
+                                <p class="text-sm">Glutamate serves as the "collection center". GDH converts Glutamate $\rightleftharpoons$ $\alpha$-Ketoglutarate + $NH_3$. Unique feature: Uses either $NAD^+$ or $NADP^+$ as a coenzyme.</p>
+                                <p class="text-xs mt-2 text-rose-700 bg-rose-100 p-2 rounded inline-block"><strong>Regulation:</strong> Inhibited by ATP, GTP, Steroids. Activated by ADP, GDP.</p>
+                            </div>
+                            <div class="bg-rose-50/50 p-4 rounded-xl">
+                                <strong class="text-rose-900 block mb-1">Amino Acid Oxidases</strong>
+                                <p class="text-sm">Flavoproteins (L-amino acid oxidase uses FMN; D-amino acid oxidase uses FAD). Generates $H_2O_2$ (decomposed by catalase). D-amino acid oxidase is vital for converting unnatural D-amino acids from diet into usable L-forms.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Non-Oxidative Deamination -->
+                    <div class="border border-rose-100 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-orange-300"></div>
+                        <h4 class="font-serif text-xl font-semibold text-rose-800 mb-3">2. Non-Oxidative Deamination</h4>
+                        <p class="text-sm text-gray-600 mb-3">Liberation of $NH_3$ without oxidation.</p>
+                        <ul class="space-y-3 text-sm bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <li><strong>Dehydratases (PLP dependent):</strong> Acts on hydroxy amino acids (Serine $\rightarrow$ Pyruvate + $NH_3$, Threonine, Homoserine).</li>
+                            <li><strong>Desulfhydrases:</strong> Acts on sulfur amino acids (Cysteine $\rightarrow$ Pyruvate + $H_2S$ + $NH_3$).</li>
+                            <li><strong>Histidase:</strong> Deaminates Histidine $\rightarrow$ Urocanate + $NH_3$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Topic 6: Decarboxylation -->
+            <article class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-soft-glow border border-white">
+                <h3 class="font-serif text-2xl font-semibold text-rose-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-wind text-rose-400"></i> Decarboxylation
+                </h3>
+                <p class="text-gray-700 mb-4">The removal of $CO_2$ from the carboxyl group of an amino acid to form the corresponding <strong>amine</strong>. This process requires <strong>Pyridoxal Phosphate (PLP)</strong>.</p>
+                <div class="flex items-center gap-4 bg-rose-50 p-4 rounded-xl border border-rose-100 mb-4">
+                    <div class="text-rose-900 font-mono text-sm bg-white p-2 rounded shadow-sm">Amino Acid</div>
+                    <i class="fas fa-arrow-right text-rose-400"></i>
+                    <div class="text-rose-900 font-mono text-sm bg-white p-2 rounded shadow-sm text-center">
+                        <span class="block text-xs text-rose-400 mb-1">Decarboxylase (PLP)</span>
+                        Amine + $CO_2$
+                    </div>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Physiologically Significant Biogenic Amines (Examples):</h4>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <li class="flex items-center gap-2 bg-white p-3 rounded-lg border border-gray-100 shadow-sm"><i class="fas fa-angle-right text-rose-400"></i> Histidine $\rightarrow$ <strong>Histamine</strong></li>
+                    <li class="flex items-center gap-2 bg-white p-3 rounded-lg border border-gray-100 shadow-sm"><i class="fas fa-angle-right text-rose-400"></i> Tryptophan $\rightarrow$ <strong>Tryptamine</strong></li>
+                    <li class="flex items-center gap-2 bg-white p-3 rounded-lg border border-gray-100 shadow-sm"><i class="fas fa-angle-right text-rose-400"></i> Tyrosine $\rightarrow$ <strong>Tyramine</strong></li>
+                </ul>
+            </article>
+
+        </section>
+
+        <!-- Page break for PDF -->
+        <div class="page-break no-print my-16"></div>
+
+        <!-- ==========================================
+             SECTION 2: QUICK REVISION NOTES
+             ========================================== -->
+        <section id="revision-section" class="mt-20 relative">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="h-8 w-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h2 class="font-serif text-3xl font-bold text-gray-800 tracking-wide">Quick Revision Notes</h2>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-rose-400 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="font-serif font-bold text-rose-900 text-lg mb-2">1. Fundamentals & Turnover</h3>
+                    <ul class="text-sm space-y-2 text-gray-600 list-disc pl-4">
+                        <li><strong>Body Protein:</strong> 12kg in 70kg adult.</li>
+                        <li><strong>Turnover:</strong> ~400g synthesized/degraded daily.</li>
+                        <li><strong>Tagging for destruction:</strong> Done by <strong>Ubiquitin</strong>.</li>
+                        <li><strong>PEST Sequence:</strong> Proline, Glutamate, Serine, Threonine = rapid degradation.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-rose-400 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="font-serif font-bold text-rose-900 text-lg mb-2">2. Nitrogen Balance</h3>
+                    <ul class="text-sm space-y-2 text-gray-600 list-disc pl-4">
+                        <li><strong>Equilibrium:</strong> Intake = Excretion (Normal adult).</li>
+                        <li><strong>Positive (+):</strong> Intake > Excretion (Growth, pregnancy).</li>
+                        <li><strong>Negative (-):</strong> Intake < Excretion (Starvation, illness, Kwashiorkor).</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-rose-400 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="font-serif font-bold text-rose-900 text-lg mb-2">3. Transamination</h3>
+                    <ul class="text-sm space-y-2 text-gray-600 list-disc pl-4">
+                        <li><strong>Action:</strong> Swaps $-NH_2$ group between amino acid and keto acid.</li>
+                        <li><strong>Coenzyme:</strong> PLP (Vitamin B6). forms Schiff base.</li>
+                        <li><strong>Mechanism:</strong> Ping Pong Bi Bi.</li>
+                        <li><strong>Exceptions:</strong> Lysine, Threonine, Proline, Hydroxyproline do NOT participate.</li>
+                        <li><strong>Hub:</strong> Concentrates nitrogen into Glutamate.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-rose-400 hover:-translate-y-1 transition-transform duration-300">
+                    <h3 class="font-serif font-bold text-rose-900 text-lg mb-2">4. Deamination</h3>
+                    <ul class="text-sm space-y-2 text-gray-600 list-disc pl-4">
+                        <li><strong>Action:</strong> Removes $-NH_2$ as free $NH_3$.</li>
+                        <li><strong>Oxidative:</strong>
+                            <ul class="pl-4 mt-1 space-y-1 text-xs">
+                                <li><strong>GDH:</strong> Glutamate $\rightarrow$ $\alpha$-Ketoglutarate. Regulated by ATP/GTP (-) and ADP/GDP (+). Uses $NAD^+$/$NADP^+$.</li>
+                                <li><strong>Oxidases:</strong> D-amino acid oxidase (FAD) converts unnatural diet D-forms to L-forms.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Non-Oxidative:</strong> Dehydratases (Serine/Threonine), Desulfhydrases (Cysteine), Histidase.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-rose-400 hover:-translate-y-1 transition-transform duration-300 md:col-span-2">
+                    <h3 class="font-serif font-bold text-rose-900 text-lg mb-2">5. Decarboxylation & Overall Catabolism</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+                        <div>
+                            <strong class="text-gray-800">Decarboxylation:</strong>
+                            <ul class="list-disc pl-4 mt-1 space-y-1">
+                                <li>Removes $CO_2$, forming biogenic amines.</li>
+                                <li>Requires PLP.</li>
+                                <li><em>Ex:</em> Histidine $\rightarrow$ Histamine.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong class="text-gray-800">3 Catabolic Stages:</strong>
+                            <ol class="list-decimal pl-4 mt-1 space-y-1">
+                                <li>Remove Amino Group (Transamination/Deamination).</li>
+                                <li>Dispose Ammonia (Urea Cycle in Liver).</li>
+                                <li>Dispose Carbon Skeleton (TCA cycle for energy/glucose/fat).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Decorative Element -->
+            <div class="absolute bottom-[-20px] right-[-20px] text-pink-200/40 text-9xl z-0 pointer-events-none transform rotate-12">
+                <i class="fas fa-heart"></i>
+            </div>
+        </section>
+
+        <!-- Footer / Signature -->
+        <footer class="mt-20 text-center text-rose-400 font-serif text-sm no-print">
+            <p>Made with <i class="fas fa-heart"></i> for sweet studying.</p>
+        </footer>
+
+    </main>
+
+    <!-- Script for PDF Generation -->
+    <script>
+        function downloadPDF() {
+            // Target the main container
+            const element = document.getElementById('pdf-content');
+            
+            // Add a temporary class to adjust styles specifically for PDF generation if needed
+            element.classList.add('pdf-export-mode');
+
+            const opt = {
+                margin:       12, // 12mm margin
+                filename:     'StudyLove_Metabolism_Notes.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true,
+                    letterRendering: true,
+                    backgroundColor: '#ffffff'
+                },
+                jsPDF:        { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
+                }
+            };
+
+            // Trigger the download
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Remove the temporary class after completion
+                element.classList.remove('pdf-export-mode');
+            });
+        }
+    </script>
+</body>
+</html>
+

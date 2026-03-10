@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetic Code & Protein Synthesis - Study Notes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romantic: {
+                            50: '#fdf2f8', // Soft pink background
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777', // Headings
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+                        warm: {
+                            50: '#fffbeb', // Warm beige
+                            100: '#fef3c7',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Nunito"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft-glow': '0 10px 40px -10px rgba(236, 72, 153, 0.15)',
+                        'inner-glow': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fffbeb 50%, #fce7f3 100%);
+            background-attachment: fixed;
+            color: #334155;
+        }
+        
+        /* Custom Scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdf2f8; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fbcfe8; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f472b6; 
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Print optimizations for the PDF generator */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .glass-card { background: white; box-shadow: none; border: none; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen p-4 md:p-8 selection:bg-romantic-200 selection:text-romantic-900">
+
+    <!-- Floating Header -->
+    <header class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center mb-10 gap-4 no-print">
+        <div class="text-center md:text-left">
+            <h1 class="font-serif text-3xl md:text-4xl font-bold text-romantic-600 flex items-center justify-center md:justify-start gap-2">
+                <i data-lucide="heart-pulse" class="w-8 h-8 text-romantic-400"></i>
+                Study Notes
+            </h1>
+            <p class="text-slate-500 font-medium mt-1">Curated with love for your exam success 💌</p>
+        </div>
+        <button onclick="generatePDF()" class="group relative px-6 py-3 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-romantic-400 to-romantic-600 rounded-full shadow-soft-glow hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-2">
+            <i data-lucide="download" class="w-5 h-5 transition-transform group-hover:-translate-y-1"></i>
+            <span>Save as PDF</span>
+            <div class="absolute inset-0 w-full h-full rounded-full ring-2 ring-white/20 shadow-inner-glow pointer-events-none"></div>
+        </button>
+    </header>
+
+    <!-- Main Content Container (This gets exported to PDF) -->
+    <div id="content-to-pdf" class="max-w-5xl mx-auto space-y-12">
+        
+        <!-- PDF Title Header (Visible only in PDF or at top of content) -->
+        <div class="text-center mb-8 border-b border-romantic-200 pb-8">
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-slate-800 mb-3">Genetic Code & Inhibition of Protein Synthesis</h1>
+            <p class="text-romantic-500 font-medium text-lg italic">Comprehensive Biology Notes</p>
+        </div>
+
+        <!-- ==========================================
+             SECTION 1: DETAILED EXPLANATIONS
+             ========================================== -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-romantic-100 p-2 rounded-full"><i data-lucide="book-open" class="text-romantic-600 w-6 h-6"></i></div>
+                <h2 class="font-serif text-3xl font-bold text-romantic-800">Section I: In-Depth Concepts</h2>
+            </div>
+
+            <!-- Topic 1: The Genetic Code -->
+            <article class="glass-card rounded-3xl p-6 md:p-10 shadow-soft-glow transition-all hover:shadow-xl">
+                <h3 class="font-serif text-2xl font-bold text-romantic-600 border-b-2 border-romantic-100 pb-3 mb-5">1. The Genetic Code</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    The genetic code acts as the dictionary that translates the language of nucleic acids (DNA/mRNA) into the language of proteins (amino acids). A sequence of three adjacent nucleotide bases forms a <strong>codon</strong>, which specifies a single amino acid.
+                </p>
+                
+                <h4 class="font-bold text-slate-700 text-lg mt-6 mb-3 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-romantic-400"></i> Key Characteristics
+                </h4>
+                <ul class="space-y-4 text-slate-600 ml-2">
+                    <li class="flex gap-3">
+                        <span class="text-romantic-400 mt-1">✦</span>
+                        <div>
+                            <strong class="text-slate-800">Number of Codons:</strong> There are exactly <strong>64</strong> possible codon sequences. Since RNA uses 4 bases (A, G, C, U) read in triplets, the combination is $4^3 = 64$.
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-romantic-400 mt-1">✦</span>
+                        <div>
+                            <strong class="text-slate-800">Stop (Nonsense) Codons:</strong> Out of 64, three codons do not code for any amino acid. They act as "stop signs" for protein synthesis. 
+                            <div class="mt-2 bg-romantic-50 p-3 rounded-lg border border-romantic-100 inline-block">
+                                <span class="font-mono text-romantic-800 font-bold">UAA</span> (Ochre) | 
+                                <span class="font-mono text-romantic-800 font-bold">UAG</span> (Amber) | 
+                                <span class="font-mono text-romantic-800 font-bold">UGA</span> (Opal)
+                            </div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-romantic-400 mt-1">✦</span>
+                        <div>
+                            <strong class="text-slate-800">Degenerate but Unambiguous:</strong> 
+                            <br><em>Degenerate:</em> 61 codons code for only 20 amino acids. This means one amino acid can have multiple codons (Synonyms). For example, Arginine is coded by 6 different codons. This redundancy protects the body from harmful mutations.
+                            <br><em>Unambiguous:</em> While an amino acid can have many codons, a specific codon will <strong>only ever code for one</strong> specific amino acid. 
+                            <div class="text-sm italic text-slate-500 mt-1">Exceptions: Methionine (AUG) and Tryptophan (UGG) have only one single codon each.</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-romantic-400 mt-1">✦</span>
+                        <div>
+                            <strong class="text-slate-800">Universal (Almost):</strong> The code means the same thing in almost all organisms, from bacteria to humans. 
+                            <br><em>Exceptions (Human Mitochondria):</em> 
+                            <ul class="list-disc ml-5 mt-1 text-sm text-slate-500">
+                                <li><strong>UGA</strong> codes for Tryptophan (usually a Stop codon).</li>
+                                <li><strong>AUA</strong> codes for Methionine (usually Isoleucine).</li>
+                                <li><strong>CUA</strong> codes for Threonine (usually Leucine).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-romantic-400 mt-1">✦</span>
+                        <div>
+                            <strong class="text-slate-800">Non-overlapping & Punctuation-free:</strong> The code is read sequentially, 3 bases at a time, without any gaps.
+                            <div class="mt-2 bg-warm-50 p-3 rounded-lg text-sm font-mono border border-warm-100">
+                                Example Sequence: <span class="text-slate-400">AUGCUAGACUUU</span><br>
+                                Is read cleanly as: <strong class="text-romantic-600">AUG / CUA / GAC / UUU</strong>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+
+            <!-- Topic 2: Wobble Hypothesis -->
+            <article class="glass-card rounded-3xl p-6 md:p-10 shadow-soft-glow transition-all hover:shadow-xl">
+                <h3 class="font-serif text-2xl font-bold text-romantic-600 border-b-2 border-romantic-100 pb-3 mb-5">2. The Wobble Hypothesis</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    Proposed by Francis Crick, this hypothesis explains how a single tRNA molecule can recognize and bind to multiple synonymous codons, solving the "degeneracy" puzzle. It relies on the flexibility (wobble) of the 3rd base in the codon.
+                </p>
+                
+                <div class="bg-romantic-50 border-l-4 border-romantic-400 p-4 rounded-r-lg mb-6">
+                    <strong class="text-romantic-800">Example of Wobble:</strong> 
+                    Yeast tRNA for Alanine has the anticodon <span class="font-mono bg-white px-1 rounded text-romantic-600">IGC</span> (I = Inosine). Because of the wobble, this single tRNA can perfectly bind to three different mRNA codons: <span class="font-mono bg-white px-1 rounded text-romantic-600">GCU</span>, <span class="font-mono bg-white px-1 rounded text-romantic-600">GCC</span>, and <span class="font-mono bg-white px-1 rounded text-romantic-600">GCA</span>.
+                </div>
+
+                <h4 class="font-bold text-slate-700 text-lg mb-3">Crick's 4 Rules of Wobble:</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="text-romantic-400 font-bold mb-1">Rule 1: Strict Pairing</div>
+                        <p class="text-sm text-slate-600">The first two bases of an mRNA codon always form strong, standard Watson-Crick base pairs with the anticodon.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="text-romantic-400 font-bold mb-1">Rule 2: Distinct tRNAs</div>
+                        <p class="text-sm text-slate-600">Codons that differ in their first or second base <em>must</em> be read by entirely different tRNAs (e.g., UUA and CUA for Leucine).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="text-romantic-400 font-bold mb-1">Rule 3: The Anticodon Factor</div>
+                        <p class="text-sm text-slate-600">The first base of the <em>anticodon</em> dictates the wobble:
+                        <br>• If <strong>C or A</strong>: Reads 1 codon.
+                        <br>• If <strong>U or G</strong>: Reads 2 codons.
+                        <br>• If <strong>I (Inosine)</strong>: Reads 3 codons.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="text-romantic-400 font-bold mb-1">Rule 4: Economy of tRNA</div>
+                        <p class="text-sm text-slate-600">Thanks to the wobble effect, a cell doesn't need 61 tRNAs for 61 codons. A minimum of just <strong>32 tRNAs</strong> is sufficient to translate all amino acids.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Topic 3: Inhibition -->
+            <article class="glass-card rounded-3xl p-6 md:p-10 shadow-soft-glow transition-all hover:shadow-xl page-break">
+                <h3 class="font-serif text-2xl font-bold text-romantic-600 border-b-2 border-romantic-100 pb-3 mb-5">3. Inhibition of Protein Synthesis</h3>
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Many antibiotics and toxins function by hijacking or blocking specific stages of translation. Most antibiotics selectively target prokaryotic (bacterial) ribosomes without harming eukaryotic (human) cells.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-romantic-100 shadow-sm">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-romantic-50 text-romantic-800 uppercase font-bold text-xs">
+                            <tr>
+                                <th class="px-6 py-4 rounded-tl-xl">Inhibitor (Antibiotic/Toxin)</th>
+                                <th class="px-6 py-4">Target Site</th>
+                                <th class="px-6 py-4 rounded-tr-xl">Mechanism of Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-romantic-100 bg-white">
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Puromycin</td>
+                                <td class="px-6 py-4">Prokaryotes & Eukaryotes</td>
+                                <td class="px-6 py-4">Mimics 3' end of aminoacyl-tRNA. Gets incorporated into the chain, preventing further addition. Causes premature chain termination.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Tetracyclines</td>
+                                <td class="px-6 py-4">30S Subunit (Prokaryotes)</td>
+                                <td class="px-6 py-4">Inhibits binding of the incoming aminoacyl-tRNA to the ribosomal 'A' site.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Chloramphenicol</td>
+                                <td class="px-6 py-4">50S Subunit (Prokaryotes)</td>
+                                <td class="px-6 py-4">Blocks the peptidyl transferase reaction (prevents peptide bond formation).</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Erythromycin</td>
+                                <td class="px-6 py-4">50S Subunit (Prokaryotes)</td>
+                                <td class="px-6 py-4">Inhibits the translocation step (ribosome moving along mRNA).</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Streptomycin</td>
+                                <td class="px-6 py-4">30S Subunit (Prokaryotes)</td>
+                                <td class="px-6 py-4">Causes misreading of the genetic code and interferes with initiation tRNA binding. Inhibits chain elongation.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Lincomycin & Clindamycin</td>
+                                <td class="px-6 py-4">50S Subunit (Prokaryotes)</td>
+                                <td class="px-6 py-4">Inhibits peptidyl transferase, preventing peptide bond formation.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors bg-warm-50/30">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Cycloheximide</td>
+                                <td class="px-6 py-4">60S Subunit (Eukaryotes)</td>
+                                <td class="px-6 py-4">Blocks peptidyl transferase activity specifically in eukaryotes.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors bg-warm-50/30">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Diphtheria Toxin</td>
+                                <td class="px-6 py-4">Eukaryotes</td>
+                                <td class="px-6 py-4">Inactivates the elongation factor, halting protein synthesis.</td>
+                            </tr>
+                            <tr class="hover:bg-romantic-50/50 transition-colors bg-warm-50/30">
+                                <td class="px-6 py-4 font-semibold text-slate-800">Tunicamycin</td>
+                                <td class="px-6 py-4">Glycoproteins</td>
+                                <td class="px-6 py-4">Prevents attachment of oligosaccharide side chains to glycoproteins.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <!-- ==========================================
+             SECTION 2: QUICK REVISION NOTES (Cheat Sheet)
+             ========================================== -->
+        <section class="mt-16 page-break">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-warm-100 p-2 rounded-full"><i data-lucide="zap" class="text-orange-500 w-6 h-6"></i></div>
+                    <h2 class="font-serif text-3xl font-bold text-slate-800">Section II: Quick Revision Notes</h2>
+                </div>
+                <span class="text-sm font-bold bg-romantic-100 text-romantic-600 px-3 py-1 rounded-full uppercase tracking-widest no-print">Cheat Sheet</span>
+            </div>
+
+            <div class="bg-gradient-to-br from-romantic-50 via-white to-warm-50 rounded-3xl p-6 md:p-10 shadow-lg border-2 border-white relative overflow-hidden">
+                <!-- Decorative background shapes -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-romantic-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-warm-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                    
+                    <!-- Code & Wobble Quick Facts -->
+                    <div>
+                        <h4 class="font-bold text-lg text-romantic-800 mb-4 border-b border-romantic-200 pb-2">🧬 Genetic Code & Wobble</h4>
+                        <ul class="space-y-3 text-sm text-slate-700">
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>64 Codons Total:</strong> 61 code for amino acids, 3 are Stop signals.</li>
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>Stop Codons:</strong> UAA, UAG, UGA.</li>
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>Degenerate:</strong> Redundancy (multiple codons per amino acid). Minimizes mutation risk.</li>
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>Unambiguous:</strong> 1 codon = STRICTLY 1 amino acid.</li>
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>Exceptions to Universal Rule:</strong> In human mitochondria, UGA = Trp, AUA = Met, CUA = Thr.</li>
+                            <li class="flex gap-2 items-start"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i> <strong>Wobble Hypothesis (Crick):</strong> 3rd base pairing is loose. Allows a minimum of <strong>32 tRNAs</strong> to read all 61 amino-acid codons.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Inhibitors Quick Facts -->
+                    <div>
+                        <h4 class="font-bold text-lg text-romantic-800 mb-4 border-b border-romantic-200 pb-2">💊 Antibiotics Target Mappings</h4>
+                        <ul class="space-y-3 text-sm text-slate-700">
+                            <li class="flex flex-col">
+                                <span class="font-bold text-slate-900">30S Subunit Blockers:</span>
+                                <span class="text-slate-500 pl-2 border-l-2 border-romantic-200 ml-1 mt-1">
+                                    • <strong>Tetracycline:</strong> Blocks A-site binding.<br>
+                                    • <strong>Streptomycin:</strong> Causes misreading & inhibits elongation.
+                                </span>
+                            </li>
+                            <li class="flex flex-col mt-2">
+                                <span class="font-bold text-slate-900">50S Subunit Blockers:</span>
+                                <span class="text-slate-500 pl-2 border-l-2 border-romantic-200 ml-1 mt-1">
+                                    • <strong>Chloramphenicol:</strong> Blocks peptidyl transferase.<br>
+                                    • <strong>Erythromycin:</strong> Blocks translocation.<br>
+                                    • <strong>Lincomycin/Clindamycin:</strong> Blocks peptide bond formation.
+                                </span>
+                            </li>
+                            <li class="flex flex-col mt-2">
+                                <span class="font-bold text-slate-900">Special Cases:</span>
+                                <span class="text-slate-500 pl-2 border-l-2 border-romantic-200 ml-1 mt-1">
+                                    • <strong>Puromycin:</strong> Premature termination (Both Pro/Euk).<br>
+                                    • <strong>Cycloheximide:</strong> 60S eukaryotic blocker.<br>
+                                    • <strong>Diphtheria Toxin:</strong> Inactivates eukaryotic elongation factor.
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 text-slate-400 text-sm italic font-serif flex items-center justify-center gap-2 pb-10">
+                You've got this. Good luck with your exam! <i data-lucide="heart" class="w-4 h-4 text-romantic-300"></i>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+
+        // PDF Generation Function
+        function generatePDF() {
+            const element = document.getElementById('content-to-pdf');
+            
+            // Show a temporary loading state on the button
+            const btn = document.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i><span>Saving...</span>';
+            lucide.createIcons();
+
+            const opt = {
+                margin:       [0.4, 0, 0.4, 0], // top, left, bottom, right
+                filename:     'Genetic_Code_Notes_Revision.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // New Promise-based usage:
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button state
+                btn.innerHTML = originalText;
+                lucide.createIcons();
+            });
+        }
+    </script>
+</body>
+</html>
+

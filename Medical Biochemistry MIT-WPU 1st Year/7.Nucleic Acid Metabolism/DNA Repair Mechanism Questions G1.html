@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Repair Mechanism | Interactive Study Guide</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .tab-btn.active {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .dark .tab-btn.active {
+            border-bottom: 3px solid #60a5fa;
+            color: #60a5fa;
+        }
+        .explanation-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
+        }
+        .explanation-content.show {
+            max-height: 1000px; /* Arbitrary large number for animation */
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-500 text-white p-2 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-600 dark:from-brand-400 dark:to-indigo-400 hidden sm:block">
+                    Molecular Biology: DNA Repair
+                </h1>
+                <h1 class="text-xl font-bold sm:hidden text-brand-600 dark:text-brand-400">DNA Repair</h1>
+            </div>
+            
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                <!-- Sun Icon -->
+                <svg id="sunIcon" class="w-6 h-6 hidden text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="moonIcon" class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800/50">
+            <button onclick="switchTab('mcq')" id="tab-mcq" class="tab-btn active px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap transition-colors">Multiple Choice (20)</button>
+            <button onclick="switchTab('short')" id="tab-short" class="tab-btn px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap transition-colors">Short Answer (10)</button>
+            <button onclick="switchTab('essay')" id="tab-essay" class="tab-btn px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap transition-colors">Essay Questions (10)</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 py-8">
+        <!-- MCQ Section -->
+        <section id="section-mcq" class="space-y-6">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Multiple Choice Questions</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Select the best answer. Instant feedback will be provided.</p>
+            </div>
+            <div id="mcq-container" class="space-y-8"></div>
+        </section>
+
+        <!-- Short Answer Section -->
+        <section id="section-short" class="space-y-6 hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Short Answer Questions</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Test your memory. Click "Show Explanation" to check your answer.</p>
+            </div>
+            <div id="short-container" class="space-y-6"></div>
+        </section>
+
+        <!-- Essay Section -->
+        <section id="section-essay" class="space-y-6 hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Essay Questions</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Practice comprehensive answers. Review the detailed explanations to grade yourself.</p>
+            </div>
+            <div id="essay-container" class="space-y-6"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-12">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center space-y-3">
+            <p class="text-slate-500 dark:text-slate-400 font-medium tracking-wide">
+                Designed For My Bestie 💖
+            </p>
+            <a href="https://instagram.com/shivamcuj" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-full hover:opacity-90 transition-opacity shadow-md">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.822a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                <span class="font-semibold text-sm tracking-wide">@shivamcuj</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Data Source extracted directly from the PDF
+        const mcqData = [
+            { q: "What is the primary consequence of unrepaired replication errors or mutations in DNA?", options: ["Increased cell division", "Serious consequences for the cell", "Enhanced protein synthesis", "Immediate cellular energy boost"], correct: 1, exp: "Damage to DNA caused by replication errors or mutations may have serious consequences, requiring the cell's inbuilt repair system." },
+            { q: "Which of the following is NOT one of the four distinct mechanisms of DNA repair mentioned?", options: ["Base excision-repair", "Nucleotide excision-repair", "RNA interference repair", "Mismatch repair"], correct: 2, exp: "The four distinct mechanisms are: Base excision-repair, Nucleotide excision-repair, Mismatch repair, and Double-strand break repair." },
+            { q: "Base excision-repair is typically used for damage caused by:", options: ["Damage to a segment of DNA", "Damage to a single base due to spontaneous alteration", "Copying errors with 1-5 base loops", "Double-strand breaks"], correct: 1, exp: "Base excision-repair handles damage to a single base due to spontaneous alteration or by chemical or radiation means." },
+            { q: "Cytosine can undergo spontaneous depurination to form which altered base?", options: ["Hypoxanthine", "Xanthine", "Uracil", "Thymine"], correct: 2, exp: "The base cytosine can undergo spontaneous depurination to form uracil." },
+            { q: "Adenine spontaneously alters to form which base?", options: ["Uracil", "Xanthine", "Hypoxanthine", "Guanine"], correct: 2, exp: "Adenine can undergo spontaneous alteration to form hypoxanthine." },
+            { q: "In base excision-repair, which enzyme initially removes the defective base (e.g., Uracil)?", options: ["DNA polymerase", "N-glycosylase (e.g., Uracil DNA glycosylase)", "Endonuclease", "DNA ligase"], correct: 1, exp: "Removal of the defective base is carried out by N-glycosylase (such as Uracil DNA glycosylase)." },
+            { q: "After N-glycosylase removes the base, which enzyme cuts the backbone of the DNA strand near the defect?", options: ["DNA ligase", "Exonuclease", "Endonuclease", "DNA polymerase"], correct: 2, exp: "An endonuclease cuts the backbone of the DNA strand near the defect and removes a few bases." },
+            { q: "Nucleotide excision-repair is best suited for repairing:", options: ["Single spontaneous depurinations", "Large-scale defects like cross-linkages and strand breaks", "Mismatch of C and A during replication", "Homologous recombination"], correct: 1, exp: "Nucleotide excision-repair is ideally suited for large-scale defects such as modification of bases, strand breaks, and cross-linkages caused by UV light or radiation." },
+            { q: "What is the approximate length of the DNA fragment removed during nucleotide excision-repair?", options: ["1-5 nucleotides", "10 nucleotides", "30 nucleotides", "100 nucleotides"], correct: 2, exp: "Nucleotide excision-repair involves the removal of the DNA fragment of approximately 30 nt in length." },
+            { q: "In nucleotide excision-repair, which enzyme cuts the DNA on either side (upstream and downstream) of the damage?", options: ["Excision nuclease (exinuclease)", "Endonuclease", "GATC endonuclease", "N-glycosylase"], correct: 0, exp: "An excision nuclease (exinuclease) cuts the DNA on either side (upstream and downstream) of the damaged DNA." },
+            { q: "Xeroderma pigmentosum (XP) is linked to a defect in which DNA repair mechanism?", options: ["Base excision-repair", "Nucleotide excision-repair", "Mismatch repair", "Double-strand break repair"], correct: 1, exp: "XP is a rare autosomal recessive disease caused by a defect in the nucleotide excision repair of damaged DNA." },
+            { q: "What is a primary clinical symptom of Xeroderma pigmentosum (XP)?", options: ["Colon cancer", "Severe photosensitivity and susceptibility to skin cancers", "Defective homologous recombination", "Increased copying errors"], correct: 1, exp: "Affected XP patients are photosensitive and highly susceptible to skin cancers." },
+            { q: "Mismatch repair specifically corrects damage caused by:", options: ["Ionizing radiations", "Spontaneous chemical alterations", "Copying errors during replication", "UV light"], correct: 2, exp: "Mismatch repair corrects single mismatch base pairs resulting from copying errors during DNA replication." },
+            { q: "How does the mismatch repair system distinguish between the template strand and the newly synthesized strand?", options: ["The template strand has uracil", "The new strand is longer", "The template strand is methylated", "The new strand is heavily folded"], correct: 2, exp: "The template strand of the DNA exists in a methylated form, while the newly synthesized strand is not methylated." },
+            { q: "Which enzyme is responsible for cutting the newly synthesized strand in mismatch repair?", options: ["Exinuclease", "Uracil DNA glycosylase", "Endonuclease", "GATC endonuclease"], correct: 3, exp: "The enzyme GATC endonuclease cuts the strand at an adjacent methylated GATC sequence." },
+            { q: "Hereditary nonpolyposis colon cancer (HNPCC) is associated with a fault in which repair mechanism?", options: ["Mismatch repair", "Base excision-repair", "Nucleotide excision-repair", "Non-homologous end joining"], correct: 0, exp: "HNPCC is linked with faulty mismatch repair of defective DNA." },
+            { q: "Double-strand break (DSB) repair handles damage primarily caused by:", options: ["Copying errors", "Spontaneous depurination", "Ionizing radiations, free radicals, and chemotherapy", "UV light exclusively"], correct: 2, exp: "Double-strand breaks are caused by ionizing radiations, free radicals, chemotherapy, etc." },
+            { q: "Which of the following is NOT a potential consequence of unrepaired double-strand breaks?", options: ["Genetic recombination", "Chromosomal translocation", "Cell death", "Spontaneous methylation"], correct: 3, exp: "DSBs can result in genetic recombination which may lead to chromosomal translocation, broken chromosomes, and finally cell death. Methylation is not listed as a consequence." },
+            { q: "In mammals, which mechanism dominates for repairing double-strand breaks?", options: ["Homologous recombination", "Non-homologous end joining", "Nucleotide excision", "Mismatch gap filling"], correct: 1, exp: "In mammals, non-homologous end joining dominates for double-strand break repair." },
+            { q: "In nearly all repair mechanisms (Base, Nucleotide, and Mismatch), what is the final step to seal the new DNA strand?", options: ["Digestion by exonuclease", "Ligation by DNA ligase", "Unwinding by helicase", "Polymerization by RNA polymerase"], correct: 1, exp: "The gap created is filled up by DNA polymerase and gets ligated (sealed) by DNA ligase." }
+        ];
+
+        const shortData = [
+            { q: "What are the four distinct mechanisms of DNA repair?", exp: "1) Base excision-repair<br>2) Nucleotide excision-repair<br>3) Mismatch repair<br>4) Double-strand break repair" },
+            { q: "Name the altered bases that form when Cytosine, Adenine, and Guanine undergo spontaneous depurination.", exp: "Cytosine forms Uracil.<br>Adenine forms Hypoxanthine.<br>Guanine forms Xanthine." },
+            { q: "What is the specific role of the enzyme N-glycosylase?", exp: "N-glycosylase is responsible for the removal of a single defective base (e.g., uracil) during base excision-repair." },
+            { q: "How long is the DNA fragment that is typically removed during nucleotide excision-repair?", exp: "A DNA fragment of approximately 30 nucleotides (nt) in length is removed." },
+            { q: "What environmental factors typically cause the type of large-scale DNA defects that require nucleotide excision-repair?", exp: "Ultraviolet (UV) light, ionizing radiation, and other environmental factors that cause modification of bases, strand breaks, and cross-linkages." },
+            { q: "What is Xeroderma pigmentosum (XP)?", exp: "It is a rare autosomal recessive disease caused by a defect in nucleotide excision-repair, resulting in patients being highly photosensitive and susceptible to skin cancers." },
+            { q: "In mismatch repair, how does the cell recognize which strand has the error?", exp: "The cell recognizes the new strand because the original template strand exists in a methylated form, while the newly synthesized strand is temporarily unmethylated." },
+            { q: "What enzyme removes the defective strand after the initial cut is made during mismatch repair?", exp: "An exonuclease digests and removes the defective strand after GATC endonuclease makes the initial cut." },
+            { q: "Name the cancer linked specifically to faulty mismatch repair.", exp: "Hereditary nonpolyposis colon cancer (HNPCC)." },
+            { q: "What are the two specific mechanisms by which double-strand breaks (DSBs) can be repaired?", exp: "1) Homologous recombination (dominates in yeasts)<br>2) Non-homologous end joining (dominates in mammals)" }
+        ];
+
+        const essayData = [
+            { q: "Describe the complete process of base excision-repair using the deamination of cytosine to uracil as an example.", exp: "When cytosine spontaneously deaminates to form uracil, the altered base does not belong in normal DNA. The process begins with the enzyme uracil DNA glycosylase recognizing and removing the defective uracil base. Next, an endonuclease cuts the backbone of the DNA strand near the defect to remove the abasic sugar and a few adjacent bases. Finally, repair DNA polymerase synthesizes the correct nucleotides to fill the gap, and DNA ligase seals the nick to restore the normal DNA double helix." },
+            { q: "Compare the type of DNA damage handled by base excision-repair versus nucleotide excision-repair.", exp: "Base excision-repair is designed to handle damage to a single base caused by spontaneous alteration (like depurination) or mild chemical/radiation means. In contrast, nucleotide excision-repair is suited for large-scale defects that distort the DNA helix, such as cross-linkages, modification of multiple bases, and strand breaks caused by severe environmental factors like UV light and ionizing radiation. While base excision removes just the base and a tiny gap, nucleotide excision removes a fragment of about 30 nucleotides." },
+            { q: "Explain the mechanism of nucleotide excision-repair and discuss the clinical consequences if this system fails.", exp: "Nucleotide excision-repair begins with the identification of a large-scale defect. The DNA double helix unwinds to expose the damage. An excision nuclease (exinuclease) then cuts the DNA on both the upstream and downstream sides of the damaged portion. The defective piece (~30 nt long) is degraded and removed. DNA polymerase fills the gap, and DNA ligase seals it. If this system fails, the clinical consequence is illustrated by Xeroderma pigmentosum (XP), an autosomal recessive disease where patients suffer extreme photosensitivity and high rates of skin cancer due to the inability to repair UV-induced DNA damage." },
+            { q: "Detail the steps involved in mismatch repair and explain the mechanism of strand discrimination.", exp: "Mismatch repair corrects errors (1-5 base loops) made during DNA replication, such as pairing C with A instead of T with A. The critical first step is strand discrimination: the repair system must know which base is wrong. It does this because the original template strand is methylated, while the newly synthesized strand is not. Recognizing this, the enzyme GATC endonuclease cuts the unmethylated (new) strand at an adjacent methylated GATC sequence. An exonuclease then digests the defective portion of the new strand. Finally, DNA polymerase resynthesizes the corrected strand, and DNA ligase seals it." },
+            { q: "Discuss the severe cellular consequences of double-strand breaks (DSBs) and how organisms repair them.", exp: "Double-strand breaks (DSBs) are highly dangerous forms of DNA damage caused by ionizing radiation, free radicals, or chemotherapy. If left unrepaired, they can result in abnormal genetic recombination, leading to chromosomal translocations, physically broken chromosomes, and ultimately cell death. To prevent this, organisms utilize two main repair mechanisms: homologous recombination, which is the dominant repair pathway in yeasts, and non-homologous end joining, which is the dominant repair pathway in mammalian cells. Both processes involve unwinding, alignment, and ligation." },
+            { q: "Identify and describe the roles of the four major enzymes involved in the later stages of base, nucleotide, and mismatch repair mechanisms.", exp: "While the initial recognition enzymes differ, the later stages of these three repair mechanisms rely on a similar set of enzymes: \n1) Endonucleases/Exinucleases: These cut the DNA backbone to excise the damaged section (e.g., standard endonuclease in base repair, exinuclease in nucleotide repair, GATC endonuclease in mismatch repair).\n2) Exonucleases (specifically noted in mismatch repair): Digest and remove the cut defective strand.\n3) DNA Polymerase: Synthesizes new DNA by reading the undamaged complementary template strand to fill the gap created by the excision.\n4) DNA Ligase: Forms the final phosphodiester bond to seal the nick between the newly synthesized segment and the existing DNA backbone." },
+            { q: "Explain the significance of methylation in maintaining genetic integrity.", exp: "Methylation serves as a critical biological tag for maintaining genetic integrity, specifically during mismatch repair. Following DNA replication, copying errors occasionally occur. Because the newly synthesized DNA strand lacks methylation for a brief period, the mismatch repair enzymes use the presence of methyl groups (specifically at GATC sequences) on the template strand to distinguish it from the new strand. This ensures that the repair machinery cuts and corrects the newly made strand containing the error, rather than mistakenly altering the correct template strand." },
+            { q: "Trace the relationship between specific environmental/internal hazards and the exact DNA repair mechanisms deployed to combat them.", exp: "The cell deploys specific mechanisms based on the hazard:\n- Spontaneous chemical alterations (e.g., deamination/depurination): Combated by Base Excision-Repair.\n- UV light & environmental chemicals causing bulky cross-links: Combated by Nucleotide Excision-Repair.\n- Internal replication machinery errors (copying mismatches): Combated by Mismatch Repair.\n- Severe hazards like free radicals, ionizing radiation, and chemotherapy causing complete helix cleavage: Combated by Double-Strand Break Repair (Homologous Recombination or Non-Homologous End Joining)." },
+            { q: "Provide clinical correlations for defects in DNA repair systems based on the text provided.", exp: "The text provides two major clinical correlations for defective repair mechanisms. First, a defect in the nucleotide excision-repair system causes Xeroderma pigmentosum (XP). This rare autosomal recessive condition renders patients highly sensitive to sunlight (UV) and highly susceptible to skin cancers. Second, a faulty mismatch repair system is directly linked to Hereditary nonpolyposis colon cancer (HNPCC), one of the most common inherited cancers, demonstrating how uncorrected replication errors lead to oncogenesis." },
+            { q: "Compare Homologous Recombination and Non-Homologous End Joining.", exp: "Both are mechanisms used to repair dangerous double-strand breaks (DSBs) caused by radiation or free radicals, which require unwinding, alignment, and ligation. The key difference highlighted in the text is their biological prevalence across different organisms: Homologous recombination is the dominant mechanism occurring in yeasts, whereas non-homologous end joining is the dominant mechanism utilized in mammals to prevent chromosomal translocation and cell death." }
+        ];
+
+        // Rendering Functions
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            let html = '';
+            
+            mcqData.forEach((item, index) => {
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <button onclick="checkMCQ(this, ${index}, ${optIndex})" 
+                                class="mcq-opt w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all focus:outline-none">
+                            <div class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center text-sm font-medium text-slate-500 opt-letter">
+                                    ${String.fromCharCode(65 + optIndex)}
+                                </div>
+                                <span class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">${opt}</span>
+                            </div>
+                        </button>
+                    `;
+                });
+
+                html += `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-800" id="mcq-card-${index}">
+                        <div class="flex gap-4 mb-6">
+                            <span class="flex-shrink-0 w-8 h-8 bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold rounded-lg flex items-center justify-center">
+                                ${index + 1}
+                            </span>
+                            <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mt-1">${item.q}</h3>
+                        </div>
+                        <div class="space-y-3 pl-0 sm:pl-12">
+                            ${optionsHtml}
+                        </div>
+                        <div class="mcq-exp hidden pl-0 sm:pl-12 mt-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <div class="flex gap-2">
+                                <svg class="w-5 h-5 text-brand-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <span class="font-semibold text-slate-700 dark:text-slate-200 text-sm">Explanation:</span>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">${item.exp}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderQA(data, containerId, badgeText, badgeColorClass) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            data.forEach((item, index) => {
+                html += `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-start gap-4">
+                            <span class="flex-shrink-0 px-2.5 py-1 text-xs font-bold rounded-md ${badgeColorClass}">
+                                ${badgeText} ${index + 1}
+                            </span>
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">${item.q}</h3>
+                                
+                                <button onclick="toggleExplanation(this)" class="flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 transition-colors bg-brand-50 dark:bg-brand-900/30 px-4 py-2 rounded-lg">
+                                    <svg class="w-4 h-4 transition-transform duration-300 icon-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    Show Explanation
+                                </button>
+                                
+                                <div class="explanation-content mt-2">
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                                        ${item.exp}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Logic & Interactions
+        function checkMCQ(btn, qIndex, selectedOptIndex) {
+            const card = document.getElementById(`mcq-card-${qIndex}`);
+            const buttons = card.querySelectorAll('.mcq-opt');
+            const expDiv = card.querySelector('.mcq-exp');
+            const correctIndex = mcqData[qIndex].correct;
+
+            // Disable all buttons in this question
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:bg-slate-50', 'dark:hover:bg-slate-700', 'cursor-pointer');
+                b.classList.add('opacity-60', 'cursor-not-allowed');
+            });
+
+            // Handle styling
+            if (selectedOptIndex === correctIndex) {
+                // Correct
+                btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'opacity-60');
+                btn.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/20', 'dark:border-green-500', 'opacity-100');
+                btn.querySelector('.opt-letter').classList.add('bg-green-500', 'text-white', 'border-green-500');
+            } else {
+                // Wrong
+                btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'opacity-60');
+                btn.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/20', 'dark:border-red-500', 'opacity-100');
+                btn.querySelector('.opt-letter').classList.add('bg-red-500', 'text-white', 'border-red-500');
+                
+                // Highlight correct
+                const correctBtn = buttons[correctIndex];
+                correctBtn.classList.remove('border-slate-200', 'dark:border-slate-700', 'opacity-60');
+                correctBtn.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/20', 'dark:border-green-500', 'opacity-100');
+                correctBtn.querySelector('.opt-letter').classList.add('bg-green-500', 'text-white', 'border-green-500');
+            }
+
+            // Show explanation
+            expDiv.classList.remove('hidden');
+        }
+
+        function toggleExplanation(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.icon-chevron');
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                btn.innerHTML = `<svg class="w-4 h-4 transition-transform duration-300 icon-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> Show Explanation`;
+            } else {
+                content.classList.add('show');
+                btn.innerHTML = `<svg class="w-4 h-4 transition-transform duration-300 icon-chevron rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> Hide Explanation`;
+            }
+        }
+
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // Update sections
+            document.getElementById('section-mcq').classList.add('hidden');
+            document.getElementById('section-short').classList.add('hidden');
+            document.getElementById('section-essay').classList.add('hidden');
+            
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark Mode Setup
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        // Check initial theme (default to light per request, but respect system preference if desired)
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                localStorage.theme = 'light';
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMCQs();
+            renderQA(shortData, 'short-container', 'SAQ', 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300');
+            renderQA(essayData, 'essay-container', 'ESSAY', 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300');
+        });
+    </script>
+</body>
+</html>
+
